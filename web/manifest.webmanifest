@@ -1,0 +1,25 @@
+{
+  "name": "TaraCmd",
+  "short_name": "TaraCmd",
+  "description": "Subject-wise revision desk for the Civil Services Examination.",
+  "start_url": "./taracmd.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#EDEFF2",
+  "theme_color": "#EDEFF2",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "maskable"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+name: content
+
+# Cheap, and runs on everything: no Java, no Gradle, no Android SDK. This is
+# what catches a duplicate topic id or a quiz question pointing at a topic that
+# no longer exists, which is the failure mode content edits actually have.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # Validates content and writes all three targets. Dies on a duplicate
+      # topic id, a quiz question aimed at an unknown topic, an answer-key
+      # array that does not match the paper length, or an unsubstituted token.
+      - name: Build
+        run: python3 build.py
+
+      # build.py is the only thing allowed to write the three targets. A dirty
+      # tree here means one of them was hand-edited — which is exactly how the
+      # Android assets once shipped a full rename behind the web build.
+      - name: Fail if a generated target was hand-edited
+        run: |
+          if ! git diff --quiet; then
+            echo "::error::a generated target differs from what build.py produces"
+            git diff --stat
+            exit 1
+          fi

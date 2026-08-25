@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Mirrors --paper and --card from the page's light palette. -->
+<resources>
+    <color name="paper">#EDEFF2</color>
+    <color name="card">#FFFFFF</color>
+</resources>

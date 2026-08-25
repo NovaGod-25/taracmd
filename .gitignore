@@ -1,0 +1,29 @@
+# Android
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/.idea/
+*.apk
+*.aab
+*.keystore
+*.jks
+
+# Gradle wrapper jar is generated, not committed — see CLAUDE.md open item 3
+android/gradle/wrapper/gradle-wrapper.jar
+android/gradlew
+android/gradlew.bat
+
+# Answer-key PDFs cached by tools/answer-keys.py. Not redistributed: they are
+# fetched from upsc.gov.in and stay local.
+tools/.key-pdfs/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Editors / OS
+.DS_Store
+Thumbs.db
+*.swp

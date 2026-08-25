@@ -1,0 +1,43 @@
+{
+  "questions": [
+    {
+      "id": "pol-basic-structure-1",
+      "topic": "polity-basic-structure",
+      "q": "The basic structure doctrine was first laid down by the Supreme Court in which case?",
+      "options": [
+        "Golaknath v. State of Punjab (1967)",
+        "Kesavananda Bharati v. State of Kerala (1973)",
+        "Indira Nehru Gandhi v. Raj Narain (1975)",
+        "Minerva Mills v. Union of India (1980)"
+      ],
+      "answer": 1,
+      "why": "Kesavananda Bharati held that Parliament may amend any part of the Constitution but cannot damage its basic structure. Golaknath is the near-miss: it barred amendment of Fundamental Rights outright, and Kesavananda overruled it."
+    },
+    {
+      "id": "geo-monsoon-1",
+      "topic": "geography-indian-monsoon-and-climate",
+      "q": "The withdrawal of the south-west monsoon from India begins in which region?",
+      "options": [
+        "Kerala and the southern peninsula",
+        "North-western India",
+        "The north-eastern states",
+        "The Konkan coast"
+      ],
+      "answer": 1,
+      "why": "Retreat starts over north-west India in early September and moves south-east, the reverse of the onset, which begins over Kerala around 1 June."
+    },
+    {
+      "id": "env-cbd-1",
+      "topic": "environment-cbd-cites-global-biodiversity",
+      "q": "The Nagoya Protocol, adopted in 2010, deals principally with which of the following?",
+      "options": [
+        "Liability and redress for damage from living modified organisms",
+        "Access to genetic resources and fair sharing of benefits from their use",
+        "Reduction of persistent organic pollutants",
+        "Trade in endangered species of wild fauna and flora"
+      ],
+      "answer": 1,
+      "why": "Nagoya is the access-and-benefit-sharing protocol under the CBD. The first option describes the Nagoya–Kuala Lumpur Supplementary Protocol, which is the trap; the third is Stockholm and the fourth is CITES."
+    }
+  ]
+}

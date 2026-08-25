@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The page's dark palette, so the window behind the WebView does not flash
+     white on launch. -->
+<resources>
+    <color name="paper">#0E131B</color>
+    <color name="card">#161D28</color>
+</resources>

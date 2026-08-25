@@ -1,0 +1,61 @@
+name: APK
+
+# The expensive half, gated. Content-only edits do not build an APK — that was
+# costing build minutes on every JSON tweak. The trade-off is real and worth
+# stating: content IS inlined into the APK, so after a content edit the last
+# built APK is stale. Build one deliberately from the Actions tab
+# (workflow_dispatch) when you want a release with new content in it.
+#
+# Content itself is still validated on every push, by content.yml.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'android/**'
+      - 'templates/**'
+      - 'build.py'
+      - '.github/workflows/android.yml'
+  pull_request:
+    paths:
+      - 'android/**'
+      - 'templates/**'
+      - 'build.py'
+  workflow_dispatch:
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # The assets the APK ships are generated, not committed-and-trusted.
+      - name: Build assets from content/
+        run: python3 build.py
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      # No gradle-wrapper.jar is committed (it is a binary), so this installs
+      # Gradle directly and the build calls `gradle`, not `./gradlew`.
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.10.2'
+
+      # assembleRelease produces an UNSIGNED apk that will not install. Debug
+      # is signed with the debug key and does. A real release needs a keystore
+      # secret and a signingConfigs block in app/build.gradle.kts.
+      - name: assembleDebug
+        working-directory: android
+        run: gradle --no-daemon assembleDebug
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: taracmd-debug-apk
+          path: android/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error

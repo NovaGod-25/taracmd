@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The U, kept inside the 72dp safe zone of the 108dp adaptive canvas so no
+     launcher's mask clips it. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M36,34 L36,56 A18,18 0 0 0 72,56 L72,34 L60,34 L60,56 A6,6 0 0 1 48,56 L48,34 Z" />
+</vector>

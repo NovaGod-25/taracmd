@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!-- Matches savedDir() in MainActivity: the app's own folder, nowhere else. -->
+    <external-files-path name="saved" path="saved/" />
+    <files-path name="saved_internal" path="saved/" />
+</paths>

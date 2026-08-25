@@ -1,0 +1,546 @@
+{
+  "prelims": [
+    {
+      "year": 2026,
+      "papers": [
+        {
+          "name": "General Studies Paper I",
+          "code": "gs1",
+          "url": "https://www.upsc.gov.in/sites/default/files/QP_CSP_2026_GENERAL_STUDIES_PAPER-I_25052026.pdf"
+        },
+        {
+          "name": "CSAT Paper II",
+          "code": "gs2",
+          "url": "https://www.upsc.gov.in/sites/default/files/QP_CSP_2026_GENERAL_STUDIES_PAPER-II_25052026.pdf"
+        }
+      ]
+    },
+    {
+      "year": 2025,
+      "papers": [
+        {
+          "name": "General Studies Paper I",
+          "code": "gs1",
+          "url": "https://www.upsc.gov.in/sites/default/files/QP-CSP-25-GENERAL-STUDIES-PAPER-I-26052025.pdf"
+        },
+        {
+          "name": "CSAT Paper II",
+          "code": "gs2",
+          "url": "https://www.upsc.gov.in/sites/default/files/QP-CSP-25-GENERAL-STUDIES-PAPER-II-26052025.pdf"
+        }
+      ]
+    },
+    {
+      "year": 2024,
+      "papers": [
+        {
+          "name": "General Studies Paper I",
+          "code": "gs1",
+          "url": null
+        },
+        {
+          "name": "CSAT Paper II",
+          "code": "gs2",
+          "url": null
+        }
+      ]
+    },
+    {
+      "year": 2023,
+      "papers": [
+        {
+          "name": "General Studies Paper I",
+          "code": "gs1",
+          "url": "https://www.upsc.gov.in/sites/default/files/QP_CS_Pre_Exam_2023_280523.pdf"
+        },
+        {
+          "name": "CSAT Paper II",
+          "code": "gs2",
+          "url": "https://www.upsc.gov.in/sites/default/files/QP_CS_Pre_Exam_2023_GENERAL_STUDIES_PAPER_II_280523.pdf"
+        }
+      ]
+    },
+    {
+      "year": 2022,
+      "papers": [
+        {
+          "name": "General Studies Paper I",
+          "code": "gs1",
+          "url": "https://www.upsc.gov.in/sites/default/files/GENERAL%20STUDIES%20PAPER%20I.pdf"
+        },
+        {
+          "name": "CSAT Paper II",
+          "code": "gs2",
+          "url": "https://www.upsc.gov.in/sites/default/files/GENERAL%20STUDIES%20PAPER%20II.pdf"
+        }
+      ]
+    },
+    {
+      "year": 2021,
+      "papers": [
+        {
+          "name": "General Studies Paper I",
+          "code": "gs1",
+          "url": "https://www.upsc.gov.in/sites/default/files/QP-CSP-21-GeneralStudiesPaper-I-121021.pdf"
+        },
+        {
+          "name": "CSAT Paper II",
+          "code": "gs2",
+          "url": "https://www.upsc.gov.in/sites/default/files/QP-CSP-21-GeneralStudiesPaper-II-121021.pdf"
+        }
+      ]
+    },
+    {
+      "year": 2020,
+      "papers": [
+        {
+          "name": "General Studies Paper I",
+          "code": "gs1",
+          "url": null
+        },
+        {
+          "name": "CSAT Paper II",
+          "code": "gs2",
+          "url": null
+        }
+      ]
+    },
+    {
+      "year": 2019,
+      "papers": [
+        {
+          "name": "General Studies Paper I",
+          "code": "gs1",
+          "url": null
+        },
+        {
+          "name": "CSAT Paper II",
+          "code": "gs2",
+          "url": null
+        }
+      ]
+    },
+    {
+      "year": 2018,
+      "papers": [
+        {
+          "name": "General Studies Paper I",
+          "code": "gs1",
+          "url": null
+        },
+        {
+          "name": "CSAT Paper II",
+          "code": "gs2",
+          "url": null
+        }
+      ]
+    },
+    {
+      "year": 2017,
+      "papers": [
+        {
+          "name": "General Studies Paper I",
+          "code": "gs1",
+          "url": null
+        },
+        {
+          "name": "CSAT Paper II",
+          "code": "gs2",
+          "url": null
+        }
+      ]
+    },
+    {
+      "year": 2016,
+      "papers": [
+        {
+          "name": "General Studies Paper I",
+          "code": "gs1",
+          "url": null
+        },
+        {
+          "name": "CSAT Paper II",
+          "code": "gs2",
+          "url": null
+        }
+      ]
+    },
+    {
+      "year": 2015,
+      "papers": [
+        {
+          "name": "General Studies Paper I",
+          "code": "gs1",
+          "url": null
+        },
+        {
+          "name": "CSAT Paper II",
+          "code": "gs2",
+          "url": null
+        }
+      ]
+    }
+  ],
+  "mains": [
+    {
+      "year": 2026,
+      "papers": [
+        {
+          "name": "General Studies Paper I",
+          "code": "gs1",
+          "url": null
+        },
+        {
+          "name": "General Studies Paper II",
+          "code": "gs2",
+          "url": null
+        },
+        {
+          "name": "General Studies Paper III",
+          "code": "gs3",
+          "url": null
+        },
+        {
+          "name": "General Studies Paper IV",
+          "code": "gs4",
+          "url": null
+        },
+        {
+          "name": "Essay",
+          "code": "essay",
+          "url": null
+        }
+      ]
+    },
+    {
+      "year": 2025,
+      "papers": [
+        {
+          "name": "General Studies Paper I",
+          "code": "gs1",
+          "url": "https://www.upsc.gov.in/sites/default/files/GENERAL-STUDIES-PAPER%20I-QP-CSM-25-010925.pdf"
+        },
+        {
+          "name": "General Studies Paper II",
+          "code": "gs2",
+          "url": "https://www.upsc.gov.in/sites/default/files/GENERAL-STUDIES-PAPER-II-QP-CSM-25-010925.pdf"
+        },
+        {
+          "name": "General Studies Paper III",
+          "code": "gs3",
+          "url": "https://www.upsc.gov.in/sites/default/files/GENERAL-STUDIES-PAPER-III-QP-CSM-25-010925.pdf"
+        },
+        {
+          "name": "General Studies Paper IV",
+          "code": "gs4",
+          "url": "https://www.upsc.gov.in/sites/default/files/GENERAL-STUDIES-PAPER-IV-QP-CSM-25-010925.pdf"
+        },
+        {
+          "name": "Essay",
+          "code": "essay",
+          "url": "https://www.upsc.gov.in/sites/default/files/ESSAY-QP-CSM-25-010925.pdf"
+        }
+      ]
+    },
+    {
+      "year": 2024,
+      "papers": [
+        {
+          "name": "General Studies Paper I",
+          "code": "gs1",
+          "url": "https://www.upsc.gov.in/sites/default/files/QP_CSM_2024_GenStud_I_03102024.pdf"
+        },
+        {
+          "name": "General Studies Paper II",
+          "code": "gs2",
+          "url": "https://www.upsc.gov.in/sites/default/files/QP_CSM_2024_GenStud_II_03102024.pdf"
+        },
+        {
+          "name": "General Studies Paper III",
+          "code": "gs3",
+          "url": "https://www.upsc.gov.in/sites/default/files/QP_CSM_2024_GenStud_III_03102024.pdf"
+        },
+        {
+          "name": "General Studies Paper IV",
+          "code": "gs4",
+          "url": "https://www.upsc.gov.in/sites/default/files/QP_CSM_2024_GenStud_IV_03102024.pdf"
+        },
+        {
+          "name": "Essay",
+          "code": "essay",
+          "url": "https://www.upsc.gov.in/sites/default/files/QP_CSM_2024_ESSAY_03102024.pdf"
+        }
+      ]
+    },
+    {
+      "year": 2023,
+      "papers": [
+        {
+          "name": "General Studies Paper I",
+          "code": "gs1",
+          "url": null
+        },
+        {
+          "name": "General Studies Paper II",
+          "code": "gs2",
+          "url": null
+        },
+        {
+          "name": "General Studies Paper III",
+          "code": "gs3",
+          "url": null
+        },
+        {
+          "name": "General Studies Paper IV",
+          "code": "gs4",
+          "url": null
+        },
+        {
+          "name": "Essay",
+          "code": "essay",
+          "url": null
+        }
+      ]
+    },
+    {
+      "year": 2022,
+      "papers": [
+        {
+          "name": "General Studies Paper I",
+          "code": "gs1",
+          "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-22-GENERAL-STUDIES-PAPER%20I-190922.pdf"
+        },
+        {
+          "name": "General Studies Paper II",
+          "code": "gs2",
+          "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-22-GENERAL-STUDIES-PAPER-II-190922.pdf"
+        },
+        {
+          "name": "General Studies Paper III",
+          "code": "gs3",
+          "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-22-GENERAL-STUDIES-PAPER-III-190922.pdf"
+        },
+        {
+          "name": "General Studies Paper IV",
+          "code": "gs4",
+          "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-22-GENERAL-STUDIES-PAPER%20IV-190922.pdf"
+        },
+        {
+          "name": "Essay",
+          "code": "essay",
+          "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-22-ESSAY-190922.pdf"
+        }
+      ]
+    },
+    {
+      "year": 2021,
+      "papers": [
+        {
+          "name": "General Studies Paper I",
+          "code": "gs1",
+          "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-21-GENSTUDIESPAPER-I-110122.pdf"
+        },
+        {
+          "name": "General Studies Paper II",
+          "code": "gs2",
+          "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-21-GENSTUDIESPAPER-II-110122.pdf"
+        },
+        {
+          "name": "General Studies Paper III",
+          "code": "gs3",
+          "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-21-GENSTUDIESPAPER-III-110122.pdf"
+        },
+        {
+          "name": "General Studies Paper IV",
+          "code": "gs4",
+          "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-21-GENSTUDIESPAPER-IV-110122.pdf"
+        },
+        {
+          "name": "Essay",
+          "code": "essay",
+          "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-21-ESSAY-110122.pdf"
+        }
+      ]
+    },
+    {
+      "year": 2020,
+      "papers": [
+        {
+          "name": "General Studies Paper I",
+          "code": "gs1",
+          "url": null
+        },
+        {
+          "name": "General Studies Paper II",
+          "code": "gs2",
+          "url": null
+        },
+        {
+          "name": "General Studies Paper III",
+          "code": "gs3",
+          "url": null
+        },
+        {
+          "name": "General Studies Paper IV",
+          "code": "gs4",
+          "url": null
+        },
+        {
+          "name": "Essay",
+          "code": "essay",
+          "url": null
+        }
+      ]
+    },
+    {
+      "year": 2019,
+      "papers": [
+        {
+          "name": "General Studies Paper I",
+          "code": "gs1",
+          "url": null
+        },
+        {
+          "name": "General Studies Paper II",
+          "code": "gs2",
+          "url": null
+        },
+        {
+          "name": "General Studies Paper III",
+          "code": "gs3",
+          "url": null
+        },
+        {
+          "name": "General Studies Paper IV",
+          "code": "gs4",
+          "url": null
+        },
+        {
+          "name": "Essay",
+          "code": "essay",
+          "url": null
+        }
+      ]
+    },
+    {
+      "year": 2018,
+      "papers": [
+        {
+          "name": "General Studies Paper I",
+          "code": "gs1",
+          "url": null
+        },
+        {
+          "name": "General Studies Paper II",
+          "code": "gs2",
+          "url": null
+        },
+        {
+          "name": "General Studies Paper III",
+          "code": "gs3",
+          "url": null
+        },
+        {
+          "name": "General Studies Paper IV",
+          "code": "gs4",
+          "url": null
+        },
+        {
+          "name": "Essay",
+          "code": "essay",
+          "url": null
+        }
+      ]
+    },
+    {
+      "year": 2017,
+      "papers": [
+        {
+          "name": "General Studies Paper I",
+          "code": "gs1",
+          "url": null
+        },
+        {
+          "name": "General Studies Paper II",
+          "code": "gs2",
+          "url": null
+        },
+        {
+          "name": "General Studies Paper III",
+          "code": "gs3",
+          "url": null
+        },
+        {
+          "name": "General Studies Paper IV",
+          "code": "gs4",
+          "url": null
+        },
+        {
+          "name": "Essay",
+          "code": "essay",
+          "url": null
+        }
+      ]
+    },
+    {
+      "year": 2016,
+      "papers": [
+        {
+          "name": "General Studies Paper I",
+          "code": "gs1",
+          "url": null
+        },
+        {
+          "name": "General Studies Paper II",
+          "code": "gs2",
+          "url": null
+        },
+        {
+          "name": "General Studies Paper III",
+          "code": "gs3",
+          "url": null
+        },
+        {
+          "name": "General Studies Paper IV",
+          "code": "gs4",
+          "url": null
+        },
+        {
+          "name": "Essay",
+          "code": "essay",
+          "url": null
+        }
+      ]
+    },
+    {
+      "year": 2015,
+      "papers": [
+        {
+          "name": "General Studies Paper I",
+          "code": "gs1",
+          "url": null
+        },
+        {
+          "name": "General Studies Paper II",
+          "code": "gs2",
+          "url": null
+        },
+        {
+          "name": "General Studies Paper III",
+          "code": "gs3",
+          "url": null
+        },
+        {
+          "name": "General Studies Paper IV",
+          "code": "gs4",
+          "url": null
+        },
+        {
+          "name": "Essay",
+          "code": "essay",
+          "url": null
+        }
+      ]
+    }
+  ]
+}

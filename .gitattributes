@@ -1,0 +1,8 @@
+# build.py writes LF. If Git checked these out as CRLF on Windows, the CI
+# "was a generated target hand-edited?" check would fail on line endings alone.
+* text=auto eol=lf
+
+*.png binary
+*.jar binary
+*.apk binary
+*.keystore binary

@@ -1,0 +1,1075 @@
+{
+  "publishers": [
+    {
+      "name": "Vision IAS",
+      "url": "https://visionias.in/resources/toppers-answer-copy/"
+    },
+    {
+      "name": "NEXT IAS",
+      "url": "https://www.nextias.com/toppers-answers-ias"
+    },
+    {
+      "name": "ForumIAS",
+      "url": "https://forumias.com/blog/testimonials/"
+    },
+    {
+      "name": "InsightsIAS",
+      "url": "https://www.insightsonindia.com/upsc-toppers-answer-copies-download-ias-topper-mains-copies-by-insightsias/"
+    },
+    {
+      "name": "Vajiram & Ravi",
+      "url": "https://vajiramandravi.com/upsc-ias-toppers-copy-and-answer-sheets/"
+    },
+    {
+      "name": "GS SCORE",
+      "url": "https://iasscore.in/toppers-copy"
+    },
+    {
+      "name": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy"
+    },
+    {
+      "name": "theIAShub",
+      "url": "https://theiashub.com/toppers/upsc"
+    },
+    {
+      "name": "Fortune IAS",
+      "url": "https://www.fortuneias.com/toppers-answer-sheets/"
+    },
+    {
+      "name": "Shankar IAS Parliament",
+      "url": "https://www.shankariasparliament.com/upsc-toppers-list"
+    }
+  ],
+  "copies": [
+    {
+      "name": "Tina Dabi",
+      "rank": 1,
+      "year": 2015,
+      "papers": [],
+      "publisher": "Vision IAS",
+      "url": "https://www.visionias.in/resources/material/?id=98&type=toppers_answers",
+      "direct": true
+    },
+    {
+      "name": "Anudeep Durishetty",
+      "rank": 1,
+      "year": 2017,
+      "papers": [
+        "GS-II",
+        "GS-III"
+      ],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/anudeep-durishetty-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Kanishak Kataria",
+      "rank": 1,
+      "year": 2018,
+      "papers": [],
+      "publisher": "Vision IAS, UnlockIAS",
+      "url": "https://visionias.in/resources/material/?id=461&type=toppers_answers",
+      "direct": true
+    },
+    {
+      "name": "Akshat Jain",
+      "rank": 2,
+      "year": 2018,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/akshat-jain-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Junaid Ahmad",
+      "rank": 3,
+      "year": 2018,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/junaid-ahmad-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Srushti Jayant Deshmukh",
+      "rank": 5,
+      "year": 2018,
+      "papers": [],
+      "publisher": "UnlockIAS, Vision IAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/srushti-deshmukh-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Ankita Chaudhary",
+      "rank": 14,
+      "year": 2018,
+      "papers": [],
+      "publisher": "ForumIAS",
+      "url": "https://forumias.com/blog/rank-14-ankita-choudhary-download-mgp-copies/",
+      "direct": true
+    },
+    {
+      "name": "Natisha Mathur",
+      "rank": 37,
+      "year": 2019,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/natisha-mathur-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Pedditi Dhatri Reddy",
+      "rank": 46,
+      "year": 2019,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/pedditi-dhatri-reddy-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Shishir Gupta",
+      "rank": 50,
+      "year": 2019,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/shishir-gupta-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Shubham Kumar",
+      "rank": 1,
+      "year": 2020,
+      "papers": [
+        "Essay"
+      ],
+      "publisher": "ForumIAS, UnlockIAS",
+      "url": "https://forumias.com/blog/download-shubham-kumar-ias-rank-1-upsc-cse-2020-mains-open-test-essay-copy/",
+      "direct": true
+    },
+    {
+      "name": "Jagrati Awasthi",
+      "rank": 2,
+      "year": 2020,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/jagrati-awasthi-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Aditya",
+      "rank": 92,
+      "year": 2020,
+      "papers": [],
+      "publisher": "ForumIAS",
+      "url": "https://blog.forumias.com/aditya-ias-rank-92-upsc-cse-2020-testimonial/",
+      "direct": true
+    },
+    {
+      "name": "Suchitra Sharma",
+      "rank": 146,
+      "year": 2020,
+      "papers": [],
+      "publisher": "ForumIAS",
+      "url": "https://blog.forumias.com/download-suchitra-sharma-cse-rank-146-upsc-cse-2020-mgp-test-copies",
+      "direct": true
+    },
+    {
+      "name": "Shruti Sharma",
+      "rank": 1,
+      "year": 2021,
+      "papers": [
+        "GS-I",
+        "GS-IV"
+      ],
+      "publisher": "UnlockIAS, ForumIAS, Vajiram & Ravi",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/shruti-sharma-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Gamini Singla",
+      "rank": 3,
+      "year": 2021,
+      "papers": [],
+      "publisher": "Vision IAS",
+      "url": "https://visionias.in/resources/material/?id=1525&type=toppers_answers",
+      "direct": true
+    },
+    {
+      "name": "Ishita Rathi",
+      "rank": 8,
+      "year": 2021,
+      "papers": [],
+      "publisher": "ForumIAS",
+      "url": "https://forumias.com/blog/download-ishita-rathi-ias-rank-8-upsc-cse-2021-mgp-test-copies/",
+      "direct": true
+    },
+    {
+      "name": "Saksham Goel",
+      "rank": 27,
+      "year": 2021,
+      "papers": [
+        "GS-II",
+        "GS-III"
+      ],
+      "publisher": "Vajiram & Ravi",
+      "url": "https://vajiramandravi.com/upsc-ias-toppers-copy-and-answer-sheets/",
+      "direct": false
+    },
+    {
+      "name": "Pankaj Yadav",
+      "rank": 107,
+      "year": 2021,
+      "papers": [],
+      "publisher": "ForumIAS",
+      "url": "https://forumias.com/blog/download-pankaj-yadav-ias-rank-107-upsc-cse-2021-mgp-test-copies/",
+      "direct": true
+    },
+    {
+      "name": "Ishita Kishore",
+      "rank": 1,
+      "year": 2022,
+      "papers": [],
+      "publisher": "Vision IAS, ForumIAS",
+      "url": "https://www.visionias.in/resources/material/?id=1791&type=toppers_answers",
+      "direct": true
+    },
+    {
+      "name": "Kanika Goyal",
+      "rank": 9,
+      "year": 2022,
+      "papers": [
+        "Essay"
+      ],
+      "publisher": "InsightsIAS",
+      "url": "https://www.insightsonindia.com/wp-content/uploads/2025/07/Kanika_Goyal_AIR-9_IPM-Test-Series_ESSAY.pdf",
+      "direct": true
+    },
+    {
+      "name": "Avinash Kumar",
+      "rank": 17,
+      "year": 2022,
+      "papers": [],
+      "publisher": "ForumIAS",
+      "url": "https://forumias.com/blog/download-avinash-kumar-ias-rank-17-upsc-cse-2022-mgp-test-copies/",
+      "direct": true
+    },
+    {
+      "name": "Chaitanya Awasthi",
+      "rank": 37,
+      "year": 2022,
+      "papers": [
+        "GS-I",
+        "GS-II",
+        "GS-III",
+        "GS-IV"
+      ],
+      "publisher": "Vajiram & Ravi",
+      "url": "https://vajiramandravi.com/upsc-ias-toppers-copy-and-answer-sheets/",
+      "direct": false
+    },
+    {
+      "name": "Aditi Varshney",
+      "rank": 57,
+      "year": 2022,
+      "papers": [
+        "GS-I",
+        "GS-II",
+        "GS-III",
+        "GS-IV"
+      ],
+      "publisher": "Vajiram & Ravi",
+      "url": "https://vajiramandravi.com/upsc-ias-toppers-copy-and-answer-sheets/",
+      "direct": false
+    },
+    {
+      "name": "Tanmai Khanna",
+      "rank": 61,
+      "year": 2022,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/tanmai-khanna-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Dwij Goel",
+      "rank": 71,
+      "year": 2022,
+      "papers": [],
+      "publisher": "ForumIAS",
+      "url": "https://forumias.com/blog/download-dwij-goel-cse-rank-71-upsc-cse-2022-mgp-test-copies/",
+      "direct": true
+    },
+    {
+      "name": "Aditya Srivastava",
+      "rank": 1,
+      "year": 2023,
+      "papers": [],
+      "publisher": "Vision IAS, UnlockIAS, ForumIAS",
+      "url": "https://visionias.in/resources/material/?id=2467&type=toppers_answers",
+      "direct": true
+    },
+    {
+      "name": "Animesh Pradhan",
+      "rank": 2,
+      "year": 2023,
+      "papers": [],
+      "publisher": "Vision IAS",
+      "url": "https://www.visionias.in/resources/material/?id=2485&type=toppers_answers",
+      "direct": true
+    },
+    {
+      "name": "Ruhani",
+      "rank": 5,
+      "year": 2023,
+      "papers": [],
+      "publisher": "ForumIAS",
+      "url": "https://forumias.com/blog/ruhani-air-5-upsc-2023-topper-biography-state-marksheet-and-answer-copy/",
+      "direct": true
+    },
+    {
+      "name": "Srishti Dabas",
+      "rank": 6,
+      "year": 2023,
+      "papers": [],
+      "publisher": "ForumIAS",
+      "url": "https://forumias.com/blog/srishti-dabas-upsc-ias-2023-topper-air-6-biography-state-marksheet-and-answer-copy/",
+      "direct": true
+    },
+    {
+      "name": "Aishwaryam Prajapati",
+      "rank": 10,
+      "year": 2023,
+      "papers": [
+        "GS-IV"
+      ],
+      "publisher": "Vision IAS",
+      "url": "https://visionias.in/resources/toppers-answer-copy/",
+      "direct": false
+    },
+    {
+      "name": "Shailputri",
+      "rank": 315,
+      "year": 2023,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/shailputri-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Devdarshdeep Singh",
+      "rank": 340,
+      "year": 2023,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/devdarshdeep-singh-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Rishabh Bhatt",
+      "rank": 363,
+      "year": 2023,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/rishabh-bhatt-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Kanchan Choudhary",
+      "rank": 408,
+      "year": 2023,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/kanchan-choudhary-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Gyanendra Bharti",
+      "rank": 537,
+      "year": 2023,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/gyanendra-bharti-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Ravi Gangwar",
+      "rank": 616,
+      "year": 2023,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/ravi-gangwar-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Apeksh Jakhar",
+      "rank": 782,
+      "year": 2023,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/apeksh-jakhar-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Preeti Suman",
+      "rank": 863,
+      "year": 2023,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/preeti-suman-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Laxman Meena",
+      "rank": 983,
+      "year": 2023,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/laxman-meena-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Shakti Dubey",
+      "rank": 1,
+      "year": 2024,
+      "papers": [
+        "GS-I",
+        "GS-II",
+        "GS-III",
+        "GS-IV",
+        "Essay"
+      ],
+      "publisher": "Vision IAS, UnlockIAS, Vajiram & Ravi, NEXT IAS, ForumIAS",
+      "url": "https://visionias.in/resources/material/?id=3176&type=toppers_answers",
+      "direct": true
+    },
+    {
+      "name": "Harshita Goyal",
+      "rank": 2,
+      "year": 2024,
+      "papers": [
+        "Political Science & International Relations (optional)"
+      ],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/harshita-goyal-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Aakash Garg",
+      "rank": 5,
+      "year": 2024,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/aakash-garg-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Komal Punia",
+      "rank": 6,
+      "year": 2024,
+      "papers": [
+        "GS-II",
+        "GS-IV"
+      ],
+      "publisher": "UnlockIAS, Vajiram & Ravi",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/komal-punia-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Aayushi Bansal",
+      "rank": 7,
+      "year": 2024,
+      "papers": [
+        "GS-IV"
+      ],
+      "publisher": "UnlockIAS, Vajiram & Ravi",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/aayushi-bansal-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Raj Krishna Jha",
+      "rank": 8,
+      "year": 2024,
+      "papers": [
+        "GS-I",
+        "GS-II",
+        "GS-III",
+        "GS-IV",
+        "Essay"
+      ],
+      "publisher": "InsightsIAS, UnlockIAS",
+      "url": "https://www.insightsonindia.com/wp-content/uploads/2025/07/raj-krishna-jha-upsc-2024-gs-1-topper-copy-1.pdf",
+      "direct": true
+    },
+    {
+      "name": "Madhav Agrawal",
+      "rank": 16,
+      "year": 2024,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/madhav-agrawal-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Vibhor Bhardwaj",
+      "rank": 19,
+      "year": 2024,
+      "papers": [
+        "Essay"
+      ],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/vibhor-bhardwaj-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Rangamanju",
+      "rank": 24,
+      "year": 2024,
+      "papers": [
+        "Essay"
+      ],
+      "publisher": "InsightsIAS",
+      "url": "https://www.insightsonindia.com/wp-content/uploads/2025/07/Rangamanju-Rank-24-Essay-1.pdf",
+      "direct": true
+    },
+    {
+      "name": "Ranga Manju",
+      "rank": 24,
+      "year": 2024,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/ranga-manju-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Sachin B G",
+      "rank": 41,
+      "year": 2024,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/sachin-b-g-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Ravula Jayasimha Reddy",
+      "rank": 46,
+      "year": 2024,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/ravula-jayasimha-reddy-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Nandanaa G P",
+      "rank": 47,
+      "year": 2024,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/nandanaa-g-p-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Vishal Singh",
+      "rank": 56,
+      "year": 2024,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/vishal-singh-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Poorva Agrawal",
+      "rank": 65,
+      "year": 2024,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/poorva-agrawal-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Kumud Mishra",
+      "rank": 69,
+      "year": 2024,
+      "papers": [
+        "GS-II",
+        "GS-III",
+        "GS-IV",
+        "Essay"
+      ],
+      "publisher": "InsightsIAS, UnlockIAS",
+      "url": "https://www.insightsonindia.com/wp-content/uploads/2025/07/kumud-mishra-upsc-rank-69-gs-2-topper-copy.pdf",
+      "direct": true
+    },
+    {
+      "name": "Utkarsh Pathak",
+      "rank": 88,
+      "year": 2024,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/utkarsh-pathak-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Aaditi Chhaparia",
+      "rank": 97,
+      "year": 2024,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/aaditi-chhaparia-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Tejasvi Deshpande",
+      "rank": 99,
+      "year": 2024,
+      "papers": [
+        "GS-I",
+        "GS-II",
+        "GS-III",
+        "Essay"
+      ],
+      "publisher": "InsightsIAS, UnlockIAS",
+      "url": "https://www.insightsonindia.com/wp-content/uploads/2025/07/Tejasvi-Deshpande-upsc-rank-99-gs-1-Topper-copy.pdf",
+      "direct": true
+    },
+    {
+      "name": "Srishti",
+      "rank": 145,
+      "year": 2024,
+      "papers": [
+        "GS-IV",
+        "Essay"
+      ],
+      "publisher": "Vajiram & Ravi",
+      "url": "https://vajiramandravi.com/upsc-ias-toppers-copy-and-answer-sheets/",
+      "direct": false
+    },
+    {
+      "name": "Apsara N",
+      "rank": 192,
+      "year": 2024,
+      "papers": [
+        "GS-II",
+        "GS-III"
+      ],
+      "publisher": "InsightsIAS, UnlockIAS",
+      "url": "https://www.insightsonindia.com/wp-content/uploads/2025/07/Apsara-upsc-rank-192-gs-2-topper-copy.pdf",
+      "direct": true
+    },
+    {
+      "name": "Ravish Mittal",
+      "rank": 379,
+      "year": 2024,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/ravish-mittal-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Vandita",
+      "rank": 403,
+      "year": 2024,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/vandita-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Arpit Kumar",
+      "rank": 421,
+      "year": 2024,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/arpit-kumar-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Madhavi R",
+      "rank": 446,
+      "year": 2024,
+      "papers": [
+        "GS-I",
+        "GS-II",
+        "GS-III",
+        "GS-IV",
+        "Essay"
+      ],
+      "publisher": "InsightsIAS, UnlockIAS",
+      "url": "https://www.insightsonindia.com/wp-content/uploads/2025/07/MADHAVI-upsc-rank-446-gs-1-toppers-copy-updated.pdf",
+      "direct": true
+    },
+    {
+      "name": "Gore Akash",
+      "rank": 500,
+      "year": 2024,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/gore-akash-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Shubham Raghuvanshi",
+      "rank": 556,
+      "year": 2024,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/shubham-raghuvanshi-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Akansh Dhull",
+      "rank": 3,
+      "year": 2025,
+      "papers": [],
+      "publisher": "UnlockIAS, ForumIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/akansh-dhull-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Raghav Jhunjhunwala",
+      "rank": 4,
+      "year": 2025,
+      "papers": [],
+      "publisher": "UnlockIAS, ForumIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/raghav-jhunjhunwala-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Ishan Bhatnagar",
+      "rank": 5,
+      "year": 2025,
+      "papers": [],
+      "publisher": "UnlockIAS, ForumIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/ishan-bhatnagar-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Zinnia Aurora",
+      "rank": 6,
+      "year": 2025,
+      "papers": [
+        "GS-II"
+      ],
+      "publisher": "UnlockIAS, theIAShub",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/zinnia-aurora-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "A R Rajah Mohaideen",
+      "rank": 7,
+      "year": 2025,
+      "papers": [],
+      "publisher": "ForumIAS",
+      "url": "https://forumias.com/blog/testimonials/",
+      "direct": false
+    },
+    {
+      "name": "Pakshal Secretry",
+      "rank": 8,
+      "year": 2025,
+      "papers": [
+        "GS-IV",
+        "Essay"
+      ],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/pakshal-secretry-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Astha Jain",
+      "rank": 9,
+      "year": 2025,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/astha-jain-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Yashaswi Raj Vardhan",
+      "rank": 11,
+      "year": 2025,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/yashaswi-raj-vardhan-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Monika Srivastava",
+      "rank": 16,
+      "year": 2025,
+      "papers": [
+        "GS-IV"
+      ],
+      "publisher": "UnlockIAS, Vajiram & Ravi",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/monika-srivastava-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Sruthii R",
+      "rank": 18,
+      "year": 2025,
+      "papers": [
+        "GS-I",
+        "GS-III"
+      ],
+      "publisher": "theIAShub",
+      "url": "https://theiashub.com/toppers/upsc",
+      "direct": false
+    },
+    {
+      "name": "Nisar Dishant",
+      "rank": 19,
+      "year": 2025,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/nisar-dishant-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Vikas",
+      "rank": 27,
+      "year": 2025,
+      "papers": [
+        "GS-I",
+        "GS-II",
+        "GS-III",
+        "GS-IV"
+      ],
+      "publisher": "Vajiram & Ravi, UnlockIAS",
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/VIKAS_SS_GS_1_AIR_27_a59d0601ae.pdf",
+      "direct": true
+    },
+    {
+      "name": "Aryan Yadav",
+      "rank": 31,
+      "year": 2025,
+      "papers": [],
+      "publisher": "Vision IAS",
+      "url": "https://www.visionias.in/blog/toppers-strategy/aryan-yadav-air-31-upsc-2025-background-upsc-journey-marksheet-toppers-copy-strategy",
+      "direct": true
+    },
+    {
+      "name": "Deepali Mahto",
+      "rank": 36,
+      "year": 2025,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/deepali-mahto-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Diksha Rai",
+      "rank": 40,
+      "year": 2025,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/diksha-rai-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Aniket Ranjan",
+      "rank": 48,
+      "year": 2025,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/aniket-ranjan-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Animesh Jain",
+      "rank": 63,
+      "year": 2025,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/animesh-jain-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Minal Negi",
+      "rank": 66,
+      "year": 2025,
+      "papers": [
+        "GS-II"
+      ],
+      "publisher": "theIAShub",
+      "url": "https://theiashub.com/toppers/upsc",
+      "direct": false
+    },
+    {
+      "name": "Kanishak Aggarwal",
+      "rank": 72,
+      "year": 2025,
+      "papers": [
+        "GS-III"
+      ],
+      "publisher": "Vajiram & Ravi, UnlockIAS",
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/vaji_gs3_560b2c9b36.pdf",
+      "direct": true
+    },
+    {
+      "name": "Aakash Om Trivedi",
+      "rank": 73,
+      "year": 2025,
+      "papers": [
+        "GS-IV"
+      ],
+      "publisher": "Vajiram & Ravi, UnlockIAS",
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/AAKASH_TRIVEDI_GS_4_AIR_73_2025_9cc4bacd05.pdf",
+      "direct": true
+    },
+    {
+      "name": "Rahul Shekhar",
+      "rank": 75,
+      "year": 2025,
+      "papers": [
+        "GS-IV"
+      ],
+      "publisher": "Vajiram & Ravi",
+      "url": "https://vajiramias.sgp1.cdn.digitaloceanspaces.com/strapi/RAHUL_SHEKHAR_GS_4_AIR_75_2025_d5a4a7ce63.pdf",
+      "direct": true
+    },
+    {
+      "name": "Sandeep Badad",
+      "rank": 82,
+      "year": 2025,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/sandeep-badad-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Isha Barak",
+      "rank": 85,
+      "year": 2025,
+      "papers": [],
+      "publisher": "Vision IAS",
+      "url": "https://www.visionias.in/blog/toppers-strategy/isha-barak-air-85-upsc-2025-background-upsc-journey-marksheet-toppers-copy-strategy",
+      "direct": true
+    },
+    {
+      "name": "Puru Dubey",
+      "rank": 86,
+      "year": 2025,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/puru-dubey-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Hassan Khan",
+      "rank": 95,
+      "year": 2025,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/hassan-khan-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Yashvi Jain",
+      "rank": 97,
+      "year": 2025,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/yashvi-jain-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Vimal Kumar",
+      "rank": 107,
+      "year": 2025,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/vimal-kumar-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Shagun Kaushal",
+      "rank": 145,
+      "year": 2025,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/shagun-kaushal-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Srishti Goyal",
+      "rank": 160,
+      "year": 2025,
+      "papers": [
+        "GS-III"
+      ],
+      "publisher": "theIAShub",
+      "url": "https://theiashub.com/toppers/upsc",
+      "direct": false
+    },
+    {
+      "name": "Ritika Pandey",
+      "rank": 185,
+      "year": 2025,
+      "papers": [
+        "GS-I",
+        "GS-II"
+      ],
+      "publisher": "theIAShub",
+      "url": "https://theiashub.com/toppers/upsc",
+      "direct": false
+    },
+    {
+      "name": "Abhigyan Khaund",
+      "rank": 187,
+      "year": 2025,
+      "papers": [],
+      "publisher": "UnlockIAS",
+      "url": "https://www.unlockias.in/upsc-toppers-answer-copy/abhigyan-khaund-answer-copy",
+      "direct": true
+    },
+    {
+      "name": "Tushar Chauhan",
+      "rank": 216,
+      "year": 2025,
+      "papers": [
+        "GS-II",
+        "GS-III"
+      ],
+      "publisher": "theIAShub",
+      "url": "https://theiashub.com/toppers/upsc",
+      "direct": false
+    },
+    {
+      "name": "Padmavathi S",
+      "rank": 291,
+      "year": 2025,
+      "papers": [
+        "GS-I",
+        "GS-II",
+        "GS-III"
+      ],
+      "publisher": "theIAShub",
+      "url": "https://theiashub.com/toppers/upsc",
+      "direct": false
+    },
+    {
+      "name": "Mouleeshwaran S",
+      "rank": 410,
+      "year": 2025,
+      "papers": [
+        "GS-I",
+        "GS-III"
+      ],
+      "publisher": "theIAShub",
+      "url": "https://theiashub.com/toppers/upsc",
+      "direct": false
+    },
+    {
+      "name": "Aman Kashyap",
+      "rank": 818,
+      "year": 2025,
+      "papers": [
+        "GS-III",
+        "GS-IV"
+      ],
+      "publisher": "theIAShub",
+      "url": "https://theiashub.com/toppers/upsc",
+      "direct": false
+    }
+  ]
+}

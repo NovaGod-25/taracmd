@@ -1,0 +1,198 @@
+{
+  "marking": {
+    "gs1": {
+      "name": "GS Paper I",
+      "questions": 100,
+      "correct": 2,
+      "wrong": -0.66,
+      "total": 200,
+      "qualifying": false
+    },
+    "gs2": {
+      "name": "CSAT Paper II",
+      "questions": 80,
+      "correct": 2.5,
+      "wrong": -0.83,
+      "total": 200,
+      "qualifying": true,
+      "qualifying_pct": 33
+    }
+  },
+  "years": [
+    {
+      "year": 2026,
+      "status": "provisional",
+      "released": null,
+      "papers": [
+        {
+          "code": "gs1",
+          "url": null,
+          "dropped": [],
+          "keys": {}
+        },
+        {
+          "code": "gs2",
+          "url": null,
+          "dropped": [],
+          "keys": {}
+        }
+      ]
+    },
+    {
+      "year": 2025,
+      "status": "final",
+      "released": "2026-05-13",
+      "papers": [
+        {
+          "code": "gs1",
+          "url": null,
+          "dropped": [],
+          "keys": {}
+        },
+        {
+          "code": "gs2",
+          "url": null,
+          "dropped": [],
+          "keys": {}
+        }
+      ]
+    },
+    {
+      "year": 2024,
+      "status": "final",
+      "released": "2025-05-21",
+      "papers": [
+        {
+          "code": "gs1",
+          "url": "https://www.upsc.gov.in/sites/default/files/AnsKey-CivilServicesPExam-2024-GeneralStudies-I-210525.pdf",
+          "dropped_count": 3,
+          "dropped": [],
+          "keys": {}
+        },
+        {
+          "code": "gs2",
+          "url": "https://www.upsc.gov.in/sites/default/files/AnsKey-CivilServicesPExam-2024-GeneralStudies-II-210525.pdf",
+          "dropped_count": 0,
+          "dropped": [],
+          "keys": {}
+        }
+      ]
+    },
+    {
+      "year": 2023,
+      "status": "final",
+      "released": "2024-05-09",
+      "papers": [
+        {
+          "code": "gs1",
+          "url": "https://www.upsc.gov.in/sites/default/files/AnsKey-CSP-2023-Paper-I-090524.pdf",
+          "dropped_count": 1,
+          "dropped": [],
+          "keys": {}
+        },
+        {
+          "code": "gs2",
+          "url": "https://www.upsc.gov.in/sites/default/files/AnsKey-CSP-2023-Paper-II-090524.pdf",
+          "dropped_count": 0,
+          "dropped": [],
+          "keys": {}
+        }
+      ]
+    },
+    {
+      "year": 2022,
+      "status": "final",
+      "released": "2023-07-04",
+      "papers": [
+        {
+          "code": "gs1",
+          "url": "https://www.upsc.gov.in/sites/default/files/AnsKey-CSP-2022-Paper-I-040723.pdf",
+          "dropped": [],
+          "keys": {}
+        },
+        {
+          "code": "gs2",
+          "url": "https://www.upsc.gov.in/sites/default/files/AnsKey-CSP-2022-Paper-II-040723.pdf",
+          "dropped": [],
+          "keys": {}
+        }
+      ]
+    },
+    {
+      "year": 2021,
+      "status": "final",
+      "released": "2022-05-30",
+      "papers": [
+        {
+          "code": "gs1",
+          "url": "https://www.upsc.gov.in/sites/default/files/Anskey-CSP-21-GS-I-300522.pdf",
+          "dropped": [],
+          "keys": {}
+        },
+        {
+          "code": "gs2",
+          "url": null,
+          "dropped": [],
+          "keys": {}
+        }
+      ]
+    },
+    {
+      "year": 2020,
+      "status": "final",
+      "released": null,
+      "papers": [
+        {
+          "code": "gs1",
+          "url": null,
+          "dropped": [],
+          "keys": {}
+        },
+        {
+          "code": "gs2",
+          "url": null,
+          "dropped": [],
+          "keys": {}
+        }
+      ]
+    },
+    {
+      "year": 2019,
+      "status": "final",
+      "released": null,
+      "papers": [
+        {
+          "code": "gs1",
+          "url": null,
+          "dropped": [],
+          "keys": {}
+        },
+        {
+          "code": "gs2",
+          "url": null,
+          "dropped": [],
+          "keys": {}
+        }
+      ]
+    },
+    {
+      "year": 2018,
+      "status": "final",
+      "released": null,
+      "papers": [
+        {
+          "code": "gs1",
+          "url": null,
+          "dropped": [],
+          "keys": {}
+        },
+        {
+          "code": "gs2",
+          "url": null,
+          "dropped": [],
+          "keys": {}
+        }
+      ]
+    }
+  ]
+}

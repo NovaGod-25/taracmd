@@ -269,6 +269,36 @@ a{color:var(--accent-ink);text-decoration:none}
 .pace .pr{flex:1;display:flex;flex-direction:column;gap:3px;font-size:12.5px;color:var(--ink-2);min-width:0}
 .pace .pr b{color:var(--ink)}
 
+/* ---------- Mains answer log ---------- */
+.papers.logs{margin-top:7px;padding-top:7px;border-top:1px dashed var(--rule)}
+.pbtn.log{background:transparent;border-style:dashed;color:var(--ink-3);font-size:12px;padding:5px 9px}
+.pbtn.log:hover{color:var(--accent-ink);border-color:var(--accent);border-style:solid}
+.pbtn.log.has{border-style:solid;background:var(--card-2);color:var(--ink-2)}
+.pbtn.log b{font-family:"IBM Plex Mono",monospace;color:var(--accent-ink)}
+
+.wform{display:flex;gap:7px;flex-wrap:wrap;margin:8px 0}
+.wform label{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--ink-3);
+  font-family:"IBM Plex Mono",monospace}
+.wform input,.wform select{width:62px;padding:7px 8px;border-radius:8px;border:1px solid var(--rule);
+  background:var(--card-2);color:var(--ink);font-size:13px;font-family:"IBM Plex Mono",monospace}
+.wform select{width:auto}
+.wform input:focus,.wform select:focus{border-color:var(--accent);outline:none}
+.wnote{width:100%;box-sizing:border-box;padding:9px 10px;border-radius:9px;border:1px solid var(--rule);
+  background:var(--card-2);color:var(--ink);font-size:13px}
+.wnote:focus{border-color:var(--accent);outline:none}
+
+.wrow{display:flex;gap:11px;align-items:flex-start;padding:10px 12px;border-bottom:1px solid var(--rule)}
+.wrow:last-child{border-bottom:none}
+.wq{flex:none;width:34px;height:26px;border-radius:7px;display:grid;place-items:center;
+  background:var(--accent-soft);color:var(--accent-ink);font-size:11.5px;font-weight:600}
+.wbody{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.wmeta{font-size:11px;color:var(--ink-2)}
+.wtext{font-size:12.5px;color:var(--ink);line-height:1.4}
+.wdate{font-size:10.5px;color:var(--ink-3);font-family:"IBM Plex Mono",monospace}
+.wdel{flex:none;color:var(--ink-3);padding:2px}
+.wdel:hover{color:var(--mark)}
+.wdel svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round}
+
 /* ---------- backup sheet ---------- */
 .dump{width:100%;box-sizing:border-box;font-family:"IBM Plex Mono",monospace;font-size:11px;
   line-height:1.45;padding:9px 10px;border-radius:10px;border:1px solid var(--rule);
@@ -332,7 +362,7 @@ const BLANK = {
   attempts: {},   // "year-paper-set" -> {question: letter}   OMR sheets
   revised:  {},   // topic id  -> [epoch ms]                  revision history
   picks:    {},   // question id -> option index              practice answers
-  writing:  {}    // "year-code-qN" -> {mins,words,score,note} Mains log
+  writing:  {}    // "year-code" -> [{q,mins,words,score,of,note,on}]  Mains log
 };
 let store = Object.assign({}, BLANK);
 try{ const r = localStorage.getItem(KEY); if(r) store = Object.assign(store, JSON.parse(r)); }catch(e){}
@@ -675,6 +705,105 @@ function closeSheet(){ sheet.classList.remove("on"); sheetBg.classList.remove("o
 sheetBg.onclick = closeSheet;
 document.addEventListener("keydown", e=>{ if(e.key==="Escape" && openId) closeSheet(); });
 
+/* ---------------- Mains answer log ----------------
+   Prelims is a recognition test and the OMR scorer covers it. Mains is not:
+   it is won by writing 20 answers in three hours, and no amount of ticking
+   subtopics tells you whether you can. So each Mains paper gets a log — how
+   long an answer took, how many words it ran to, what you would score it, and
+   the one sentence about what went wrong that is the whole point of doing it.
+
+   Lives inside the Mains tab on purpose. The tab bar is repeat(5,1fr) and a
+   sixth would cramp the row on a phone. */
+const writeKey = (year, code) => `${year}-${code}`;
+const writeLog = (year, code) => store.writing[writeKey(year, code)] || [];
+
+function writeStats(year, code){
+  const log = writeLog(year, code);
+  if(!log.length) return null;
+  const pct = log.filter(a => a.of).map(a => a.score / a.of);
+  const mins = log.filter(a => a.mins).map(a => a.mins);
+  const words = log.filter(a => a.words).map(a => a.words);
+  const avg = a => a.length ? a.reduce((x, y) => x + y, 0) / a.length : null;
+  return {n: log.length, pct: avg(pct), mins: avg(mins), words: avg(words)};
+}
+
+function openWriting(year, code, label){
+  openId = "__write__";
+  const draw = ()=>{
+    const log = writeLog(year, code).slice().sort((a, b) => (b.on || 0) - (a.on || 0));
+    const st = writeStats(year, code);
+    const isEssay = code === "essay";
+    sheetIn.innerHTML = `
+      <div class="sheethead">
+        <div><div class="eyebrow">Mains ${year} &middot; ${esc(label)}</div><h3>Answer log</h3></div>
+        <button class="xbtn" id="sheetX" aria-label="Close">${XI}</button>
+      </div>
+      ${st ? `<div class="sgrid" style="margin:12px 0 14px">
+        <span>logged <b class="mono">${st.n}</b></span>
+        ${st.pct !== null ? `<span>average <b class="mono">${Math.round(st.pct * 100)}%</b></span>` : ""}
+        ${st.mins !== null ? `<span>time <b class="mono">${Math.round(st.mins)}</b> min</span>` : ""}
+        ${st.words !== null ? `<span>length <b class="mono">${Math.round(st.words)}</b> words</span>` : ""}
+      </div>` : `<p class="note" style="margin:10px 0 14px">Nothing logged for this paper yet. Write one answer under time, then record what it cost you.</p>`}
+
+      <div class="eyebrow">Log an answer</div>
+      <div class="wform">
+        <label>Q<input id="wq" type="number" min="1" max="30" inputmode="numeric" placeholder="${isEssay ? "1" : "7"}"></label>
+        <label>min<input id="wmin" type="number" min="1" max="240" inputmode="numeric" placeholder="${isEssay ? "75" : "9"}"></label>
+        <label>words<input id="wwords" type="number" min="1" max="3000" inputmode="numeric" placeholder="${isEssay ? "1000" : "150"}"></label>
+        <label>marks<input id="wscore" type="number" min="0" max="250" step="0.5" inputmode="decimal" placeholder="9"></label>
+        <label>of<select id="wof">
+          ${(isEssay ? [125, 250] : [10, 15]).map(v=>`<option value="${v}">${v}</option>`).join("")}
+        </select></label>
+      </div>
+      <input class="wnote" id="wnote" maxlength="160" placeholder="What went wrong? Intro too long, no diagram, ran out of time…">
+      <div class="act"><button class="prim" id="wadd">Log it</button></div>
+      <p class="note" id="wmsg"></p>
+
+      ${log.length ? `<div class="eyebrow" style="margin-top:18px">Logged</div>
+      <div class="list" style="margin-top:8px">
+        ${log.map((a, i)=>`<div class="wrow">
+          <span class="wq mono">Q${a.q || "?"}</span>
+          <span class="wbody">
+            <span class="wmeta mono">${[a.mins ? a.mins + " min" : null, a.words ? a.words + " words" : null,
+                (a.score !== undefined && a.of) ? a.score + "/" + a.of : null].filter(Boolean).join(" · ")}</span>
+            ${a.note ? `<span class="wtext">${esc(a.note)}</span>` : ""}
+            <span class="wdate">${a.on ? agoWords(a.on) : ""}</span>
+          </span>
+          <button class="wdel" data-del="${a.on}" aria-label="Remove">${XI}</button>
+        </div>`).join("")}
+      </div>` : ""}`;
+
+    sheetIn.querySelector("#sheetX").onclick = closeSheet;
+    sheetIn.querySelector("#wadd").onclick = ()=>{
+      const num = id => { const v = sheetIn.querySelector(id).value.trim(); return v === "" ? undefined : +v; };
+      const entry = {
+        q: num("#wq"), mins: num("#wmin"), words: num("#wwords"),
+        score: num("#wscore"), of: +sheetIn.querySelector("#wof").value,
+        note: sheetIn.querySelector("#wnote").value.trim(), on: Date.now()
+      };
+      if(entry.q === undefined && entry.score === undefined && !entry.note){
+        sheetIn.querySelector("#wmsg").textContent = "Give it at least a question number, a score or a note.";
+        return;
+      }
+      const k = writeKey(year, code);
+      store.writing[k] = writeLog(year, code).concat([entry]);
+      save();
+      draw();
+      render();
+    };
+    sheetIn.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{
+      const on = +b.dataset.del, k = writeKey(year, code);
+      store.writing[k] = writeLog(year, code).filter(a => a.on !== on);
+      if(!store.writing[k].length) delete store.writing[k];
+      save();
+      draw();
+      render();
+    });
+  };
+  draw();
+  sheet.classList.add("on"); sheetBg.classList.add("on");
+}
+
 /* Everything falling due, across all eight subjects, oldest debt first. Rides
    on the same #results slot the search uses. */
 function showDue(){
@@ -836,6 +965,12 @@ function renderPYQ(kind){
           : `<a class="pbtn miss" href="${KEYINDEX}" target="_blank" rel="noopener">${nm} · find</a>`;
       }).join("") + (ky.papers.some(hasLetters)
           ? `<button class="pbtn score" data-score="${y.year}">Score me</button>` : "");
+      /* Mains is written, not recognised — so every Mains paper carries a log
+         of what your own answers cost you in time, length and marks. */
+      const logBtns = kind !== "mains" ? "" : y.papers.map(p=>{
+        const st = writeStats(y.year, p.code);
+        return `<button class="pbtn log${st ? " has" : ""}" data-log="${y.year}|${p.code}|${esc(shortPaper(p))}">${shortPaper(p)} log${st ? ` <b>${st.n}</b>` : ""}</button>`;
+      }).join("");
       return `
       <div class="year">
         <div class="yh"><span class="yn">${y.year}</span><span class="ys">${y.papers.filter(p=>p.url).length}/${y.papers.length}${ky && ky.status==="provisional" ? " · provisional key" : ""}</span></div>
@@ -845,12 +980,17 @@ function renderPYQ(kind){
             : `<a class="pbtn miss" href="${ARCHIVE}" target="_blank" rel="noopener">${shortPaper(p)} · find</a>`).join("")}
           ${keyBtns}
         </div>
+        ${logBtns ? `<div class="papers logs">${logBtns}</div>` : ""}
       </div>`;}).join("")}
     <p class="note">Every link points at the paper on <a href="${ARCHIVE}" target="_blank" rel="noopener">upsc.gov.in</a> — nothing here is a mirror or a re-upload. Dashed buttons are years whose PDF the UPSC archive did not serve up; they open the archive so you can pull the paper yourself.${kind==="prelims" ? ` Answer keys come from the Commission's own <a href="${KEYINDEX}" target="_blank" rel="noopener">answer-key page</a>; there is no official key for Mains, and none has ever been published.` : ""}</p>`;
   view.querySelectorAll("[data-score]").forEach(b=>b.onclick=()=>{
     state.tab="quiz"; state.qmode="score"; state.qyear=+b.dataset.score;
     document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("on", x.dataset.tab==="quiz"));
     render();
+  });
+  view.querySelectorAll("[data-log]").forEach(b=>b.onclick=()=>{
+    const [yr, code, label] = b.dataset.log.split("|");
+    openWriting(+yr, code, label);
   });
 }
 function shortPaper(p){

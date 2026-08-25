@@ -236,16 +236,20 @@ def main() -> int:
 
     template = TEMPLATE.read_text(encoding="utf-8")
 
+    # An unsubstituted token kills the build, and this is the check that does
+    # it: every token in the template must have a value here. Anything else —
+    # a typo'd token, a new one added to the template and not wired up — lands
+    # in `missing`.
     missing = {m.group(0) for m in TOKEN.finditer(template)} - values.keys()
     if missing:
         return fatal(f"template wants tokens nothing fills: {', '.join(sorted(missing))}")
 
-    # Substituted in one pass, so a token appearing inside content is not rescanned.
+    # One pass, so token-shaped text inside content is never rescanned. Do not
+    # add a "did any token survive?" sweep over the result: the check above
+    # already makes that impossible for template tokens, so the only thing such
+    # a sweep can match is a __LIKE_THIS__ string that came out of the JSON —
+    # harmless page text that would then fail the build for nothing.
     rendered = TOKEN.sub(lambda m: values[m.group(0)], template)
-
-    left = TOKEN.findall(rendered)
-    if left:
-        return fatal(f"unsubstituted token(s) survived: {', '.join(sorted(set(left)))}")
 
     variants = {
         "web": keep_pwa(rendered),

@@ -25,6 +25,11 @@ jobs:
       - name: Build
         run: python3 build.py
 
+      # The validation only runs when content is already broken, so a bug in it
+      # stays hidden until the day it was meant to help. This checks it fires.
+      - name: Prove the validation fires
+        run: python3 tools/check-validation.py
+
       # build.py is the only thing allowed to write the three targets. A dirty
       # tree here means one of them was hand-edited — which is exactly how the
       # Android assets once shipped a full rename behind the web build.

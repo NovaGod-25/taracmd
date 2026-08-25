@@ -38,7 +38,7 @@ what `build.py` produces, which is the guard that was missing.
 | `subjects.json` | 8 subjects → 242 topics → 1,723 subtopics; each topic tagged with papers + weight |
 | `pyq-papers.json` | official upsc.gov.in paper links per year |
 | `answer-keys.json` | Prelims answer keys: links, marking scheme, dropped questions, set-wise letters |
-| `quiz.json` | practice questions, each tagged to a topic id |
+| `quiz.json` | 35 practice questions, each tagged to a topic id |
 | `toppers.json` | 102 published answer copies across 10 publishers |
 
 ## Decisions that should not be quietly reversed
@@ -54,9 +54,21 @@ scraper per site against ForumIAS, UnlockIAS, Vision, Vajiram, Insights, NEXT, G
 theIAShub and the rest. What exists instead is a **per-copy Save button**: one tap, one
 URL, handed to Android's DownloadManager, landing in the app's own folder. No crawler.
 
-**`localStorage` key is `taracmd-v1`.** It holds `done` (revision ticks, keyed by topic
-id), `theme`, and `attempts` (OMR answer sheets, keyed `year-paper-set`). Changing the
-key orphans everyone's progress.
+**`localStorage` key is `taracmd-v1`.** Changing it orphans everyone's progress, so it
+never changes — every field added since is additive and defaulted from `BLANK` on load,
+which means a store written by an older build still opens.
+
+| Field | Holds |
+|---|---|
+| `done` | revision ticks, `topic id -> [subtopic indices]` |
+| `theme` | `"dark"`, `"light"`, or null for system |
+| `attempts` | OMR answer sheets, keyed `year-paper-set` |
+| `revised` | revision history, `topic id -> [epoch ms]` — what the Due filter reads |
+| `picks` | practice answers, `question id -> option index` |
+| `writing` | Mains answer log, `year-code -> [{q,mins,words,score,of,note,on}]` |
+
+There is no export bridge function: backup is a copyable blob in a sheet, plus a file
+download on web only. That is deliberate — see the four-function contract below.
 
 **The Android page is served over `https://appassets.androidplatform.net/`** via
 `WebViewAssetLoader`, not `file:///android_asset/`. A `file://` page has an opaque
@@ -122,6 +134,22 @@ the recovered page:
 Also gone with the tree, and not rebuilt: the four `taxonomy-*.json` files. They were
 155 KB read by nothing, so their loss cost nothing and open item 3 is closed by default.
 
+Added after the recovery, all exercised in a browser on a real http origin:
+
+- **Revision decay.** A tick said you had read something once; it never said you still
+  knew it nine months later. Completing a topic now dates it, and it falls due again at
+  3, 7, 21, 60 then 120 days. A "Due" filter per subject, a cross-subject due list off
+  the pace strip, and a footer in the topic sheet.
+- **Practice answers persist.** They were in a plain `state` object, so a reload threw
+  away every answer including the wrong ones. Adds a "Got wrong" queue.
+- **Backup.** Copyable blob plus a file download on web. Import merges rather than
+  replaces: ticks and dates unioned, local data wins.
+- **The exam clock.** Days to the next exam, from the calendar rule at runtime — never
+  baked in, since the page is meant to open offline months after it was built. The
+  topics-a-day figure hides inside the last 30 days, where it is only an insult.
+- **A Mains answer log** per paper: question, minutes, words, marks, and the sentence
+  about what went wrong. Essay comes free on a 125/250 scale.
+
 ## Open work, in order of leverage
 
 1. **Weight bands do not discriminate.** 145 topics `high`, 96 `medium`, exactly 1 `low`.
@@ -129,9 +157,13 @@ Also gone with the tree, and not rebuilt: the four `taxonomy-*.json` files. They
    claim and at 60% high they carry almost no signal. Needs an editorial pass through
    `subjects.json` — this is a judgment call about UPSC frequency, not a code change.
 2. **Answer keys incomplete.** Every `keys` object is empty, so Quiz → Score a paper
-   says so rather than showing a grid. Run `python3 tools/answer-keys.py discover` then
-   `extract --dry-run`, locally. 2025, the 2026 provisional key, and 2020-and-earlier
-   have no URL yet either.
+   still says so rather than showing a grid. Seven papers do have URLs (2021–2024), and
+   `python3 tools/answer-keys.py extract --dry-run` against those is the way in — it
+   needs `pip install pypdf` and it downloads seven PDFs from upsc.gov.in, so run it
+   locally and unhurried.
+   `discover` will not help for the eleven missing URLs: checked 25 Aug 2026, the
+   Commission's answer-key page lists only CDS-II and CAPF keys and no Civil Services
+   Prelims at all. Those years are archived off it and need finding by hand.
 3. **`gradle-wrapper.jar` is not committed** (binary). Open `android/` in Android Studio
    once, or run `gradle wrapper`, and `./gradlew` starts working. CI sidesteps this by
    installing Gradle directly.
@@ -142,6 +174,11 @@ Also gone with the tree, and not rebuilt: the four `taxonomy-*.json` files. They
 
 ## Gotchas
 
+- **Always link `www.upsc.gov.in`, never the bare `upsc.gov.in`.** They are separate
+  certificates and the bare host's expired on 24 Aug 2026 while `www` runs to 2 November.
+  The app's answer-key link and `tools/answer-keys.py` both used the bare host and both
+  broke — the link with a certificate warning, the tool with
+  `CERTIFICATE_VERIFY_FAILED`. Do not "fix" that by disabling verification.
 - **Bump `CACHE` in `web/sw.js` on every deploy** or returning visitors get the cached
   old page.
 - `assembleRelease` produces an **unsigned** APK that will not install. CI builds

@@ -106,6 +106,8 @@ a{color:var(--accent-ink);text-decoration:none}
   background:var(--sunk);color:var(--ink-2);white-space:nowrap}
 .chip.p{background:var(--accent-soft);color:var(--accent-ink)}
 .chip.e{background:var(--amber-soft);color:var(--amber)}
+.chip.due{background:var(--mark-soft);color:var(--mark)}
+.chip.sched{background:transparent;color:var(--ink-3);box-shadow:inset 0 0 0 1px var(--rule)}
 .tick{flex:none;width:20px;height:20px;border-radius:6px;border:1.5px solid var(--rule-2);display:grid;place-items:center;
   margin-top:1px;color:transparent}
 .tick.on{background:var(--accent);border-color:var(--accent);color:#fff}
@@ -178,6 +180,15 @@ a{color:var(--accent-ink);text-decoration:none}
 .progline{display:flex;align-items:center;gap:9px;margin:14px 0 4px;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-3)}
 .progline .bar{flex:1}
 
+/* ---------- revision footer ---------- */
+.revline{display:flex;align-items:center;gap:11px;margin-top:16px;padding-top:13px;
+  border-top:1px solid var(--rule);font-size:12.5px;color:var(--ink-2);line-height:1.45}
+.revline > span{flex:1}
+.revline b{color:var(--mark)}
+.revbtn{flex:none;padding:7px 12px;border-radius:9px;border:1px solid var(--rule-2);
+  background:var(--card-2);font-size:12.5px;font-weight:500;color:var(--ink)}
+.revbtn:hover{border-color:var(--accent);color:var(--accent-ink)}
+
 /* ---------- tab bar ---------- */
 .tabs{position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--card);border-top:1px solid var(--rule);
   display:grid;grid-template-columns:repeat(5,1fr);padding-bottom:env(safe-area-inset-bottom)}
@@ -249,6 +260,23 @@ a{color:var(--accent-ink);text-decoration:none}
   font-size:11px;font-weight:500;color:var(--ink-2)}
 .savebtn:hover{color:var(--ink);border-color:var(--accent)}
 
+/* ---------- pace strip ---------- */
+.pace{display:flex;gap:15px;align-items:center;background:var(--card);border:1px solid var(--rule);
+  border-radius:14px;padding:13px 15px;box-shadow:var(--shadow);margin-bottom:4px}
+.pace .pl{flex:none;text-align:center;padding-right:15px;border-right:1px solid var(--rule)}
+.pace .pl .big{font-size:26px;font-weight:600;letter-spacing:-.02em;display:block;line-height:1.1}
+.pace .pl .lil{font-size:10.5px;color:var(--ink-3);display:block;max-width:82px;line-height:1.3;margin-top:2px}
+.pace .pr{flex:1;display:flex;flex-direction:column;gap:3px;font-size:12.5px;color:var(--ink-2);min-width:0}
+.pace .pr b{color:var(--ink)}
+
+/* ---------- backup sheet ---------- */
+.dump{width:100%;box-sizing:border-box;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  line-height:1.45;padding:9px 10px;border-radius:10px;border:1px solid var(--rule);
+  background:var(--card-2);color:var(--ink-2);resize:vertical}
+.dump:focus{border-color:var(--accent);outline:none}
+.linky{color:var(--accent-ink);font-weight:500;padding:0;font-size:inherit;text-align:left}
+.linky:hover{text-decoration:underline}
+
 /* ---------- misc ---------- */
 .note{font-size:12.5px;color:var(--ink-3);line-height:1.55;padding:0 2px;margin:10px 0 0}
 .note a{border-bottom:1px solid var(--rule-2)}
@@ -294,11 +322,21 @@ const ARCHIVE = "https://www.upsc.gov.in/examinations/previous-question-papers/a
 const KEYINDEX = "https://upsc.gov.in/examinations/answer-key";
 
 /* ---------------- storage (best effort) ---------------- */
+/* The key never changes: it is the only thing standing between a returning
+   visitor and an empty app. Every field added since is additive and defaulted
+   below, so a store written by an older build still loads. */
 const KEY = "taracmd-v1";
-let store = {done:{}, theme:null, attempts:{}};
+const BLANK = {
+  done:     {},   // topic id  -> [subtopic indices ticked]
+  theme:    null, // "dark" | "light" | null for system
+  attempts: {},   // "year-paper-set" -> {question: letter}   OMR sheets
+  revised:  {},   // topic id  -> [epoch ms]                  revision history
+  picks:    {},   // question id -> option index              practice answers
+  writing:  {}    // "year-code-qN" -> {mins,words,score,note} Mains log
+};
+let store = Object.assign({}, BLANK);
 try{ const r = localStorage.getItem(KEY); if(r) store = Object.assign(store, JSON.parse(r)); }catch(e){}
-if(!store.done) store.done = {};
-if(!store.attempts) store.attempts = {};
+for(const k in BLANK){ if(store[k] === undefined || store[k] === null) store[k] = BLANK[k]; }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(store)); }catch(e){} }
 
 /* Native bridge — present only inside the Android shell. Lets a single copy
@@ -310,12 +348,75 @@ function savedPath(url){
   try{ return NATIVE.savedPath(url) || null; }catch(e){ return null; }
 }
 const doneSet = id => new Set(store.done[id] || []);
-function toggleSub(tid, i){
+function toggleSub(tid, i, total){
   const s = doneSet(tid);
   s.has(i) ? s.delete(i) : s.add(i);
   store.done[tid] = [...s];
   if(!store.done[tid].length) delete store.done[tid];
+  /* Finishing a topic is itself a revision — and it is the only moment we can
+     honestly timestamp, which is what starts the decay clock below. */
+  if(total && s.size === total && !revisions(tid).length) markRevised(tid);
+  else save();
+}
+
+/* ---------------- revision decay ----------------
+   A tick says you have read something once. It does not say you still know it
+   nine months later, and nine months is the shape of this exam. So each topic
+   also carries the dates it was revised, and falls due again on widening
+   intervals. Additive: a store with no `revised` simply has nothing due. */
+const REVISE_DAYS = [3, 7, 21, 60, 120];
+const DAY = 86400000;
+const revisions = tid => store.revised[tid] || [];
+const lastRevised = tid => { const r = revisions(tid); return r.length ? r[r.length - 1] : null; };
+
+function markRevised(tid){
+  const r = revisions(tid).slice();
+  r.push(Date.now());
+  if(r.length > 12) r.shift();           // the tail is what matters, not a diary
+  store.revised[tid] = r;
   save();
+}
+
+const isComplete = tp => tp.subtopics.length > 0 &&
+  (store.done[tp.id] || []).length >= tp.subtopics.length;
+
+/* Days until this topic wants looking at again. <=0 is due, null means it is
+   not a candidate yet — still part-ticked and never revised, so it belongs to
+   "Not done" rather than to the decay schedule. */
+function dueIn(tp){
+  const last = lastRevised(tp.id);
+  if(last === null) return isComplete(tp) ? 0 : null;
+  const step = REVISE_DAYS[Math.min(revisions(tp.id).length - 1, REVISE_DAYS.length - 1)];
+  return Math.ceil((last + step * DAY - Date.now()) / DAY);
+}
+
+const isDue = tp => { const d = dueIn(tp); return d !== null && d <= 0; };
+
+/* ---------------- the clock ----------------
+   Prelims sits on the last Sunday of May; Mains opens on 1 September. Worked
+   out at runtime and never baked in: this page is built to be opened offline
+   months later, and a date frozen at build time would quietly be a lie. */
+function lastSundayOfMay(y){
+  const d = new Date(y, 4, 31);
+  d.setDate(31 - ((d.getDay() + 7) % 7));
+  return d;
+}
+function nextExam(){
+  const now = new Date(), y = now.getFullYear(), out = [];
+  for(const yy of [y, y + 1]){
+    out.push({name: "Prelims " + yy, on: lastSundayOfMay(yy)});
+    out.push({name: "Mains " + yy, on: new Date(yy, 8, 1)});
+  }
+  return out.filter(c => c.on >= now).sort((a, b) => a.on - b.on)[0];
+}
+
+function agoWords(ms){
+  const d = Math.floor((Date.now() - ms) / DAY);
+  if(d <= 0) return "today";
+  if(d === 1) return "yesterday";
+  if(d < 30) return d + " days ago";
+  const m = Math.floor(d / 30);
+  return m === 1 ? "a month ago" : m + " months ago";
 }
 
 /* ---------------- helpers ---------------- */
@@ -363,14 +464,50 @@ function renderSubjects(){
     </div>
     <div id="results"></div>
     <div id="home">
+      ${paceHtml(total)}
       <div class="head"><h2>Subjects</h2><span class="n">${total} topics</span></div>
       <div class="grid">${cards}</div>
-      <p class="note">Weight bands come from how often a topic has surfaced in the last ten years of papers. Tick subtopics as you revise — progress is stored on this device only.</p>
+      <p class="note">Weight bands come from how often a topic has surfaced in the last ten years of papers. Tick subtopics as you revise, and mark a topic revised when you go back over it — everything is stored on this device only. <button class="linky" id="dataBtn">Back up or restore progress</button></p>
     </div>`;
 
   view.querySelectorAll("[data-sub]").forEach(b=>b.onclick=()=>{state.subject=b.dataset.sub;state.tfilter="all";render();});
   const q = document.getElementById("q");
   q.addEventListener("input", ()=>runSearch(q.value.trim()));
+  const dj = document.getElementById("dueJump");
+  if(dj) dj.onclick = showDue;
+  document.getElementById("dataBtn").onclick = openData;
+}
+
+/* What the exam calendar and your own ticks jointly imply.
+   The daily rate is only shown when there is enough runway for it to mean
+   anything. Inside the last month "35 topics a day" is not a plan, it is an
+   insult, so the strip switches to plain counts instead. */
+const PACE_HORIZON = 30;
+
+function paceHtml(total){
+  const ex = nextExam();
+  if(!ex) return "";
+  const days = Math.max(0, Math.ceil((ex.on - Date.now()) / DAY));
+  const done = SUBJECTS.reduce((a, s) => a + s.topics.filter(isComplete).length, 0);
+  const due = SUBJECTS.reduce((a, s) => a + s.topics.filter(isDue).length, 0);
+  const left = total - done;
+  const rate = left / Math.max(1, days);
+
+  let second;
+  if(!left) second = "whole syllabus ticked off";
+  else if(days >= PACE_HORIZON)
+    second = `<b class="mono">${rate < 10 ? rate.toFixed(1) : Math.round(rate)}</b> topics a day to cover the rest`;
+  else
+    second = `<b class="mono">${left}</b> still untouched — revision territory now, not first pass`;
+
+  return `<div class="pace">
+    <div class="pl"><span class="big mono">${days}</span><span class="lil">days to ${esc(ex.name)}</span></div>
+    <div class="pr">
+      <span><b class="mono">${done}</b> of ${total} topics finished</span>
+      <span>${second}</span>
+      ${due ? `<span><button class="linky" id="dueJump"><b class="mono">${due}</b> due for revision</button></span>` : ""}
+    </div>
+  </div>`;
 }
 
 function runSearch(term){
@@ -395,12 +532,16 @@ function runSearch(term){
 function rowHtml(tp, s, subline){
   const dn = (store.done[tp.id]||[]).length, tot = tp.subtopics.length;
   const complete = dn === tot && tot > 0;
+  const d = dueIn(tp);
+  const dueChip = d === null ? ""
+    : d <= 0 ? `<span class="chip due">due</span>`
+             : `<span class="chip sched">${d}d</span>`;
   return `<button class="row" data-topic="${tp.id}">
     <span class="stripe ${tp.weight}"></span>
     <span class="body">
       <span class="t">${esc(tp.name)}</span>
       <span class="s">${esc(subline || (s ? s.short + " · " : "") + tp.subtopics.slice(0,2).join(" · "))}</span>
-      <span class="chips">${chipHtml(tp)}<span class="chip">${dn}/${tot}</span></span>
+      <span class="chips">${chipHtml(tp)}<span class="chip">${dn}/${tot}</span>${dueChip}</span>
     </span>
     <span class="tick ${complete?"on":""}">${CHECK}</span>
   </button>`;
@@ -414,11 +555,13 @@ function renderSubject(){
   else if(state.tfilter==="prelims") topics = topics.filter(t=>t.papers.includes("prelims"));
   else if(state.tfilter==="mains") topics = topics.filter(t=>t.papers.some(p=>p.startsWith("mains")));
   else if(state.tfilter==="left") topics = topics.filter(t=>(store.done[t.id]||[]).length < t.subtopics.length);
+  else if(state.tfilter==="due") topics = topics.filter(isDue).sort((a,b)=>dueIn(a)-dueIn(b));
 
   const counts = {
     high: s.topics.filter(t=>t.weight==="high").length,
     medium: s.topics.filter(t=>t.weight==="medium").length,
-    low: s.topics.filter(t=>t.weight==="low").length
+    low: s.topics.filter(t=>t.weight==="low").length,
+    due: s.topics.filter(isDue).length
   };
   const p = subjProgress(s);
   view.innerHTML = `
@@ -427,7 +570,7 @@ function renderSubject(){
     </div>
     <div class="bar" style="margin-bottom:14px"><i style="width:${(p*100).toFixed(1)}%"></i></div>
     <div class="filters">
-      ${[["all","All "+s.topics.length],["high","High weight "+counts.high],["prelims","Prelims"],["mains","Mains"],["left","Not done"]]
+      ${[["all","All "+s.topics.length],["due","Due "+counts.due],["high","High weight "+counts.high],["prelims","Prelims"],["mains","Mains"],["left","Not done"]]
         .map(([k,l])=>`<button class="fchip ${state.tfilter===k?"on":""}" data-f="${k}">${l}</button>`).join("")}
     </div>
     <div class="legend">
@@ -436,7 +579,9 @@ function renderSubject(){
       <span><i style="background:var(--rule-2)"></i>low ${counts.low}</span>
     </div>
     ${topics.length ? `<div class="list">${topics.map(t=>rowHtml(t,null,null)).join("")}</div>`
-                    : `<div class="empty">No topics in this filter.</div>`}`;
+                    : `<div class="empty">${state.tfilter==="due" ? "Nothing due in " + esc(s.short) + " yet."
+                                          : state.tfilter==="left" ? "Every topic here is ticked off."
+                                          : "No topics in this filter."}</div>`}`;
   view.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{state.tfilter=b.dataset.f;renderSubject();});
   bindRows(view);
 }
@@ -456,6 +601,21 @@ function openTopic(id){
   drawSheet(tp, sj);
   sheet.classList.add("on"); sheetBg.classList.add("on");
 }
+/* The revision footer of the sheet: when you last went through this, when it
+   falls due again, and the one button that says you have just done it. */
+function revBlock(tp){
+  const last = lastRevised(tp.id), n = revisions(tp.id).length, d = dueIn(tp);
+  const line = last === null
+    ? (isComplete(tp) ? "Ticked off, but never dated — treat it as due."
+                      : "Not revised yet.")
+    : `Revised ${n === 1 ? "once" : n + " times"}, last ${agoWords(last)}.` +
+      (d <= 0 ? " <b>Due now.</b>" : ` Due again in ${d} day${d === 1 ? "" : "s"}.`);
+  return `<div class="revline">
+    <span>${line}</span>
+    <button class="revbtn" id="revNow">${last === null ? "Mark revised" : "Revised again"}</button>
+  </div>`;
+}
+
 function drawSheet(tp, sj){
   const done = doneSet(tp.id);
   const pct = tp.subtopics.length ? done.size/tp.subtopics.length : 0;
@@ -479,11 +639,20 @@ function drawSheet(tp, sj){
     <ul class="subtopics">
       ${tp.subtopics.map((x,i)=>`<li><button class="${done.has(i)?"done":""}" data-i="${i}">
         <span class="tick ${done.has(i)?"on":""}">${CHECK}</span><span class="lbl">${esc(x)}</span></button></li>`).join("")}
-    </ul>`;
+    </ul>
+    ${revBlock(tp)}`;
   sheetIn.querySelector("#sheetX").onclick = closeSheet;
+  const rev = sheetIn.querySelector("#revNow");
+  if(rev) rev.onclick = ()=>{
+    const y = sheet.scrollTop;
+    markRevised(tp.id);
+    drawSheet(tp, sj);
+    sheet.scrollTop = y;
+    refreshBehind();
+  };
   sheetIn.querySelectorAll("[data-i]").forEach(b=>b.onclick=()=>{
     const y = sheet.scrollTop;                 // redrawing the sheet used to jump you to the top
-    toggleSub(tp.id, +b.dataset.i);
+    toggleSub(tp.id, +b.dataset.i, tp.subtopics.length);
     drawSheet(tp, sj);
     sheet.scrollTop = y;
     refreshBehind();
@@ -505,6 +674,119 @@ function refreshBehind(){
 function closeSheet(){ sheet.classList.remove("on"); sheetBg.classList.remove("on"); openId=null; }
 sheetBg.onclick = closeSheet;
 document.addEventListener("keydown", e=>{ if(e.key==="Escape" && openId) closeSheet(); });
+
+/* Everything falling due, across all eight subjects, oldest debt first. Rides
+   on the same #results slot the search uses. */
+function showDue(){
+  const res = document.getElementById("results"), home = document.getElementById("home");
+  if(!res) return;
+  const rows = [];
+  for(const s of SUBJECTS) for(const tp of s.topics) if(isDue(tp)) rows.push({s, tp});
+  rows.sort((a, b) => dueIn(a.tp) - dueIn(b.tp));
+  home.classList.add("hide");
+  res.innerHTML = `<div class="head"><h2>Due for revision</h2><span class="n">${rows.length}</span></div>
+    ${rows.length ? `<div class="list">${rows.map(r => rowHtml(r.tp, r.s, null)).join("")}</div>` : `<div class="empty">Nothing due. Come back tomorrow.</div>`}
+    <p class="note">Longest-neglected first. Go back over one, then tap <b>Revised again</b> in the sheet — it returns at a wider interval each time: ${REVISE_DAYS.join(", ")} days, then every ${REVISE_DAYS[REVISE_DAYS.length - 1]}.</p>`;
+  bindRows(res);
+}
+
+/* ---------------- backup ----------------
+   All of this lives in one browser's localStorage and nowhere else. Clear site
+   data, reinstall the APK or change phone and it is gone, so there has to be a
+   way to get it out. Deliberately a copyable blob rather than a fifth bridge
+   function: the JS↔native contract is four functions wide and widening it
+   silently is how the two halves drift apart. */
+function mergeStore(incoming){
+  const uniqSort = (a, b) => [...new Set([...(a || []), ...(b || [])])].sort((x, y) => x - y);
+  let touched = 0;
+
+  for(const tid in incoming.done || {}){
+    const before = (store.done[tid] || []).length;
+    store.done[tid] = uniqSort(store.done[tid], incoming.done[tid]);
+    if(store.done[tid].length !== before) touched++;
+  }
+  for(const tid in incoming.revised || {}){
+    store.revised[tid] = uniqSort(store.revised[tid], incoming.revised[tid]).slice(-12);
+  }
+  // Maps of answers: what is already here wins, the backup only fills gaps.
+  for(const k of ["attempts", "picks", "writing"]){
+    for(const id in incoming[k] || {}){
+      if(store[k][id] === undefined){ store[k][id] = incoming[k][id]; touched++; }
+    }
+  }
+  save();
+  return touched;
+}
+
+function openData(){
+  openId = "__data__";
+  const json = JSON.stringify(store);
+  const n = o => Object.keys(o || {}).length;
+  sheetIn.innerHTML = `
+    <div class="sheethead">
+      <div><div class="eyebrow">This device only</div><h3>Back up or restore</h3></div>
+      <button class="xbtn" id="sheetX" aria-label="Close">${XI}</button>
+    </div>
+    <p class="note" style="margin-top:2px">Nothing here leaves the device by itself. Clear site data, reinstall the app or move phone and the text below is the only copy of your progress.</p>
+    <div class="sgrid" style="margin:14px 0 16px">
+      <span>topics started <b class="mono">${n(store.done)}</b></span>
+      <span>subtopics ticked <b class="mono">${Object.values(store.done).reduce((a, v) => a + v.length, 0)}</b></span>
+      <span>topics dated <b class="mono">${n(store.revised)}</b></span>
+      <span>answer sheets <b class="mono">${n(store.attempts)}</b></span>
+      <span>practice answers <b class="mono">${n(store.picks)}</b></span>
+      <span>answers logged <b class="mono">${n(store.writing)}</b></span>
+    </div>
+    <div class="eyebrow">Backup</div>
+    <textarea class="dump" id="dumpOut" rows="4" readonly>${esc(json)}</textarea>
+    <div class="act">
+      <button class="prim" id="copyOut">Copy</button>
+      ${NATIVE ? "" : `<button id="fileOut">Save as file</button>`}
+    </div>
+    <div class="eyebrow" style="margin-top:20px">Restore</div>
+    <p class="note" style="margin:4px 0 8px">Paste a backup. It is merged, not swapped in — ticks and dates are unioned, and anything already on this device wins.</p>
+    <textarea class="dump" id="dumpIn" rows="3" placeholder='{"done":{ … }}'></textarea>
+    <div class="act"><button id="doImport">Merge this in</button></div>
+    <p class="note" id="ioMsg"></p>`;
+
+  sheetIn.querySelector("#sheetX").onclick = closeSheet;
+  const msg = t => { sheetIn.querySelector("#ioMsg").innerHTML = t; };
+
+  sheetIn.querySelector("#copyOut").onclick = ()=>{
+    const ta = sheetIn.querySelector("#dumpOut");
+    ta.select();
+    const done = ()=>msg("Copied. Paste it somewhere that survives this device.");
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(ta.value).then(done, ()=>msg("Could not copy — select the text and copy it by hand."));
+    } else {
+      try{ document.execCommand("copy"); done(); }
+      catch(e){ msg("Could not copy — select the text and copy it by hand."); }
+    }
+  };
+
+  const fileBtn = sheetIn.querySelector("#fileOut");
+  if(fileBtn) fileBtn.onclick = ()=>{
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([json], {type:"application/json"}));
+    a.download = "taracmd-backup-" + new Date().toISOString().slice(0, 10) + ".json";
+    a.click();
+    setTimeout(()=>URL.revokeObjectURL(a.href), 5000);
+  };
+
+  sheetIn.querySelector("#doImport").onclick = ()=>{
+    const raw = sheetIn.querySelector("#dumpIn").value.trim();
+    if(!raw) return msg("Nothing pasted.");
+    let obj;
+    try{ obj = JSON.parse(raw); }
+    catch(e){ return msg("That is not valid JSON — paste the whole backup, braces and all."); }
+    if(!obj || typeof obj !== "object" || (!obj.done && !obj.revised))
+      return msg("That JSON does not look like a TaraCmd backup.");
+    const touched = mergeStore(obj);
+    msg(`Merged. ${touched} entr${touched === 1 ? "y" : "ies"} added. <b>${Object.values(store.done).reduce((a, v) => a + v.length, 0)}</b> subtopics ticked in total.`);
+    refreshBehind();
+  };
+
+  sheet.classList.add("on"); sheetBg.classList.add("on");
+}
 
 /* Hardware back on Android, and swipe-down on the grip. */
 window.taracmdBack = function(){
@@ -726,17 +1008,29 @@ function renderPractice(root){
   }
   const subjOf = tid => SUBJECTS.find(s=>s.topics.some(t=>t.id===tid));
   const subs = [...new Set(qs.map(q=>{const s=subjOf(q.topic); return s && s.id;}).filter(Boolean))];
-  const shown = state.qsubj && state.qsubj!=="all" ? qs.filter(q=>{const s=subjOf(q.topic); return s && s.id===state.qsubj;}) : qs;
-  state.picks = state.picks || {};
+
+  /* Answers persist. They used to live in a plain state object, so a reload
+     threw away every answer — including which ones you got wrong, which is
+     the only part worth keeping. */
+  const wrongOnes = qs.filter(q => store.picks[q.id] !== undefined && store.picks[q.id] !== q.answer);
+  const answered = qs.filter(q => store.picks[q.id] !== undefined).length;
+
+  let shown = qs;
+  if(state.qsubj === "wrong") shown = wrongOnes;
+  else if(state.qsubj && state.qsubj !== "all")
+    shown = qs.filter(q=>{const s=subjOf(q.topic); return s && s.id===state.qsubj;});
 
   root.innerHTML = `
     <div class="filters">
       <button class="fchip ${!state.qsubj||state.qsubj==="all"?"on":""}" data-qs="all">All ${qs.length}</button>
+      ${wrongOnes.length ? `<button class="fchip ${state.qsubj==="wrong"?"on":""}" data-qs="wrong">Got wrong ${wrongOnes.length}</button>` : ""}
       ${subs.map(id=>{const s=SUBJECTS.find(x=>x.id===id);
         return `<button class="fchip ${state.qsubj===id?"on":""}" data-qs="${id}">${esc(s.short)}</button>`;}).join("")}
     </div>
+    ${answered ? `<div class="progline"><span>${answered}/${qs.length} attempted</span><span class="bar"><i style="width:${(answered/qs.length*100).toFixed(1)}%"></i></span><span>${Math.round((answered-wrongOnes.length)/answered*100)}% right</span></div>` : ""}
+    ${!shown.length ? `<div class="empty">Nothing here yet.</div>` : ""}
     ${shown.map(q=>{
-      const pick = state.picks[q.id], done = pick!==undefined;
+      const pick = store.picks[q.id], done = pick!==undefined;
       const tp = (subjOf(q.topic)||{topics:[]}).topics.find(t=>t.id===q.topic);
       return `<div class="qcard">
         <div class="eyebrow">${esc(tp ? tp.name : q.topic)}</div>
@@ -756,14 +1050,20 @@ function renderPractice(root){
     }).join("")}
     <p class="note">These are written for this app, not lifted from past papers — the real
       questions are one tap away on the Prelims and Mains tabs, on the Commission's own site.
-      Add your own as you revise; a question you had to write is worth more than one you copied.</p>`;
+      Add your own as you revise; a question you had to write is worth more than one you copied.
+      ${answered ? `<button class="linky" id="qreset">Forget my answers</button>` : ""}</p>`;
 
   root.querySelectorAll("[data-qs]").forEach(b=>b.onclick=()=>{state.qsubj=b.dataset.qs;renderQuiz();});
   root.querySelectorAll("[data-qid]").forEach(b=>b.onclick=()=>{
     const y = window.scrollY;
-    if(state.picks[b.dataset.qid]===undefined) state.picks[b.dataset.qid] = +b.dataset.oi;
+    if(store.picks[b.dataset.qid]===undefined){
+      store.picks[b.dataset.qid] = +b.dataset.oi;
+      save();
+    }
     renderQuiz(); window.scrollTo(0,y);
   });
+  const qr = root.querySelector("#qreset");
+  if(qr) qr.onclick = ()=>{ store.picks = {}; save(); state.qsubj = "all"; renderQuiz(); };
   root.querySelectorAll("[data-goto]").forEach(b=>b.onclick=()=>openTopic(b.dataset.goto));
 }
 

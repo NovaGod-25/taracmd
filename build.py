@@ -86,7 +86,7 @@ def check_subjects(subjects) -> dict[str, str]:
                     fail(f"topic {t.get('id', '?')!r} has no {field!r}")
             tid = t.get("id")
             if tid in topics:
-                fail(f"duplicate topic id {tid!r} — in {topics[tid]!r} and {sid!r}")
+                fail(f"duplicate topic id {tid!r} - in {topics[tid]!r} and {sid!r}")
             topics[tid] = sid
 
             if t.get("weight") not in WEIGHTS:
@@ -153,7 +153,7 @@ def check_keys(keys) -> None:
 
             for q in paper.get("dropped") or []:
                 if not 1 <= q <= expected:
-                    fail(f"{y} {code}: dropped question {q} is outside 1–{expected}")
+                    fail(f"{y} {code}: dropped question {q} is outside 1-{expected}")
 
 
 # ------------------------------------------------------------------- derived
@@ -169,7 +169,7 @@ def sat_years(pyq, today: date) -> dict:
             (kept if date(y["year"], month, day) <= today else held).append(y)
         if held:
             years_held = ", ".join(str(y["year"]) for y in held)
-            print(f"  {kind}: holding back {years_held} — not sat yet")
+            print(f"  {kind}: holding back {years_held} - not sat yet")
         out[kind] = kept
     return out
 
@@ -202,7 +202,7 @@ def fragment(html: str) -> str:
 
 def main() -> int:
     today = date.today()
-    print(f"TaraCmd build — {today.isoformat()}")
+    print(f"TaraCmd build - {today.isoformat()}")
 
     subjects = load("subjects.json")
     pyq = load("pyq-papers.json")

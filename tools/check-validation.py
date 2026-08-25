@@ -15,6 +15,7 @@ only ever misfire on legitimate page text.
 """
 
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -23,6 +24,12 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 PY = sys.executable
+
+# A Windows console is cp1252, and build.py's messages are echoed back here
+# verbatim. Without this, one non-ASCII character in a message crashes the
+# whole run with UnicodeEncodeError instead of reporting a result.
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 
 def fresh(tmp: Path) -> Path:
@@ -35,8 +42,13 @@ def fresh(tmp: Path) -> Path:
 
 
 def run(root: Path):
+    # Force the child to speak UTF-8 down the pipe. Left to itself on Windows
+    # it writes the locale encoding, and content/*.json legitimately contains
+    # en-dashes ("Rajouri-Poonch-Kishtwar" is spelled with them), so an error
+    # naming such a topic would come back as mojibake.
+    env = {**os.environ, "PYTHONIOENCODING": "utf-8"}
     p = subprocess.run([PY, "build.py"], cwd=root, capture_output=True,
-                       text=True, encoding="utf-8", errors="replace")
+                       text=True, encoding="utf-8", errors="replace", env=env)
     return p.returncode, (p.stdout + p.stderr)
 
 

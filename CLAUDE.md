@@ -91,7 +91,17 @@ compares against the surviving page — it matches exactly, all 207,917 characte
 Recovered verbatim: all five content files, and every line of markup, CSS and JS.
 Rewritten from this file's description rather than recovered: `build.py`, the whole
 Android wrapper, `web/sw.js`, the manifest, the CI workflows and `tools/answer-keys.py`.
-Those are the files to read sceptically.
+
+Of those, `build.py` has since been run: it reproduces all three committed targets
+byte-for-byte, and `tools/check-validation.py` proves each of its checks actually fires.
+The page itself was exercised in a browser on a real http origin — ticks persist under
+`taracmd-v1`, `taracmdBack()` walks sheet → subject → tab, and ticking from search
+results keeps the search.
+
+**Still never executed, and the files to read sceptically: the whole Android wrapper**
+(no SDK to hand), `web/sw.js` (registration is untested — the embedded browser had
+service workers disabled, though the script parses and serves correctly) and
+`tools/answer-keys.py` (its PDF parsing has never met a real key PDF).
 
 Fixed in the session before the loss, all verified in a headless DOM and all present in
 the recovered page:
@@ -158,6 +168,7 @@ Also gone with the tree, and not rebuilt: the four `taxonomy-*.json` files. They
 
 ```bash
 python3 build.py                            # rebuild all three targets
+python3 tools/check-validation.py           # prove build.py's validation still fires
 python3 tools/answer-keys.py discover       # find answer-key PDFs still missing
 python3 tools/answer-keys.py extract --dry-run   # read Set A/B/C/D letters, print only
 perl tools/make-icons.pl                    # regenerate the API 24–25 launcher rasters

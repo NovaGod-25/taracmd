@@ -38,6 +38,422 @@
       ],
       "answer": 1,
       "why": "Nagoya is the access-and-benefit-sharing protocol under the CBD. The first option describes the Nagoya–Kuala Lumpur Supplementary Protocol, which is the trap; the third is Stockholm and the fourth is CITES."
+    },
+    {
+      "id": "pol-fundamental-rights-1",
+      "topic": "polity-fundamental-rights",
+      "q": "Which one of the following Fundamental Rights is available only to citizens of India?",
+      "options": [
+        "Equality before the law under Article 14",
+        "Freedom of speech and expression under Article 19",
+        "Protection of life and personal liberty under Article 21",
+        "Freedom of conscience and religion under Article 25"
+      ],
+      "answer": 1,
+      "why": "Articles 14, 21 and 25 speak of 'any person' or 'all persons' and so extend to foreigners. Articles 15, 16, 19, 29 and 30 are the citizen-only set — Article 19 is the one usually tested."
+    },
+    {
+      "id": "pol-anti-defection-1",
+      "topic": "polity-anti-defection",
+      "q": "Under the Tenth Schedule, who decides whether a member has incurred disqualification on the ground of defection?",
+      "options": [
+        "The President or the Governor, on the Election Commission's advice",
+        "The Speaker or Chairman of the House concerned",
+        "The Election Commission of India",
+        "The High Court of the State concerned"
+      ],
+      "answer": 1,
+      "why": "The presiding officer decides. Kihoto Hollohan (1992) upheld that power but held the decision is a tribunal's and therefore open to judicial review — which is the distinction the question is really after."
+    },
+    {
+      "id": "pol-emergency-1",
+      "topic": "polity-emergency-provisions",
+      "q": "President's Rule in a State is imposed under which Article of the Constitution?",
+      "options": [
+        "Article 352",
+        "Article 356",
+        "Article 360",
+        "Article 365"
+      ],
+      "answer": 1,
+      "why": "356 is the proclamation. 352 is National Emergency and 360 is Financial Emergency. 365 is the trap: it makes failure to comply with a Union direction a ground on which 356 may be invoked, but it is not itself the provision for imposition."
+    },
+    {
+      "id": "pol-constitutional-bodies-1",
+      "topic": "polity-constitutional-bodies",
+      "q": "Which one of the following is NOT a constitutional body?",
+      "options": [
+        "Union Public Service Commission",
+        "Finance Commission",
+        "NITI Aayog",
+        "Comptroller and Auditor General of India"
+      ],
+      "answer": 2,
+      "why": "NITI Aayog was set up by an executive resolution in January 2015 — neither constitutional nor statutory. The others sit in Articles 315, 280 and 148. The Planning Commission it replaced was not a constitutional body either."
+    },
+    {
+      "id": "geo-plate-tectonics-1",
+      "topic": "geography-earth-interior-and-plate-tectonics",
+      "q": "Which one of the following is an example of a divergent plate boundary?",
+      "options": [
+        "The Mid-Atlantic Ridge",
+        "The Himalayan mountain system",
+        "The San Andreas Fault",
+        "The Mariana Trench"
+      ],
+      "answer": 0,
+      "why": "Sea-floor spreading along the Mid-Atlantic Ridge is the textbook divergent margin. The Himalayas are continental collision, the Mariana Trench is oceanic subduction, and San Andreas is transform — plates sliding past each other, neither made nor destroyed."
+    },
+    {
+      "id": "geo-drainage-1",
+      "topic": "geography-indian-drainage-system",
+      "q": "Which of the following peninsular rivers flows westward through a rift valley?",
+      "options": [
+        "Godavari",
+        "Narmada",
+        "Krishna",
+        "Mahanadi"
+      ],
+      "answer": 1,
+      "why": "The Narmada and the Tapi occupy rift valleys and drain west into the Arabian Sea. Because a rift valley confines the load, both form estuaries rather than deltas — the other three flow east and do build deltas."
+    },
+    {
+      "id": "geo-pressure-winds-1",
+      "topic": "geography-pressure-belts-and-winds",
+      "q": "The equatorial belt of calms known as the doldrums corresponds to which pressure feature?",
+      "options": [
+        "The Inter-Tropical Convergence Zone",
+        "The subtropical high pressure belt",
+        "The sub-polar low pressure belt",
+        "The polar high pressure belt"
+      ],
+      "answer": 0,
+      "why": "Doldrums are the ITCZ, where the trade winds converge and air rises. The horse latitudes are the near-identical trap: also a calm belt, but at roughly 30 degrees over the subtropical highs, where air descends instead."
+    },
+    {
+      "id": "geo-oceanography-1",
+      "topic": "geography-oceanography",
+      "q": "Which cold ocean current flows along the western coast of South America?",
+      "options": [
+        "Benguela Current",
+        "Canary Current",
+        "Humboldt Current",
+        "Kuroshio Current"
+      ],
+      "answer": 2,
+      "why": "Humboldt, or Peru, current — and the upwelling along it supports one of the world's great fisheries until El Nino suppresses it. Benguela and Canary are also cold but hug Africa; Kuroshio is warm, off Japan."
+    },
+    {
+      "id": "env-ramsar-1",
+      "topic": "environment-ramsar-wetlands",
+      "q": "The Montreux Record is maintained under which of the following?",
+      "options": [
+        "The Ramsar Convention on Wetlands",
+        "The World Heritage Convention",
+        "The IUCN Red List assessment process",
+        "Appendix I of CITES"
+      ],
+      "answer": 0,
+      "why": "It is the Ramsar register of listed wetlands where ecological character has changed, is changing or is likely to change. India's entries have included Keoladeo and Loktak. 'In Danger' lists belong to World Heritage — that is the confusion being tested."
+    },
+    {
+      "id": "env-unfccc-1",
+      "topic": "environment-unfccc-paris-cop",
+      "q": "The principle of common but differentiated responsibilities was formally enshrined at which of the following?",
+      "options": [
+        "The Stockholm Conference, 1972",
+        "The Rio Earth Summit, 1992",
+        "The Kyoto Protocol, 1997",
+        "The Paris Agreement, 2015"
+      ],
+      "answer": 1,
+      "why": "Rio 1992, in the Rio Declaration and the UNFCCC itself. Kyoto operationalised it through binding Annex I targets, and Paris restated it as CBDR-RC 'in the light of different national circumstances' — but the principle was already written by then."
+    },
+    {
+      "id": "env-ozone-1",
+      "topic": "environment-ozone-montreal-protocol",
+      "q": "The Kigali Amendment to the Montreal Protocol provides for the phase-down of which substances?",
+      "options": [
+        "Chlorofluorocarbons",
+        "Hydrochlorofluorocarbons",
+        "Hydrofluorocarbons",
+        "Halons"
+      ],
+      "answer": 2,
+      "why": "HFCs — and the point worth remembering is that they do not deplete ozone at all. They were adopted as substitutes for CFCs and HCFCs, then turned out to be powerful greenhouse gases, so an ozone treaty was extended to a climate purpose."
+    },
+    {
+      "id": "env-protected-areas-1",
+      "topic": "environment-protected-areas-india",
+      "q": "With reference to the Wild Life (Protection) Act, 1972, which statement is correct?",
+      "options": [
+        "Grazing and human activity may be regulated but permitted in a Wildlife Sanctuary",
+        "A National Park may be created only by an Act of Parliament",
+        "Boundaries of a National Park may be altered by the Chief Wildlife Warden",
+        "A Wildlife Sanctuary cannot be upgraded to a National Park"
+      ],
+      "answer": 0,
+      "why": "Sanctuaries admit regulated rights and grazing at the Chief Wildlife Warden's discretion; National Parks are the stricter category and extinguish them. Both are notified by the State Government, and boundary alteration needs a resolution of the State Legislature."
+    },
+    {
+      "id": "his-mauryan-1",
+      "topic": "history-mauryan-empire",
+      "q": "The Maski and Gujarra minor rock edicts are significant because they",
+      "options": [
+        "record the Kalinga war in detail",
+        "mention Ashoka by his personal name",
+        "are written in the Kharoshthi script",
+        "were issued by Bindusara rather than Ashoka"
+      ],
+      "answer": 1,
+      "why": "Most edicts call him only Devanampiya Piyadasi, 'the beloved of the gods'. Maski, Gujarra, Nettur and Udegolam give the name Ashoka, which is how the inscriptions were tied to the king of the literary tradition."
+    },
+    {
+      "id": "his-revolt-1857-1",
+      "topic": "history-revolt-1857",
+      "q": "During the Revolt of 1857 the rebels at Delhi proclaimed as their sovereign",
+      "options": [
+        "Nana Sahib",
+        "Bahadur Shah II",
+        "Rani Lakshmibai",
+        "Kunwar Singh"
+      ],
+      "answer": 1,
+      "why": "Bahadur Shah Zafar, the last Mughal, was proclaimed Shahenshah-e-Hindustan — a symbol rather than a commander. Nana Sahib led at Kanpur, Lakshmibai at Jhansi and Kunwar Singh in Bihar, each locally."
+    },
+    {
+      "id": "his-gandhian-1",
+      "topic": "history-gandhian-mass-movements",
+      "q": "Gandhi's intervention at Champaran in 1917 was directed against",
+      "options": [
+        "the salt tax",
+        "the tinkathia system imposed on indigo cultivators",
+        "the enhancement of land revenue during a crop failure",
+        "wage cuts in the textile mills"
+      ],
+      "answer": 1,
+      "why": "Tinkathia obliged tenants to plant indigo on three-twentieths of their holding for the European planters. The land-revenue option describes Kheda and the mill wages describe Ahmedabad — both also 1917-18, which is what makes them plausible."
+    },
+    {
+      "id": "his-architecture-1",
+      "topic": "history-indian-architecture",
+      "q": "A temple whose sanctum is crowned by a stepped pyramidal tower of diminishing storeys belongs to which style?",
+      "options": [
+        "Nagara",
+        "Dravida",
+        "Vesara",
+        "Kalinga"
+      ],
+      "answer": 1,
+      "why": "That tower is the vimana of the Dravida style, its storeys called talas, and the complex is walled with gopurams over the gateways. Nagara raises a curvilinear shikhara instead; Vesara blends the two in the Deccan."
+    },
+    {
+      "id": "eco-monetary-policy-1",
+      "topic": "economics-monetary-policy",
+      "q": "In the event of a tie in the voting of the Monetary Policy Committee, the casting vote lies with",
+      "options": [
+        "the Union Finance Minister",
+        "the Governor of the Reserve Bank of India",
+        "the Deputy Governor in charge of monetary policy",
+        "the senior-most external member"
+      ],
+      "answer": 1,
+      "why": "Six members — three from the RBI and three appointed by the Centre — and the Governor holds the second, casting vote. The Finance Minister has no vote at all; the government's representation is through the three external appointees."
+    },
+    {
+      "id": "eco-gst-1",
+      "topic": "economics-taxation-and-gst",
+      "q": "A decision of the GST Council requires the support of what proportion of the weighted votes of members present and voting?",
+      "options": [
+        "A simple majority",
+        "Two-thirds",
+        "Three-fourths",
+        "Unanimity"
+      ],
+      "answer": 2,
+      "why": "Three-fourths, with the Centre holding one-third of the weight and all States together two-thirds. So neither the Centre alone nor the States alone can carry a decision — the design is a mutual veto, not a majority."
+    },
+    {
+      "id": "eco-inflation-1",
+      "topic": "economics-inflation",
+      "q": "Under India's flexible inflation targeting framework, the RBI's target is defined in terms of",
+      "options": [
+        "the Wholesale Price Index",
+        "the Consumer Price Index (Combined)",
+        "the GDP deflator",
+        "the Consumer Price Index for Industrial Workers"
+      ],
+      "answer": 1,
+      "why": "CPI (Combined), at 4 per cent with a band of plus or minus 2. WPI carries no services at all and CPI-IW is used for dearness allowance — both are the standard distractors here."
+    },
+    {
+      "id": "eco-bop-1",
+      "topic": "economics-external-sector-bop",
+      "q": "Which of the following is recorded in the current account of India's balance of payments?",
+      "options": [
+        "Foreign direct investment inflows",
+        "Foreign portfolio investment",
+        "Private remittances from Indians abroad",
+        "External commercial borrowings"
+      ],
+      "answer": 2,
+      "why": "Remittances are secondary income and sit in the current account, alongside goods, services and primary income. FDI, FPI and ECBs are all financing flows and belong to the capital and financial account."
+    },
+    {
+      "id": "sci-isro-1",
+      "topic": "scitech-isro-missions",
+      "q": "The Vikram lander of Chandrayaan-3 touched down in which region of the Moon?",
+      "options": [
+        "Close to the lunar equator",
+        "A high southern latitude near the south pole",
+        "The far side, never visible from Earth",
+        "The north polar region"
+      ],
+      "answer": 1,
+      "why": "About 69 degrees south, between Manzinus C and Simpelius N, the site named Statio Shiv Shakti — the first landing at such a latitude. The far-side option describes China's Chang'e-4, which is the intended confusion."
+    },
+    {
+      "id": "sci-nuclear-1",
+      "topic": "scitech-nuclear-energy-programme",
+      "q": "The third stage of India's nuclear power programme is based on",
+      "options": [
+        "natural uranium in pressurised heavy water reactors",
+        "plutonium-fuelled fast breeder reactors",
+        "thorium and uranium-233 in breeder reactors",
+        "enriched uranium in light water reactors"
+      ],
+      "answer": 2,
+      "why": "Thorium-232 bred to uranium-233 — the point of the whole three-stage design, since India has large thorium reserves and little uranium. Stage one is the PHWR and stage two the fast breeder that makes the plutonium to get there."
+    },
+    {
+      "id": "sci-dpi-1",
+      "topic": "scitech-digital-public-infrastructure",
+      "q": "The Unified Payments Interface is owned and operated by",
+      "options": [
+        "the Reserve Bank of India directly",
+        "the National Payments Corporation of India",
+        "the Securities and Exchange Board of India",
+        "the Institute for Development and Research in Banking Technology"
+      ],
+      "answer": 1,
+      "why": "NPCI, an umbrella organisation set up by the RBI and the Indian Banks' Association but not the RBI itself. The RBI regulates it and licenses it as an authorised payment system operator, which is why the first option reads plausibly."
+    },
+    {
+      "id": "sci-genomics-1",
+      "topic": "scitech-genomics-gene-editing",
+      "q": "In the CRISPR-Cas9 system, the function of the Cas9 protein is to",
+      "options": [
+        "cut the DNA double helix at the site specified by a guide RNA",
+        "transcribe the target gene into messenger RNA",
+        "repair the double-strand break once it has been made",
+        "add methyl groups to silence the promoter"
+      ],
+      "answer": 0,
+      "why": "Cas9 is the nuclease — it makes the cut, and the guide RNA supplies the address. Repair is done afterwards by the cell's own machinery, and it is that repair, not Cas9, which determines whether a gene is knocked out or edited."
+    },
+    {
+      "id": "sec-pmla-1",
+      "topic": "security-terror-financing-money-laundering",
+      "q": "Which agency is empowered to investigate offences of money laundering under the PMLA, 2002?",
+      "options": [
+        "The Central Bureau of Investigation",
+        "The Directorate of Enforcement",
+        "The National Investigation Agency",
+        "The Financial Intelligence Unit - India"
+      ],
+      "answer": 1,
+      "why": "The Enforcement Directorate investigates and attaches property. FIU-IND is the trap: it receives and analyses suspicious transaction reports and passes them on, but it does not itself investigate or prosecute."
+    },
+    {
+      "id": "sec-uapa-1",
+      "topic": "security-legal-framework",
+      "q": "The power to designate an individual — not merely an organisation — as a terrorist was introduced into the UAPA by the amendment of",
+      "options": [
+        "2004",
+        "2008",
+        "2013",
+        "2019"
+      ],
+      "answer": 3,
+      "why": "The 2019 amendment added the Fourth Schedule for individuals. 2004 brought terrorist organisations in after POTA was repealed and 2008 tightened the law after the Mumbai attacks — both real amendments, which is what makes the dating hard."
+    },
+    {
+      "id": "sec-certin-1",
+      "topic": "security-cyber-security-architecture",
+      "q": "CERT-In, the national nodal agency for computer security incidents, functions under",
+      "options": [
+        "the Ministry of Home Affairs",
+        "the Ministry of Electronics and Information Technology",
+        "the National Security Council Secretariat",
+        "the National Technical Research Organisation"
+      ],
+      "answer": 1,
+      "why": "MeitY, under Section 70B of the IT Act. The NCIIPC, which protects critical information infrastructure, sits under NTRO instead — keeping the two apart is the usual difficulty."
+    },
+    {
+      "id": "sec-borders-1",
+      "topic": "security-eastern-border-management",
+      "q": "India's longest land boundary is shared with",
+      "options": [
+        "China",
+        "Pakistan",
+        "Bangladesh",
+        "Nepal"
+      ],
+      "answer": 2,
+      "why": "Bangladesh, at roughly 4,097 km across five States — longer than the boundary with China and about twice that with Pakistan. It is also the most riverine and densely settled, which is what makes fencing it so difficult."
+    },
+    {
+      "id": "ir-quad-1",
+      "topic": "ir-quad-indo-pacific",
+      "q": "Which one of the following is NOT a member of the Quadrilateral Security Dialogue?",
+      "options": [
+        "Australia",
+        "Japan",
+        "Republic of Korea",
+        "United States"
+      ],
+      "answer": 2,
+      "why": "The Quad is India, the United States, Japan and Australia. South Korea is a US treaty ally in the region and is periodically discussed as a partner, which is exactly why it reads like a member."
+    },
+    {
+      "id": "ir-ndb-1",
+      "topic": "ir-brics",
+      "q": "The headquarters of the New Development Bank is located at",
+      "options": [
+        "Beijing",
+        "Shanghai",
+        "New Delhi",
+        "Johannesburg"
+      ],
+      "answer": 1,
+      "why": "Shanghai, with the first regional centre in Johannesburg — which is the distractor. The NDB is the BRICS bank; the Asian Infrastructure Investment Bank, a separate institution, is the one headquartered in Beijing."
+    },
+    {
+      "id": "ir-nathula-1",
+      "topic": "ir-india-china",
+      "q": "Nathu La, reopened for border trade in 2006, connects Tibet with which Indian State?",
+      "options": [
+        "Himachal Pradesh",
+        "Sikkim",
+        "Uttarakhand",
+        "Arunachal Pradesh"
+      ],
+      "answer": 1,
+      "why": "Sikkim. Shipki La is in Himachal and Lipulekh in Uttarakhand — both also trade or pilgrimage passes, which is the difficulty. Bum La, in Arunachal, is a meeting point rather than a trade route."
+    },
+    {
+      "id": "ir-g4-1",
+      "topic": "ir-un-reform",
+      "q": "Which one of the following is NOT a member of the G4 group seeking permanent seats on the UN Security Council?",
+      "options": [
+        "Brazil",
+        "Germany",
+        "Italy",
+        "Japan"
+      ],
+      "answer": 2,
+      "why": "G4 is Brazil, Germany, India and Japan, each backing the others' claim. Italy leads Uniting for Consensus — the group formed precisely to oppose new permanent seats — so it is not a near-miss but the opposite camp."
     }
   ]
 }

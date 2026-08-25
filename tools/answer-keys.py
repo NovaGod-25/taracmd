@@ -7,7 +7,7 @@
 
 RUN THIS LOCALLY, NEVER IN CI.
 
-upsc.gov.in rate-limits hard — it stopped answering entirely after roughly 45
+upsc.gov.in rate-limits hard - it stopped answering entirely after roughly 45
 requests in one session, and once it stops it stays stopped for a while. Every
 request here is separated by THROTTLE seconds on purpose. Do not lower it, do
 not parallelise it, and do not put it on a schedule. There is nothing here that
@@ -33,7 +33,7 @@ ROOT = Path(__file__).resolve().parent.parent
 KEYS_FILE = ROOT / "content" / "answer-keys.json"
 CACHE = ROOT / "tools" / ".key-pdfs"      # downloaded once, reread for free
 
-KEY_INDEX = "https://upsc.gov.in/examinations/answer-key"
+KEY_INDEX = "https://www.upsc.gov.in/examinations/answer-key"
 UA = "Mozilla/5.0 (compatible; TaraCmd/1.0; personal study tool)"
 
 THROTTLE = 4.0
@@ -115,10 +115,10 @@ def discover(args) -> int:
     print(f"\nreading {KEY_INDEX}")
     page = fetch(KEY_INDEX)
     if page is None:
-        print("could not read the answer-key index — try again later, unhurried")
+        print("could not read the answer-key index - try again later, unhurried")
         return 1
 
-    hrefs = {h if h.startswith("http") else "https://upsc.gov.in" + h
+    hrefs = {h if h.startswith("http") else "https://www.upsc.gov.in" + h
              for h in LINK.findall(page)}
     print(f"  {len(hrefs)} pdf link(s) on the page")
 
@@ -140,7 +140,7 @@ def discover(args) -> int:
         print("run `python3 build.py` to put the new chips on the Prelims tab")
     else:
         print("\nnothing matched. The Commission archives older keys off this "
-              "page — those years may need finding by hand.")
+              "page - those years may need finding by hand.")
     return 0
 
 
@@ -163,7 +163,7 @@ def pdf_text(raw: bytes, name: str) -> str | None:
 
 # A key PDF is a grid: question number, then one letter per set. The column
 # order is given by a header row naming the sets. Layout has changed between
-# years, so this is a heuristic — always eyeball --dry-run before writing.
+# years, so this is a heuristic - always eyeball --dry-run before writing.
 ROW = re.compile(r"^\s*(\d{1,3})\s+([ABCD])(?:\s+([ABCD]))?(?:\s+([ABCD]))?(?:\s+([ABCD]))?\s*$")
 HEADER = re.compile(r"\bSET\b[^\n]*?\bA\b", re.IGNORECASE)
 

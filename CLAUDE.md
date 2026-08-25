@@ -160,9 +160,18 @@ perl tools/make-icons.pl                    # regenerate the API 24–25 launche
 cd android && ./gradlew assembleDebug       # local APK, needs Android SDK + wrapper
 ```
 
+```bash
+perl tools/serve.pl 8787                    # serve web/ on a real http origin
+```
+
+Needed because `localStorage` is disabled on a `file://` or `data:` page — the same
+opaque-origin problem the Android build dodges with `appassets.androidplatform.net`. Open
+`web/taracmd.html` straight off disk and the revision ticks silently do not persist.
+
 One-off recovery tools, kept for provenance and not part of the build:
 
 ```bash
 perl tools/extract-from-build.pl <taracmd.html>   # tree ← built page
 perl tools/verify-roundtrip.pl <taracmd.html>     # prove the tree rebuilds that page
+perl tools/verify-roundtrip.pl <taracmd.html> --emit   # write the targets without Python
 ```

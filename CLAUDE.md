@@ -147,8 +147,12 @@ Also gone with the tree, and not rebuilt: the four `taxonomy-*.json` files. They
   `pyq-papers.json` with null URLs, waiting for the date.
 - The Android package is `com.taracmd.app`. Not `in.taracmd.*` — `in` is a Kotlin hard
   keyword and cannot be a package segment without backticks.
-- `python3` must actually be on PATH. On this Windows box it currently resolves to the
-  Microsoft Store stub, which is not Python and will not run `build.py`.
+- **On Windows the command is `python` or `py`, not `python3`.** The python.org installer
+  never creates a `python3.exe` — only the Microsoft Store build does. So `python3` keeps
+  resolving to the WindowsApps stub, which is not Python and reports "Python was not
+  found" however many times you install the real thing. Either use `py build.py`, or turn
+  the alias off under Settings → Apps → Advanced app settings → App execution aliases.
+  The `python3` in the commands below is written for CI, which runs on Ubuntu.
 
 ## Commands
 

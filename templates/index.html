@@ -101,6 +101,10 @@ a{color:var(--accent-ink);text-decoration:none}
 .sub-card .meta{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ink-3);
   display:flex;justify-content:space-between;align-items:center;letter-spacing:.02em}
 .bar{height:4px;border-radius:99px;background:var(--sunk);overflow:hidden}
+/* Grid stretches every card in a row to the tallest. Without this the bar and
+   the count stay top-aligned, so a subject whose name wraps to two lines
+   ("International Relations") leaves its neighbour's footer floating. */
+.sub-card .bar{margin-top:auto}
 .bar > i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .3s}
 
 /* ---------- section heads ---------- */

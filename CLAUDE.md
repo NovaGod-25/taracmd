@@ -36,7 +36,7 @@ what `build.py` produces, which is the guard that was missing.
 | File | Holds |
 |---|---|
 | `subjects.json` | 8 subjects → 242 topics → 1,723 subtopics; each topic tagged with papers + weight |
-| `pyq-papers.json` | official upsc.gov.in paper links per year |
+| `pyq-papers.json` | official upsc.gov.in paper links per year — Prelims 22/24, Mains 54/60 |
 | `answer-keys.json` | Prelims answer keys: links, marking scheme, dropped questions, set-wise letters |
 | `quiz.json` | 35 practice questions, each tagged to a topic id |
 | `toppers.json` | 102 published answer copies across 10 publishers |
@@ -152,6 +152,15 @@ Added after the recovery, all exercised in a browser on a real http origin:
 
 ## Open work, in order of leverage
 
+0. **`build.py`'s output depends on the date it runs.** `SAT_BY` decides at build
+   time which exam years to inline, so the three generated targets change on their
+   own when the calendar crosses a cutoff — no code involved. Seen live: a build on
+   25 Aug and a build on 2 Sep differ, which makes `content.yml`'s "was a generated
+   target hand-edited?" check fail for nothing. It also bakes the decision into a
+   page meant to be opened offline months later, which is the exact argument the
+   exam clock avoids by computing at runtime. The fix is to move the hold-back out
+   of `build.py` and into the page: inline every year, let the page filter on
+   `Date.now()`. That makes the build deterministic and the page honest.
 1. **Weight bands do not discriminate.** 145 topics `high`, 96 `medium`, exactly 1 `low`.
    The stripes, the legend and the "High weight" filter are the app's central editorial
    claim and at 60% high they carry almost no signal. Needs an editorial pass through
@@ -206,6 +215,7 @@ Added after the recovery, all exercised in a browser on a real http origin:
 ```bash
 python3 build.py                            # rebuild all three targets
 python3 tools/check-validation.py           # prove build.py's validation still fires
+python3 tools/pyq-papers.py discover      # fill in missing question-paper URLs
 python3 tools/answer-keys.py discover       # find answer-key PDFs still missing
 python3 tools/answer-keys.py extract --dry-run   # read Set A/B/C/D letters, print only
 perl tools/make-icons.pl                    # regenerate the API 24–25 launcher rasters

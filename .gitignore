@@ -27,3 +27,6 @@ __pycache__/
 .DS_Store
 Thumbs.db
 *.swp
+
+# Cached upsc.gov.in listing pages (tools/pyq-papers.py). Not ours to commit.
+tools/.archive/

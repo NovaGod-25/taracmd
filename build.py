@@ -189,6 +189,43 @@ def check_optionals(opts) -> None:
         fail("optionals.json lists no subjects")
 
 
+DAILY_FIELDS = re.compile(r"\{(yyyy|mm|dd|d|month)\}")
+
+
+def check_daily(daily) -> None:
+    """The daily quiz is reached by expanding a URL template against the date,
+    so the template has to actually carry the date. A pattern missing {yyyy}
+    would silently point at the same day forever."""
+    srcs = daily.get("sources") or []
+    if not srcs:
+        fail("daily.json lists no sources")
+
+    seen: set[str] = set()
+    for src in srcs:
+        sid = src.get("id", "?")
+        for field in ("id", "name", "url", "index", "questions"):
+            if field not in src:
+                fail(f"daily source {sid!r} has no {field!r}")
+        if sid in seen:
+            fail(f"duplicate daily source id {sid!r}")
+        seen.add(sid)
+
+        url = src.get("url", "")
+        fields = set(DAILY_FIELDS.findall(url))
+        if not {"yyyy", "month"} <= fields and not {"yyyy", "mm"} <= fields:
+            fail(f"daily source {sid!r} url has no date in it: {sorted(fields)}")
+        for stray in re.findall(r"\{([a-z_]+)\}", url):
+            if stray not in ("yyyy", "mm", "dd", "d", "month"):
+                fail(f"daily source {sid!r} url uses unknown placeholder {{{stray}}}")
+
+        for day in src.get("skips") or []:
+            if not isinstance(day, int) or not 0 <= day <= 6:
+                fail(f"daily source {sid!r} skips {day!r}; want 0-6, Sunday first")
+
+        if not isinstance(src.get("questions"), int) or src["questions"] < 1:
+            fail(f"daily source {sid!r} has questions={src.get('questions')!r}")
+
+
 # ------------------------------------------------------------------- derived
 
 def sat_years(pyq, today: date) -> dict:
@@ -243,11 +280,13 @@ def main() -> int:
     keys = load("answer-keys.json")
     quiz = load("quiz.json")
     opts = load("optionals.json")
+    daily = load("daily.json")
 
     topics = check_subjects(subjects)
     check_quiz(quiz, topics)
     check_keys(keys)
     check_optionals(opts)
+    check_daily(daily)
 
     if problems:
         print(f"\n{len(problems)} problem(s) in content:", file=sys.stderr)
@@ -262,7 +301,8 @@ def main() -> int:
     pyq = sat_years(pyq, today)
 
     data = {"__SUBJECTS__": subjects, "__PYQ__": pyq, "__TOPPERS__": toppers,
-            "__KEYS__": keys, "__QUIZ__": quiz, "__OPTIONALS__": opts}
+            "__KEYS__": keys, "__QUIZ__": quiz, "__OPTIONALS__": opts,
+            "__DAILY__": daily}
 
     values = {t: json.dumps(v, ensure_ascii=False, separators=(",", ":"))
               for t, v in data.items()}

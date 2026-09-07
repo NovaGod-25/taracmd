@@ -1,0 +1,14 @@
+{
+  "note": "Daily current-affairs quizzes. The app derives each day's URL from the date and links out — it does not copy the questions in. They are the publisher's editorial product, and the same reasoning that keeps toppers' booklets on their own sites applies here. `url` is expanded at runtime with {yyyy} {mm} {dd} {d} {month}: {dd} is zero-padded, {d} is not, {month} is the lowercase full month name.",
+  "sources": [
+    {
+      "id": "insights",
+      "name": "InsightsOnIndia",
+      "url": "https://www.insightsonindia.com/{yyyy}/{mm}/{dd}/upsc-current-affairs-quiz-{d}-{month}-{yyyy}-daily-prelims-quiz/",
+      "index": "https://www.insightsonindia.com/current-affairs-quiz/",
+      "questions": 5,
+      "skips": [0],
+      "note": "Five questions, published most mornings. Nothing on Sundays, and the day's set can go up late — if the link misses, the index has it."
+    }
+  ]
+}

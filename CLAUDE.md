@@ -15,8 +15,8 @@ templates/       ┘                   web/artifact.html             (fragment)
   index.html                         android/…/assets/index.html   (what the APK ships)
 ```
 
-`templates/index.html` is the app — all the markup, CSS and JS — with eight tokens in it.
-`build.py` fills them: six content blobs plus the two derived counts in the search
+`templates/index.html` is the app — all the markup, CSS and JS — with nine tokens in it.
+`build.py` fills them: seven content blobs plus the two derived counts in the search
 placeholder. There is **no runtime fetch for app content**; everything is inlined at build
 time. Editing JSON then running `python3 build.py` is the whole content workflow.
 
@@ -40,6 +40,7 @@ what `build.py` produces, which is the guard that was missing.
 | `answer-keys.json` | Prelims answer keys: links, marking scheme, dropped questions, set-wise letters |
 | `quiz.json` | 35 practice questions, each tagged to a topic id |
 | `toppers.json` | 102 published answer copies across 10 publishers |
+| `daily.json` | daily current-affairs quiz sources: a URL pattern the page expands against the date |
 | `optionals.json` | the Optional tab: Geography and Law, 22/22 papers each 2016–2026, plus curated copies |
 
 ## Decisions that should not be quietly reversed
@@ -67,6 +68,7 @@ which means a store written by an older build still opens.
 | `revised` | revision history, `topic id -> [epoch ms]` — what the Due filter reads |
 | `picks` | practice answers, `question id -> option index` |
 | `writing` | Mains and Optional answer log, `year-code -> [{q,mins,words,score,of,note,on}]` |
+| `daily` | daily quiz log, `YYYY-MM-DD -> {score,of,src}` — what the streak counts |
 
 There is no export bridge function: backup is a copyable blob in a sheet, plus a file
 download on web only. That is deliberate — see the four-function contract below.

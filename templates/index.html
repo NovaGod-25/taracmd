@@ -242,8 +242,8 @@ a{color:var(--accent-ink);text-decoration:none}
 
 /* ---------- quiz ---------- */
 .modes{display:flex;gap:6px;margin:2px 0 14px}
-.modes button{flex:1;font-size:13px;font-weight:500;padding:8px 6px;border-radius:10px;border:1px solid var(--rule);
-  background:var(--card);color:var(--ink-2)}
+.modes button{flex:1;font-size:12.5px;font-weight:500;padding:8px 4px;border-radius:10px;border:1px solid var(--rule);
+  background:var(--card);color:var(--ink-2);white-space:nowrap}
 .modes button.on{background:var(--accent);border-color:var(--accent);color:#fff}
 :root[data-theme="dark"] .modes button.on,
 :root:not([data-theme="light"]) .modes button.on{color:#0E131B}
@@ -276,8 +276,14 @@ a{color:var(--accent-ink);text-decoration:none}
 .sgrid{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;font-size:12.5px;color:var(--ink-2)}
 .sgrid b{font-family:"IBM Plex Mono",monospace;color:var(--ink)}
 .act{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.act{align-items:center}
 .act button,.act a{font-size:13px;font-weight:500;padding:8px 13px;border-radius:9px;border:1px solid var(--rule);
-  background:var(--card-2);color:var(--ink)}
+  background:var(--card-2);color:var(--ink);display:inline-flex;align-items:center;gap:6px}
+/* Without this an inline SVG in here has no width and no fill:none, so it
+   renders as a huge black block. Latent since the scorer's "Official key"
+   link was written — it just never had a loaded answer key to show it. */
+.act svg{width:13px;height:13px;flex:none;stroke:currentColor;fill:none;stroke-width:1.9;
+  stroke-linecap:round;stroke-linejoin:round;opacity:.7}
 .act .prim{background:var(--accent);border-color:var(--accent);color:#fff}
 :root[data-theme="dark"] .act .prim,
 :root:not([data-theme="light"]) .act .prim{color:#0E131B}
@@ -382,6 +388,7 @@ const TOPPERS = __TOPPERS__;
 const KEYS = __KEYS__;
 const QUIZ = __QUIZ__;
 const OPTIONALS = __OPTIONALS__;
+const DAILY = __DAILY__;
 const ARCHIVE = "https://www.upsc.gov.in/examinations/previous-question-papers/archives";
 const KEYINDEX = "https://www.upsc.gov.in/examinations/answer-key";
 
@@ -396,7 +403,8 @@ const BLANK = {
   attempts: {},   // "year-paper-set" -> {question: letter}   OMR sheets
   revised:  {},   // topic id  -> [epoch ms]                  revision history
   picks:    {},   // question id -> option index              practice answers
-  writing:  {}    // "year-code" -> [{q,mins,words,score,of,note,on}]  Mains log
+  writing:  {},   // "year-code" -> [{q,mins,words,score,of,note,on}]  Mains log
+  daily:    {}    // "YYYY-MM-DD" -> {score,of,src}           daily quiz log
 };
 let store = Object.assign({}, BLANK);
 try{ const r = localStorage.getItem(KEY); if(r) store = Object.assign(store, JSON.parse(r)); }catch(e){}
@@ -1173,16 +1181,135 @@ const LET = ["A","B","C","D"];
 
 function renderQuiz(){
   document.getElementById("brandSub").textContent = "";
-  const mode = state.qmode || "practice";
+  /* Daily leads because it is the only one that expires. */
+  const mode = state.qmode || "daily";
   view.innerHTML = `
     <div class="head" style="margin-top:6px"><h2>Quiz</h2></div>
     <div class="modes">
+      <button data-m="daily" class="${mode==="daily"?"on":""}">Daily</button>
       <button data-m="practice" class="${mode==="practice"?"on":""}">Practice</button>
       <button data-m="score" class="${mode==="score"?"on":""}">Score a paper</button>
     </div>
     <div id="qbody"></div>`;
   view.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{state.qmode=b.dataset.m;renderQuiz();});
-  (mode==="score" ? renderScorer : renderPractice)(document.getElementById("qbody"));
+  ({daily: renderDaily, score: renderScorer, practice: renderPractice}[mode]
+    || renderDaily)(document.getElementById("qbody"));
+}
+
+/* ---------------- mode 0: the daily current-affairs quiz ----------------
+   The questions stay on the publisher's site. This derives each day's URL from
+   the date, opens it, and keeps the score — the app indexes and it does not
+   mirror, and a day's quiz is somebody's editorial product for that day.
+
+   Deriving beats harvesting an index here: the URL falls out of the calendar,
+   so a page built in September still knows March's address. Nothing to fetch,
+   nothing to go stale. */
+const MONTHS = ["january","february","march","april","may","june",
+                "july","august","september","october","november","december"];
+const DAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+const isoDay = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+
+function dailyUrl(src, d){
+  return src.url
+    .replace(/{yyyy}/g, d.getFullYear())
+    .replace(/{mm}/g, String(d.getMonth()+1).padStart(2,"0"))
+    .replace(/{dd}/g, String(d.getDate()).padStart(2,"0"))
+    .replace(/{d}/g, d.getDate())
+    .replace(/{month}/g, MONTHS[d.getMonth()]);
+}
+const publishesOn = (src, d) => !(src.skips || []).includes(d.getDay());
+
+/* Consecutive logged days, walking back from today and stepping over the days
+   the publisher does not publish on. */
+function dailyStreak(src){
+  let n = 0;
+  const d = new Date();
+  for(let i = 0; i < 400; i++){
+    const key = isoDay(d);
+    if(publishesOn(src, d)){
+      if(store.daily[key]) n++;
+      else if(i > 0) break;          // today not yet done is not a broken streak
+    }
+    d.setDate(d.getDate() - 1);
+  }
+  return n;
+}
+
+function renderDaily(root){
+  const src = (DAILY.sources || [])[0];
+  if(!src){ root.innerHTML = `<div class="empty">No daily quiz source configured.</div>`; return; }
+
+  const today = new Date();
+  const logged = Object.keys(store.daily).length;
+  const scored = Object.values(store.daily).filter(a => a.of);
+  const pct = scored.length
+    ? Math.round(scored.reduce((a,x)=>a + x.score/x.of, 0) / scored.length * 100) : null;
+  const streak = dailyStreak(src);
+
+  const rows = [];
+  for(let i = 0; i < 14; i++){
+    const d = new Date(); d.setDate(today.getDate() - i);
+    rows.push({d, key: isoDay(d), open: publishesOn(src, d)});
+  }
+
+  const tKey = isoDay(today), tMine = store.daily[tKey];
+  root.innerHTML = `
+    <div class="score">
+      <span class="lil">${DAYS[today.getDay()]}, ${today.getDate()} ${MONTHS[today.getMonth()].replace(/^./,c=>c.toUpperCase())} ${today.getFullYear()}</span>
+      ${publishesOn(src, today)
+        ? `<span class="big">${tMine && tMine.of ? tMine.score + "/" + tMine.of : "—"}</span>
+           <span class="lil">${tMine ? "logged for today" : "today's " + esc(src.name) + " quiz, " + src.questions + " questions"}</span>`
+        : `<span class="big" style="font-size:19px">No quiz today</span>
+           <span class="lil">${esc(src.name)} does not publish on ${DAYS[today.getDay()]}s</span>`}
+      <div class="sgrid">
+        <span>streak <b class="mono">${streak}</b></span>
+        <span>logged <b class="mono">${logged}</b></span>
+        ${pct !== null ? `<span>average <b class="mono">${pct}%</b></span>` : ""}
+      </div>
+      <div class="act">
+        ${publishesOn(src, today)
+          ? `<a class="prim" href="${esc(dailyUrl(src, today))}" target="_blank" rel="noopener">Open today's quiz ${LINKI}</a>` : ""}
+        <a href="${esc(src.index)}" target="_blank" rel="noopener">All quizzes ${LINKI}</a>
+      </div>
+    </div>
+    ${publishesOn(src, today) ? `<div class="wform" style="margin:0 0 4px">
+      <label>scored<input id="dsc" type="number" min="0" max="100" inputmode="numeric" value="${tMine ? tMine.score : ""}" placeholder="4"></label>
+      <label>of<input id="dof" type="number" min="1" max="100" inputmode="numeric" value="${tMine ? tMine.of : src.questions}"></label>
+      <button class="revbtn" id="dlog">${tMine ? "Update" : "Log today"}</button>
+      ${tMine ? `<button class="revbtn" id="ddel">Clear</button>` : ""}
+    </div>` : ""}
+    <p class="note">The questions live on <a href="${esc(src.index)}" target="_blank" rel="noopener">${esc(src.name)}</a> and stay there — this keeps the address and your score, nothing more. ${esc(src.note || "")}</p>
+
+    <div class="head"><h2>Last two weeks</h2><span class="n">${rows.filter(r=>store.daily[r.key]).length}/${rows.filter(r=>r.open).length}</span></div>
+    <div class="list">
+      ${rows.map(r=>{
+        const mine = store.daily[r.key];
+        const label = `${DAYS[r.d.getDay()].slice(0,3)} ${r.d.getDate()} ${MONTHS[r.d.getMonth()].slice(0,3).replace(/^./,c=>c.toUpperCase())}`;
+        if(!r.open) return `<div class="wrow" style="opacity:.45">
+          <span class="wq mono" style="background:var(--sunk);color:var(--ink-3)">—</span>
+          <span class="wbody"><span class="wmeta">${label}</span><span class="wdate">no quiz</span></span></div>`;
+        return `<div class="wrow">
+          <span class="wq mono" ${mine ? "" : 'style="background:var(--sunk);color:var(--ink-3)"'}>${mine && mine.of ? mine.score + "/" + mine.of : "·"}</span>
+          <span class="wbody">
+            <span class="wmeta">${label}</span>
+            <span class="wdate">${mine ? (mine.of ? Math.round(mine.score/mine.of*100) + "%" : "logged") : "not logged"}</span>
+          </span>
+          <a class="ext" href="${esc(dailyUrl(src, r.d))}" target="_blank" rel="noopener" aria-label="Open ${label}">${LINKI}</a>
+        </div>`;
+      }).join("")}
+    </div>
+    <p class="note">A missing link is usually a day the set went up late or not at all — <a href="${esc(src.index)}" target="_blank" rel="noopener">the index</a> is the fallback. Add another source in <span class="mono">content/daily.json</span>; the date is substituted into whatever URL shape it uses.</p>`;
+
+  const log = root.querySelector("#dlog");
+  if(log) log.onclick = ()=>{
+    const s = root.querySelector("#dsc").value.trim(), o = root.querySelector("#dof").value.trim();
+    if(s === "") return;
+    store.daily[tKey] = {score: +s, of: +o || src.questions, src: src.id};
+    save(); renderQuiz();
+  };
+  const del = root.querySelector("#ddel");
+  if(del) del.onclick = ()=>{ delete store.daily[tKey]; save(); renderQuiz(); };
 }
 
 /* --- mode 1: punch in your answers, score against the official key --- */

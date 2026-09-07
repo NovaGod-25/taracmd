@@ -174,6 +174,28 @@ def _(root):
     edit(root, "optionals.json", m)
 
 
+@case("daily url with no date in it", "no date in it")
+def _(root):
+    # A pattern without the date would point at the same day forever.
+    def m(d):
+        d["sources"][0]["url"] = "https://example.com/todays-quiz/"
+    edit(root, "daily.json", m)
+
+
+@case("daily url with unknown placeholder", "unknown placeholder")
+def _(root):
+    def m(d):
+        d["sources"][0]["url"] = "https://example.com/{yyyy}/{mm}/{weekday}/q/"
+    edit(root, "daily.json", m)
+
+
+@case("daily skips out of range", "want 0-6")
+def _(root):
+    def m(d):
+        d["sources"][0]["skips"] = [7]
+    edit(root, "daily.json", m)
+
+
 @case("malformed JSON", "not valid JSON")
 def _(root):
     (root / "content" / "quiz.json").write_text('{"questions": [', encoding="utf-8")

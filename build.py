@@ -30,13 +30,12 @@ TARGETS = {
     "android": ROOT / "android" / "app" / "src" / "main" / "assets" / "index.html",
 }
 
-# An exam year is only shown once its exam has actually been sat, so the app
-# never offers a year with nothing behind it. Prelims goes on the last Sunday
-# of May (2025: the 26th, 2026: the 25th) and Mains opens on 1 September — and
-# the Commission puts each paper up the same day it is sat, so the sitting date
-# is also the publication date. The Prelims cutoff is the end of the month
-# because the exact Sunday moves.
-SAT_BY = {"prelims": (5, 31), "mains": (9, 1)}
+# Which exam years to show is NOT decided here. Holding a year back at build
+# time made this script's output depend on the day it ran, so the same content
+# produced two different pages either side of a cutoff and content.yml's
+# "was a generated target hand-edited?" check failed on nothing. It also froze
+# a date into a page meant to be opened offline months later. The page filters
+# on its own clock instead — see satOn() in templates/index.html.
 
 # What the app's own PAPER_LBL map knows how to render.
 PAPERS = {"prelims", "mains-gs1", "mains-gs2", "mains-gs3", "mains-gs4", "essay"}
@@ -226,24 +225,6 @@ def check_daily(daily) -> None:
             fail(f"daily source {sid!r} has questions={src.get('questions')!r}")
 
 
-# ------------------------------------------------------------------- derived
-
-def sat_years(pyq, today: date) -> dict:
-    """Drop exam years whose exam has not been sat yet, so the app never shows
-    a year with nothing behind it. Derived from today rather than pinned."""
-    out = {}
-    for kind, years in pyq.items():
-        month, day = SAT_BY.get(kind, (12, 31))
-        kept, held = [], []
-        for y in years:
-            (kept if date(y["year"], month, day) <= today else held).append(y)
-        if held:
-            years_held = ", ".join(str(y["year"]) for y in held)
-            print(f"  {kind}: holding back {years_held} - not sat yet")
-        out[kind] = kept
-    return out
-
-
 # ------------------------------------------------------------------- render
 
 PWA_MARKER = re.compile(r"^<!--/?PWA-->\n", re.MULTILINE)
@@ -271,8 +252,7 @@ def fragment(html: str) -> str:
 
 
 def main() -> int:
-    today = date.today()
-    print(f"TaraCmd build - {today.isoformat()}")
+    print(f"TaraCmd build - {date.today().isoformat()}")
 
     subjects = load("subjects.json")
     pyq = load("pyq-papers.json")
@@ -297,8 +277,6 @@ def main() -> int:
     n_topics = len(topics)
     n_subtopics = sum(len(t["subtopics"]) for s in subjects for t in s["topics"])
     print(f"  {len(subjects)} subjects, {n_topics} topics, {n_subtopics:,} subtopics")
-
-    pyq = sat_years(pyq, today)
 
     data = {"__SUBJECTS__": subjects, "__PYQ__": pyq, "__TOPPERS__": toppers,
             "__KEYS__": keys, "__QUIZ__": quiz, "__OPTIONALS__": opts,

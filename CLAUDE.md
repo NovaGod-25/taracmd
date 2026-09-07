@@ -167,15 +167,6 @@ Added after the recovery, all exercised in a browser on a real http origin:
 
 ## Open work, in order of leverage
 
-0. **`build.py`'s output depends on the date it runs.** `SAT_BY` decides at build
-   time which exam years to inline, so the three generated targets change on their
-   own when the calendar crosses a cutoff — no code involved. Seen live: a build on
-   25 Aug and a build on 2 Sep differ, which makes `content.yml`'s "was a generated
-   target hand-edited?" check fail for nothing. It also bakes the decision into a
-   page meant to be opened offline months later, which is the exact argument the
-   exam clock avoids by computing at runtime. The fix is to move the hold-back out
-   of `build.py` and into the page: inline every year, let the page filter on
-   `Date.now()`. That makes the build deterministic and the page honest.
 1. **Weight bands do not discriminate.** 145 topics `high`, 96 `medium`, exactly 1 `low`.
    The stripes, the legend and the "High weight" filter are the app's central editorial
    claim and at 60% high they carry almost no signal. Needs an editorial pass through
@@ -213,9 +204,10 @@ Added after the recovery, all exercised in a browser on a real http origin:
 - The page asks Google Fonts for IBM Plex, loaded non-blocking so it never delays first
   paint. Offline it falls back to the system font. The Devanagari family was removed —
   the content has zero Devanagari characters.
-- Prelims 2026 papers exist (sat 25 May 2026); Mains 2026 does not until 1 September, and
-  `build.py` holds it back automatically via `SAT_BY`. The entry is already in
-  `pyq-papers.json` with null URLs, waiting for the date.
+- Every exam year is inlined, including ones not sat yet; the **page** hides them, via
+  `satOn()` next to `renderPYQ`. `build.py` deliberately does no date filtering — it did
+  once, through a `SAT_BY` table, and that made its output depend on the day it ran and
+  `content.yml`'s drift check fail on nothing. Do not move this back into the build.
 - The Android package is `com.taracmd.app`. Not `in.taracmd.*` — `in` is a Kotlin hard
   keyword and cannot be a package segment without backticks.
 - **On Windows the command is `python` or `py`, not `python3`.** The python.org installer

@@ -995,8 +995,23 @@ const keyYear = y => (KEYS.years || []).find(k=>k.year===y);
 const keyPaper = (y,code) => { const k=keyYear(y); return k && k.papers.find(p=>p.code===code); };
 const hasLetters = p => !!(p && p.keys && Object.keys(p.keys).length);
 
+/* An exam year is only offered once its exam has actually been sat, so the app
+   never shows a year with nothing behind it. Worked out here and not in
+   build.py, for the reason nextExam() is: dropping the years at build time made
+   build.py's output depend on the day it ran, and content.yml's drift check
+   fail on nothing. The Commission puts each paper up the day it is sat, so the
+   sitting date is also the publication date.
+
+   Prelims deliberately uses the END OF MAY, not nextExam()'s last-Sunday rule.
+   The exact Sunday moves and the exam does not track it: 2025 was sat on the
+   26th when the last Sunday was the 25th, and 2026 on the 25th when it was the
+   31st. Erring late only delays a year by days; erring early offers a paper
+   that does not exist yet. */
+const satOn = (kind, y) => kind === "prelims" ? new Date(y, 4, 31) : new Date(y, 8, 1);
+
 function renderPYQ(kind){
-  const data = PYQ[kind] || [];
+  const now = new Date();
+  const data = (PYQ[kind] || []).filter(y => satOn(kind, y.year) <= now);
   const label = kind==="prelims" ? "Prelims" : "Mains";
   document.getElementById("brandSub").textContent = "official papers";
   const found = data.reduce((a,y)=>a + y.papers.filter(p=>p.url).length, 0);

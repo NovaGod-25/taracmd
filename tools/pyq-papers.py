@@ -69,6 +69,12 @@ ESSAY = re.compile(r"^essay$", re.IGNORECASE)
 
 ROMAN = {"i": 1, "ii": 2, "iii": 3, "iv": 4}
 
+# The optional subjects the Optional tab carries. Each is two papers of 250
+# marks - half the written total - and they are listed in the same tables as
+# General Studies, just with the subject's own name in the label.
+OPTIONALS = {"geography": "Geography", "law": "Law"}
+OPT_PAPER = re.compile(r"^{}\s*paper\s*[-–]?\s*(II|I|[12])$", re.IGNORECASE)
+
 
 def strip_tags(s: str) -> str:
     return " ".join(H.unescape(re.sub(r"<[^>]+>", " ", s)).split())
@@ -138,13 +144,105 @@ def scrape(html: str) -> dict[tuple[str, int], dict[str, str]]:
     return found
 
 
+def scrape_optionals(html: str) -> dict[tuple[str, int], dict[str, str]]:
+    """-> {(subject id, year): {"p1"|"p2": url}} for the OPTIONALS only."""
+    found: dict[tuple[str, int], dict[str, str]] = {}
+    pats = {sid: re.compile(OPT_PAPER.pattern.format(re.escape(nm)), re.IGNORECASE)
+            for sid, nm in OPTIONALS.items()}
+
+    for table in re.findall(r"<table[^>]*>(.*?)</table>", html, re.S | re.I):
+        cap = re.search(r"<caption[^>]*>(.*?)</caption>", table, re.S | re.I)
+        if not cap:
+            continue
+        m = CAPTION.search(strip_tags(cap.group(1)))
+        # optionals exist only in the Mains papers
+        if not m or m.group(1).lower() != "main":
+            continue
+        year = int(m.group(2))
+
+        for li in re.findall(r"<li>(.*?)</li>", table, re.S | re.I):
+            a = re.search(r'href="([^"]+\.pdf)"', li, re.I)
+            if not a:
+                continue
+            label = strip_tags(re.sub(r"<a.*", "", li, flags=re.S))
+            for sid, pat in pats.items():
+                hit = pat.match(label)
+                if not hit:
+                    continue
+                n = hit.group(1).lower()
+                code = "p1" if n in ("i", "1") else "p2"
+                url = a.group(1)
+                if url.startswith("/"):
+                    url = BASE + url
+                found.setdefault((sid, year), {}).setdefault(code, url)
+
+    return found
+
+
+def optionals(args) -> int:
+    """Rebuild content/optionals.json's question-paper lists in place, leaving
+    every other field - the toppers' copies especially - untouched."""
+    found: dict[tuple[str, int], dict[str, str]] = {}
+    for name, url in SOURCES:
+        html = get_page(name, url, args.refresh)
+        if html is None:
+            continue
+        for sitting, codes in scrape_optionals(html).items():
+            found.setdefault(sitting, {})
+            for code, u in codes.items():
+                found[sitting].setdefault(code, u)
+
+    if not found:
+        print("\ncould not read either page - try again later, unhurried")
+        return 1
+
+    out = {}
+    for sid in OPTIONALS:
+        years = sorted({y for s, y in found if s == sid}, reverse=True)
+        out[sid] = [{"year": y,
+                     "papers": [{"code": c, "name": f"Paper {'I' if c == 'p1' else 'II'}",
+                                 "url": found[(sid, y)].get(c)}
+                                for c in ("p1", "p2")]}
+                    for y in years]
+        got = sum(1 for y in out[sid] for p in y["papers"] if p["url"])
+        print(f"\n  {OPTIONALS[sid]}: {len(years)} years, "
+              f"{got}/{len(years) * 2} papers - {years[-1]} to {years[0]}")
+
+    if args.dry_run:
+        for sid, years in out.items():
+            for y in years:
+                print(f"    {sid:10}{y['year']}  "
+                      + "  ".join((p['url'] or 'null').rsplit('/', 1)[-1][:40]
+                                  for p in y['papers']))
+        print("\n--dry-run: nothing written")
+        return 0
+
+    path = ROOT / "content" / "optionals.json"
+    doc = json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}
+    for sub in doc.get("subjects", []):
+        if sub["id"] in out:
+            sub["pyq"] = out[sub["id"]]
+    with path.open("w", encoding="utf-8", newline="\n") as fh:
+        json.dump(doc, fh, ensure_ascii=False, indent=2)
+        fh.write("\n")
+    print("\nwrote content/optionals.json")
+    print("run `python3 build.py` to put the papers on the Optional tab")
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     sub = ap.add_subparsers(dest="cmd", required=True)
     d = sub.add_parser("discover", help="fill in paper URLs that are still null")
     d.add_argument("--dry-run", action="store_true", help="print, do not write")
     d.add_argument("--refresh", action="store_true", help="refetch the archive page")
+    o = sub.add_parser("optionals", help="rebuild the Optional tab's paper lists")
+    o.add_argument("--dry-run", action="store_true", help="print, do not write")
+    o.add_argument("--refresh", action="store_true", help="refetch the pages")
     args = ap.parse_args()
+
+    if args.cmd == "optionals":
+        return optionals(args)
 
     with PAPERS_FILE.open(encoding="utf-8") as fh:
         papers = json.load(fh)

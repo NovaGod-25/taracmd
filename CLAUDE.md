@@ -40,6 +40,7 @@ what `build.py` produces, which is the guard that was missing.
 | `answer-keys.json` | Prelims answer keys: links, marking scheme, dropped questions, set-wise letters |
 | `quiz.json` | 35 practice questions, each tagged to a topic id |
 | `toppers.json` | 102 published answer copies across 10 publishers |
+| `optionals.json` | the Optional tab: Geography and Law, 22/22 papers each 2016–2026, plus curated copies |
 
 ## Decisions that should not be quietly reversed
 
@@ -75,6 +76,18 @@ download on web only. That is deliberate — see the four-function contract belo
 origin, which makes `localStorage` unreliable across WebView versions — and the revision
 ticks live in `localStorage`. `APP_HOST` in `MainActivity.kt` is a host Google reserves
 for this; it never resolves on the network.
+
+**No publisher indexes its toppers' copies by optional subject.** Checked 7 Sep 2026
+across Vision, GS SCORE, theIAShub and NEXT IAS: the listings are by rank and name, the
+"geography optional" hits are meta-keywords and course menus, and the optional booklet
+sits inside a topper's full set rather than being listed on its own. So `copies` in
+`optionals.json` is curated by hand and starts empty — the tab links the publishers'
+section pages instead. Filling it automatically would need a crawler per site across ten
+sites, which is the thing already turned down above. Do not quietly build it.
+
+**The tab bar is `repeat(6,1fr)`** — 63 px a column on a 375 px phone, labels at 9.5 px.
+Measured: nothing clips, but a seventh tab would not fit. Fold new surfaces into an
+existing tab, the way the Mains answer log went inside Mains.
 
 **upsc.gov.in rate-limits hard.** It stopped answering entirely after roughly 45 requests
 in one session. `tools/answer-keys.py` waits 4 seconds between requests on purpose. Any
@@ -216,6 +229,7 @@ Added after the recovery, all exercised in a browser on a real http origin:
 python3 build.py                            # rebuild all three targets
 python3 tools/check-validation.py           # prove build.py's validation still fires
 python3 tools/pyq-papers.py discover      # fill in missing question-paper URLs
+python3 tools/pyq-papers.py optionals     # rebuild the Optional tab paper lists
 python3 tools/answer-keys.py discover       # find answer-key PDFs still missing
 python3 tools/answer-keys.py extract --dry-run   # read Set A/B/C/D letters, print only
 perl tools/make-icons.pl                    # regenerate the API 24–25 launcher rasters

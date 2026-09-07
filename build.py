@@ -156,6 +156,39 @@ def check_keys(keys) -> None:
                     fail(f"{y} {code}: dropped question {q} is outside 1-{expected}")
 
 
+def check_optionals(opts) -> None:
+    """The Optional tab. Two papers per subject, and the answer log is keyed on
+    `year-<subject id>-<code>`, so a duplicate subject id would merge two
+    subjects' logged answers into one pile."""
+    seen: set[str] = set()
+    for sub in opts.get("subjects", []):
+        sid = sub.get("id", "?")
+        for field in ("id", "name", "short", "icon", "pyq", "copies"):
+            if field not in sub:
+                fail(f"optional {sid!r} has no {field!r}")
+        if sid in seen:
+            fail(f"duplicate optional subject id {sid!r}")
+        seen.add(sid)
+
+        years: set[int] = set()
+        for year in sub.get("pyq") or []:
+            y = year.get("year")
+            if y in years:
+                fail(f"optional {sid!r} lists {y} twice")
+            years.add(y)
+            codes = [p.get("code") for p in year.get("papers") or []]
+            if codes != ["p1", "p2"]:
+                fail(f"optional {sid!r} {y} has papers {codes}, expected ['p1', 'p2']")
+
+        for copy in sub.get("copies") or []:
+            for field in ("name", "year", "publisher", "url"):
+                if field not in copy:
+                    fail(f"optional {sid!r} copy {copy.get('name', '?')!r} has no {field!r}")
+
+    if not seen:
+        fail("optionals.json lists no subjects")
+
+
 # ------------------------------------------------------------------- derived
 
 def sat_years(pyq, today: date) -> dict:
@@ -209,10 +242,12 @@ def main() -> int:
     toppers = load("toppers.json")
     keys = load("answer-keys.json")
     quiz = load("quiz.json")
+    opts = load("optionals.json")
 
     topics = check_subjects(subjects)
     check_quiz(quiz, topics)
     check_keys(keys)
+    check_optionals(opts)
 
     if problems:
         print(f"\n{len(problems)} problem(s) in content:", file=sys.stderr)
@@ -227,7 +262,7 @@ def main() -> int:
     pyq = sat_years(pyq, today)
 
     data = {"__SUBJECTS__": subjects, "__PYQ__": pyq, "__TOPPERS__": toppers,
-            "__KEYS__": keys, "__QUIZ__": quiz}
+            "__KEYS__": keys, "__QUIZ__": quiz, "__OPTIONALS__": opts}
 
     values = {t: json.dumps(v, ensure_ascii=False, separators=(",", ":"))
               for t, v in data.items()}

@@ -1,0 +1,389 @@
+{
+  "note": "Optional subjects: two papers of 250 marks each, so 500 of the 1,750 written marks. The pyq arrays are rebuilt by `python3 tools/pyq-papers.py optionals`; the copies arrays are curated by hand, because no publisher indexes its toppers' copies by optional subject and finding them means opening the section pages below.",
+  "subjects": [
+    {
+      "id": "geography",
+      "name": "Geography",
+      "short": "Geography",
+      "icon": "🌍",
+      "marks": 500,
+      "why": "The most-taken optional after the humanities pair. Overlaps heavily with GS Paper I physical geography and with the environment and disaster-management sections of GS-III, which is most of its appeal. Paper I is systematic, Paper II is India.",
+      "pyq": [
+        {
+          "year": 2026,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-26-010926-Optional-GEOGRAPHY_PAPER_I.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-26-010926-Optional-GEOGRAPHY_PAPER_II.pdf"
+            }
+          ]
+        },
+        {
+          "year": 2025,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/GEOGRAPHY-PAPER-I-QP-CSM-25-010925.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/GEOGRAPHY-PAPER%20II-QP-CSM-25-010925.pdf"
+            }
+          ]
+        },
+        {
+          "year": 2024,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-24-GEOGRAPHY-PAPER-I-031024.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-24-GEOGRAPHY-PAPER-II-031024.pdf"
+            }
+          ]
+        },
+        {
+          "year": 2023,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-23-GEOGRAPHY-PAPER-I-29092023.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-23-GEOGRAPHY-PAPER-II-29092023.pdf"
+            }
+          ]
+        },
+        {
+          "year": 2022,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-22-GEOGRAPHY-PAPER-I-280922.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-22-GEOGRAPHY-PAPER-II-280922.pdf"
+            }
+          ]
+        },
+        {
+          "year": 2021,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/Geography%20Paper-I.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/Geography%20Paper-II.pdf"
+            }
+          ]
+        },
+        {
+          "year": 2020,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/GEOGRAPHY_I.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/GEOGRAPHY_II.pdf"
+            }
+          ]
+        },
+        {
+          "year": 2019,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM19-Geography-I.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM19-Geography-II.pdf"
+            }
+          ]
+        },
+        {
+          "year": 2018,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/GEOGRAPHY-PAPER-I.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/GEOGRAPHY-PAPER-II.pdf"
+            }
+          ]
+        },
+        {
+          "year": 2017,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/GEOGRAPHY1_1.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/GEOGRAPHY2_0.pdf"
+            }
+          ]
+        },
+        {
+          "year": 2016,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/GEOGRAPHY1_0.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/GEOGRAPHY2.pdf"
+            }
+          ]
+        }
+      ],
+      "copies": []
+    },
+    {
+      "id": "law",
+      "name": "Law",
+      "short": "Law",
+      "icon": "⚖️",
+      "marks": 500,
+      "why": "Small candidate pool and a syllabus that rewards precision over volume. Overlaps with GS-II on the Constitution, and with GS-IV on jurisprudence. Paper I is constitutional and international law, Paper II is criminal, tort, contract and contemporary legal developments.",
+      "pyq": [
+        {
+          "year": 2026,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-26-010926-Optional-LAW-PAPER_I.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-26-010926-Optional-LAW-PAPER_II.pdf"
+            }
+          ]
+        },
+        {
+          "year": 2025,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/LAW-PAPER%20I-QP-CSM-25-010925.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/LAW-PAPER-II-QP-CSM-25-010925.pdf"
+            }
+          ]
+        },
+        {
+          "year": 2024,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-24-LAW-PAPER-I-031024.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-24-LAW-PAPER-II-031024.pdf"
+            }
+          ]
+        },
+        {
+          "year": 2023,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-23-LAW-PAPER-I-29092023.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-23-LAW-PAPER-II-29092023.pdf"
+            }
+          ]
+        },
+        {
+          "year": 2022,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-22-LAW-PAPER-I-280922.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-22-LAW-PAPER-II-280922.pdf"
+            }
+          ]
+        },
+        {
+          "year": 2021,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/Law%20Paper-I.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/Law%20Paper-II.pdf"
+            }
+          ]
+        },
+        {
+          "year": 2020,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/LAW_I_.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/LAW_II.pdf"
+            }
+          ]
+        },
+        {
+          "year": 2019,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM19-Law-I.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM19-Law-II.pdf"
+            }
+          ]
+        },
+        {
+          "year": 2018,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/LAW-PAPER-I.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/LAW-PAPER-II.pdf"
+            }
+          ]
+        },
+        {
+          "year": 2017,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/LAW1_0.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/LAW2_0.pdf"
+            }
+          ]
+        },
+        {
+          "year": 2016,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/LAW1.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/LAW2.pdf"
+            }
+          ]
+        }
+      ],
+      "copies": []
+    }
+  ],
+  "publishers": [
+    {
+      "name": "Vision IAS",
+      "url": "https://visionias.in/resources/toppers-answer-copy/",
+      "note": "Copies listed by rank; the optional booklet is inside the per-topper set where one was published."
+    },
+    {
+      "name": "GS SCORE",
+      "url": "https://iasscore.in/toppers-copy",
+      "note": "Listed by rank and year."
+    },
+    {
+      "name": "theIAShub",
+      "url": "https://theiashub.com/toppers/upsc",
+      "note": "Filterable by year; the largest single index of the ten."
+    },
+    {
+      "name": "NEXT IAS",
+      "url": "https://www.nextias.com/toppers-answers-ias",
+      "note": "Listed by rank."
+    },
+    {
+      "name": "ForumIAS",
+      "url": "https://forumias.com/blog/testimonials/",
+      "note": "Copies sit inside the written testimonial, which usually names the optional."
+    },
+    {
+      "name": "InsightsIAS",
+      "url": "https://www.insightsonindia.com/upsc-toppers-answer-copies-download-ias-toppers-answer-booklets/",
+      "note": "Older sets, some as direct PDFs."
+    }
+  ]
+}

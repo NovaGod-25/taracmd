@@ -217,8 +217,12 @@ a{color:var(--accent-ink);text-decoration:none}
 
 /* ---------- tab bar ---------- */
 .tabs{position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--card);border-top:1px solid var(--rule);
-  display:grid;grid-template-columns:repeat(5,1fr);padding-bottom:env(safe-area-inset-bottom)}
-.tab{display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 2px 8px;color:var(--ink-3);font-size:10px;font-weight:500}
+  display:grid;grid-template-columns:repeat(6,1fr);padding-bottom:env(safe-area-inset-bottom)}
+/* Six columns is 62px each on a 375px phone. The labels still fit at 9.5px,
+   but only just — a seventh tab would not, and this is the reason to fold new
+   surfaces into existing tabs instead. */
+.tab{display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 1px 8px;color:var(--ink-3);font-size:9.5px;font-weight:500;
+  letter-spacing:-.01em;white-space:nowrap;overflow:hidden}
 .tab svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .tab.on{color:var(--accent-ink)}
 
@@ -366,6 +370,7 @@ a{color:var(--accent-ink);text-decoration:none}
   <button class="tab on" data-tab="subjects"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 016.5 3H19v15H6.5A2.5 2.5 0 004 20.5z"/><path d="M4 20.5A2.5 2.5 0 016.5 18H19v3H6.5A2.5 2.5 0 014 20.5z"/></svg>Subjects</button>
   <button class="tab" data-tab="prelims"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg>Prelims</button>
   <button class="tab" data-tab="mains"><svg viewBox="0 0 24 24"><path d="M4 4h11l5 5v11H4z"/><path d="M15 4v5h5"/><path d="M8 13h8M8 17h5"/></svg>Mains</button>
+  <button class="tab" data-tab="optional"><svg viewBox="0 0 24 24"><path d="M12 4v16"/><path d="M9 20h6"/><path d="M6 8h12"/><path d="M6 8l-3 5h6z"/><path d="M18 8l3 5h-6z"/></svg>Optional</button>
   <button class="tab" data-tab="quiz"><svg viewBox="0 0 24 24"><path d="M9.1 9a3 3 0 015.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>Quiz</button>
   <button class="tab" data-tab="toppers"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4 6.7 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg>Toppers</button>
 </nav>
@@ -376,6 +381,7 @@ const PYQ = __PYQ__;
 const TOPPERS = __TOPPERS__;
 const KEYS = __KEYS__;
 const QUIZ = __QUIZ__;
+const OPTIONALS = __OPTIONALS__;
 const ARCHIVE = "https://www.upsc.gov.in/examinations/previous-question-papers/archives";
 const KEYINDEX = "https://www.upsc.gov.in/examinations/answer-key";
 
@@ -761,6 +767,11 @@ function openWriting(year, code, label){
     const log = writeLog(year, code).slice().sort((a, b) => (b.on || 0) - (a.on || 0));
     const st = writeStats(year, code);
     const isEssay = code === "essay";
+    /* What a single answer is marked out of. Essay is one of two at 125;
+       a GS answer is a 10- or a 15-marker; an optional paper mixes in
+       20-markers as well. */
+    const isOpt = /-p[12]$/.test(code);
+    const scales = isEssay ? [125, 250] : isOpt ? [10, 15, 20] : [10, 15];
     sheetIn.innerHTML = `
       <div class="sheethead">
         <div><div class="eyebrow">Mains ${year} &middot; ${esc(label)}</div><h3>Answer log</h3></div>
@@ -780,7 +791,7 @@ function openWriting(year, code, label){
         <label>words<input id="wwords" type="number" min="1" max="3000" inputmode="numeric" placeholder="${isEssay ? "1000" : "150"}"></label>
         <label>marks<input id="wscore" type="number" min="0" max="250" step="0.5" inputmode="decimal" placeholder="9"></label>
         <label>of<select id="wof">
-          ${(isEssay ? [125, 250] : [10, 15]).map(v=>`<option value="${v}">${v}</option>`).join("")}
+          ${scales.map(v=>`<option value="${v}">${v}</option>`).join("")}
         </select></label>
       </div>
       <input class="wnote" id="wnote" maxlength="160" placeholder="What went wrong? Intro too long, no diagram, ran out of time…">
@@ -1025,6 +1036,92 @@ function shortPaper(p){
   return {gs1:"GS-I", gs2:"GS-II", gs3:"GS-III", gs4:"GS-IV", essay:"Essay"}[p.code] || esc(p.name);
 }
 
+/* ---------------- optional subject ----------------
+   500 of the 1,750 written marks sit in one optional, and none of it is on the
+   Subjects tab, which only covers the GS syllabus. Two papers a year, eleven
+   years of them, plus an answer log per paper on the same footing as Mains —
+   an optional answer is written under the same clock.
+
+   The toppers' copies here are curated by hand and the list is short. Not an
+   oversight: no publisher indexes its copies by optional subject, so finding
+   them means opening the section pages at the bottom of the tab and reading.
+   Harvesting them automatically would need a crawler per site, which is the
+   thing this project already looked at and turned down. */
+function renderOptional(){
+  const subs = OPTIONALS.subjects || [];
+  if(!state.opt || !subs.some(s=>s.id===state.opt)) state.opt = subs.length ? subs[0].id : null;
+  const s = subs.find(x=>x.id===state.opt);
+  if(!s){ view.innerHTML = `<div class="empty">No optional subject configured.</div>`; return; }
+
+  const linked = s.pyq.reduce((a,y)=>a + y.papers.filter(p=>p.url).length, 0);
+  const total = s.pyq.reduce((a,y)=>a + y.papers.length, 0);
+  const logged = s.pyq.reduce((a,y)=>a + y.papers.reduce((b,p)=>
+    b + writeLog(y.year, s.id + "-" + p.code).length, 0), 0);
+  document.getElementById("brandSub").textContent = s.marks ? s.marks + " marks" : "";
+
+  view.innerHTML = `
+    <div class="filters" style="margin-top:8px">
+      ${subs.map(x=>`<button class="fchip ${x.id===state.opt?"on":""}" data-opt="${x.id}">${x.icon} ${esc(x.short)}</button>`).join("")}
+    </div>
+    <div class="head" style="margin-top:6px"><h2>${s.icon} ${esc(s.name)}</h2><span class="n">${linked}/${total} papers</span></div>
+    ${s.why ? `<div class="why"><span class="stripe high" style="width:3px;min-height:34px;border-radius:99px"></span>
+      <span>${esc(s.why)}</span></div>` : ""}
+
+    <div class="head"><h2>Question papers</h2><span class="n">${s.pyq.length} years${logged ? ` · ${logged} logged` : ""}</span></div>
+    ${s.pyq.map(y=>`
+      <div class="year">
+        <div class="yh"><span class="yn">${y.year}</span><span class="ys">${y.papers.filter(p=>p.url).length}/${y.papers.length}</span></div>
+        <div class="papers">
+          ${y.papers.map(p=> p.url
+            ? `<a class="pbtn" href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.name)} ${LINKI}</a>`
+            : `<a class="pbtn miss" href="${ARCHIVE}" target="_blank" rel="noopener">${esc(p.name)} · find</a>`).join("")}
+        </div>
+        <div class="papers logs">
+          ${y.papers.map(p=>{
+            const st = writeStats(y.year, s.id + "-" + p.code);
+            return `<button class="pbtn log${st ? " has" : ""}" data-olog="${y.year}|${s.id}-${p.code}|${esc(s.short + " " + p.name)}">${esc(p.name)} log${st ? ` <b>${st.n}</b>` : ""}</button>`;
+          }).join("")}
+        </div>
+      </div>`).join("")}
+    <p class="note">Every paper opens on <a href="${ARCHIVE}" target="_blank" rel="noopener">upsc.gov.in</a> — the Commission publishes each one the day it is sat, ${s.pyq[0] ? `${s.pyq[0].year} included` : ""}. Log an answer against the paper you wrote it from; an optional answer is written under the same clock as a GS one, and the same 250 marks ride on the paper.</p>
+
+    <div class="head"><h2>Toppers' copies</h2><span class="n">${s.copies.length}</span></div>
+    ${s.copies.length ? `<div class="list">${s.copies.map(c=>{
+        const isPdf = /\.pdf($|\?)/i.test(c.url || "");
+        const local = isPdf ? savedPath(c.url) : null;
+        return `<div class="tcard">
+          <span class="rank ${c.rank===1?"top":""}">${c.rank ? "#"+c.rank : "—"}</span>
+          <a style="flex:1;min-width:0;color:inherit" href="${esc(local || c.url || "#")}" target="_blank" rel="noopener">
+            <span class="nm">${esc(c.name)}</span>
+            <span class="mt">${c.year} · ${esc(c.publisher)}${c.note ? " · " + esc(c.note) : ""}${local ? " · saved" : ""}</span>
+          </a>
+          ${local ? `<span class="saved" title="Saved on this device">${DOWNI}</span>`
+                  : (NATIVE && isPdf ? `<button class="savebtn" data-save="${esc(c.url)}">Save</button>` : `<span class="ext">${LINKI}</span>`)}
+        </div>`;}).join("")}</div>`
+      : `<div class="empty">None indexed yet for ${esc(s.short)}.<br><br>
+          No publisher lists its copies by optional subject, so these have to be
+          found by hand — open a section below, and add what you find to
+          <span class="mono">content/optionals.json</span>.</div>`}
+
+    <div class="head"><h2>Where to look</h2></div>
+    <div class="list">
+      ${(OPTIONALS.publishers||[]).map(p=>`<a class="tcard" href="${esc(p.url)}" target="_blank" rel="noopener">
+        <span style="flex:1"><span class="nm">${esc(p.name)}</span><span class="mt">${esc(p.note || "toppers' copies section")}</span></span>
+        <span class="ext">${LINKI}</span></a>`).join("")}
+    </div>
+    <p class="note">These are the publishers' own pages, not a mirror. An optional booklet is usually inside a topper's full set rather than listed separately, so it is worth reading the testimonial as well as the scan — the choice of optional is often explained there.</p>`;
+
+  view.querySelectorAll("[data-opt]").forEach(b=>b.onclick=()=>{state.opt=b.dataset.opt;renderOptional();});
+  view.querySelectorAll("[data-olog]").forEach(b=>b.onclick=()=>{
+    const [yr, code, label] = b.dataset.olog.split("|");
+    openWriting(+yr, code, label);
+  });
+  view.querySelectorAll("[data-save]").forEach(b=>b.onclick=()=>{
+    b.textContent = "…";
+    try{ NATIVE.saveCopy(b.dataset.save); }catch(e){ b.textContent = "Save"; }
+  });
+}
+
 /* ---------------- toppers ---------------- */
 function renderToppers(){
   document.getElementById("brandSub").textContent = TOPPERS.copies.length + " copies";
@@ -1064,8 +1161,12 @@ function renderToppers(){
     try{ NATIVE.saveCopy(b.dataset.save); }catch(e){ b.textContent = "Save"; }
   });
 }
-/* Android calls this when a download lands so the row can flip to "saved". */
-window.taracmdSaved = function(){ if(state.tab==="toppers") renderToppers(); };
+/* Android calls this when a download lands so the row can flip to "saved".
+   Both tabs that offer a Save button have to listen. */
+window.taracmdSaved = function(){
+  if(state.tab==="toppers") renderToppers();
+  else if(state.tab==="optional") renderOptional();
+};
 
 /* ---------------- quiz ---------------- */
 const LET = ["A","B","C","D"];
@@ -1247,6 +1348,7 @@ function render(){
   } else if(state.tab==="subjects") renderSubjects();
   else if(state.tab==="prelims") renderPYQ("prelims");
   else if(state.tab==="mains") renderPYQ("mains");
+  else if(state.tab==="optional") renderOptional();
   else if(state.tab==="quiz") renderQuiz();
   else renderToppers();
   window.scrollTo(0,0);

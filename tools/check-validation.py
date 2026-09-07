@@ -144,6 +144,36 @@ def _(root):
     edit(root, "subjects.json", m)
 
 
+@case("duplicate optional subject id", "duplicate optional subject id")
+def _(root):
+    # The answer log is keyed year-<subject id>-<code>, so two subjects sharing
+    # an id would pour their logged answers into one pile.
+    def m(d):
+        d["subjects"][1]["id"] = d["subjects"][0]["id"]
+    edit(root, "optionals.json", m)
+
+
+@case("optional year with wrong paper codes", "expected ['p1', 'p2']")
+def _(root):
+    def m(d):
+        d["subjects"][0]["pyq"][0]["papers"] = [{"code": "gs1", "name": "x", "url": None}]
+    edit(root, "optionals.json", m)
+
+
+@case("optional year listed twice", "twice")
+def _(root):
+    def m(d):
+        d["subjects"][0]["pyq"].append(dict(d["subjects"][0]["pyq"][0]))
+    edit(root, "optionals.json", m)
+
+
+@case("topper copy missing a field", "has no")
+def _(root):
+    def m(d):
+        d["subjects"][0]["copies"] = [{"name": "Someone", "year": 2025}]
+    edit(root, "optionals.json", m)
+
+
 @case("malformed JSON", "not valid JSON")
 def _(root):
     (root / "content" / "quiz.json").write_text('{"questions": [', encoding="utf-8")

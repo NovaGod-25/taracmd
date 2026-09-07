@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Mirrors --paper and --card from the page's light palette. -->
+<!-- Mirrors the paper and card custom properties from the page's light
+     palette. Their CSS names carry a double hyphen that XML comments cannot. -->
 <resources>
     <color name="paper">#EDEFF2</color>
     <color name="card">#FFFFFF</color>

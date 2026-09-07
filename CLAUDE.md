@@ -208,6 +208,11 @@ Added after the recovery, all exercised in a browser on a real http origin:
   `satOn()` next to `renderPYQ`. `build.py` deliberately does no date filtering — it did
   once, through a `SAT_BY` table, and that made its output depend on the day it ran and
   `content.yml`'s drift check fail on nothing. Do not move this back into the build.
+- **No `--` inside an XML comment.** XML forbids it outright, and the res files are full
+  of references to the page's CSS custom properties, whose names start with one. Writing
+  `--accent` in a comment in `res/` fails `mergeDebugResources` with "The string `--` is
+  not permitted within comments" — which is what broke every APK build until it was
+  caught. Name the property without the dashes.
 - The Android package is `com.taracmd.app`. Not `in.taracmd.*` — `in` is a Kotlin hard
   keyword and cannot be a package segment without backticks.
 - **On Windows the command is `python` or `py`, not `python3`.** The python.org installer

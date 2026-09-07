@@ -15,8 +15,8 @@ templates/       ┘                   web/artifact.html             (fragment)
   index.html                         android/…/assets/index.html   (what the APK ships)
 ```
 
-`templates/index.html` is the app — all the markup, CSS and JS — with seven tokens in it.
-`build.py` fills them: five content blobs plus the two derived counts in the search
+`templates/index.html` is the app — all the markup, CSS and JS — with eight tokens in it.
+`build.py` fills them: six content blobs plus the two derived counts in the search
 placeholder. There is **no runtime fetch for app content**; everything is inlined at build
 time. Editing JSON then running `python3 build.py` is the whole content workflow.
 
@@ -66,7 +66,7 @@ which means a store written by an older build still opens.
 | `attempts` | OMR answer sheets, keyed `year-paper-set` |
 | `revised` | revision history, `topic id -> [epoch ms]` — what the Due filter reads |
 | `picks` | practice answers, `question id -> option index` |
-| `writing` | Mains answer log, `year-code -> [{q,mins,words,score,of,note,on}]` |
+| `writing` | Mains and Optional answer log, `year-code -> [{q,mins,words,score,of,note,on}]` |
 
 There is no export bridge function: backup is a copyable blob in a sheet, plus a file
 download on web only. That is deliberate — see the four-function contract below.
@@ -228,8 +228,8 @@ Added after the recovery, all exercised in a browser on a real http origin:
 ```bash
 python3 build.py                            # rebuild all three targets
 python3 tools/check-validation.py           # prove build.py's validation still fires
-python3 tools/pyq-papers.py discover      # fill in missing question-paper URLs
-python3 tools/pyq-papers.py optionals     # rebuild the Optional tab paper lists
+python3 tools/pyq-papers.py discover        # fill in missing question-paper URLs
+python3 tools/pyq-papers.py optionals       # rebuild the Optional tab paper lists
 python3 tools/answer-keys.py discover       # find answer-key PDFs still missing
 python3 tools/answer-keys.py extract --dry-run   # read Set A/B/C/D letters, print only
 perl tools/make-icons.pl                    # regenerate the API 24–25 launcher rasters

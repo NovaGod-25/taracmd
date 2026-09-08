@@ -25,6 +25,12 @@ tools/.key-pdfs/
 # Test deps. tests/package-lock.json IS committed, so CI can npm ci.
 tests/node_modules/
 
+# Staged question batches, and the record of which have been imported. The
+# questions themselves land in content/quiz.json, which IS committed; these
+# are the working files that got them there.
+intake/
+tools/.intake-log.json
+
 # Python
 __pycache__/
 *.pyc

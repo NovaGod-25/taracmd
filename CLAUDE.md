@@ -137,8 +137,19 @@ answered wearing a new id.
 3. Explanations, where the institute gives them. They become `why`, which is the part that
    teaches.
 
-**The pipeline.** Papers go in a Drive folder — *TaraCmd question intake* — named so the
-pair is obvious (`… - paper.pdf` and `… - key.pdf`, or `… - paper+key.pdf`). Reading a
+**The pipeline.** Papers go in a Drive folder — *TaraCmd question intake*. One naming
+rule: a paper and a key belong together when **everything before the final `" - "` is
+identical**, and the suffix is one of `paper`, `key`, `paper+key`, `explanations`. The
+front part is free-form and becomes the label on every question, so it should be
+findable a year later — `Vision IAS - PT Test 12 - 2026` rather than `test 3 new`.
+Different sets and different sections go in as separate pairs.
+
+Batches are staged under `intake/` (gitignored, along with `tools/.intake-log.json`);
+what ships is `content/quiz.json`. `tools/intake.py` processes every staged batch at
+once and **logs what it took, keyed by the batch's contents** — so dropping five papers,
+processing three, then dropping two more does not re-import the first three, while a
+batch you *corrected* is noticed and re-imported, taking only what changed. Re-asking is
+therefore free, which is the property that makes this safe to run on a whim. Reading a
 paper is judgement, and deciding which of the 242 topics a question belongs to is not
 something a script should guess at, so that part is done by hand into a staged file:
 

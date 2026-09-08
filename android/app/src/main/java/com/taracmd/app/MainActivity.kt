@@ -227,6 +227,19 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        /**
+         * What is actually installed, so the app can say so.
+         *
+         * versionName is decided by Gradle at APK build time and follows the
+         * CI run number, so the page cannot know it — build.py runs long
+         * before the APK exists. Hence a bridge function rather than a token.
+         */
+        @JavascriptInterface
+        fun appVersion(): String =
+            runCatching {
+                packageManager.getPackageInfo(packageName, 0).versionName ?: ""
+            }.getOrDefault("")
+
         @JavascriptInterface
         fun saveCopy(url: String) {
             val name = fileNameFor(url)

@@ -8,6 +8,10 @@ android/.idea/
 *.aab
 *.keystore
 *.jks
+# ...except the one that has to be identical everywhere. See the comment in
+# android/app/build.gradle.kts: a per-machine debug key is what made every new
+# APK refuse to install over the last one.
+!android/app/taracmd-debug.p12
 
 # Gradle wrapper jar is generated, not committed — see CLAUDE.md open item 3
 android/gradle/wrapper/gradle-wrapper.jar

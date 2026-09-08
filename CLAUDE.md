@@ -161,7 +161,7 @@ new scraping should be designed to run locally and unhurried, never in CI.
 
 ## The JS ↔ native contract
 
-Six functions, and nothing else crosses. Changing a name on either side breaks it
+Seven functions, and nothing else crosses. Changing a name on either side breaks it
 silently, because the page checks for the bridge before using it and falls back to
 browser behaviour when it is absent.
 
@@ -170,6 +170,7 @@ browser behaviour when it is absent.
 | page → native | `AndroidHost.savedPath(url)` | non-null once this PDF is on disk, so the row can read "saved" |
 | page → native | `AndroidHost.saveCopy(url)` | one URL to DownloadManager |
 | native → page | `window.taracmdSaved()` | a download landed; re-render the Toppers tab |
+| page → native | `AndroidHost.appVersion()` | the installed versionName, which only the APK knows |
 | page → native | `AndroidHost.focusAwake(on)` | hold the screen awake for a focus run, and let it sleep after |
 | native → page | `window.taracmdBack()` | hardware back. Closes sheet → collapses the outline → returns to the Syllabus tab → returns `false` so the OS takes over |
 | native → page | `window.taracmdInterrupted()` | `onPause` — the app has been left, so a focus run is void |
@@ -369,6 +370,23 @@ app, but the shape is easy to get wrong twice.
   button loses to them and inherits the dark-on-dark ink meant for a filled accent
   button — an invisible label on a visible border. Match the specificity
   (`:root .prim.yours`) rather than reaching for `!important`.
+- **The signing key is committed, and must never be regenerated.** `assembleDebug`
+  otherwise signs with `~/.android/debug.keystore`, which a fresh CI runner creates from
+  scratch every run — three consecutive builds were signed by three different keys, and
+  **Android refuses to update an app whose signing key changed.** That is what made every
+  new APK demand an uninstall first, taking every tick, logged answer and scored paper
+  with it. `android/app/taracmd-debug.p12` is exempted in `.gitignore` and marked
+  `binary` in `.gitattributes` on purpose: `text=auto` normalising a keystore would
+  corrupt it silently. It is a debug key and it is in the tree deliberately, because it
+  has to be identical on every machine and every runner. A release key for Play would be
+  a different key, kept out of the tree.
+  To check two APKs will update over each other, compare their signers rather than
+  guessing — the public key sits in the v2 signing block, after the magic
+  `APK Sig Block 42` near the end of the file.
+- **The app cannot check for its own updates**, and should not pretend to. The repository
+  is private, so a version check needs a token, and a token shipped inside an APK is a
+  token given away. The drawer shows what `AndroidHost.appVersion()` reports and opens
+  the build page instead, where you are already signed in.
 - The Android package is `com.taracmd.app`. Not `in.taracmd.*` — `in` is a Kotlin hard
   keyword and cannot be a package segment without backticks.
 - **On Windows the command is `python` or `py`, not `python3`.** The python.org installer

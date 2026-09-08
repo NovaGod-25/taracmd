@@ -424,7 +424,9 @@ describe("navigation", () => {
   test("the drawer holds the long tail, and Toppers lights no tab", () => {
     const items = JSON.parse(inPage(win,
       `JSON.stringify([...document.querySelectorAll(".ditem b")].map(e => e.textContent))`));
-    assert.equal(items.length, 3);
+    assert.deepEqual(items,
+      ["Toppers' copies", "Read the whole syllabus", "Back up or restore", "Updates"],
+      "the drawer is where rare destinations go, so name them rather than count them");
     inPage(win, `state.tab = "toppers"; markTab("toppers"); render();`);
     assert.equal(Number(inPage(win, `document.querySelectorAll(".tab.on").length`)), 0,
       "no tab may claim to be where you are when you are somewhere else");
@@ -457,5 +459,28 @@ describe("navigation", () => {
     inPage(win, `store.theme = null; markTheme();`);
     assert.equal(inPage(win, `document.querySelector("[data-theme-set='system']").classList.contains("on")`),
       true, "no stored theme means System, not Light");
+  });
+});
+
+describe("updates", () => {
+  test("the drawer says what is installed and where the newer one is", () => {
+    inPage(win, "openDrawer()");
+    const item = inPage(win, `document.getElementById("dUpdate").textContent`);
+    assert.match(item, /Updates/);
+    // no bridge in a browser, so it must not claim to know a version
+    assert.equal(inPage(win, "appVersion()"), null);
+    assert.match(inPage(win, `document.getElementById("dVer").textContent`),
+      /only known inside the app/);
+    inPage(win, "closeDrawer()");
+  });
+
+  /* The repository is private, so a version check from the page would need a
+     token — and a token shipped inside an APK is a token given away. The link
+     goes to where the build lives instead. */
+  test("no credential is embedded for the update check", () => {
+    const src = inPage(win, "RELEASES");
+    assert.match(src, /^https:\/\/github\.com\//);
+    assert.ok(!/token|ghp_|Authorization|api\.github\.com/i.test(src),
+      "the update link must not carry or imply a credential");
   });
 });

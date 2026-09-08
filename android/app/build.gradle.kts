@@ -21,6 +21,36 @@ android {
         versionName = if (run != null) "1.0.$run" else "1.0"
     }
 
+    /*
+     * One key, committed, for every build.
+     *
+     * assembleDebug otherwise signs with ~/.android/debug.keystore, which a
+     * fresh CI runner generates from scratch on every run — so every APK CI
+     * produced was signed by a different throwaway key. Android refuses to
+     * update an app whose signing key changed, which is why installing a new
+     * build meant uninstalling the old one and losing nothing but every tick,
+     * every logged answer and every scored paper, all of which live in
+     * localStorage on the device.
+     *
+     * This is a DEBUG key and it is in the repository on purpose: it has to be
+     * identical on every machine and every runner or the problem comes back.
+     * It is not a release key. Publishing to Play would need a real one, kept
+     * out of the tree and out of reach — and would also mean this app could
+     * never be signed with that key by anyone else.
+     *
+     * Never regenerate this file. A new key is a new identity, and the next
+     * install would ask to uninstall again.
+     */
+    signingConfigs {
+        getByName("debug") {
+            storeFile = file("taracmd-debug.p12")
+            storeType = "PKCS12"
+            storePassword = "taracmd"
+            keyAlias = "taracmd"
+            keyPassword = "taracmd"
+        }
+    }
+
     buildTypes {
         release {
             // assembleRelease produces an UNSIGNED apk that will not install.

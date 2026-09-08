@@ -6,3 +6,7 @@
 *.jar binary
 *.apk binary
 *.keystore binary
+# The signing key. text=auto usually detects binary, but "usually" is not good
+# enough for the one file whose corruption would make every APK unsignable.
+*.p12 binary
+*.jks binary

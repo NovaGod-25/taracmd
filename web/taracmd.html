@@ -577,6 +577,10 @@ mark{background:var(--amber-soft);color:inherit;border-radius:3px;padding:0 1px}
     <svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M4 20h16"/></svg>
     <span><b>Back up or restore</b><i>This device is the only copy of your progress</i></span>
   </button>
+  <button class="ditem" id="dUpdate">
+    <svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 10-2.3 5.6"/><path d="M20 6v6h-6"/></svg>
+    <span><b>Updates</b><i id="dVer">Checking what is installed…</i></span>
+  </button>
   <div class="dsplit">Theme</div>
   <div class="seg dtheme" id="dTheme">
     <button data-theme-set="light">Light</button>
@@ -2204,7 +2208,7 @@ const drawerOpen = () => drawer.classList.contains("on");
 function openDrawer(){
   drawer.classList.add("on"); drawerBg.classList.add("on");
   drawer.setAttribute("aria-hidden", "false");
-  markTheme();
+  markTheme(); markVersion();
 }
 function closeDrawer(){
   drawer.classList.remove("on"); drawerBg.classList.remove("on");
@@ -2226,6 +2230,34 @@ document.getElementById("dRead").onclick = () => {
   render();
 };
 document.getElementById("dData").onclick = () => { closeDrawer(); openData(); };
+
+/* Updates.
+   The app cannot check for itself: the repository is private, so any version
+   check would need a token, and a token in a page that ships to a phone is a
+   token you have given away. What it can do is say exactly what is installed
+   and open the place the newer one lives, where you are already signed in.
+
+   Installing over the top works from this build onwards. Every APK before it
+   was signed by a different throwaway key, because a fresh CI runner makes a
+   new debug keystore each run, and Android will not update an app whose
+   signing key changed — which is why it kept asking to uninstall first. */
+const RELEASES = "https://github.com/NovaGod-25/taracmd/actions/workflows/android.yml";
+function appVersion(){
+  if(NATIVE && NATIVE.appVersion){ try{ return NATIVE.appVersion() || null; }catch(e){} }
+  return null;
+}
+function markVersion(){
+  const el = document.getElementById("dVer");
+  if(!el) return;
+  const v = appVersion();
+  el.textContent = v
+    ? `Version ${v} installed · open the build page`
+    : "Open the build page — version is only known inside the app";
+}
+document.getElementById("dUpdate").onclick = () => {
+  closeDrawer();
+  open(RELEASES, "_blank", "noopener");
+};
 
 /* Three states, not a toggle: the third is "follow the phone", which a
    two-way switch cannot express and which is the sensible default. */

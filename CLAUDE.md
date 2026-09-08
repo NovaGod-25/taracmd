@@ -127,7 +127,7 @@ new scraping should be designed to run locally and unhurried, never in CI.
 
 ## The JS ↔ native contract
 
-Four functions, and nothing else crosses. Changing a name on either side breaks it
+Seven functions, and nothing else crosses. Changing a name on either side breaks it
 silently, because the page checks for the bridge before using it and falls back to
 browser behaviour when it is absent.
 
@@ -136,7 +136,39 @@ browser behaviour when it is absent.
 | page → native | `AndroidHost.savedPath(url)` | non-null once this PDF is on disk, so the row can read "saved" |
 | page → native | `AndroidHost.saveCopy(url)` | one URL to DownloadManager |
 | native → page | `window.taracmdSaved()` | a download landed; re-render the Toppers tab |
-| native → page | `window.taracmdBack()` | hardware back. Closes sheet → exits subject → returns to Subjects tab → returns `false` so the OS takes over |
+| page → native | `AndroidHost.focusStart(mins)` | pin the screen and hold it awake for a focus session |
+| page → native | `AndroidHost.focusState()` | `"locked"` or `"awake"` — what the OS actually granted, which the page trusts over `focusStart`'s return |
+| page → native | `AndroidHost.focusStop()` | unpin, let the screen sleep again |
+| native → page | `window.taracmdBack()` | hardware back. Closes sheet → refuses while a focus session runs → collapses the outline → returns to the Syllabus tab → returns `false` so the OS takes over |
+
+### What the focus lock can and cannot do
+
+`startLockTask()` from an ordinary app is **screen pinning**: Home and Recents stop
+working and the page refuses Back. **Android always keeps one way out — holding Back and
+Overview together — and no ordinary app may remove it.** That is deliberate on Android's
+part and deliberate here: a phone that cannot be unlocked for ninety minutes is a phone
+you cannot call an ambulance with. The tab says so rather than promising a cage.
+
+For a lock with genuinely no way out the app has to be whitelisted by a **device owner**.
+Same `startLockTask()` call; the provisioning is what upgrades it. On a factory-reset
+device with no account added:
+
+```bash
+adb shell dpm set-device-owner com.taracmd.app/.AdminReceiver
+```
+
+That needs a `DeviceAdminReceiver` and a policy XML, neither of which exists here — it is
+written down as the route, not as something already built.
+
+Two things the page must keep honest, both easy to get wrong:
+
+- `focusStart` posts `startLockTask` to the UI thread and cannot know whether it landed,
+  so the mode shown comes from `focusState()` on the next render. **Never let the page
+  claim a stronger lock than it has.**
+- The pin does not survive the activity being recreated, but the session does — it lives
+  in `localStorage`, because the app is pinned for an hour and the OS may reclaim it. On
+  boot the page re-asks for the pin and reopens the Focus tab; otherwise the clock would
+  run on with nothing actually holding the phone.
 
 ## State of the work
 
@@ -299,6 +331,16 @@ app, but the shape is easy to get wrong twice.
   simply had ten years instead of eleven, with nothing anywhere to say a year was
   missing. `OPT_LABEL` carries the variants. When a new optional comes up one year short,
   suspect the label before the archive.
+- **The tab bar is a grid with a hard-coded column count, and it is now full.** Seven
+  tabs is 53px each on a 375px phone and 46px on a 320px one, which is why the label
+  shrinks below 360. Adding a button without raising `repeat(7,1fr)` silently wraps the
+  last tab onto a second row — it does not overflow or clip, it just quietly becomes two
+  rows. An eighth does not fit at any size the labels stay readable, so the next surface
+  folds into an existing tab.
+- **`.prim`'s theme overrides are `:root`-scoped**, so a bare `.custom` class on a `.prim`
+  button loses to them and inherits the dark-on-dark ink meant for a filled accent
+  button — an invisible label on a visible border. Match the specificity
+  (`:root .prim.yours`) rather than reaching for `!important`.
 - The Android package is `com.taracmd.app`. Not `in.taracmd.*` — `in` is a Kotlin hard
   keyword and cannot be a package segment without backticks.
 - **On Windows the command is `python` or `py`, not `python3`.** The python.org installer

@@ -327,3 +327,52 @@ describe("the Optional tab", () => {
       "the log is keyed year-<subject id>-<code>; a duplicate id would merge two subjects");
   });
 });
+
+describe("the focus lock", () => {
+  test("a session is stored, not held in a variable, so a reload cannot lose it", () => {
+    inPage(win, "focusStart(45)");
+    const r = JSON.parse(inPage(win, "JSON.stringify(store.focusRun)"));
+    assert.equal(r.mins, 45);
+    assert.ok(r.start > 0, "the clock is a wall-clock start, not a countdown in memory");
+    // what a reload does: read the same object back and work out the remainder
+    const left = Number(inPage(win, "focusLeft(store.focusRun)"));
+    assert.ok(left > 44 * 60000 && left <= 45 * 60000, `remaining looked wrong: ${left}`);
+  });
+
+  test("back is refused for as long as the clock runs", () => {
+    assert.equal(inPage(win, "focusBlocksBack()"), true);
+    assert.equal(inPage(win, "taracmdBack()"), true, "back must not leave a session");
+  });
+
+  /* The page may never claim a stronger lock than it has. In a browser there is
+     no pinning at all, and the copy has to say so. */
+  test("without the native bridge it says plainly that nothing is pinned", () => {
+    assert.equal(inPage(win, "NATIVE"), null, "jsdom is the no-bridge case");
+    const mode = inPage(win, "store.focusRun.mode");
+    assert.equal(mode, "none");
+    assert.match(inPage(win, "FOCUS_MODE[store.focusRun.mode]"), /cannot pin/);
+  });
+
+  test("ending early is recorded as broken, not quietly dropped", () => {
+    const before = Number(inPage(win, "(store.focus || []).length"));
+    inPage(win, 'focusEnd("broke")');
+    const log = JSON.parse(inPage(win, "JSON.stringify(store.focus)"));
+    assert.equal(log.length, before + 1);
+    assert.equal(log.at(-1).kind, "broke");
+    assert.equal(inPage(win, "store.focusRun"), null, "the session is cleared on ending");
+  });
+
+  test("a finished session is recorded as finished", () => {
+    inPage(win, "focusStart(1); store.focusRun.start = Date.now() - 61000;");
+    assert.equal(inPage(win, "focusDone(store.focusRun)"), true);
+    inPage(win, 'focusEnd("done")');
+    assert.equal(JSON.parse(inPage(win, "JSON.stringify(store.focus)")).at(-1).kind, "done");
+  });
+
+  test("the log is capped, so a year of sessions cannot fill localStorage", () => {
+    inPage(win, `store.focus = Array.from({length: 80}, (_, i) => ({on: i, mins: 25, ran: 1, kind: "done"}));`);
+    inPage(win, 'focusStart(25); focusEnd("broke")');
+    const n = Number(inPage(win, "store.focus.length"));
+    assert.ok(n <= 60, `log grew to ${n}`);
+  });
+});

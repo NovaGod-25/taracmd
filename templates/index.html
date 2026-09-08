@@ -1351,7 +1351,11 @@ function renderScorer(root){
   const mine = store.attempts[aid] || {};
   const mark = KEYS.marking[paper.code];
   const key = paper.keys[state.qset];
-  const dropped = new Set(paper.dropped || []);
+  /* A dropped question is marked X in the key, and lands at a different
+     number in each Series — 2022 GS-I dropped one, at 61 in Set A but 11 in
+     Set D. So it has to be read off the set you actually sat, not from a list
+     hanging off the paper. */
+  const dropped = new Set(key.reduce((a, k, i) => (k === "X" ? [...a, i + 1] : a), []));
 
   let right=0, wrong=0, blank=0;
   key.forEach((k,i)=>{

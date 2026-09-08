@@ -40,7 +40,12 @@ TARGETS = {
 # What the app's own PAPER_LBL map knows how to render.
 PAPERS = {"prelims", "mains-gs1", "mains-gs2", "mains-gs3", "mains-gs4", "essay"}
 WEIGHTS = {"high", "medium", "low"}
-SET_LETTERS = {"A", "B", "C", "D"}
+# "X" is the Commission's own mark for a question it dropped. It is a letter
+# in the key like any other, and it falls at a DIFFERENT number in each Series
+# — 2022 GS-I dropped one question, at 61 in Set A, 71 in B, 31 in C, 11 in D.
+# That is why droppedness lives in the letters rather than in a per-paper list:
+# a flat list cannot say "question 61, but only if you sat Set A".
+SET_LETTERS = {"A", "B", "C", "D", "X"}
 
 TOKEN = re.compile(r"__[A-Z0-9_]+__")
 
@@ -150,9 +155,16 @@ def check_keys(keys) -> None:
                 if stray:
                     fail(f"{y} {code} set {set_name} contains {stray}")
 
-            for q in paper.get("dropped") or []:
-                if not 1 <= q <= expected:
-                    fail(f"{y} {code}: dropped question {q} is outside 1-{expected}")
+            # Each key page prints how many questions it dropped. That count is
+            # transcribed separately, so it is an independent check on the
+            # letters: if they disagree, one of the two was read wrong.
+            want = paper.get("dropped_count")
+            if want is not None:
+                for set_name, letters in (paper.get("keys") or {}).items():
+                    got = list(letters).count("X")
+                    if got != want:
+                        fail(f"{y} {code} set {set_name}: {got} question(s) marked X, "
+                             f"but the paper says {want} were dropped")
 
 
 def check_optionals(opts) -> None:

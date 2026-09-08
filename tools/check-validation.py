@@ -107,6 +107,19 @@ def _(root):
     edit(root, "answer-keys.json", m)
 
 
+@case("X marks disagree with the printed dropped count", "were dropped")
+def _(root):
+    # Each key page states how many questions it dropped. That number is
+    # transcribed separately from the letters, so the two disagreeing means one
+    # of them was read wrong — which is the whole point of keeping both.
+    def m(d):
+        n = d["marking"]["gs1"]["questions"]
+        paper = d["years"][2]["papers"][0]
+        paper["dropped_count"] = 2
+        paper["keys"] = {"A": ["A"] * (n - 1) + ["X"]}
+    edit(root, "answer-keys.json", m)
+
+
 @case("quiz answer index out of range", "outside its")
 def _(root):
     def m(d):

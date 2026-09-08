@@ -3,7 +3,7 @@
  * BUMP THIS ON EVERY DEPLOY. The whole app is one HTML file, so a stale cache
  * entry means returning visitors keep getting the old page, content and all.
  */
-const CACHE = "taracmd-2026-09-08a";
+const CACHE = "taracmd-2026-09-08b";
 
 const SHELL = [
   "./",

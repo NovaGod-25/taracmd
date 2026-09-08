@@ -144,3 +144,66 @@ describe("the exam clock", () => {
     assert.ok(on >= new Date(new Date().toDateString()), `nextExam looked backwards: ${on}`);
   });
 });
+
+describe("scoring a Prelims paper against the official key", () => {
+  test("2022 GS-I carries all four Series, 100 letters each", () => {
+    const shape = JSON.parse(inPage(win, `
+      (() => {
+        const p = KEYS.years.find(y => y.year === 2022).papers.find(p => p.code === "gs1");
+        return JSON.stringify({
+          sets: Object.keys(p.keys),
+          lengths: Object.values(p.keys).map(k => k.length),
+          xs: Object.values(p.keys).map(k => k.filter(l => l === "X").length),
+          droppedCount: p.dropped_count,
+        });
+      })()`));
+    assert.deepEqual(shape.sets, ["A", "B", "C", "D"]);
+    assert.deepEqual(shape.lengths, [100, 100, 100, 100]);
+    assert.deepEqual(shape.xs, [1, 1, 1, 1], "one dropped question in every Series");
+    assert.equal(shape.droppedCount, 1, "and the paper's own header agrees");
+  });
+
+  /* The transcription guard. UPSC builds the four Series by shuffling the same
+     ten-question blocks, so every block in Set A must reappear intact in B, C
+     and D. A single letter read wrong off the scan breaks the block it sits in
+     and this fails — which is what makes a hand-read key trustworthy. */
+  test("the four Series are permutations of one set of ten-question blocks", () => {
+    const blocks = JSON.parse(inPage(win, `
+      (() => {
+        const p = KEYS.years.find(y => y.year === 2022).papers.find(p => p.code === "gs1");
+        const cut = k => Array.from({length: 10}, (_, i) => k.slice(i*10, i*10+10).join(""));
+        return JSON.stringify(Object.fromEntries(
+          Object.entries(p.keys).map(([s, k]) => [s, cut(k).sort()])));
+      })()`));
+    for (const s of ["B", "C", "D"]) {
+      assert.deepEqual(blocks[s], blocks.A,
+        `Set ${s} does not use the same blocks as Set A — a letter is misread`);
+    }
+  });
+
+  test("the dropped question follows the Series you sat, not the paper", () => {
+    const at = JSON.parse(inPage(win, `
+      (() => {
+        const p = KEYS.years.find(y => y.year === 2022).papers.find(p => p.code === "gs1");
+        return JSON.stringify(Object.fromEntries(Object.entries(p.keys)
+          .map(([s, k]) => [s, k.indexOf("X") + 1])));
+      })()`));
+    assert.deepEqual(at, { A: 61, B: 71, C: 31, D: 11 });
+    assert.equal(new Set(Object.values(at)).size, 4,
+      "a per-paper list of dropped questions could not express this");
+  });
+
+  test("a perfect sheet scores 198 of 200 — the dropped question is left out", () => {
+    const out = JSON.parse(inPage(win, `
+      (() => {
+        const p = KEYS.years.find(y => y.year === 2022).papers.find(p => p.code === "gs1");
+        const key = p.keys.A, m = KEYS.marking.gs1;
+        let right = 0, wrong = 0, blank = 0;
+        key.forEach(k => { if (k === "X") return; right++; });
+        return JSON.stringify({ right, marks: right * m.correct + wrong * m.wrong, total: m.total });
+      })()`));
+    assert.equal(out.right, 99);
+    assert.equal(out.marks, 198);
+    assert.equal(out.total, 200);
+  });
+});

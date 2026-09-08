@@ -165,6 +165,28 @@ Added after the recovery, all exercised in a browser on a real http origin:
 - **A Mains answer log** per paper: question, minutes, words, marks, and the sentence
   about what went wrong. Essay comes free on a 125/250 scale.
 
+## Tests
+
+`tests/` holds behaviour tests for the app itself, run by `node --test` against
+**`web/taracmd.html`** — the built file, not the template, because that is what a phone
+opens. jsdom is the only dependency.
+
+```bash
+npm --prefix tests ci      # once
+npm --prefix tests test
+```
+
+They cover the parts where a silent wrong answer is worse than a crash: the runtime
+exam-year filter, the widening revision-decay schedule, the union-not-replace merge that
+restoring a backup depends on, `esc()`, and the exam clock. `content.yml` runs them on
+every push.
+
+Note the shape they had to be written to: **ticks are stored as numeric subtopic
+indices**, not ids — `toggleSub` pushes `+dataset.i`. The first draft of these tests used
+string ids, passed the length checks anyway, and only failed on the merge, where
+`uniqSort`'s numeric comparator returns `NaN` for strings. The test was wrong, not the
+app, but the shape is easy to get wrong twice.
+
 ## Open work, in order of leverage
 
 1. **Weight bands do not discriminate.** 145 topics `high`, 96 `medium`, exactly 1 `low`.

@@ -11,8 +11,14 @@ android {
         applicationId = "com.taracmd.app"
         minSdk = 24
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
+        // Every CI build was versionCode 1, so Android saw a new APK as the
+        // same version as the installed one and refused it as an upgrade —
+        // you had to uninstall first. The run number is monotonic per repo,
+        // so CI builds now climb; a local build stays at 1, which is fine
+        // because it is the only one on the device.
+        val run = System.getenv("GITHUB_RUN_NUMBER")?.toIntOrNull()
+        versionCode = run ?: 1
+        versionName = if (run != null) "1.0.$run" else "1.0"
     }
 
     buildTypes {

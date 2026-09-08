@@ -18,6 +18,9 @@ android/gradlew.bat
 # fetched from upsc.gov.in and stay local.
 tools/.key-pdfs/
 
+# Test deps. tests/package-lock.json IS committed, so CI can npm ci.
+tests/node_modules/
+
 # Python
 __pycache__/
 *.pyc

@@ -13,9 +13,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
 
@@ -29,6 +29,18 @@ jobs:
       # stays hidden until the day it was meant to help. This checks it fires.
       - name: Prove the validation fires
         run: python3 tools/check-validation.py
+
+      # The checks above say the content is coherent. They say nothing about
+      # whether the app behaves — the decay schedule, the merge on import, the
+      # runtime year filter. These run against web/taracmd.html, the file a
+      # phone actually opens, in a headless DOM.
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+      - name: Install test deps
+        run: npm --prefix tests ci
+      - name: Behaviour tests
+        run: npm --prefix tests test
 
       # build.py is the only thing allowed to write the three targets. A dirty
       # tree here means one of them was hand-edited — which is exactly how the

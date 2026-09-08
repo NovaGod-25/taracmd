@@ -1,0 +1,12 @@
+{
+  "name": "taracmd-tests",
+  "private": true,
+  "type": "module",
+  "description": "Behaviour tests for the built page. Run from the repo root: npm --prefix tests test",
+  "scripts": {
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "jsdom": "^25.0.1"
+  }
+}

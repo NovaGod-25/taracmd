@@ -61,6 +61,40 @@ Things that will bite:
 - `Read it all` renders the whole syllabus flat with no controls, and is what `@media
   print` prints. The app is one file, so printing is a stylesheet rather than an export.
 
+## Navigation
+
+Four tabs and a drawer, after the bar reached seven and stopped having a shape.
+
+```
+Syllabus   Papers                     Practice              Focus      ☰ drawer
+           ├ Prelims                  ├ Daily                          ├ Toppers' copies
+           ├ Mains                    ├ Practice                       ├ Read the whole syllabus
+           └ Optional                 └ Score a paper                  ├ Back up or restore
+                                                                       └ Theme
+```
+
+Prelims, Mains and Optional were three of the seven tabs and **one idea** — the
+Commission's question papers — and Prelims and Mains already shared `renderPYQ`. They are
+segments now, in the same control the syllabus lens and the practice modes already use.
+
+Things that will bite:
+
+- **`renderPapers` reassigns `view`.** The three paper renderers all write to `view` and
+  none takes a target, so it points `view` at a panel below the segment and puts it back
+  in a `finally`. That is why `view` is `let` and not `const`. If it ever failed to put it
+  back, every later render would draw into the wrong element — there is a test for
+  exactly that.
+- **The drawer is button-opened, never edge-swiped.** On Android 10+ a swipe in from
+  either edge is the system Back gesture; an app cannot reliably take that edge, and
+  trying makes Back unreliable, which is worse than having no gesture.
+- **The back ladder gained a rung and the drawer goes first**, because it is the topmost
+  thing on screen: drawer → sheet → read view → collapse the outline → Syllabus tab → OS.
+- **Toppers lights no tab**, because it is reached from the drawer. `markTab` clears the
+  bar rather than leaving the previous tab lit and claiming you are somewhere you are not.
+- **Four columns, and the drawer is why it should stay four.** Anything rare goes in the
+  drawer instead of the bar. The old note about a seventh tab wrapping still applies to
+  the grid: `repeat(4,1fr)` is not decorative.
+
 ## Content files
 
 | File | Holds |

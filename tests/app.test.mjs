@@ -393,3 +393,69 @@ describe("the focus dial", () => {
     assert.ok(n <= 60, `log grew to ${n}`);
   });
 });
+
+describe("navigation", () => {
+  test("four tabs, and Papers holds the three paper indexes as segments", () => {
+    const tabs = JSON.parse(inPage(win,
+      `JSON.stringify([...document.querySelectorAll(".tab")].map(t => t.dataset.tab))`));
+    assert.deepEqual(tabs, ["syllabus", "papers", "practice", "focus"],
+      "seven tabs was three tabs for one idea; Prelims/Mains/Optional are segments now");
+    const segs = JSON.parse(inPage(win, "JSON.stringify(PAPER_SEGS.map(s => s[0]))"));
+    assert.deepEqual(segs, ["prelims", "mains", "optional"]);
+  });
+
+  test("every paper index still renders behind its segment", () => {
+    for (const seg of ["prelims", "mains", "optional"]) {
+      inPage(win, `state.tab = "papers"; state.pset = ${JSON.stringify(seg)}; render();`);
+      // textContent, not innerText: jsdom does not implement innerText at all
+      const body = inPage(win, `document.getElementById("papersview").textContent`);
+      assert.ok(body && body.length > 40, `${seg} rendered nothing behind the segment`);
+    }
+  });
+
+  /* renderPapers points the paper renderers at a panel below its segment by
+     reassigning `view`. If it ever failed to put it back, every later render
+     would draw into the wrong element. */
+  test("renderPapers puts `view` back where it found it", () => {
+    inPage(win, `state.tab = "papers"; state.pset = "prelims"; render();`);
+    assert.equal(inPage(win, `view === document.getElementById("view")`), true);
+  });
+
+  test("the drawer holds the long tail, and Toppers lights no tab", () => {
+    const items = JSON.parse(inPage(win,
+      `JSON.stringify([...document.querySelectorAll(".ditem b")].map(e => e.textContent))`));
+    assert.equal(items.length, 3);
+    inPage(win, `state.tab = "toppers"; markTab("toppers"); render();`);
+    assert.equal(Number(inPage(win, `document.querySelectorAll(".tab.on").length`)), 0,
+      "no tab may claim to be where you are when you are somewhere else");
+  });
+
+  /* The ladder is the part a regroup can quietly break. Drawer first, because
+     it is the topmost thing on the screen. */
+  test("back unwinds drawer, then sheet, then the outline, then the tab", () => {
+    inPage(win, `state.tab = "syllabus"; state.read = false; openId = null;
+                 state.open = new Set(); state.openTopics = new Set(); openDrawer();`);
+    assert.equal(inPage(win, "taracmdBack()"), true, "drawer closes first");
+    assert.equal(inPage(win, "drawerOpen()"), false);
+
+    inPage(win, `state.open = new Set(["polity"]);`);
+    assert.equal(inPage(win, "taracmdBack()"), true, "an open outline collapses");
+    assert.equal(Number(inPage(win, "state.open.size")), 0);
+
+    inPage(win, `state.tab = "papers"; markTab("papers");`);
+    assert.equal(inPage(win, "taracmdBack()"), true, "any other tab returns to the syllabus");
+    assert.equal(inPage(win, "state.tab"), "syllabus");
+
+    assert.equal(inPage(win, "taracmdBack()"), false, "then the OS takes over");
+  });
+
+  test("the theme control has three states, not two", () => {
+    const opts = JSON.parse(inPage(win,
+      `JSON.stringify([...document.querySelectorAll("[data-theme-set]")].map(b => b.dataset.themeSet))`));
+    assert.deepEqual(opts, ["light", "dark", "system"],
+      "'follow the phone' is a state a toggle cannot express");
+    inPage(win, `store.theme = null; markTheme();`);
+    assert.equal(inPage(win, `document.querySelector("[data-theme-set='system']").classList.contains("on")`),
+      true, "no stored theme means System, not Light");
+  });
+});

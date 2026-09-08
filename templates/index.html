@@ -217,16 +217,18 @@ a{color:var(--accent-ink);text-decoration:none}
 
 /* ---------- tab bar ---------- */
 .tabs{position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--card);border-top:1px solid var(--rule);
-  display:grid;grid-template-columns:repeat(7,1fr);padding-bottom:env(safe-area-inset-bottom)}
-/* Seven columns is 53px each on a 375px phone and 45px on a 320px one, which
-   is why the label shrinks below 360. This is the ceiling: an eighth tab does
-   not fit at any size the labels stay readable at, so the next surface folds
-   into an existing tab rather than joining this row. The grid count is not
-   decorative — leave it at six with seven buttons and the last one wraps onto
-   a second row. */
-.tab{display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 0 8px;color:var(--ink-3);font-size:9.5px;font-weight:500;
-  letter-spacing:-.02em;white-space:nowrap;overflow:hidden}
-@media(max-width:360px){.tab{font-size:8.5px;letter-spacing:-.03em}.tab svg{width:18px;height:18px}}
+  display:grid;grid-template-columns:repeat(4,1fr);padding-bottom:env(safe-area-inset-bottom)}
+/* Four columns is 93px each on a 375px phone, which is room for an 11px label
+   and air around it. It got to seven once — Prelims, Mains and Optional are
+   one idea and were three of them — and the row lost its shape long before it
+   ran out of pixels. Rare destinations go in the drawer instead, so this
+   number should not need to change again. */
+.tab{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 0 9px;
+  color:var(--ink-3);font-size:11px;font-weight:500;white-space:nowrap;overflow:hidden}
+/* The active tab was marked by colour alone, which is the one cue a
+   colour-blind reader does not get and the first to wash out in sunlight. */
+.tab.on::before{content:"";position:absolute;top:0;width:26px;height:2.5px;border-radius:0 0 3px 3px;background:var(--accent)}
+.tab.on svg{stroke-width:2.1}
 .tab svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .tab.on{color:var(--accent-ink)}
 
@@ -492,6 +494,35 @@ mark{background:var(--amber-soft);color:inherit;border-radius:3px;padding:0 1px}
 /* .prim's theme overrides are :root-scoped and out-specify a bare class, which
    once painted this label dark-on-dark inside a visible border. Match it. */
 :root .prim.fstop{margin-top:22px;background:none;border-color:var(--rule-2);color:var(--ink-2);font-weight:500}
+
+/* ---------------- drawer ---------------- */
+.drawer-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);opacity:0;pointer-events:none;
+  transition:opacity .2s;z-index:60}
+.drawer-bg.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(84vw,330px);z-index:61;
+  background:var(--card);border-left:1px solid var(--rule);box-shadow:var(--shadow);
+  transform:translateX(100%);transition:transform .22s cubic-bezier(.2,.7,.3,1);
+  padding:14px 14px calc(14px + env(safe-area-inset-bottom));overflow-y:auto;
+  display:flex;flex-direction:column;gap:4px}
+.drawer.on{transform:none}
+@media (prefers-reduced-motion:reduce){.drawer{transition:none}}
+.dhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.deyebrow{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--ink-3)}
+.ditem{display:flex;align-items:flex-start;gap:11px;width:100%;text-align:left;padding:11px 10px;
+  border-radius:11px;color:inherit;cursor:pointer}
+.ditem:hover{background:var(--sunk)}
+.ditem svg{width:19px;height:19px;flex:none;margin-top:1px;stroke:currentColor;fill:none;
+  stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;color:var(--ink-3)}
+.ditem b{display:block;font-size:14px;font-weight:500}
+.ditem i{display:block;font-style:normal;font-size:11.5px;color:var(--ink-3);margin-top:2px;line-height:1.4}
+.dsplit{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--ink-3);margin:14px 10px 7px}
+.seg.dtheme{margin:0 10px}
+.seg.dtheme button{flex:1}
+.dnote{margin:16px 10px 0}
+.segwide{display:flex;margin:6px 0 4px}
+.segwide button{flex:1}
 </style>
 </head>
 <body>
@@ -507,6 +538,9 @@ mark{background:var(--amber-soft);color:inherit;border-radius:3px;padding:0 1px}
     <button class="iconbtn" id="themeBtn" title="Switch theme" aria-label="Switch theme">
       <svg viewBox="0 0 24 24" id="themeIcon"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg>
     </button>
+    <button class="iconbtn" id="menuBtn" title="More" aria-label="More">
+      <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
   </div>
 
   <div id="view"></div>
@@ -517,13 +551,44 @@ mark{background:var(--amber-soft);color:inherit;border-radius:3px;padding:0 1px}
 
 <nav class="tabs" id="tabs">
   <button class="tab on" data-tab="syllabus"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 016.5 3H19v15H6.5A2.5 2.5 0 004 20.5z"/><path d="M4 20.5A2.5 2.5 0 016.5 18H19v3H6.5A2.5 2.5 0 014 20.5z"/></svg>Syllabus</button>
-  <button class="tab" data-tab="prelims"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg>Prelims</button>
-  <button class="tab" data-tab="mains"><svg viewBox="0 0 24 24"><path d="M4 4h11l5 5v11H4z"/><path d="M15 4v5h5"/><path d="M8 13h8M8 17h5"/></svg>Mains</button>
-  <button class="tab" data-tab="optional"><svg viewBox="0 0 24 24"><path d="M12 4v16"/><path d="M9 20h6"/><path d="M6 8h12"/><path d="M6 8l-3 5h6z"/><path d="M18 8l3 5h-6z"/></svg>Optional</button>
+  <button class="tab" data-tab="papers"><svg viewBox="0 0 24 24"><path d="M4 4h11l5 5v11H4z"/><path d="M15 4v5h5"/><path d="M8 13h8M8 17h5"/></svg>Papers</button>
+  <button class="tab" data-tab="practice"><svg viewBox="0 0 24 24"><path d="M9.1 9a3 3 0 015.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>Practice</button>
   <button class="tab" data-tab="focus"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/></svg>Focus</button>
-  <button class="tab" data-tab="quiz"><svg viewBox="0 0 24 24"><path d="M9.1 9a3 3 0 015.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>Quiz</button>
-  <button class="tab" data-tab="toppers"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4 6.7 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg>Toppers</button>
 </nav>
+
+<!-- The long tail. Everything rare or settings-shaped lives here rather than
+     competing for a slot in a row of four, which is what keeps the bar from
+     creeping back to seven. Opened by the button, never by an edge swipe: on
+     Android 10+ a swipe from either edge is the system Back gesture, and an
+     app that fights the OS for that edge loses. -->
+<div class="drawer-bg" id="drawerBg"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="dhead">
+    <span class="deyebrow">TaraCmd</span>
+    <button class="xbtn" id="drawerX" aria-label="Close">&#215;</button>
+  </div>
+  <button class="ditem" data-go="toppers">
+    <svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4 6.7 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg>
+    <span><b>Toppers' copies</b><i>Published answer booklets, by rank and by subject</i></span>
+  </button>
+  <button class="ditem" id="dRead">
+    <svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
+    <span><b>Read the whole syllabus</b><i>All 1,723 subtopics, flat — and what prints</i></span>
+  </button>
+  <button class="ditem" id="dData">
+    <svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M4 20h16"/></svg>
+    <span><b>Back up or restore</b><i>This device is the only copy of your progress</i></span>
+  </button>
+  <div class="dsplit">Theme</div>
+  <div class="seg dtheme" id="dTheme">
+    <button data-theme-set="light">Light</button>
+    <button data-theme-set="dark">Dark</button>
+    <button data-theme-set="system">System</button>
+  </div>
+  <p class="note dnote">Everything you tick, log and score is stored on this device only, under
+    <span class="mono">taracmd-v1</span>. Nothing is sent anywhere, and clearing site data or
+    moving phone loses it unless you have backed it up.</p>
+</aside>
 
 <script>
 const SUBJECTS = __SUBJECTS__;
@@ -640,7 +705,10 @@ function agoWords(ms){
 /* ---------------- helpers ---------------- */
 const esc = s => String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const PAPER_LBL = {prelims:"P", "mains-gs1":"GS1", "mains-gs2":"GS2", "mains-gs3":"GS3", "mains-gs4":"GS4", essay:"Essay"};
-const view = document.getElementById("view");
+/* Not const: renderPapers points the three paper renderers at a panel below
+   its segment control and puts this back afterwards. They all write to `view`
+   and none of them takes a target, so this is the seam. */
+let view = document.getElementById("view");
 const topicCount = s => s.topics.length;
 function subjProgress(s){
   let d=0, t=0;
@@ -661,6 +729,7 @@ const DOWNI = '<svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="M7 11l5 5 5
 /* ---------------- state ---------------- */
 let state = {
   tab: "syllabus", filter: "all", tfilter: "all",
+  pset: "prelims",        // which paper index the Papers tab is showing
   lens: "subject",        // "subject" | "paper" — two shapes of one syllabus
   open: new Set(),        // expanded groups
   openTopics: new Set(),  // topics expanded in place
@@ -845,7 +914,6 @@ function renderSyllabus(){
         </div>
         <div class="lens-r">
           <button class="linky" id="expAll">${anyOpen ? "Collapse all" : "Expand all"}</button>
-          <button class="linky" id="readAll">Read it all</button>
         </div>
       </div>
       <div class="filters">
@@ -873,15 +941,13 @@ function renderSyllabus(){
             : `<div class="empty">Nothing here under this filter.</div>`) : ""}
         </section>`;
       }).join("")}
-      <p class="note">Weight bands come from how often a topic has surfaced in the last ten years of papers. Tick subtopics as you revise, and mark a topic revised when you go back over it — everything is stored on this device only. <button class="linky" id="dataBtn">Back up or restore progress</button></p>
+      <p class="note">Weight bands come from how often a topic has surfaced in the last ten years of papers. Tick subtopics as you revise, and mark a topic revised when you go back over it. Reading the whole syllabus and backing it up are both in the menu, top right.</p>
     </div>`;
 
   const q = document.getElementById("q");
   q.addEventListener("input", () => runSearch(q.value.trim()));
   const dj = document.getElementById("dueJump");
   if(dj) dj.onclick = () => { state.tfilter = "due"; state.open = new Set(gs.map(g => g.id)); render(); };
-  document.getElementById("dataBtn").onclick = openData;
-  document.getElementById("readAll").onclick = () => { state.read = true; render(); };
   document.getElementById("expAll").onclick = () => {
     state.open = anyOpen ? new Set() : new Set(gs.map(g => g.id));
     render();
@@ -1560,6 +1626,7 @@ function openData(){
 
 /* Hardware back on Android, and swipe-down on the grip. */
 window.taracmdBack = function(){
+  if(drawerOpen()){ closeDrawer(); return true; }
   if(openId){ closeSheet(); return true; }
   if(state.tab==="syllabus" && state.read){ state.read=false; render(); return true; }
   if(state.tab==="syllabus" && (state.openTopics.size || state.open.size)){
@@ -2083,23 +2150,95 @@ function renderPractice(root){
 
 /* ---------------- shell ---------------- */
 const backBtn = document.getElementById("backBtn"), brand = document.getElementById("brand");
+/* Prelims, Mains and Optional were three of seven tabs and one idea: the
+   Commission's question papers. They are one tab with a segment now, which is
+   the same control the syllabus lens and the practice modes already use. */
+const PAPER_SEGS = [["prelims", "Prelims"], ["mains", "Mains"], ["optional", "Optional"]];
+
+function renderPapers(){
+  view.innerHTML = `<div class="seg segwide" id="pseg">
+      ${PAPER_SEGS.map(([k, l]) => `<button class="${state.pset === k ? "on" : ""}" data-pseg="${k}">${l}</button>`).join("")}
+    </div><div id="papersview"></div>`;
+  const into = document.getElementById("papersview");
+  // The three renderers each write to `view`, so they are pointed at the panel
+  // below the segment instead and put back afterwards.
+  const real = view;
+  try{
+    view = into;
+    if(state.pset === "optional") renderOptional(); else renderPYQ(state.pset);
+  } finally { view = real; }
+  document.querySelectorAll("[data-pseg]").forEach(b => b.onclick = () => {
+    state.pset = b.dataset.pseg; render();
+  });
+}
+
 function render(){
   backBtn.classList.add("hide");
   brand.classList.remove("hide");
   if(state.tab==="syllabus") renderSyllabus();
-  else if(state.tab==="prelims") renderPYQ("prelims");
-  else if(state.tab==="mains") renderPYQ("mains");
-  else if(state.tab==="optional") renderOptional();
+  else if(state.tab==="papers") renderPapers();
   else if(state.tab==="focus") renderFocus();
-  else if(state.tab==="quiz") renderQuiz();
+  else if(state.tab==="practice") renderQuiz();
   else renderToppers();
   window.scrollTo(0,0);
 }
 backBtn.onclick = ()=>{ render(); };
 document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{
   state.tab = b.dataset.tab; state.filter="all"; state.read=false;
-  document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("on", x===b));
+  markTab(state.tab);
   render();
+});
+
+/* Toppers is reached from the drawer, so no tab is lit for it — but the bar
+   must not keep the previous tab lit either, or it would claim you are
+   somewhere you are not. */
+function markTab(tab){
+  document.querySelectorAll(".tab").forEach(x => x.classList.toggle("on", x.dataset.tab === tab));
+}
+
+/* ---------------- the drawer ----------------
+   Button-opened, never edge-swiped: on Android 10+ a swipe in from either
+   edge is the system Back gesture, and an app cannot reliably take that edge
+   from the OS. Trying would make Back unreliable, which is worse than not
+   having the gesture. */
+const drawer = document.getElementById("drawer"), drawerBg = document.getElementById("drawerBg");
+const drawerOpen = () => drawer.classList.contains("on");
+function openDrawer(){
+  drawer.classList.add("on"); drawerBg.classList.add("on");
+  drawer.setAttribute("aria-hidden", "false");
+  markTheme();
+}
+function closeDrawer(){
+  drawer.classList.remove("on"); drawerBg.classList.remove("on");
+  drawer.setAttribute("aria-hidden", "true");
+}
+document.getElementById("menuBtn").onclick = openDrawer;
+document.getElementById("drawerX").onclick = closeDrawer;
+drawerBg.onclick = closeDrawer;
+document.querySelectorAll("[data-go]").forEach(b => b.onclick = () => {
+  closeDrawer();
+  state.tab = b.dataset.go; state.read = false;
+  markTab(state.tab);
+  render();
+});
+document.getElementById("dRead").onclick = () => {
+  closeDrawer();
+  state.tab = "syllabus"; state.read = true;
+  markTab("syllabus");
+  render();
+};
+document.getElementById("dData").onclick = () => { closeDrawer(); openData(); };
+
+/* Three states, not a toggle: the third is "follow the phone", which a
+   two-way switch cannot express and which is the sensible default. */
+function markTheme(){
+  const cur = store.theme || "system";
+  document.querySelectorAll("[data-theme-set]").forEach(b =>
+    b.classList.toggle("on", b.dataset.themeSet === cur));
+}
+document.querySelectorAll("[data-theme-set]").forEach(b => b.onclick = () => {
+  store.theme = b.dataset.themeSet === "system" ? null : b.dataset.themeSet;
+  save(); applyTheme(store.theme); markTheme();
 });
 
 /* theme toggle — remembered across launches */

@@ -155,10 +155,24 @@ def pdf_text(raw: bytes, name: str) -> str | None:
     import io
     try:
         reader = PdfReader(io.BytesIO(raw))
-        return "\n".join((p.extract_text() or "") for p in reader.pages)
     except Exception as e:
         print(f"  ! could not read {name}: {e}")
         return None
+
+    text = "\n".join((p.extract_text() or "") for p in reader.pages)
+    if text.strip():
+        return text
+
+    # No text layer at all. Checked against all seven keys the Commission has
+    # published a URL for (2021-2024): every one is a photograph of a printed
+    # grid - four pages, one per Series - and not one carries a single
+    # character of text. So this is the normal case here, not a bad download.
+    # Say that, rather than letting parse_key report "no rows recognised" and
+    # imply the regex is what needs another look.
+    print(f"  ! {name}: no text layer, {len(reader.pages)} scanned page(s).")
+    print("    These keys are images. Reading them needs OCR, not a parser.")
+    print("    See CLAUDE.md, open work, for where that stands.")
+    return None
 
 
 # A key PDF is a grid: question number, then one letter per set. The column

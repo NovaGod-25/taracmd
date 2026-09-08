@@ -171,11 +171,29 @@ Added after the recovery, all exercised in a browser on a real http origin:
    The stripes, the legend and the "High weight" filter are the app's central editorial
    claim and at 60% high they carry almost no signal. Needs an editorial pass through
    `subjects.json` — this is a judgment call about UPSC frequency, not a code change.
-2. **Answer keys incomplete.** Every `keys` object is empty, so Quiz → Score a paper
-   still says so rather than showing a grid. Seven papers do have URLs (2021–2024), and
-   `python3 tools/answer-keys.py extract --dry-run` against those is the way in — it
-   needs `pip install pypdf` and it downloads seven PDFs from upsc.gov.in, so run it
-   locally and unhurried.
+2. **Answer keys incomplete, and `extract` cannot fill them.** Every `keys` object is
+   empty, so Quiz → Score a paper shows a message instead of a grid. The seven papers
+   that have URLs (2021–2024) were all fetched and opened: **every one is a scan.** Four
+   pages each, one per Series, a photograph of a printed grid, and not one character of
+   text in any of the 28 pages. `extract`'s premise — pull text out with pypdf and match
+   rows with a regex — cannot ever work on them; it now says so instead of blaming its
+   own regex.
+   Reading them means OCR. A working proof of that exists and is worth knowing about
+   before anyone starts over: deskew the page (they sit up to 1.8° off square, which
+   smears every rule and defeats projection), find the cell grid from the table's own
+   printed rules rather than an assumed pitch (pitch drifts, and drift silently reads the
+   wrong row near the bottom of a column), then read each cell with several tesseract
+   modes and take the majority — no single mode gets every letter, but the vote does.
+   On CS(P)-2022 GS-I Series A that read 100 of 100 cells, agreed with a careful reading
+   by eye on every one, and its count of `X` cells matched the "No. of Questions Dropped"
+   the page prints in its own header — which is the checksum any attempt at this should
+   be made to pass, per page.
+   What is NOT done is making that hold across the other six. The scans vary far more
+   than expected — 2,481×3,507 up to 9,992×14,096 pixels, skew from 0° to 1.8° — and the
+   table finder currently only locks on for 2022 Paper I. That generalisation is the
+   work, and it is a computer-vision job, not an afternoon.
+   Typing four sets of 100 letters per paper by hand remains a legitimate alternative,
+   and the header checksum makes it verifiable.
    `discover` will not help for the eleven missing URLs: checked 25 Aug 2026, the
    Commission's answer-key page lists only CDS-II and CAPF keys and no Civil Services
    Prelims at all. Those years are archived off it and need finding by hand.

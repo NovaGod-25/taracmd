@@ -1329,9 +1329,11 @@ function renderScorer(root){
   const years = (KEYS.years||[]).filter(y=>y.papers.some(hasLetters));
   if(!years.length){
     root.innerHTML = `<div class="empty">No answer key has been loaded yet.<br><br>
-      Run <span class="mono">python3 tools/answer-keys.py extract</span> to pull the
-      letters out of the Commission's own key PDFs, then rebuild.</div>
-      <p class="note">The links to every key that is published are on the Prelims tab.</p>`;
+      The Commission publishes its keys as scans — a photograph of a printed grid,
+      with no text in the file — so they cannot simply be read out of the PDF.</div>
+      <p class="note">Every key that has been published is linked on the Prelims tab, and
+      opens the Commission's own PDF. Scoring here needs the letters typed in or read by
+      OCR first; until then this tab stays empty rather than pretending otherwise.</p>`;
     return;
   }
   if(!state.qyear || !years.some(y=>y.year===state.qyear)) state.qyear = years[0].year;

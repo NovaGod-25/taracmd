@@ -207,3 +207,84 @@ describe("scoring a Prelims paper against the official key", () => {
     assert.equal(out.total, 200);
   });
 });
+
+describe("the syllabus tab", () => {
+  test("by subject: eight groups, and the counts add up to the whole syllabus", () => {
+    const g = JSON.parse(inPage(win, `
+      (() => { state.lens = "subject";
+        return JSON.stringify(groups().map(x => ({id: x.id, n: x.topics.length}))); })()`));
+    assert.equal(g.length, 8);
+    assert.equal(g.reduce((a, x) => a + x.n, 0), 242);
+  });
+
+  /* The lens is the point of the tab: the Commission sets the syllabus per
+     paper, and 240 of 242 topics carry more than one paper tag, so this is a
+     genuinely different shape of the same material rather than the same list
+     grouped twice. */
+  test("by paper: six papers, each holding exactly the topics tagged for it", () => {
+    const g = JSON.parse(inPage(win, `
+      (() => { state.lens = "paper";
+        const out = groups().map(x => ({
+          id: x.id, n: x.topics.length,
+          tagged: ALL_TOPICS.filter(t => t.tp.papers.includes(x.id)).length }));
+        state.lens = "subject";
+        return JSON.stringify(out); })()`));
+    assert.deepEqual(g.map(x => x.id),
+      ["prelims", "mains-gs1", "mains-gs2", "mains-gs3", "mains-gs4", "essay"]);
+    for (const x of g) assert.equal(x.n, x.tagged, `${x.id} lost topics in the regroup`);
+    assert.equal(g.find(x => x.id === "prelims").n, 235);
+  });
+
+  test("most topics serve more than one paper, so the lenses really do differ", () => {
+    const multi = Number(inPage(win, "ALL_TOPICS.filter(x => x.tp.papers.length > 1).length"));
+    assert.equal(multi, 240);
+  });
+
+  test("progress counts topics and subtopics separately", () => {
+    setStore(win, { done: {} });
+    const t = JSON.parse(inPage(win, "JSON.stringify(tally(ALL_TOPICS.map(x => x.tp)))"));
+    assert.equal(t.tTot, 242);
+    assert.equal(t.sTot, 1723);
+    assert.equal(t.tDone, 0);
+    // finishing one topic moves the topic count by one and the subtopic count
+    // by that topic's length — one percentage could not say both
+    const n = Number(inPage(win, `
+      (() => { const tp = ALL_TOPICS[0].tp;
+        store.done[tp.id] = tp.subtopics.map((_, i) => i);
+        return tp.subtopics.length; })()`));
+    const after = JSON.parse(inPage(win, "JSON.stringify(tally(ALL_TOPICS.map(x => x.tp)))"));
+    assert.equal(after.tDone, 1);
+    assert.equal(after.sDone, n);
+  });
+
+  test("read-it-all renders every subtopic, not a teaser", () => {
+    const html = inPage(win, "readHtml()");
+    const items = (html.match(/<li>/g) || []).length;
+    assert.equal(items, 1723, "the whole syllabus has to be in the read view");
+    assert.equal((html.match(/<h2>/g) || []).length, 8);
+    assert.equal((html.match(/<h3>/g) || []).length, 242);
+  });
+
+  test("a topic opened in place shows all of its subtopics and what it counts for", () => {
+    const out = JSON.parse(inPage(win, `
+      (() => { const tp = ALL_TOPICS.find(x => x.tp.papers.length > 1).tp;
+        const h = subtopicsHtml(tp, "");
+        return JSON.stringify({ boxes: (h.match(/data-tick=/g) || []).length,
+                                subtopics: tp.subtopics.length,
+                                counts: /Counts for /.test(h) }); })()`));
+    assert.equal(out.boxes, out.subtopics, "every subtopic is a tick target");
+    assert.ok(out.counts, "the topic says which papers it serves");
+  });
+
+  test("search reaches subtopics and marks what matched", () => {
+    const out = JSON.parse(inPage(win, `
+      (() => { const term = "monsoon";
+        const hits = ALL_TOPICS.filter(({tp}) =>
+          tp.name.toLowerCase().includes(term) ||
+          tp.subtopics.some(s => s.toLowerCase().includes(term)));
+        const h = topicHtml(hits[0].tp, hits[0].s, term);
+        return JSON.stringify({ topics: hits.length, marked: /<mark>/.test(h) }); })()`));
+    assert.ok(out.topics > 0, "monsoon should match something in a UPSC syllabus");
+    assert.ok(out.marked, "matched words are highlighted");
+  });
+});

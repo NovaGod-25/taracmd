@@ -349,6 +349,107 @@ a{color:var(--accent-ink);text-decoration:none}
 .empty{text-align:center;color:var(--ink-3);font-size:13.5px;padding:38px 20px}
 .hide{display:none!important}
 .mono{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
+
+/* ---------------- the syllabus outline ---------------- */
+/* The shape strip: how big the syllabus is and where the mass sits. The bar
+   is drawn twice — the pale track is how many topics that group holds, the
+   solid overlay is how much of it is ticked — so size and progress read off
+   the same line instead of competing for space. */
+.shape{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:12px 13px;margin-bottom:14px}
+.shead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:12.5px;margin-bottom:10px}
+.shead .n{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ink-3)}
+.sbars{display:flex;flex-direction:column;gap:5px}
+.sbar{display:grid;grid-template-columns:minmax(78px,1fr) 2.4fr auto;align-items:center;gap:9px;
+  width:100%;background:none;border:0;padding:2px 0;cursor:pointer;text-align:left;color:inherit}
+.sbar:hover .sb-l{color:var(--ink)}
+.sb-l{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-2);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb-i{font-size:13px;line-height:1}
+.sb-t{position:relative;height:7px;border-radius:99px;background:var(--sunk);overflow:hidden}
+.sb-t > i{position:absolute;left:0;top:0;height:100%;background:var(--rule-2);border-radius:99px}
+.sb-t > b{position:absolute;left:0;top:0;height:100%;background:var(--accent);border-radius:99px}
+.sb-n{font-size:10.5px;color:var(--ink-3);min-width:26px;text-align:right}
+
+/* Lens switch. Two shapes of one syllabus, so it is a segmented control and
+   not a filter chip — picking one is not narrowing, it is re-grouping. */
+.lens{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:16px 0 10px}
+.seg{display:inline-flex;background:var(--sunk);border-radius:99px;padding:3px;gap:2px}
+.seg button{font-size:12.5px;font-weight:500;padding:6px 13px;border-radius:99px;border:0;
+  background:none;color:var(--ink-3);cursor:pointer}
+.seg button.on{background:var(--card);color:var(--ink);box-shadow:var(--shadow)}
+.lens-r{display:flex;gap:12px}
+
+/* The eight (or six) group icons, for getting down the page without scrolling
+   past everything in between. */
+.jump{display:flex;gap:6px;overflow-x:auto;padding:0 0 12px}
+.jump::-webkit-scrollbar{display:none}
+.jump button{flex:none;width:34px;height:34px;border-radius:10px;border:1px solid var(--rule);
+  background:var(--card);font-size:15px;line-height:1;cursor:pointer}
+.jump button:hover{border-color:var(--accent);transform:translateY(-1px)}
+
+.grp{margin-bottom:10px;scroll-margin-top:8px}
+/* Sticky, so you always know which subject or paper you are reading inside a
+   242-topic scroll. */
+.ghead{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:10px;width:100%;text-align:left;
+  padding:11px 13px;border:1px solid var(--rule);border-radius:12px;background:var(--card);
+  cursor:pointer;color:inherit}
+.ghead.open{border-bottom-left-radius:0;border-bottom-right-radius:0}
+.ghead:hover{border-color:var(--rule-2)}
+.gi{font-size:17px;line-height:1;flex:none}
+.gt{flex:1;min-width:0}
+.gn{display:block;font-family:"IBM Plex Serif",Georgia,serif;font-weight:600;font-size:14.5px;line-height:1.25}
+.gm{display:block;font-size:10.5px;color:var(--ink-3);margin-top:3px}
+.gbar{flex:none;width:56px;height:4px;border-radius:99px;background:var(--sunk);overflow:hidden}
+.gbar > i{display:block;height:100%;background:var(--accent);border-radius:99px}
+.caret{flex:none;width:20px;text-align:center;font-size:16px;color:var(--ink-3);line-height:1}
+
+.tlist{background:var(--card);border:1px solid var(--rule);border-top:0;
+  border-radius:0 0 12px 12px;overflow:hidden}
+.tw{border-bottom:1px solid var(--rule)}
+.tw:last-child{border-bottom:none}
+.tw.open{background:var(--card-2)}
+.tw .row{border-bottom:none}
+
+/* Subtopics in place. This is the syllabus itself — all of a topic, not two
+   of seven — and each line is the tick target, so reading and marking are the
+   same gesture. */
+.subs{padding:2px 13px 12px 27px}
+.sub{display:flex;align-items:flex-start;gap:9px;width:100%;text-align:left;padding:7px 8px;
+  border:0;border-radius:8px;background:none;cursor:pointer;color:var(--ink-2);font-size:13px;line-height:1.45}
+.sub:hover{background:var(--sunk)}
+.sub .box{flex:none;width:16px;height:16px;margin-top:1px;border:1.5px solid var(--rule-2);border-radius:5px;
+  display:grid;place-items:center;color:transparent}
+.sub .box svg{width:11px;height:11px;stroke:currentColor;stroke-width:3;fill:none}
+.sub.on .box{background:var(--accent);border-color:var(--accent);color:#fff}
+.sub.on .stxt{color:var(--ink-3);text-decoration:line-through;text-decoration-color:var(--rule-2)}
+.subfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+  padding:9px 8px 2px;border-top:1px dashed var(--rule);margin-top:6px}
+.also{font-size:11.5px;color:var(--ink-3)}
+.chip.m{background:var(--amber-soft);color:var(--amber)}
+mark{background:var(--amber-soft);color:inherit;border-radius:3px;padding:0 1px}
+
+/* Read it all: the flat document. No chrome, no checkboxes, and it is what
+   prints — the app is one file, so printing is a stylesheet, not an export. */
+.readbar{display:flex;gap:8px;margin:4px 0 14px}
+.readdoc{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:18px 18px 22px}
+.readdoc h1{font-size:19px;margin:0 0 4px}
+.readdoc h2{font-size:15.5px;margin:22px 0 2px;padding-top:12px;border-top:1px solid var(--rule)}
+.readdoc h3{font-size:13.5px;font-weight:600;margin:13px 0 4px;color:var(--ink-2);
+  display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.readdoc .rp{font-family:"IBM Plex Mono",monospace;font-size:9.5px;color:var(--ink-3);
+  font-weight:400;flex:none;letter-spacing:.03em}
+.readdoc ul{margin:0;padding-left:19px}
+.readdoc li{font-size:12.5px;line-height:1.6;color:var(--ink-2)}
+
+@media print{
+  .tabs,.topbar,.readbar,.searchwrap,.sheet,.sheetbg{display:none!important}
+  body{background:#fff;color:#000}
+  .readdoc{border:0;padding:0;background:#fff}
+  .readdoc h2{break-after:avoid}
+  .readdoc h3{break-after:avoid;break-inside:avoid}
+  .readdoc ul{break-inside:avoid}
+  .readdoc li,.readdoc .rp{color:#000}
+}
 </style>
 </head>
 <body>
@@ -373,7 +474,7 @@ a{color:var(--accent-ink);text-decoration:none}
 <div class="sheet" id="sheet" role="dialog" aria-modal="true"><div class="grip"></div><div class="inner" id="sheetIn"></div></div>
 
 <nav class="tabs" id="tabs">
-  <button class="tab on" data-tab="subjects"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 016.5 3H19v15H6.5A2.5 2.5 0 004 20.5z"/><path d="M4 20.5A2.5 2.5 0 016.5 18H19v3H6.5A2.5 2.5 0 014 20.5z"/></svg>Subjects</button>
+  <button class="tab on" data-tab="syllabus"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 016.5 3H19v15H6.5A2.5 2.5 0 004 20.5z"/><path d="M4 20.5A2.5 2.5 0 016.5 18H19v3H6.5A2.5 2.5 0 014 20.5z"/></svg>Syllabus</button>
   <button class="tab" data-tab="prelims"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg>Prelims</button>
   <button class="tab" data-tab="mains"><svg viewBox="0 0 24 24"><path d="M4 4h11l5 5v11H4z"/><path d="M15 4v5h5"/><path d="M8 13h8M8 17h5"/></svg>Mains</button>
   <button class="tab" data-tab="optional"><svg viewBox="0 0 24 24"><path d="M12 4v16"/><path d="M9 20h6"/><path d="M6 8h12"/><path d="M6 8l-3 5h6z"/><path d="M18 8l3 5h-6z"/></svg>Optional</button>
@@ -513,21 +614,175 @@ const XI    = '<svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>';
 const DOWNI = '<svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M4 20h16"/></svg>';
 
 /* ---------------- state ---------------- */
-let state = {tab:"subjects", subject:null, filter:"all", tfilter:"all"};
+let state = {
+  tab: "syllabus", filter: "all", tfilter: "all",
+  lens: "subject",        // "subject" | "paper" — two shapes of one syllabus
+  open: new Set(),        // expanded groups
+  openTopics: new Set(),  // topics expanded in place
+  read: false,            // the flat, printable read-it-all view
+};
 
 /* ---------------- renderers ---------------- */
-function renderSubjects(){
-  const total = SUBJECTS.reduce((a,s)=>a+s.topics.length,0);
-  document.getElementById("brandSub").textContent = total + " topics";
-  const cards = SUBJECTS.map(s=>{
-    const p = subjProgress(s);
-    return `<button class="sub-card" data-sub="${s.id}">
-      <span class="em">${s.icon}</span>
-      <span class="nm">${esc(s.short)}</span>
-      <div class="bar"><i style="width:${(p*100).toFixed(1)}%"></i></div>
-      <span class="meta"><span>${topicCount(s)} topics</span><span>${Math.round(p*100)}%</span></span>
-    </button>`;
-  }).join("");
+/* ---------------- the syllabus ----------------
+   This tab IS the syllabus, not a menu standing in front of it. Eight
+   subjects, 242 topics and 1,723 subtopics, on one page that opens in place
+   and reads all the way down. It used to be eight cards leading to a list
+   leading to a modal, which meant the 1,723 lines — the actual syllabus —
+   could only be seen eight at a time, one topic at a time, 242 modals deep.
+
+   Two lenses over the same topics. BY SUBJECT is how the material is taught.
+   BY PAPER is how the Commission actually sets it, and 240 of the 242 topics
+   carry more than one paper tag, so the two are genuinely different shapes of
+   one syllabus rather than the same list printed twice. */
+
+const PAPER_ORDER = ["prelims", "mains-gs1", "mains-gs2", "mains-gs3", "mains-gs4", "essay"];
+const PAPER_NAME = {
+  prelims: "Prelims", "mains-gs1": "Mains GS-I", "mains-gs2": "Mains GS-II",
+  "mains-gs3": "Mains GS-III", "mains-gs4": "Mains GS-IV", essay: "Essay",
+};
+const PAPER_ICON = {
+  prelims: "◷", "mains-gs1": "🏛", "mains-gs2": "⚖", "mains-gs3": "📈",
+  "mains-gs4": "🧭", essay: "✍",
+};
+const ALL_TOPICS = SUBJECTS.flatMap(s => s.topics.map(tp => ({tp, s})));
+const OWNER = {};
+ALL_TOPICS.forEach(x => { OWNER[x.tp.id] = x; });
+
+const ticked = tp => (store.done[tp.id] || []).length;
+
+/* Topics and subtopics counted separately. One percentage cannot say which it
+   means, and "68% of topics" is a different claim from 68% of the reading. */
+function tally(list){
+  let tDone = 0, sTot = 0, sDone = 0;
+  for(const tp of list){
+    sTot += tp.subtopics.length;
+    const d = ticked(tp);
+    sDone += d;
+    if(tp.subtopics.length && d >= tp.subtopics.length) tDone++;
+  }
+  return {tTot: list.length, tDone, sTot, sDone, pct: sTot ? sDone / sTot : 0};
+}
+
+function groups(){
+  if(state.lens === "paper"){
+    return PAPER_ORDER
+      .map(p => ({id: p, icon: PAPER_ICON[p], name: PAPER_NAME[p], short: PAPER_NAME[p],
+                  topics: ALL_TOPICS.filter(x => x.tp.papers.includes(p)).map(x => x.tp)}))
+      .filter(g => g.topics.length);
+  }
+  return SUBJECTS.map(s => ({id: s.id, icon: s.icon, name: s.name, short: s.short, topics: s.topics}));
+}
+
+function passesFilter(tp){
+  if(state.tfilter === "due") return isDue(tp);
+  if(state.tfilter === "high") return tp.weight === "high";
+  if(state.tfilter === "left") return ticked(tp) < tp.subtopics.length;
+  return true;
+}
+
+const hl = (s, term) => !term ? esc(s)
+  : esc(s).replace(new RegExp("(" + term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "ig"), "<mark>$1</mark>");
+
+/* The shape of the whole thing in one strip: how big is this, and where does
+   the mass sit? Nothing answered that before, and it is the first thing you
+   want to know about a syllabus you have to finish by a date. */
+function shapeHtml(){
+  const gs = groups();
+  const max = Math.max(...gs.map(g => g.topics.length));
+  const t = tally(ALL_TOPICS.map(x => x.tp));
+  const multi = ALL_TOPICS.filter(x => x.tp.papers.length > 1).length;
+  return `<div class="shape">
+    <div class="shead">
+      <span><b class="mono">${t.tTot}</b> topics · <b class="mono">${t.sTot.toLocaleString()}</b> subtopics</span>
+      <span class="n">${t.tDone} done · ${t.sDone.toLocaleString()} ticked</span>
+    </div>
+    <div class="sbars">
+      ${gs.map(g => {
+        const gt = tally(g.topics);
+        return `<button class="sbar" data-jump="${g.id}">
+          <span class="sb-l"><span class="sb-i">${g.icon}</span>${esc(g.short)}</span>
+          <span class="sb-t"><i style="width:${(g.topics.length / max * 100).toFixed(1)}%"></i><b style="width:${(g.topics.length / max * gt.pct * 100).toFixed(1)}%"></b></span>
+          <span class="sb-n mono">${g.topics.length}</span>
+        </button>`;
+      }).join("")}
+    </div>
+    <p class="note" style="margin-top:9px">${multi} of ${t.tTot} topics count for more than one paper — revising once
+      serves Prelims and Mains together. <b>By paper</b> shows the syllabus the way the Commission sets it.</p>
+  </div>`;
+}
+
+/* A topic opened in place. The sheet still exists and still owns revision;
+   this is for reading, and reading the whole of a topic should not cost a
+   navigation. */
+function subtopicsHtml(tp, term){
+  const done = new Set(store.done[tp.id] || []);
+  return `<div class="subs">
+    ${tp.subtopics.map((x, i) => `
+      <button class="sub ${done.has(i) ? "on" : ""}" data-tick="${tp.id}" data-i="${i}">
+        <span class="box">${CHECK}</span><span class="stxt">${hl(x, term)}</span>
+      </button>`).join("")}
+    <div class="subfoot">
+      <span class="also">Counts for ${tp.papers.map(p => PAPER_NAME[p] || p).join(", ")}</span>
+      <button class="linky" data-sheet="${tp.id}">Open · mark revised</button>
+    </div>
+  </div>`;
+}
+
+function topicHtml(tp, s, term){
+  const open = state.openTopics.has(tp.id);
+  const dn = ticked(tp), tot = tp.subtopics.length;
+  const d = dueIn(tp);
+  const dueChip = d === null ? "" : d <= 0 ? `<span class="chip due">due</span>` : `<span class="chip sched">${d}d</span>`;
+  const matched = term ? tp.subtopics.filter(x => x.toLowerCase().includes(term)) : [];
+  const teaser = (matched.length ? matched : tp.subtopics).slice(0, 2).join(" · ");
+  return `<div class="tw ${open ? "open" : ""}">
+    <button class="row" data-open="${tp.id}">
+      <span class="stripe ${tp.weight}"></span>
+      <span class="body">
+        <span class="t">${hl(tp.name, term)}</span>
+        <span class="s">${s ? esc(s.short) + " · " : ""}${hl(teaser, term)}</span>
+        <span class="chips">${chipHtml(tp)}<span class="chip">${dn}/${tot}</span>${dueChip}${
+          term && matched.length ? `<span class="chip m">${matched.length} match${matched.length > 1 ? "es" : ""}</span>` : ""}</span>
+      </span>
+      <span class="caret">${open ? "−" : "+"}</span>
+    </button>
+    ${open ? subtopicsHtml(tp, term) : ""}
+  </div>`;
+}
+
+/* Everything, flat, no controls: for reading end to end and for printing. The
+   app is one file and prints as one document, so this costs a stylesheet
+   rather than an export. */
+function readHtml(){
+  const subs = ALL_TOPICS.reduce((a, x) => a + x.tp.subtopics.length, 0);
+  return `<div class="readdoc">
+    <h1>UPSC Civil Services — the syllabus</h1>
+    <p class="note">${ALL_TOPICS.length} topics, ${subs.toLocaleString()} subtopics. Ticks are
+      left out on purpose: this view is for reading.</p>
+    ${SUBJECTS.map(s => `
+      <h2>${s.icon} ${esc(s.name)}</h2>
+      ${s.topics.map(tp => `
+        <h3>${esc(tp.name)}<span class="rp">${tp.papers.map(p => PAPER_NAME[p]).join(" · ")}</span></h3>
+        <ul>${tp.subtopics.map(x => `<li>${esc(x)}</li>`).join("")}</ul>`).join("")}`).join("")}
+  </div>`;
+}
+
+function renderSyllabus(){
+  document.getElementById("brandSub").textContent = ALL_TOPICS.length + " topics";
+
+  if(state.read){
+    view.innerHTML = `<div class="readbar">
+        <button class="fchip on" id="readBack">← Back to the syllabus</button>
+        <button class="fchip" id="readPrint">Print</button>
+      </div>${readHtml()}`;
+    document.getElementById("readBack").onclick = () => { state.read = false; render(); };
+    document.getElementById("readPrint").onclick = () => window.print();
+    return;
+  }
+
+  const gs = groups();
+  const anyOpen = gs.some(g => state.open.has(g.id));
+  const dueCount = ALL_TOPICS.filter(x => isDue(x.tp)).length;
 
   view.innerHTML = `
     <div class="searchwrap">
@@ -536,19 +791,138 @@ function renderSubjects(){
     </div>
     <div id="results"></div>
     <div id="home">
-      ${paceHtml(total)}
-      <div class="head"><h2>Subjects</h2><span class="n">${total} topics</span></div>
-      <div class="grid">${cards}</div>
+      ${paceHtml(ALL_TOPICS.length)}
+      ${shapeHtml()}
+      <div class="lens">
+        <div class="seg">
+          <button class="${state.lens === "subject" ? "on" : ""}" data-lens="subject">By subject</button>
+          <button class="${state.lens === "paper" ? "on" : ""}" data-lens="paper">By paper</button>
+        </div>
+        <div class="lens-r">
+          <button class="linky" id="expAll">${anyOpen ? "Collapse all" : "Expand all"}</button>
+          <button class="linky" id="readAll">Read it all</button>
+        </div>
+      </div>
+      <div class="filters">
+        ${[["all", "All"], ["due", "Due " + dueCount], ["high", "High weight"], ["left", "Not done"]]
+          .map(([k, l]) => `<button class="fchip ${state.tfilter === k ? "on" : ""}" data-f="${k}">${l}</button>`).join("")}
+      </div>
+      <div class="jump">${gs.map(g => `<button data-jump="${g.id}" title="${esc(g.name)}">${g.icon}</button>`).join("")}</div>
+      ${gs.map(g => {
+        const shown = g.topics.filter(passesFilter);
+        const t = tally(g.topics);
+        const open = state.open.has(g.id);
+        return `<section class="grp" id="g-${g.id}">
+          <button class="ghead ${open ? "open" : ""}" data-grp="${g.id}">
+            <span class="gi">${g.icon}</span>
+            <span class="gt">
+              <span class="gn">${esc(g.name)}</span>
+              <span class="gm mono">${t.tDone}/${t.tTot} topics · ${t.sDone}/${t.sTot} subtopics${
+                shown.length !== g.topics.length ? " · " + shown.length + " shown" : ""}</span>
+            </span>
+            <span class="gbar"><i style="width:${(t.pct * 100).toFixed(1)}%"></i></span>
+            <span class="caret">${open ? "−" : "+"}</span>
+          </button>
+          ${open ? (shown.length
+            ? `<div class="tlist">${shown.map(tp => topicHtml(tp, state.lens === "paper" ? OWNER[tp.id].s : null, "")).join("")}</div>`
+            : `<div class="empty">Nothing here under this filter.</div>`) : ""}
+        </section>`;
+      }).join("")}
       <p class="note">Weight bands come from how often a topic has surfaced in the last ten years of papers. Tick subtopics as you revise, and mark a topic revised when you go back over it — everything is stored on this device only. <button class="linky" id="dataBtn">Back up or restore progress</button></p>
     </div>`;
 
-  view.querySelectorAll("[data-sub]").forEach(b=>b.onclick=()=>{state.subject=b.dataset.sub;state.tfilter="all";render();});
   const q = document.getElementById("q");
-  q.addEventListener("input", ()=>runSearch(q.value.trim()));
+  q.addEventListener("input", () => runSearch(q.value.trim()));
   const dj = document.getElementById("dueJump");
-  if(dj) dj.onclick = showDue;
+  if(dj) dj.onclick = () => { state.tfilter = "due"; state.open = new Set(gs.map(g => g.id)); render(); };
   document.getElementById("dataBtn").onclick = openData;
+  document.getElementById("readAll").onclick = () => { state.read = true; render(); };
+  document.getElementById("expAll").onclick = () => {
+    state.open = anyOpen ? new Set() : new Set(gs.map(g => g.id));
+    render();
+  };
+  view.querySelectorAll("[data-lens]").forEach(b => b.onclick = () => {
+    state.lens = b.dataset.lens; state.open = new Set(); render();
+  });
+  view.querySelectorAll("[data-f]").forEach(b => b.onclick = () => { state.tfilter = b.dataset.f; render(); });
+  view.querySelectorAll("[data-jump]").forEach(b => b.onclick = () => {
+    const id = b.dataset.jump;
+    state.open.add(id);
+    render();
+    const el = document.getElementById("g-" + id);
+    if(el) el.scrollIntoView({behavior: "smooth", block: "start"});
+  });
+  bindOutline(view);
 }
+
+/* Search reads the same 1,723 subtopics the outline does, and returns the same
+   rows — so a hit expands, ticks and links exactly like the tree it came from,
+   with the matched words marked. */
+function runSearch(term){
+  const res = document.getElementById("results"), home = document.getElementById("home");
+  if(!res) return;
+  if(!term || term.length < 2){ res.innerHTML = ""; home.classList.remove("hide"); return; }
+  home.classList.add("hide");
+  const t = term.toLowerCase();
+  const hits = [];
+  for(const {tp, s} of ALL_TOPICS){
+    const inName = tp.name.toLowerCase().includes(t);
+    const subs = tp.subtopics.filter(x => x.toLowerCase().includes(t));
+    if(inName || subs.length) hits.push({tp, s, n: subs.length});
+  }
+  if(!hits.length){ res.innerHTML = `<div class="empty">Nothing matches “${esc(term)}”.</div>`; return; }
+  const subHits = hits.reduce((a, h) => a + h.n, 0);
+  res.innerHTML = `<div class="head"><h2>Results</h2><span class="n">${hits.length} topics · ${subHits} subtopics</span></div>
+    <div class="tlist">${hits.slice(0, 80).map(h => topicHtml(h.tp, h.s, t)).join("")}</div>`;
+  bindOutline(res);
+}
+
+/* Kept for the sheet and anywhere else that still wants a plain row. */
+function rowHtml(tp, s, subline){
+  const dn = ticked(tp), tot = tp.subtopics.length;
+  const complete = dn === tot && tot > 0;
+  const d = dueIn(tp);
+  const dueChip = d === null ? "" : d <= 0 ? `<span class="chip due">due</span>` : `<span class="chip sched">${d}d</span>`;
+  return `<button class="row" data-topic="${tp.id}">
+    <span class="stripe ${tp.weight}"></span>
+    <span class="body">
+      <span class="t">${esc(tp.name)}</span>
+      <span class="s">${esc(subline || (s ? s.short + " · " : "") + tp.subtopics.slice(0, 2).join(" · "))}</span>
+      <span class="chips">${chipHtml(tp)}<span class="chip">${dn}/${tot}</span>${dueChip}</span>
+    </span>
+    <span class="tick ${complete ? "on" : ""}">${CHECK}</span>
+  </button>`;
+}
+
+/* One place binds the outline, so search results behave exactly like the tree:
+   same rows, same expansion, same ticking. */
+function bindOutline(root){
+  root.querySelectorAll("[data-grp]").forEach(b => b.onclick = () => {
+    const id = b.dataset.grp;
+    state.open.has(id) ? state.open.delete(id) : state.open.add(id);
+    refreshBehind();          // keeps your place; render() would jump to the top
+  });
+  root.querySelectorAll("[data-open]").forEach(b => b.onclick = () => {
+    const id = b.dataset.open;
+    state.openTopics.has(id) ? state.openTopics.delete(id) : state.openTopics.add(id);
+    refreshBehind();
+  });
+  root.querySelectorAll("[data-tick]").forEach(b => b.onclick = e => {
+    e.stopPropagation();
+    const tp = OWNER[b.dataset.tick].tp;
+    toggleSub(tp.id, +b.dataset.i, tp.subtopics.length);
+    refreshBehind();
+  });
+  root.querySelectorAll("[data-sheet]").forEach(b => b.onclick = e => {
+    e.stopPropagation(); openTopic(b.dataset.sheet);
+  });
+  root.querySelectorAll("[data-topic]").forEach(b => b.onclick = () => openTopic(b.dataset.topic));
+}
+
+function bindRows(root){
+  root.querySelectorAll("[data-topic]").forEach(b => b.onclick = () => openTopic(b.dataset.topic));
+}
+
 
 /* What the exam calendar and your own ticks jointly imply.
    The daily rate is only shown when there is enough runway for it to mean
@@ -580,86 +954,6 @@ function paceHtml(total){
       ${due ? `<span><button class="linky" id="dueJump"><b class="mono">${due}</b> due for revision</button></span>` : ""}
     </div>
   </div>`;
-}
-
-function runSearch(term){
-  const res = document.getElementById("results"), home = document.getElementById("home");
-  if(!term || term.length < 2){ res.innerHTML=""; home.classList.remove("hide"); return; }
-  home.classList.add("hide");
-  const t = term.toLowerCase();
-  const hits = [];
-  for(const s of SUBJECTS){
-    for(const tp of s.topics){
-      const inName = tp.name.toLowerCase().includes(t);
-      const subs = tp.subtopics.filter(x=>x.toLowerCase().includes(t));
-      if(inName || subs.length) hits.push({s, tp, subs: inName ? tp.subtopics.slice(0,2) : subs.slice(0,2)});
-    }
-  }
-  if(!hits.length){ res.innerHTML = `<div class="empty">Nothing matches “${esc(term)}”.</div>`; return; }
-  res.innerHTML = `<div class="head"><h2>Results</h2><span class="n">${hits.length} topics</span></div>
-    <div class="list">${hits.slice(0,60).map(h=>rowHtml(h.tp, h.s, h.subs.join(" · "))).join("")}</div>`;
-  bindRows(res);
-}
-
-function rowHtml(tp, s, subline){
-  const dn = (store.done[tp.id]||[]).length, tot = tp.subtopics.length;
-  const complete = dn === tot && tot > 0;
-  const d = dueIn(tp);
-  const dueChip = d === null ? ""
-    : d <= 0 ? `<span class="chip due">due</span>`
-             : `<span class="chip sched">${d}d</span>`;
-  return `<button class="row" data-topic="${tp.id}">
-    <span class="stripe ${tp.weight}"></span>
-    <span class="body">
-      <span class="t">${esc(tp.name)}</span>
-      <span class="s">${esc(subline || (s ? s.short + " · " : "") + tp.subtopics.slice(0,2).join(" · "))}</span>
-      <span class="chips">${chipHtml(tp)}<span class="chip">${dn}/${tot}</span>${dueChip}</span>
-    </span>
-    <span class="tick ${complete?"on":""}">${CHECK}</span>
-  </button>`;
-}
-
-function renderSubject(){
-  const s = SUBJECTS.find(x=>x.id===state.subject);
-  document.getElementById("brandSub").textContent = "";
-  let topics = s.topics.slice();
-  if(state.tfilter==="high") topics = topics.filter(t=>t.weight==="high");
-  else if(state.tfilter==="prelims") topics = topics.filter(t=>t.papers.includes("prelims"));
-  else if(state.tfilter==="mains") topics = topics.filter(t=>t.papers.some(p=>p.startsWith("mains")));
-  else if(state.tfilter==="left") topics = topics.filter(t=>(store.done[t.id]||[]).length < t.subtopics.length);
-  else if(state.tfilter==="due") topics = topics.filter(isDue).sort((a,b)=>dueIn(a)-dueIn(b));
-
-  const counts = {
-    high: s.topics.filter(t=>t.weight==="high").length,
-    medium: s.topics.filter(t=>t.weight==="medium").length,
-    low: s.topics.filter(t=>t.weight==="low").length,
-    due: s.topics.filter(isDue).length
-  };
-  const p = subjProgress(s);
-  view.innerHTML = `
-    <div class="head" style="margin-top:6px">
-      <h2>${s.icon} ${esc(s.name)}</h2><span class="n">${Math.round(p*100)}% revised</span>
-    </div>
-    <div class="bar" style="margin-bottom:14px"><i style="width:${(p*100).toFixed(1)}%"></i></div>
-    <div class="filters">
-      ${[["all","All "+s.topics.length],["due","Due "+counts.due],["high","High weight "+counts.high],["prelims","Prelims"],["mains","Mains"],["left","Not done"]]
-        .map(([k,l])=>`<button class="fchip ${state.tfilter===k?"on":""}" data-f="${k}">${l}</button>`).join("")}
-    </div>
-    <div class="legend">
-      <span><i style="background:var(--mark)"></i>high frequency ${counts.high}</span>
-      <span><i style="background:var(--amber)"></i>medium ${counts.medium}</span>
-      <span><i style="background:var(--rule-2)"></i>low ${counts.low}</span>
-    </div>
-    ${topics.length ? `<div class="list">${topics.map(t=>rowHtml(t,null,null)).join("")}</div>`
-                    : `<div class="empty">${state.tfilter==="due" ? "Nothing due in " + esc(s.short) + " yet."
-                                          : state.tfilter==="left" ? "Every topic here is ticked off."
-                                          : "No topics in this filter."}</div>`}`;
-  view.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{state.tfilter=b.dataset.f;renderSubject();});
-  bindRows(view);
-}
-
-function bindRows(root){
-  root.querySelectorAll("[data-topic]").forEach(b=>b.onclick=()=>openTopic(b.dataset.topic));
 }
 
 /* ---------------- topic sheet ---------------- */
@@ -731,16 +1025,20 @@ function drawSheet(tp, sj){
   });
 }
 
-/* Re-render whatever is behind the sheet without throwing away the user's
-   place. Rebuilding renderSubjects() wholesale used to wipe an active search. */
+/* Re-render the syllabus without throwing away the user's place: a rebuild
+   used to wipe an active search, and now it would also collapse whatever the
+   reader had opened. The scroll position is held too, because ticking a
+   subtopic halfway down a 242-topic outline should not send you back to the
+   top of it. */
 function refreshBehind(){
-  if(state.tab !== "subjects") return;
-  if(state.subject) return renderSubject();
+  if(state.tab !== "syllabus" || state.read) return;
   const q = document.getElementById("q");
   const term = q ? q.value : "";
-  renderSubjects();
+  const y = window.scrollY;
+  renderSyllabus();
   const q2 = document.getElementById("q");
   if(q2 && term){ q2.value = term; runSearch(term.trim()); }
+  window.scrollTo(0, y);
 }
 
 function closeSheet(){ sheet.classList.remove("on"); sheetBg.classList.remove("on"); openId=null; }
@@ -967,8 +1265,11 @@ function openData(){
 /* Hardware back on Android, and swipe-down on the grip. */
 window.taracmdBack = function(){
   if(openId){ closeSheet(); return true; }
-  if(state.tab==="subjects" && state.subject){ state.subject=null; render(); return true; }
-  if(state.tab!=="subjects"){ document.querySelector('.tab[data-tab="subjects"]').click(); return true; }
+  if(state.tab==="syllabus" && state.read){ state.read=false; render(); return true; }
+  if(state.tab==="syllabus" && (state.openTopics.size || state.open.size)){
+    state.openTopics = new Set(); state.open = new Set(); render(); return true;
+  }
+  if(state.tab!=="syllabus"){ document.querySelector('.tab[data-tab="syllabus"]').click(); return true; }
   return false;
 };
 (function(){
@@ -1487,13 +1788,9 @@ function renderPractice(root){
 /* ---------------- shell ---------------- */
 const backBtn = document.getElementById("backBtn"), brand = document.getElementById("brand");
 function render(){
-  const inSubject = state.tab==="subjects" && state.subject;
-  backBtn.classList.toggle("hide", !inSubject);
-  brand.classList.toggle("hide", !!inSubject);
-  if(inSubject){
-    document.getElementById("backLbl").textContent = "All subjects";
-    renderSubject();
-  } else if(state.tab==="subjects") renderSubjects();
+  backBtn.classList.add("hide");
+  brand.classList.remove("hide");
+  if(state.tab==="syllabus") renderSyllabus();
   else if(state.tab==="prelims") renderPYQ("prelims");
   else if(state.tab==="mains") renderPYQ("mains");
   else if(state.tab==="optional") renderOptional();
@@ -1501,9 +1798,9 @@ function render(){
   else renderToppers();
   window.scrollTo(0,0);
 }
-backBtn.onclick = ()=>{ state.subject=null; render(); };
+backBtn.onclick = ()=>{ render(); };
 document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{
-  state.tab = b.dataset.tab; state.subject=null; state.filter="all";
+  state.tab = b.dataset.tab; state.filter="all"; state.read=false;
   document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("on", x===b));
   render();
 });

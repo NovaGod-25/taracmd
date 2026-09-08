@@ -31,6 +31,36 @@ once already and shipped an APK with dead branding and a different localStorage 
 `.github/workflows/content.yml` now fails the build if any generated target differs from
 what `build.py` produces, which is the guard that was missing.
 
+## The syllabus tab
+
+The first tab **is** the syllabus, not a menu in front of it. It used to be eight cards
+leading to a per-subject list leading to a modal, which meant the 1,723 subtopics — the
+actual syllabus — could only be seen eight at a time, one topic at a time, 242 modals
+deep. Now it is one page: groups open in place, topics open in place, and every subtopic
+is its own tick target.
+
+Two lenses over the same 242 topics, and this is the point of the tab rather than a
+gimmick: **240 of the 242 carry more than one paper tag**, so `By subject` (how the
+material is taught) and `By paper` (how the Commission sets it — Prelims 235, GS-I 69,
+GS-II 82, GS-III 147, GS-IV 5, Essay 28) really are different shapes of one syllabus.
+Anything that regroups topics must keep every topic: `tests/` checks the paper lens holds
+exactly the topics tagged for each paper.
+
+Things that will bite:
+
+- **`state.open` and `state.openTopics` are Sets, and they are not persisted.** They are
+  view state, not progress; `taracmd-v1` never sees them. Back collapses them before it
+  leaves the tab, which is the middle rung of the `taracmdBack()` ladder.
+- **Ticking re-renders, so it must not lose your place.** `refreshBehind()` restores the
+  scroll position and any live search. Toggling a group goes through it for that reason;
+  `render()` scrolls to the top and would throw you back up a 242-topic page.
+- **Progress is two numbers, never one.** Topics finished and subtopics ticked say
+  different things and a single percentage hides which you mean.
+- The topic sheet still exists and still owns revision — `Open · mark revised` in an
+  expanded topic. Reading moved into the page; revision did not.
+- `Read it all` renders the whole syllabus flat with no controls, and is what `@media
+  print` prints. The app is one file, so printing is a stylesheet rather than an export.
+
 ## Content files
 
 | File | Holds |

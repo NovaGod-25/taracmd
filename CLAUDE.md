@@ -137,6 +137,25 @@ answered wearing a new id.
 3. Explanations, where the institute gives them. They become `why`, which is the part that
    teaches.
 
+**The pipeline.** Papers go in a Drive folder — *TaraCmd question intake* — named so the
+pair is obvious (`… - paper.pdf` and `… - key.pdf`, or `… - paper+key.pdf`). Reading a
+paper is judgement, and deciding which of the 242 topics a question belongs to is not
+something a script should guess at, so that part is done by hand into a staged file:
+
+```json
+{ "source": {"name": "Vision IAS", "test": "PT Test 12", "year": 2026},
+  "questions": [{"n": 1, "topic": "polity-basic-structure", "q": "…",
+                 "options": ["…","…","…","…"], "answer": 1, "why": "…"}] }
+```
+
+Everything after the judgement is mechanical, and mechanical work done by hand is where a
+question bank quietly rots — a colliding id, an answer index off by one, the same question
+imported twice from two test series that both lifted it. `tools/quiz-import.py` does that
+part: it mints ids from the source, checks the topic resolves, rejects empty or repeated
+options and out-of-range answers, refuses a question already in the bank under another id,
+and stamps the provenance. `--dry-run` says what it would do. `build.py` then re-checks all
+of it independently.
+
 **What cannot be carried:** anything that is not text. Map questions, diagrams, and
 image-based match-the-following have nowhere to live in this format — the app is one HTML
 file and an inlined image is weight on every page load. Those get skipped rather than

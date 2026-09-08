@@ -43,7 +43,12 @@ print "serving $root/ at http://127.0.0.1:$port/taracmd.html\n";
 if ($lan) {
     # Print the addresses this machine actually answers on, so the URL can be
     # typed into a phone rather than worked out.
-    my $out = `ipconfig 2>nul` || `ip -4 addr 2>/dev/null` || '';
+    # 2>nul is cmd syntax. This Perl is cygwin-built, so backticks go through
+    # sh, which cheerfully creates a FILE called nul in the repo root instead
+    # of discarding anything. Pick the right sink for the shell we actually
+    # have rather than the operating system we are on.
+    my $null = ($^O =~ /MSWin/i) ? 'nul' : '/dev/null';
+    my $out = `ipconfig 2>$null` || `ip -4 addr 2>$null` || '';
     my @ips;
     # Only this machine's own addresses. Scanning every dotted quad in
     # ipconfig also picks up the default gateway and the subnet mask, and a

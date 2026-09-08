@@ -122,9 +122,40 @@ def check_quiz(quiz, topics: dict[str, str]) -> None:
         options = q.get("options") or []
         if len(options) < 2:
             fail(f"quiz question {qid!r} has {len(options)} options")
+        if any(not isinstance(o, str) or not o.strip() for o in options):
+            fail(f"quiz question {qid!r} has an empty option")
+        if len(set(o.strip() for o in options if isinstance(o, str))) != len(options):
+            fail(f"quiz question {qid!r} repeats an option, so two answers would be right")
         answer = q.get("answer")
         if not isinstance(answer, int) or not 0 <= answer < len(options):
             fail(f"quiz question {qid!r} has answer {answer!r}, outside its {len(options)} options")
+        if not (q.get("q") or "").strip():
+            fail(f"quiz question {qid!r} has no question text")
+
+        # Where a question came from. UPSC's own papers carry `paper` and are
+        # marked against the Commission's key; anything else — a coaching
+        # institute's test series — carries `source`, and its answer is that
+        # institute's claim rather than the Commission's. Keeping them apart
+        # matters: a wrong answer from a test series is a normal event, and
+        # nothing here should let one wear the Commission's authority.
+        src = q.get("source")
+        if src is not None:
+            if q.get("paper"):
+                fail(f"quiz question {qid!r} claims both an official paper and a source")
+            for field in ("name",):
+                if not (src.get(field) or "").strip():
+                    fail(f"quiz question {qid!r} has a source with no {field!r}")
+
+    # Institutes recycle questions, and the same question twice is a question
+    # you have already answered wearing a different id.
+    stems: dict[str, str] = {}
+    for q in quiz.get("questions", []):
+        stem = " ".join((q.get("q") or "").lower().split())
+        if len(stem) < 25:
+            continue
+        if stem in stems:
+            fail(f"quiz questions {stems[stem]!r} and {q.get('id', '?')!r} ask the same thing")
+        stems[stem] = q.get("id", "?")
 
 
 def check_paper_tags(quiz, keys) -> None:

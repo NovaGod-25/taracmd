@@ -107,6 +107,41 @@ Things that will bite:
 | `daily.json` | daily current-affairs quiz sources: a URL pattern the page expands against the date |
 | `optionals.json` | the Optional tab: Geography, Law and Agriculture, 22/22 papers each 2016–2026, plus curated copies |
 
+## Feeding question papers in
+
+The bank takes questions from two kinds of source and keeps them apart, because they do
+not carry the same authority.
+
+| Field | Means | Answer is |
+|---|---|---|
+| `paper: {year, code, set, n}` | a real UPSC paper | the **Commission's**, and `build.py` refuses to ship a question whose answer disagrees with the official key |
+| `source: {name, test, year}` | a coaching institute's test series | **that institute's claim**, which is a different thing and is labelled as such on the question |
+
+A question may carry one or the other, never both. Every question also needs a `topic`
+that resolves to one of the 242 ids — that link is what puts a question in front of you
+when the topic falls due, and a question with no topic is just trivia.
+
+`build.py` also rejects an empty option, two identical options in one question (both
+would be right), a missing stem, and two questions asking the same thing in different
+words — institutes recycle heavily, and the same question twice is one you have already
+answered wearing a new id.
+
+**What a paper needs before it can be converted:**
+
+1. **A text layer.** This is the whole game. Institute papers are usually typeset and do
+   carry text. UPSC's own PDFs do not — both the question papers and the answer keys are
+   photographs of paper, and 2021 Prelims read through Drive comes back as 43 empty pages,
+   exactly as `pypdf` reads it locally. A scan needs OCR before anything can be done with it.
+2. **The answer key.** Without it there is no `answer`, and a guessed answer is worse than
+   no question at all.
+3. Explanations, where the institute gives them. They become `why`, which is the part that
+   teaches.
+
+**What cannot be carried:** anything that is not text. Map questions, diagrams, and
+image-based match-the-following have nowhere to live in this format — the app is one HTML
+file and an inlined image is weight on every page load. Those get skipped rather than
+mangled.
+
 ## Typing a past question in
 
 Quiz → Score a paper used to be a bare grid of letters: you marked A/B/C/D against a

@@ -586,6 +586,11 @@ mark{background:var(--amber-soft);color:inherit;border-radius:3px;padding:0 1px}
 .cwhy{display:block;margin-top:9px;font-size:12px;line-height:1.5;color:var(--ink-3)}
 .cwhy.ok{color:var(--accent-ink)}
 .cwhy.no{color:var(--amber)}
+
+/* Provenance, on the question rather than in a note nobody reads. */
+.qfrom{margin-left:8px;padding:1px 6px;border-radius:5px;background:var(--sunk);
+  color:var(--ink-3);letter-spacing:.02em}
+.qfrom.official{background:var(--accent-soft);color:var(--accent-ink)}
 </style>
 </head>
 <body>
@@ -2346,8 +2351,15 @@ function renderPractice(root){
     ${shown.map(q=>{
       const pick = store.picks[q.id], done = pick!==undefined;
       const tp = (subjOf(q.topic)||{topics:[]}).topics.find(t=>t.id===q.topic);
+      /* Where the question is from, on the question. A test-series answer is
+         that institute's claim; a UPSC one is the Commission's. The app must
+         never let the first wear the authority of the second. */
+      const from = q.paper
+        ? `UPSC ${q.paper.year} ${(KEYS.marking[q.paper.code]||{}).name || q.paper.code} · Q${q.paper.n}`
+        : q.source ? [q.source.name, q.source.test].filter(Boolean).join(" · ") : "";
       return `<div class="qcard">
-        <div class="eyebrow">${esc(tp ? tp.name : q.topic)}</div>
+        <div class="eyebrow">${esc(tp ? tp.name : q.topic)}${
+          from ? `<span class="qfrom ${q.paper ? "official" : ""}">${esc(from)}</span>` : ""}</div>
         <div class="qstem">${esc(q.q)}</div>
         <div class="opts">
           ${q.options.map((o,i)=>{
@@ -2362,9 +2374,10 @@ function renderPractice(root){
           ${tp ? `<br><button data-goto="${q.topic}" style="color:var(--accent-ink);font-weight:500;padding:0;margin-top:6px">Revise ${esc(tp.name)} →</button>` : ""}</div>` : ""}
       </div>`;
     }).join("")}
-    <p class="note">These are written for this app, not lifted from past papers — the real
-      questions are one tap away on the Prelims and Mains tabs, on the Commission's own site.
-      Add your own as you revise; a question you had to write is worth more than one you copied.
+    <p class="note">A question carries where it came from. <b>UPSC</b> means it is from a
+      real paper and its answer is the Commission's own — <span class="mono">build.py</span>
+      refuses to ship one that disagrees with the official key. Anything else is a test
+      series, and its answer is that institute's claim, which is not the same thing.
       ${answered ? `<button class="linky" id="qreset">Forget my answers</button>` : ""}</p>`;
 
   root.querySelectorAll("[data-qs]").forEach(b=>b.onclick=()=>{state.qsubj=b.dataset.qs;renderQuiz();});

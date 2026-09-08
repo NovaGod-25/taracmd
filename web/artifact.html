@@ -434,19 +434,41 @@ mark{background:var(--amber-soft);color:inherit;border-radius:3px;padding:0 1px}
 }
 
 /* ---------------- focus ---------------- */
-.focusrun{display:flex;flex-direction:column;align-items:center;gap:6px;padding:34px 0 10px}
-.fclock{font-size:56px;font-weight:600;letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}
-.flil{font-size:13px;color:var(--ink-3)}
-.fmode{font-size:11.5px;color:var(--ink-3);background:var(--sunk);padding:4px 10px;border-radius:99px;margin-top:6px}
-.fleft{font-size:11.5px;color:var(--amber);margin-top:2px}
+/* Sixty ticks, one per minute, so the angle round the face IS the number of
+   minutes — the dial needs no legend and no instructions. */
+.focuswrap{display:flex;flex-direction:column;align-items:center;padding:18px 0 6px}
+.fdialwrap{position:relative;width:min(78vw,300px);aspect-ratio:1}
+.fdial{width:100%;height:100%;display:block;touch-action:none;cursor:pointer}
+.ftrack{fill:none;stroke:var(--sunk);stroke-width:10}
+.farc{fill:none;stroke:var(--accent);stroke-width:10;stroke-linecap:round;transition:stroke-dasharray .25s linear}
+.ftick{stroke:var(--rule-2);stroke-width:1}
+.ftick.big{stroke:var(--ink-3);stroke-width:1.6}
+.fgrip{fill:var(--accent);stroke:var(--card);stroke-width:3}
+/* No transform-origin here. The hand is rotated by the SVG attribute
+   rotate(deg 100 100), which already carries its own centre; adding a CSS
+   origin applies the offset twice and swings the hand off the face. */
+.fhand{stroke:var(--ink-3);stroke-width:2;stroke-linecap:round}
+.fpin{fill:var(--ink-3)}
+/* Run outcomes get their own two colours. The weight-band stripes next door
+   mean how often a topic has come up in the papers, and borrowing them here
+   painted a finished run in the high-frequency red — which reads as a fault. */
+.stripe.ran{background:var(--accent)}
+.stripe.gone{background:var(--rule-2)}
+.fcentre{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;pointer-events:none;gap:2px}
+.fread{font-size:clamp(30px,10vw,44px);font-weight:600;line-height:1;font-variant-numeric:tabular-nums}
+.flil{font-size:12.5px;color:var(--ink-3)}
+.fsteps{display:flex;gap:8px;margin:18px 0 4px}
+.fstep{font-family:"IBM Plex Mono",monospace;font-size:13px;min-width:46px;padding:8px 0;border-radius:10px;
+  border:1px solid var(--rule);background:var(--card);color:var(--ink-2);cursor:pointer}
+.fstep:hover{border-color:var(--accent);color:var(--ink)}
 .prim{background:var(--accent);border:1px solid var(--accent);color:#fff;font-size:14px;font-weight:600;
   padding:12px 20px;border-radius:11px;cursor:pointer}
 :root[data-theme="dark"] .prim,:root:not([data-theme="light"]) .prim{color:#0E131B}
 @media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .prim{color:#fff}}
-.fgo{display:block;width:100%;margin:6px 0 4px}
-/* The theme overrides on .prim are :root-scoped and so out-specify a bare
-   .fstop — which painted this button's label in the dark-on-dark ink meant for
-   a filled accent button, i.e. invisible. Matched specificity, placed after. */
+.fgo{width:100%;max-width:300px;margin:10px 0 2px}
+/* .prim's theme overrides are :root-scoped and out-specify a bare class, which
+   once painted this label dark-on-dark inside a visible border. Match it. */
 :root .prim.fstop{margin-top:22px;background:none;border-color:var(--rule-2);color:var(--ink-2);font-weight:500}
 </style>
 
@@ -956,185 +978,254 @@ function paceHtml(total){
 }
 
 /* ---------------- focus ----------------
-   A timer that takes the phone away from you until it runs out.
+   A clock you set by hand, from 1 to 60 minutes, and then do not touch.
 
-   What this can actually do, because the honest version matters more than the
-   promised one. On Android the app asks for SCREEN PINNING: home and recents
-   stop working, the back button is handed to the page and the page refuses it,
-   and the screen is held awake. Android deliberately keeps ONE way out —
-   holding Back and Overview together — and no ordinary app may remove it. That
-   escape hatch is a feature, not a gap: a phone that cannot be unlocked for
-   ninety minutes is a phone you cannot call an ambulance with.
+   This does NOT try to control the phone. An earlier version pinned the screen
+   with startLockTask(), and that was the wrong idea twice over: Android always
+   leaves a way out of pinning anyway, and a study tool that fights the device
+   is solving the wrong problem. What actually breaks a study hour is the
+   reflex — the idle unlock, the glance at a notification — and you cannot
+   engineer that away. You can only count it.
 
-   For a lock with no way out the app has to be the device owner, which is an
-   adb provisioning step on a factory-reset device. CLAUDE.md carries it.
+   So the rule is simple and unforgiving: LEAVE THE APP AND THE RUN IS VOID.
+   The clock stops, the dial goes back to zero, and the streak of clean runs
+   goes back to zero with it. Nothing is blocked and nothing is locked. The
+   only thing at stake is whether the run counts, which is the whole point —
+   a number you cannot fake is worth more than a cage you can escape.
 
-   In a browser there is no pinning at all. What is left is the timer, a screen
-   wake lock where the browser has one, and honesty: leaving the page is
-   noticed and the session is written down as broken. Nothing here pretends
-   the tab is locked when it is not.
+   In-app navigation is not an interruption. Reading the syllabus during a
+   focus hour is the activity, not a distraction from it. */
 
-   The session lives in localStorage, not in a variable, so a reload — or the
-   process being killed while pinned — does not lose the clock. */
-
-const FOCUS_MINS = [25, 45, 60, 90];
-const FOCUS_MODE = {
-  locked: "pinned — home and recents are off",
-  awake: "screen held awake; this device would not pin",
-  none: "timer only — a browser tab cannot pin anything",
-};
+const FOCUS_MIN = 1, FOCUS_MAX = 60, FOCUS_DEFAULT = 25;
 
 const focusRun = () => store.focusRun && store.focusRun.start ? store.focusRun : null;
 const focusLeft = r => Math.max(0, r.start + r.mins * 60000 - Date.now());
 const focusDone = r => focusLeft(r) <= 0;
+const focusClamp = m => Math.max(FOCUS_MIN, Math.min(FOCUS_MAX, Math.round(m)));
 
 function focusFmt(ms){
   const s = Math.ceil(ms / 1000);
   return `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
 }
 
-/* Native first, then the browser's own wake lock, then nothing. Whatever we
-   got back is what the page says it got — it never claims the stronger one. */
-let wakeLock = null;
-async function focusEngage(mins){
-  if(NATIVE && NATIVE.focusStart){
-    try{ return NATIVE.focusStart(mins) || "none"; }catch(e){ /* fall through */ }
-  }
-  try{
-    if(navigator.wakeLock){ wakeLock = await navigator.wakeLock.request("screen"); return "awake"; }
-  }catch(e){ /* a wake lock is a nicety, not the feature */ }
-  return "none";
-}
+/* Streak of runs finished without leaving. Reset to zero by any interruption,
+   which is the only consequence this feature has and so has to be the one it
+   states plainly. */
+const focusStreak = () => store.focusStreak || 0;
 
-function focusRelease(){
-  if(NATIVE && NATIVE.focusStop){ try{ NATIVE.focusStop(); }catch(e){} }
-  if(wakeLock){ try{ wakeLock.release(); }catch(e){} wakeLock = null; }
+/* Keeping the screen awake is help, not control: the phone going dark
+   mid-session and taking the run with it would be the tool's fault, not
+   yours. It is the only thing the native side is asked for now. */
+let wakeLock = null;
+async function focusAwake(on){
+  if(NATIVE && NATIVE.focusAwake){ try{ NATIVE.focusAwake(on); }catch(e){} }
+  if(!on){
+    if(wakeLock){ try{ wakeLock.release(); }catch(e){} wakeLock = null; }
+    return;
+  }
+  try{ if(navigator.wakeLock) wakeLock = await navigator.wakeLock.request("screen"); }catch(e){}
 }
 
 function focusStart(mins){
-  store.focusRun = {start: Date.now(), mins, mode: "none", left: 0};
+  store.focusRun = {start: Date.now(), mins: focusClamp(mins)};
   save();
-  focusEngage(mins).then(mode => {
-    if(store.focusRun){ store.focusRun.mode = mode; save(); renderFocus(); }
-  });
+  focusAwake(true);
   render();
 }
 
-/* Every session is written down, finished or not. A tool that only records
-   the sessions you completed is a tool that flatters you. */
+/* Every run is written down, and the two endings are not the same thing:
+   "done" is a run seen out, "void" is one interrupted. A log that quietly
+   dropped the voided ones would make the streak meaningless. */
 function focusEnd(kind){
   const r = focusRun();
   if(!r) return;
-  const ran = Math.round((Date.now() - r.start) / 1000);
   store.focus = (store.focus || []).concat([{
-    on: r.start, mins: r.mins, ran, kind, left: r.left || 0,
+    on: r.start, mins: r.mins, ran: Math.round((Date.now() - r.start) / 1000), kind,
   }]).slice(-60);
+  store.focusStreak = kind === "done" ? focusStreak() + 1 : 0;
   store.focusRun = null;
-  focusRelease();
+  focusAwake(false);
   save();
   render();
 }
 
-/* The page refuses the back button for as long as the clock is running; that
-   is the half of the lock a web page can enforce on its own. */
-function focusBlocksBack(){ return !!focusRun(); }
-
-/* Leaving is not preventable in a browser, so it is counted instead. Under
-   pinning this should never fire, which makes it a useful check on whether the
-   pin actually took. */
+/* The interruption. Whatever took you out of the app — the home button, a
+   call, another app, the screen locking — lands here, and the run is void.
+   No grace period and no partial credit: a minute of leniency is a minute you
+   would spend on your phone. */
+function focusInterrupt(){
+  if(!focusRun()) return;
+  focusEnd("void");
+}
+window.taracmdInterrupted = focusInterrupt;
 document.addEventListener("visibilitychange", () => {
-  const r = focusRun();
-  if(!r || document.visibilityState !== "hidden") return;
-  r.left = (r.left || 0) + 1;
-  save();
+  if(document.visibilityState === "hidden") focusInterrupt();
 });
+addEventListener("pagehide", focusInterrupt);
+
+/* ---- the dial ----
+   Sixty minutes round the face, one per tick, so the angle IS the number of
+   minutes and setting it needs no instructions. Drag it, or tap a point on
+   the rim. */
+const FOCUS_R = 84, FOCUS_C = 2 * Math.PI * FOCUS_R;
+const focusAngle = m => (m / 60) * 360 - 90;
+const focusPoint = (m, r = FOCUS_R) => {
+  const a = focusAngle(m) * Math.PI / 180;
+  return [100 + r * Math.cos(a), 100 + r * Math.sin(a)];
+};
+
+function focusDialHtml(mins, frac, running){
+  const [hx, hy] = focusPoint(mins);
+  const ticks = Array.from({length: 60}, (_, i) => {
+    const big = i % 5 === 0;
+    const [x1, y1] = focusPoint(i, big ? 70 : 74);
+    const [x2, y2] = focusPoint(i, 78);
+    return `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}"
+      class="ftick${big ? " big" : ""}"/>`;
+  }).join("");
+  // The arc is drawn from twelve o'clock and shortened as the run is spent, so
+  // what is left on the dial is literally what is left on the clock.
+  const dash = FOCUS_C * (running ? frac : mins / 60);
+  return `<svg viewBox="0 0 200 200" class="fdial" id="fdial">
+    <circle cx="100" cy="100" r="${FOCUS_R}" class="ftrack"/>
+    ${ticks}
+    <circle cx="100" cy="100" r="${FOCUS_R}" class="farc"
+      stroke-dasharray="${dash.toFixed(1)} ${(FOCUS_C - dash).toFixed(1)}"
+      transform="rotate(-90 100 100)"/>
+    ${running ? "" : `<circle cx="${hx.toFixed(1)}" cy="${hy.toFixed(1)}" r="9" class="fgrip"/>`}
+    ${running ? `<line x1="100" y1="100" x2="100" y2="26" class="fhand" id="fhand"/>
+    <circle cx="100" cy="100" r="3" class="fpin"/>` : ""}
+  </svg>`;
+}
 
 let focusTick = null;
 function focusClock(){
   clearInterval(focusTick);
-  if(!focusRun()) return;
-  focusTick = setInterval(() => {
-    const r = focusRun();
-    if(!r){ clearInterval(focusTick); return; }
-    if(focusDone(r)){ focusEnd("done"); return; }
-    const el = document.getElementById("fclock");
-    if(el) el.textContent = focusFmt(focusLeft(r));
-  }, 250);
-}
-
-function focusStatsHtml(){
-  const log = (store.focus || []);
-  const today = new Date().toDateString();
-  const mins = log.filter(x => new Date(x.on).toDateString() === today)
-                  .reduce((a, x) => a + x.ran / 60, 0);
-  const kept = log.filter(x => x.kind === "done").length;
-  return `<div class="sgrid" style="margin:14px 0 4px">
-    <span>today <b class="mono">${Math.round(mins)}m</b></span>
-    <span>sessions <b class="mono">${log.length}</b></span>
-    <span>finished <b class="mono">${kept}</b></span>
-  </div>`;
+  const r = focusRun();
+  if(!r) return;
+  const paint = () => {
+    const run = focusRun();
+    if(!run){ clearInterval(focusTick); return; }
+    if(focusDone(run)){ clearInterval(focusTick); focusEnd("done"); return; }
+    const left = focusLeft(run), total = run.mins * 60000;
+    const el = document.getElementById("fread");
+    if(el) el.textContent = focusFmt(left);
+    const arc = document.querySelector(".farc");
+    if(arc){
+      const d = FOCUS_C * (left / total);
+      arc.setAttribute("stroke-dasharray", `${d.toFixed(1)} ${(FOCUS_C - d).toFixed(1)}`);
+    }
+    // One sweep a minute, like a second hand, so the dial is visibly alive
+    // even when the digits have not changed.
+    const hand = document.getElementById("fhand");
+    if(hand) hand.setAttribute("transform", `rotate(${((Date.now() - run.start) / 1000 % 60) * 6} 100 100)`);
+  };
+  paint();
+  focusTick = setInterval(paint, 200);
 }
 
 function renderFocus(){
   document.getElementById("brandSub").textContent = "focus";
   const r = focusRun();
+  const log = store.focus || [];
+  const today = new Date().toDateString();
+  const mins = log.filter(x => x.kind === "done" && new Date(x.on).toDateString() === today)
+                  .reduce((a, x) => a + x.ran / 60, 0);
 
   if(r){
-    // focusStart() posts startLockTask to the UI thread and cannot know whether
-    // it landed, so the truth comes from focusState() on the next render. The
-    // page must never claim a stronger lock than it actually has.
-    if(NATIVE && NATIVE.focusState){
-      try{ const real = NATIVE.focusState(); if(real && real !== r.mode){ r.mode = real; save(); } }catch(e){}
-    }
-    const mode = FOCUS_MODE[r.mode] || FOCUS_MODE.none;
     view.innerHTML = `
-      <div class="focusrun">
-        <span class="fclock mono" id="fclock">${focusFmt(focusLeft(r))}</span>
-        <span class="flil">of ${r.mins} minutes</span>
-        <span class="fmode">${esc(mode)}</span>
-        ${r.left ? `<span class="fleft">left the app <b>${r.left}</b> time${r.left > 1 ? "s" : ""}</span>` : ""}
-        <button class="prim fstop" id="fstop">End early</button>
-        <p class="note" style="text-align:center;max-width:34ch;margin:14px auto 0">
-          ${r.mode === "locked"
-            ? "Home and recents are off until the clock runs out. Android keeps one way out — hold Back and Overview together — and ending that way is still ending early."
-            : "Nothing is holding this device. The clock is honest, and leaving is counted."}
-        </p>
+      <div class="focuswrap">
+        <div class="fdialwrap">
+          ${focusDialHtml(r.mins, focusLeft(r) / (r.mins * 60000), true)}
+          <div class="fcentre">
+            <span class="fread mono" id="fread">${focusFmt(focusLeft(r))}</span>
+            <span class="flil">of ${r.mins} min</span>
+          </div>
+        </div>
+        <button class="prim fstop" id="fstop">Give up</button>
+        <p class="note" style="text-align:center;max-width:32ch;margin:16px auto 0">
+          Leave the app and this run is void — the clock resets to zero and the streak
+          with it. Reading the syllabus in here is not leaving.</p>
       </div>`;
     document.getElementById("fstop").onclick = () => {
-      if(confirm("End the session early? It goes in the log as broken.")) focusEnd("broke");
+      if(confirm("Give up on this run? It counts as broken and the streak resets.")) focusEnd("void");
     };
     focusClock();
     return;
   }
 
-  const log = (store.focus || []).slice().reverse();
+  const pick = focusClamp(store.focusPick || FOCUS_DEFAULT);
   view.innerHTML = `
-    <div class="head" style="margin-top:6px"><h2>Focus</h2><span class="n">${(store.focus || []).length} sessions</span></div>
-    ${focusStatsHtml()}
-    <div class="filters" style="padding-top:8px">
-      ${FOCUS_MINS.map(m => `<button class="fchip" data-fm="${m}">${m} min</button>`).join("")}
-    </div>
-    <button class="prim fgo" id="fgo">Start focusing</button>
-    <p class="note">Starting hands the phone to the timer. ${NATIVE && NATIVE.focusStart
-      ? "On this build the app pins itself to the screen: home and recents stop working and the screen stays awake. Android always keeps one way out — hold Back and Overview together — so this is a wall, not a cage. Ending early is recorded either way."
-      : "In a browser nothing can be pinned, so this is a clock that notices when you leave and writes it down. The Android build pins the screen properly."}</p>
-    ${log.length ? `<div class="head"><h2>Recent</h2><span class="n">last ${Math.min(log.length, 12)}</span></div>
-      <div class="list">${log.slice(0, 12).map(x => `
-        <div class="row" style="cursor:default">
-          <span class="stripe ${x.kind === "done" ? "high" : "low"}"></span>
-          <span class="body">
-            <span class="t">${x.mins} minutes · ${x.kind === "done" ? "finished" : "ended early"}</span>
-            <span class="s">${esc(agoWords(x.on))} · ran ${Math.round(x.ran / 60)}m${
-              x.left ? ` · left ${x.left}×` : ""}</span>
-          </span>
-        </div>`).join("")}</div>` : ""}`;
+    <div class="focuswrap">
+      <div class="fdialwrap">
+        ${focusDialHtml(pick, 0, false)}
+        <div class="fcentre">
+          <span class="fread mono" id="fread">${pick}</span>
+          <span class="flil">minutes</span>
+        </div>
+      </div>
+      <div class="fsteps">
+        <button class="fstep" data-step="-5">−5</button>
+        <button class="fstep" data-step="-1">−1</button>
+        <button class="fstep" data-step="1">+1</button>
+        <button class="fstep" data-step="5">+5</button>
+      </div>
+      <button class="prim fgo" id="fgo">Start</button>
+      <div class="sgrid" style="margin:18px 0 2px">
+        <span>today <b class="mono">${Math.round(mins)}m</b></span>
+        <span>clean runs in a row <b class="mono">${focusStreak()}</b></span>
+        <span>runs <b class="mono">${log.length}</b></span>
+      </div>
+      <p class="note">Drag the dial, ${FOCUS_MIN} to ${FOCUS_MAX} minutes. Nothing here locks the
+        phone — leaving the app simply voids the run and puts the streak back to zero.</p>
+      ${log.length ? `<div class="head"><h2>Recent</h2><span class="n">last ${Math.min(log.length, 12)}</span></div>
+        <div class="list">${log.slice().reverse().slice(0, 12).map(x => `
+          <div class="row" style="cursor:default">
+            <span class="stripe ${x.kind === "done" ? "ran" : "gone"}"></span>
+            <span class="body">
+              <span class="t">${x.mins} min · ${x.kind === "done" ? "finished" : "void"}</span>
+              <span class="s">${esc(agoWords(x.on))}${x.kind === "done" ? "" : ` · ran ${Math.round(x.ran / 60)}m`}</span>
+            </span>
+          </div>`).join("")}</div>` : ""}
+    </div>`;
 
-  let picked = FOCUS_MINS[0];
-  const mark = () => view.querySelectorAll("[data-fm]").forEach(b =>
-    b.classList.toggle("on", +b.dataset.fm === picked));
-  view.querySelectorAll("[data-fm]").forEach(b => b.onclick = () => { picked = +b.dataset.fm; mark(); });
-  mark();
-  document.getElementById("fgo").onclick = () => focusStart(picked);
+  const set = m => {
+    store.focusPick = focusClamp(m);
+    save();
+    const el = document.getElementById("fread");
+    if(el) el.textContent = store.focusPick;
+    const arc = document.querySelector(".farc");
+    if(arc){
+      const d = FOCUS_C * (store.focusPick / 60);
+      arc.setAttribute("stroke-dasharray", `${d.toFixed(1)} ${(FOCUS_C - d).toFixed(1)}`);
+    }
+    const grip = document.querySelector(".fgrip");
+    if(grip){
+      const [x, y] = focusPoint(store.focusPick);
+      grip.setAttribute("cx", x.toFixed(1)); grip.setAttribute("cy", y.toFixed(1));
+    }
+  };
+
+  const dial = document.getElementById("fdial");
+  const fromEvent = e => {
+    const b = dial.getBoundingClientRect();
+    const x = e.clientX - (b.left + b.width / 2), y = e.clientY - (b.top + b.height / 2);
+    // atan2 measured from twelve o'clock, clockwise; 60 lands on 0 rather than
+    // wrapping to a 0-minute run that cannot be started.
+    const deg = (Math.atan2(y, x) * 180 / Math.PI + 90 + 360) % 360;
+    return focusClamp(deg / 6 || 60);
+  };
+  let dragging = false;
+  dial.addEventListener("pointerdown", e => {
+    dragging = true; dial.setPointerCapture(e.pointerId); set(fromEvent(e));
+  });
+  dial.addEventListener("pointermove", e => { if(dragging) set(fromEvent(e)); });
+  dial.addEventListener("pointerup", () => { dragging = false; });
+  dial.addEventListener("pointercancel", () => { dragging = false; });
+
+  view.querySelectorAll("[data-step]").forEach(b =>
+    b.onclick = () => set((store.focusPick || FOCUS_DEFAULT) + +b.dataset.step));
+  document.getElementById("fgo").onclick = () => focusStart(store.focusPick || FOCUS_DEFAULT);
 }
 
 /* ---------------- topic sheet ---------------- */
@@ -1446,9 +1537,6 @@ function openData(){
 /* Hardware back on Android, and swipe-down on the grip. */
 window.taracmdBack = function(){
   if(openId){ closeSheet(); return true; }
-  // A focus session owns the back button outright — refusing it is the half of
-  // the lock the page can enforce whether or not pinning took.
-  if(focusBlocksBack()) return true;
   if(state.tab==="syllabus" && state.read){ state.read=false; render(); return true; }
   if(state.tab==="syllabus" && (state.openTopics.size || state.open.size)){
     state.openTopics = new Set(); state.open = new Set(); render(); return true;

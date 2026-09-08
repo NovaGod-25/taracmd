@@ -127,7 +127,7 @@ new scraping should be designed to run locally and unhurried, never in CI.
 
 ## The JS ↔ native contract
 
-Seven functions, and nothing else crosses. Changing a name on either side breaks it
+Six functions, and nothing else crosses. Changing a name on either side breaks it
 silently, because the page checks for the bridge before using it and falls back to
 browser behaviour when it is absent.
 
@@ -136,39 +136,33 @@ browser behaviour when it is absent.
 | page → native | `AndroidHost.savedPath(url)` | non-null once this PDF is on disk, so the row can read "saved" |
 | page → native | `AndroidHost.saveCopy(url)` | one URL to DownloadManager |
 | native → page | `window.taracmdSaved()` | a download landed; re-render the Toppers tab |
-| page → native | `AndroidHost.focusStart(mins)` | pin the screen and hold it awake for a focus session |
-| page → native | `AndroidHost.focusState()` | `"locked"` or `"awake"` — what the OS actually granted, which the page trusts over `focusStart`'s return |
-| page → native | `AndroidHost.focusStop()` | unpin, let the screen sleep again |
-| native → page | `window.taracmdBack()` | hardware back. Closes sheet → refuses while a focus session runs → collapses the outline → returns to the Syllabus tab → returns `false` so the OS takes over |
+| page → native | `AndroidHost.focusAwake(on)` | hold the screen awake for a focus run, and let it sleep after |
+| native → page | `window.taracmdBack()` | hardware back. Closes sheet → collapses the outline → returns to the Syllabus tab → returns `false` so the OS takes over |
+| native → page | `window.taracmdInterrupted()` | `onPause` — the app has been left, so a focus run is void |
 
-### What the focus lock can and cannot do
+### Focus does not control the phone
 
-`startLockTask()` from an ordinary app is **screen pinning**: Home and Recents stop
-working and the page refuses Back. **Android always keeps one way out — holding Back and
-Overview together — and no ordinary app may remove it.** That is deliberate on Android's
-part and deliberate here: a phone that cannot be unlocked for ninety minutes is a phone
-you cannot call an ambulance with. The tab says so rather than promising a cage.
+It used to try. An earlier version called `startLockTask()` to pin the screen, and that
+was wrong twice over: Android always leaves a way out of ordinary pinning, so the promise
+could not be kept, and a study tool that fights the device is solving the wrong problem
+anyway. What breaks a study hour is the reflex — the idle unlock, the glance at a
+notification — and that cannot be engineered away. It can only be counted.
 
-For a lock with genuinely no way out the app has to be whitelisted by a **device owner**.
-Same `startLockTask()` call; the provisioning is what upgrades it. On a factory-reset
-device with no account added:
+So nothing is blocked. The rule is that **leaving the app voids the run**: the clock stops,
+the dial returns to zero, and the streak of clean runs goes back to zero with it. The only
+thing at stake is whether the run counts, which is the point — a number you cannot fake is
+worth more than a cage you can escape.
 
-```bash
-adb shell dpm set-device-owner com.taracmd.app/.AdminReceiver
-```
-
-That needs a `DeviceAdminReceiver` and a policy XML, neither of which exists here — it is
-written down as the route, not as something already built.
-
-Two things the page must keep honest, both easy to get wrong:
-
-- `focusStart` posts `startLockTask` to the UI thread and cannot know whether it landed,
-  so the mode shown comes from `focusState()` on the next render. **Never let the page
-  claim a stronger lock than it has.**
-- The pin does not survive the activity being recreated, but the session does — it lives
-  in `localStorage`, because the app is pinned for an hour and the OS may reclaim it. On
-  boot the page re-asks for the pin and reopens the Focus tab; otherwise the clock would
-  run on with nothing actually holding the phone.
+- **`onPause` is the interruption**, and it is the right hook because it hears every way of
+  leaving: Home, Recents, a call, the screen locking, another app taking focus. The page
+  also listens for `visibilitychange` and `pagehide`, which is what catches it on the web.
+- **In-app navigation is not an interruption.** Reading the syllabus during a focus hour is
+  the activity, not a distraction from it. Nothing about the tab bar or the back button
+  changes while a run is going.
+- The run lives in `localStorage`, so a reload resumes it rather than losing it — and the
+  app reopens on the Focus tab when it finds one.
+- The dial is 1 to 60 minutes, one tick per minute, so the angle round the face **is** the
+  number of minutes and it needs no legend.
 
 ## State of the work
 

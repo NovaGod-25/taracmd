@@ -328,50 +328,67 @@ describe("the Optional tab", () => {
   });
 });
 
-describe("the focus lock", () => {
-  test("a session is stored, not held in a variable, so a reload cannot lose it", () => {
+describe("the focus dial", () => {
+  test("the dial is bounded at 1 and 60 minutes, whatever it is handed", () => {
+    const c = JSON.parse(inPage(win,
+      "JSON.stringify([focusClamp(0), focusClamp(-9), focusClamp(1), focusClamp(60), focusClamp(61), focusClamp(999), focusClamp(25.4)])"));
+    assert.deepEqual(c, [1, 1, 1, 60, 60, 60, 25]);
+  });
+
+  test("a run is stored, not held in a variable, so a reload cannot lose it", () => {
     inPage(win, "focusStart(45)");
     const r = JSON.parse(inPage(win, "JSON.stringify(store.focusRun)"));
     assert.equal(r.mins, 45);
     assert.ok(r.start > 0, "the clock is a wall-clock start, not a countdown in memory");
-    // what a reload does: read the same object back and work out the remainder
     const left = Number(inPage(win, "focusLeft(store.focusRun)"));
     assert.ok(left > 44 * 60000 && left <= 45 * 60000, `remaining looked wrong: ${left}`);
   });
 
-  test("back is refused for as long as the clock runs", () => {
-    assert.equal(inPage(win, "focusBlocksBack()"), true);
-    assert.equal(inPage(win, "taracmdBack()"), true, "back must not leave a session");
+  /* The whole feature. Leaving is not blocked — it is counted, and counting it
+     is worth nothing unless it actually costs the run. */
+  test("leaving the app voids the run and puts the clock back to zero", () => {
+    inPage(win, "focusStart(30); store.focusStreak = 4;");
+    inPage(win, "focusInterrupt()");
+    assert.equal(inPage(win, "store.focusRun"), null, "the run is gone, not paused");
+    assert.equal(Number(inPage(win, "store.focusStreak")), 0, "the streak resets to zero");
+    assert.equal(JSON.parse(inPage(win, "JSON.stringify(store.focus)")).at(-1).kind, "void");
   });
 
-  /* The page may never claim a stronger lock than it has. In a browser there is
-     no pinning at all, and the copy has to say so. */
-  test("without the native bridge it says plainly that nothing is pinned", () => {
-    assert.equal(inPage(win, "NATIVE"), null, "jsdom is the no-bridge case");
-    const mode = inPage(win, "store.focusRun.mode");
-    assert.equal(mode, "none");
-    assert.match(inPage(win, "FOCUS_MODE[store.focusRun.mode]"), /cannot pin/);
+  test("the native side reports every way of leaving through one hook", () => {
+    inPage(win, "focusStart(30)");
+    assert.equal(inPage(win, "typeof window.taracmdInterrupted"), "function",
+      "MainActivity.onPause calls this by name");
+    inPage(win, "window.taracmdInterrupted()");
+    assert.equal(inPage(win, "store.focusRun"), null);
   });
 
-  test("ending early is recorded as broken, not quietly dropped", () => {
-    const before = Number(inPage(win, "(store.focus || []).length"));
-    inPage(win, 'focusEnd("broke")');
-    const log = JSON.parse(inPage(win, "JSON.stringify(store.focus)"));
-    assert.equal(log.length, before + 1);
-    assert.equal(log.at(-1).kind, "broke");
-    assert.equal(inPage(win, "store.focusRun"), null, "the session is cleared on ending");
-  });
-
-  test("a finished session is recorded as finished", () => {
-    inPage(win, "focusStart(1); store.focusRun.start = Date.now() - 61000;");
+  test("a run seen out counts, and lengthens the streak", () => {
+    inPage(win, "store.focusStreak = 2; focusStart(1); store.focusRun.start = Date.now() - 61000;");
     assert.equal(inPage(win, "focusDone(store.focusRun)"), true);
     inPage(win, 'focusEnd("done")');
     assert.equal(JSON.parse(inPage(win, "JSON.stringify(store.focus)")).at(-1).kind, "done");
+    assert.equal(Number(inPage(win, "store.focusStreak")), 3);
   });
 
-  test("the log is capped, so a year of sessions cannot fill localStorage", () => {
+  test("nothing about the phone is blocked — back is the app's, not the run's", () => {
+    inPage(win, "focusStart(30); state.tab = 'focus'; state.read = false;");
+    inPage(win, "state.open = new Set(); state.openTopics = new Set();");
+    inPage(win, "openId = null");
+    assert.equal(inPage(win, "state.tab !== 'syllabus' ? taracmdBack() : true"), true,
+      "back still walks the app; a run must not hold it hostage");
+    inPage(win, 'focusEnd("void")');
+  });
+
+  test("the dial's geometry puts 60 at the top and 15 at the right", () => {
+    const pts = JSON.parse(inPage(win,
+      "JSON.stringify({top: focusPoint(60).map(Math.round), right: focusPoint(15).map(Math.round)})"));
+    assert.deepEqual(pts.top, [100, 16], "60 minutes is twelve o'clock");
+    assert.deepEqual(pts.right, [184, 100], "15 minutes is three o'clock");
+  });
+
+  test("the log is capped, so a year of runs cannot fill localStorage", () => {
     inPage(win, `store.focus = Array.from({length: 80}, (_, i) => ({on: i, mins: 25, ran: 1, kind: "done"}));`);
-    inPage(win, 'focusStart(25); focusEnd("broke")');
+    inPage(win, 'focusStart(25); focusEnd("void")');
     const n = Number(inPage(win, "store.focus.length"));
     assert.ok(n <= 60, `log grew to ${n}`);
   });

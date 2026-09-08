@@ -8,7 +8,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
 import android.webkit.JavascriptInterface
@@ -29,7 +28,7 @@ import java.io.File
  * The WebView shell. The page itself is the whole app; this class exists to do
  * the five things a page cannot: serve itself over a real origin, hand the
  * hardware back button to the page, open outbound links in a real browser, put
- * one saved PDF on disk, and pin the screen for a focus session.
+ * one saved PDF on disk, and say when the app has been left.
  */
 class MainActivity : AppCompatActivity() {
 
@@ -120,6 +119,16 @@ class MainActivity : AppCompatActivity() {
         watchDownloads()
     }
 
+    /**
+     * Every way of leaving the app arrives here — Home, Recents, a call, the
+     * screen locking, another app taking focus. The page decides what that
+     * means; this only has to report it, and report it for all of them.
+     */
+    override fun onPause() {
+        super.onPause()
+        web.evaluateJavascript("window.taracmdInterrupted && window.taracmdInterrupted()", null)
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         web.saveState(outState)
@@ -200,53 +209,21 @@ class MainActivity : AppCompatActivity() {
         }
 
         /**
-         * Take the phone away from the user until they give it back.
+         * Hold the screen awake for a focus run, and let it sleep afterwards.
          *
-         * Returns what was actually achieved, and the page says only that:
-         *
-         *   "locked" — screen pinning is on. Home and Recents do nothing.
-         *   "awake"  — pinning refused; the screen is at least held awake.
-         *   "none"   — neither.
-         *
-         * Android GUARANTEES one way out of ordinary screen pinning: holding
-         * Back and Overview together. An app cannot remove it, and this one
-         * does not try. A phone that cannot be unlocked for ninety minutes is
-         * a phone you cannot call an ambulance with, and the escape hatch is
-         * what makes a self-imposed lock safe to offer at all.
-         *
-         * For a lock with no way out the app must be the device owner, which
-         * is an adb provisioning step on a factory-reset device — see
-         * CLAUDE.md. startLockTask() is the same call either way; being
-         * whitelisted by a device owner is what upgrades it.
+         * This is the whole of the native side of Focus now. An earlier
+         * version called startLockTask() to pin the screen, and that was the
+         * wrong idea: Android always leaves a way out of ordinary pinning, and
+         * a study tool that fights the device is solving the wrong problem
+         * anyway. Keeping the screen on is help rather than control — the
+         * phone going dark mid-run and taking the run with it would be the
+         * app's fault, not the user's.
          */
         @JavascriptInterface
-        fun focusStart(minutes: Int): String {
-            var pinned = false
+        fun focusAwake(on: Boolean) {
             runOnUiThread {
-                window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-                runCatching { startLockTask(); pinned = true }
-            }
-            // startLockTask is posted to the UI thread, so this reports what was
-            // asked for rather than what landed; the page re-reads focusState()
-            // on its next render and corrects itself if pinning was refused.
-            return if (minutes > 0) "locked" else "none"
-        }
-
-        /** Whether the pin actually took — the page trusts this over focusStart. */
-        @JavascriptInterface
-        fun focusState(): String {
-            val am = getSystemService(Context.ACTIVITY_SERVICE) as android.app.ActivityManager
-            val locked = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                am.lockTaskModeState != android.app.ActivityManager.LOCK_TASK_MODE_NONE
-            else @Suppress("DEPRECATION") am.isInLockTaskMode
-            return if (locked) "locked" else "awake"
-        }
-
-        @JavascriptInterface
-        fun focusStop() {
-            runOnUiThread {
-                runCatching { stopLockTask() }
-                window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+                if (on) window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+                else window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
             }
         }
 

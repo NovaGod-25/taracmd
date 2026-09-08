@@ -72,8 +72,15 @@ ROMAN = {"i": 1, "ii": 2, "iii": 3, "iv": 4}
 # The optional subjects the Optional tab carries. Each is two papers of 250
 # marks - half the written total - and they are listed in the same tables as
 # General Studies, just with the subject's own name in the label.
-OPTIONALS = {"geography": "Geography", "law": "Law"}
+OPTIONALS = {"geography": "Geography", "law": "Law", "agriculture": "Agriculture"}
 OPT_PAPER = re.compile(r"^{}\s*paper\s*[-–]?\s*(II|I|[12])$", re.IGNORECASE)
+
+# The Commission's label for a subject is not always the subject's name. Civil
+# Services (Main) 2023 lists "Agricultural Paper - I"; every other year from
+# 2016 to 2026 says "Agriculture Paper - I". Matching the name exactly silently
+# lost that year - the subject simply had ten years instead of eleven, with
+# nothing to say a year was missing. Where the spelling moves, match both.
+OPT_LABEL = {"agriculture": r"Agricultur(?:e|al)"}
 
 
 def strip_tags(s: str) -> str:
@@ -147,7 +154,8 @@ def scrape(html: str) -> dict[tuple[str, int], dict[str, str]]:
 def scrape_optionals(html: str) -> dict[tuple[str, int], dict[str, str]]:
     """-> {(subject id, year): {"p1"|"p2": url}} for the OPTIONALS only."""
     found: dict[tuple[str, int], dict[str, str]] = {}
-    pats = {sid: re.compile(OPT_PAPER.pattern.format(re.escape(nm)), re.IGNORECASE)
+    pats = {sid: re.compile(OPT_PAPER.pattern.format(OPT_LABEL.get(sid, re.escape(nm))),
+                            re.IGNORECASE)
             for sid, nm in OPTIONALS.items()}
 
     for table in re.findall(r"<table[^>]*>(.*?)</table>", html, re.S | re.I):

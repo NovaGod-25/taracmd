@@ -71,7 +71,7 @@ Things that will bite:
 | `quiz.json` | 35 practice questions, each tagged to a topic id |
 | `toppers.json` | 102 published answer copies across 10 publishers |
 | `daily.json` | daily current-affairs quiz sources: a URL pattern the page expands against the date |
-| `optionals.json` | the Optional tab: Geography and Law, 22/22 papers each 2016–2026, plus curated copies |
+| `optionals.json` | the Optional tab: Geography, Law and Agriculture, 22/22 papers each 2016–2026, plus curated copies |
 
 ## Decisions that should not be quietly reversed
 
@@ -288,6 +288,17 @@ app, but the shape is easy to get wrong twice.
   `--accent` in a comment in `res/` fails `mergeDebugResources` with "The string `--` is
   not permitted within comments" — which is what broke every APK build until it was
   caught. Name the property without the dashes.
+- **Adding an Optional subject is two edits and a fetch**, in this order: put the id in
+  `OPTIONALS` in `tools/pyq-papers.py`, add the subject to `content/optionals.json` with
+  `pyq: []`, then run `python tools/pyq-papers.py optionals`. Never hand-write the paper
+  URLs — the tool exists to stop exactly that, and it fills only subjects already present
+  in the JSON.
+- **The Commission's label for a subject is not always the subject's name.** Civil
+  Services (Main) 2023 lists "Agricultural Paper - I"; every other year 2016-2026 says
+  "Agriculture". Matching the name exactly lost that one year *silently* — Agriculture
+  simply had ten years instead of eleven, with nothing anywhere to say a year was
+  missing. `OPT_LABEL` carries the variants. When a new optional comes up one year short,
+  suspect the label before the archive.
 - The Android package is `com.taracmd.app`. Not `in.taracmd.*` — `in` is a Kotlin hard
   keyword and cannot be a package segment without backticks.
 - **On Windows the command is `python` or `py`, not `python3`.** The python.org installer

@@ -288,3 +288,42 @@ describe("the syllabus tab", () => {
     assert.ok(out.marked, "matched words are highlighted");
   });
 });
+
+describe("the Optional tab", () => {
+  test("three subjects, each with eleven years and both papers linked", () => {
+    const subs = JSON.parse(inPage(win, `
+      (() => JSON.stringify((OPTIONALS.subjects || []).map(s => ({
+        id: s.id,
+        years: s.pyq.length,
+        span: [s.pyq[s.pyq.length - 1].year, s.pyq[0].year],
+        linked: s.pyq.reduce((a, y) => a + y.papers.filter(p => p.url).length, 0),
+        codes: [...new Set(s.pyq.flatMap(y => y.papers.map(p => p.code)))],
+      }))))()`));
+    assert.deepEqual(subs.map(s => s.id), ["geography", "law", "agriculture"]);
+    for (const s of subs) {
+      assert.equal(s.years, 11, `${s.id} should span eleven years`);
+      assert.deepEqual(s.span, [2016, 2026], `${s.id} span`);
+      assert.equal(s.linked, 22, `${s.id} should have both papers for every year`);
+      assert.deepEqual(s.codes, ["p1", "p2"]);
+    }
+  });
+
+  /* 2023 is the year the scraper used to lose: the Commission labelled it
+     "Agricultural Paper - I" that year and "Agriculture" in every other, so
+     matching the subject name exactly dropped it without a word. */
+  test("Agriculture has 2023, the year the Commission spelled differently", () => {
+    const y = JSON.parse(inPage(win, `
+      (() => { const a = OPTIONALS.subjects.find(s => s.id === "agriculture");
+        const y = a.pyq.find(y => y.year === 2023);
+        return JSON.stringify(y ? y.papers.map(p => p.url) : null); })()`));
+    assert.ok(y, "2023 is missing from Agriculture again");
+    assert.equal(y.length, 2);
+    for (const u of y) assert.match(u, /upsc\.gov\.in/, "papers stay on the Commission's site");
+  });
+
+  test("the answer log key keeps the three subjects apart", () => {
+    const ids = JSON.parse(inPage(win, "JSON.stringify(OPTIONALS.subjects.map(s => s.id))"));
+    assert.equal(new Set(ids).size, ids.length,
+      "the log is keyed year-<subject id>-<code>; a duplicate id would merge two subjects");
+  });
+});

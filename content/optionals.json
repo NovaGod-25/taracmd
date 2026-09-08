@@ -352,6 +352,182 @@
         }
       ],
       "copies": []
+    },
+    {
+      "id": "agriculture",
+      "name": "Agriculture",
+      "short": "Agriculture",
+      "icon": "🌾",
+      "marks": 500,
+      "why": "The science optional with the widest overlap into General Studies: the agriculture, food security, irrigation and subsidy sections of GS-III are most of Paper I's ground, and cropping patterns and land reform reach into GS-I. Rewards candidates who already have the background, since both papers are technical rather than discursive. Paper I is ecology, soils, agronomy, water management and horticulture; Paper II is genetics and plant breeding, plant physiology, biotechnology, plant protection and animal science.",
+      "pyq": [
+        {
+          "year": 2026,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-26-010926-Optional-AGRICULTURE_PAPER_I.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-26-010926-Optional-AGRICULTURE_PAPER_II.pdf"
+            }
+          ]
+        },
+        {
+          "year": 2025,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/AGRICULTURE-PAPER-I-QP-CSM-25-010925.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/AGRICULTURE-PAPER%20II-QP-CSM-25-010925.pdf"
+            }
+          ]
+        },
+        {
+          "year": 2024,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-24-AGRICULTURE-PAPER-I-031024.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-24-AGRICULTURE-PAPER-II-031024.pdf"
+            }
+          ]
+        },
+        {
+          "year": 2023,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-23-AGRICULTURE-PAPER-I-29092023.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-23-AGRICULTURE-PAPER-II-29092023.pdf"
+            }
+          ]
+        },
+        {
+          "year": 2022,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-22-AGRICULTURE-PAPER-I-280922.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM-22-AGRICULTURE-PAPER-II-280922.pdf"
+            }
+          ]
+        },
+        {
+          "year": 2021,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/Agriculture_Paper-I.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/Agriculture_Paper-II.pdf"
+            }
+          ]
+        },
+        {
+          "year": 2020,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/AGRICULTURE_I.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/AGRICULTURE_II.pdf"
+            }
+          ]
+        },
+        {
+          "year": 2019,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM19-Agriculture-I.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/QP-CSM19-Agriculture-II.pdf"
+            }
+          ]
+        },
+        {
+          "year": 2018,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/AGRICULTURE-PAPER-I.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/AGRICULTURE-PAPER-II.pdf"
+            }
+          ]
+        },
+        {
+          "year": 2017,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/AGRICULTURE1_0.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/AGRICULTURE2_0.pdf"
+            }
+          ]
+        },
+        {
+          "year": 2016,
+          "papers": [
+            {
+              "code": "p1",
+              "name": "Paper I",
+              "url": "https://www.upsc.gov.in/sites/default/files/AGRICULTURE1.pdf"
+            },
+            {
+              "code": "p2",
+              "name": "Paper II",
+              "url": "https://www.upsc.gov.in/sites/default/files/AGRICULTURE2.pdf"
+            }
+          ]
+        }
+      ],
+      "copies": []
     }
   ],
   "publishers": [

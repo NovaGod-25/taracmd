@@ -526,3 +526,46 @@ describe("today's plan and the focus history", () => {
     assert.equal(days.at(-2).mins, 30);
   });
 });
+
+describe("typing a past question in", () => {
+  /* The scorer used to be a bare answer sheet. A question tagged with its
+     paper cell is asked properly; an untyped one stays a lettered cell, and
+     both live in the same grid so a paper fills in as it is typed. */
+  test("a tagged question is asked with its options; the rest stay letters", () => {
+    const out = JSON.parse(inPage(win, `
+      (() => {
+        const paper = KEYS.years.find(y => y.year === 2022).papers.find(p => p.code === "gs1");
+        QUIZ.questions.push({ id: "t-1", topic: "polity-basic-structure",
+          paper: {year: 2022, code: "gs1", set: "A", n: 2},
+          q: "typed question", options: ["a","b","c","d"],
+          answer: "ABCD".indexOf(paper.keys.A[1]) });
+        state.tab = "practice"; state.qmode = "score";
+        state.qyear = 2022; state.qpaper = "gs1"; state.qset = "A";
+        render();
+        const r = { wide: document.querySelectorAll(".cell.wide").length,
+                    plain: document.querySelectorAll(".cell:not(.wide)").length,
+                    opts: document.querySelectorAll(".copt").length };
+        QUIZ.questions.pop();
+        return JSON.stringify(r);
+      })()`));
+    assert.equal(out.wide, 1, "the typed question is asked properly");
+    assert.equal(out.opts, 4);
+    assert.equal(out.plain, 99, "the other 99 are still an answer sheet");
+  });
+
+  test("a tagged question belongs to one set only", () => {
+    // the sets are shuffled against each other, so a tag names a set as well
+    // as a number and must not leak into another set's paper
+    const leaked = inPage(win, `
+      (() => {
+        QUIZ.questions.push({ id: "t-2", topic: "polity-basic-structure",
+          paper: {year: 2022, code: "gs1", set: "A", n: 2},
+          q: "typed", options: ["a","b","c","d"], answer: 0 });
+        state.qset = "B"; render();
+        const n = document.querySelectorAll(".cell.wide").length;
+        QUIZ.questions.pop(); state.qset = "A"; render();
+        return n;
+      })()`);
+    assert.equal(Number(leaked), 0, "a Set A question must not appear on Set B");
+  });
+});

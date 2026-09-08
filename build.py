@@ -127,6 +127,60 @@ def check_quiz(quiz, topics: dict[str, str]) -> None:
             fail(f"quiz question {qid!r} has answer {answer!r}, outside its {len(options)} options")
 
 
+def check_paper_tags(quiz, keys) -> None:
+    """A question may say which paper cell it came from, and if it does, the
+    Commission's own key gets to mark it.
+
+    `paper: {year, code, set, n}` puts a typed question at question n of that
+    Series, so Quiz -> Score a paper can show the real thing instead of a bare
+    row of letters. The check that makes this worth having: the question's own
+    `answer` must agree with the key letter at that cell. Typing a question
+    against the wrong number, or mis-ordering its options, then fails the build
+    rather than teaching you the wrong answer for a year.
+    """
+    marking = keys.get("marking", {})
+    by_cell: dict[tuple, str] = {}
+
+    for q in quiz.get("questions", []):
+        tag = q.get("paper")
+        if not tag:
+            continue
+        qid = q.get("id", "?")
+        year = next((y for y in keys.get("years", []) if y.get("year") == tag.get("year")), None)
+        if year is None:
+            fail(f"question {qid!r} cites {tag.get('year')}, which has no answer key")
+            continue
+        paper = next((pp for pp in year["papers"] if pp.get("code") == tag.get("code")), None)
+        if paper is None:
+            fail(f"question {qid!r} cites {tag.get('year')} {tag.get('code')!r}, which is not a paper")
+            continue
+
+        letters = (paper.get("keys") or {}).get(tag.get("set"))
+        if letters is None:
+            fail(f"question {qid!r} cites set {tag.get('set')!r}, which has no letters yet")
+            continue
+
+        n = tag.get("n")
+        total = marking.get(tag.get("code"), {}).get("questions", 0)
+        if not isinstance(n, int) or not 1 <= n <= total:
+            fail(f"question {qid!r} cites question {n!r}, outside 1-{total}")
+            continue
+
+        cell = (tag["year"], tag["code"], tag["set"], n)
+        if cell in by_cell:
+            fail(f"questions {by_cell[cell]!r} and {qid!r} both claim {cell}")
+        by_cell[cell] = qid
+
+        want = letters[n - 1]
+        if want == "X":
+            fail(f"question {qid!r} sits on {cell}, which the Commission dropped")
+            continue
+        got = "ABCD"[q["answer"]] if isinstance(q.get("answer"), int) and 0 <= q["answer"] < 4 else "?"
+        if got != want:
+            fail(f"question {qid!r} answers {got} but the official key says {want} "
+                 f"for {tag['year']} {tag['code']} set {tag['set']} q{n}")
+
+
 def check_keys(keys) -> None:
     """A set's letters must be as long as the paper is, or the scorer silently
     marks the tail of the paper blank."""
@@ -277,6 +331,7 @@ def main() -> int:
     topics = check_subjects(subjects)
     check_quiz(quiz, topics)
     check_keys(keys)
+    check_paper_tags(quiz, keys)
     check_optionals(opts)
     check_daily(daily)
 

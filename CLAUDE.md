@@ -107,6 +107,46 @@ Things that will bite:
 | `daily.json` | daily current-affairs quiz sources: a URL pattern the page expands against the date |
 | `optionals.json` | the Optional tab: Geography, Law and Agriculture, 22/22 papers each 2016–2026, plus curated copies |
 
+## Typing a past question in
+
+Quiz → Score a paper used to be a bare grid of letters: you marked A/B/C/D against a
+paper open in another app, which is an answer sheet, not practice. A question can now
+carry the paper cell it came from, and where one has been typed the scorer **asks it
+properly** — stem, four options, and the reason once you answer. Untyped questions stay
+as lettered cells in the same grid, so a paper fills in as it is typed rather than
+switching mode.
+
+Add one to `content/quiz.json`:
+
+```json
+{
+  "id": "csp22-gs1-a-2",
+  "topic": "polity-basic-structure",
+  "paper": { "year": 2022, "code": "gs1", "set": "A", "n": 2 },
+  "q": "…the question, as printed…",
+  "options": ["…", "…", "…", "…"],
+  "answer": 1,
+  "why": "…why that one, and why the near-miss is not…"
+}
+```
+
+`paper` is optional; without it a question is ordinary practice. With it, **the
+Commission's own key marks your typing**: `build.py` fails if `answer` disagrees with the
+key letter at that cell, if two questions claim one cell, if the number is out of range,
+or if the cell is one the Commission dropped. Typing a question against the wrong number
+or mis-ordering its options is caught by the build rather than teaching you a wrong
+answer for a year.
+
+Order matters — options must be in the order the paper prints them, because the key is a
+letter, not a value. And the sets are shuffled against each other, so a question typed
+for Set A cannot be reused for Set B: it is a different number there, with the options in
+a different order.
+
+**None are typed yet, and that is deliberate.** Both the question papers and the answer
+keys are published as scans — 48 pages of 2022 GS-I, zero characters of extractable text
+— so there is nothing to lift, and inventing a question and labelling it as the
+Commission's would be worse than an empty grid.
+
 ## Decisions that should not be quietly reversed
 
 **The app indexes, it does not mirror.** Question papers, answer-key PDFs and toppers'

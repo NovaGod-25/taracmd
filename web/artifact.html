@@ -539,6 +539,34 @@ mark{background:var(--amber-soft);color:inherit;border-radius:3px;padding:0 1px}
 .pt{display:block;font-size:13.5px;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ps{display:block;font-size:11px;color:var(--ink-3);margin-top:2px}
 .pgo{flex:none;color:var(--ink-3);font-size:17px;line-height:1}
+
+/* One control row for the syllabus, scrolling sideways rather than wrapping. */
+.ctrl{display:flex;align-items:center;gap:7px;overflow-x:auto;padding:4px 0 12px;
+  -webkit-overflow-scrolling:touch}
+.ctrl::-webkit-scrollbar{display:none}
+.ctrl > *{flex:none}
+.cdiv{width:1px;height:20px;background:var(--rule);margin:0 2px}
+.fchip.ghost{border-style:dashed;color:var(--ink-3)}
+.shead{display:flex;width:100%;justify-content:space-between;align-items:baseline;gap:10px;
+  font-size:12.5px;cursor:pointer;color:inherit;text-align:left}
+.shead .n i{font-style:normal;display:inline-block;width:12px;text-align:center;color:var(--ink-3)}
+
+/* A typed-in question inside the answer sheet. */
+.cell.wide{grid-column:1/-1;display:block;padding:12px 13px;text-align:left}
+.cq{display:block;font-size:14px;line-height:1.45;margin-bottom:10px}
+.cq b{color:var(--ink-3);margin-right:6px}
+.copts{display:flex;flex-direction:column;gap:6px}
+.copt{display:flex;align-items:flex-start;gap:9px;width:100%;text-align:left;padding:9px 10px;
+  border:1px solid var(--rule);border-radius:9px;background:var(--card);color:var(--ink-2);
+  font-size:13px;line-height:1.4;cursor:pointer}
+.copt:hover{border-color:var(--rule-2)}
+.copt.on{border-color:var(--accent);background:var(--accent-soft);color:var(--ink)}
+.copt i{font-style:normal;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-3);
+  flex:none;width:13px;margin-top:1px}
+.copt.on i{color:var(--accent-ink)}
+.cwhy{display:block;margin-top:9px;font-size:12px;line-height:1.5;color:var(--ink-3)}
+.cwhy.ok{color:var(--accent-ink)}
+.cwhy.no{color:var(--amber)}
 </style>
 
 
@@ -751,6 +779,7 @@ let state = {
   lens: "subject",        // "subject" | "paper" — two shapes of one syllabus
   open: new Set(),        // expanded groups
   openTopics: new Set(),  // topics expanded in place
+  shape: false,           // the size-and-progress bars, folded away by default
   read: false,            // the flat, printable read-it-all view
 };
 
@@ -823,12 +852,16 @@ function shapeHtml(){
   const max = Math.max(...gs.map(g => g.topics.length));
   const t = tally(ALL_TOPICS.map(x => x.tp));
   const multi = ALL_TOPICS.filter(x => x.tp.papers.length > 1).length;
+  /* The bars were worth seeing once and then occupied the top of the screen
+     every time. The line of counts stays, because that is the part you read;
+     the shape folds away behind it. */
+  const open = !!state.shape;
   return `<div class="shape">
-    <div class="shead">
+    <button class="shead" id="shapeToggle">
       <span><b class="mono">${t.tTot}</b> topics · <b class="mono">${t.sTot.toLocaleString()}</b> subtopics</span>
-      <span class="n">${t.tDone} done · ${t.sDone.toLocaleString()} ticked</span>
-    </div>
-    <div class="sbars">
+      <span class="n">${t.tDone} done · ${t.sDone.toLocaleString()} ticked <i>${open ? "−" : "+"}</i></span>
+    </button>
+    ${!open ? "" : `<div class="sbars">
       ${gs.map(g => {
         const gt = tally(g.topics);
         return `<button class="sbar" data-jump="${g.id}">
@@ -839,7 +872,7 @@ function shapeHtml(){
       }).join("")}
     </div>
     <p class="note" style="margin-top:9px">${multi} of ${t.tTot} topics count for more than one paper — revising once
-      serves Prelims and Mains together. <b>By paper</b> shows the syllabus the way the Commission sets it.</p>
+      serves Prelims and Mains together. <b>By paper</b> shows the syllabus the way the Commission sets it.</p>`}
   </div>`;
 }
 
@@ -994,20 +1027,22 @@ function renderSyllabus(){
       ${planHtml()}
       ${paceHtml(ALL_TOPICS.length)}
       ${shapeHtml()}
-      <div class="lens">
+      <!-- One row. It was three — lens, filters, and a bar of eight jump icons —
+           stacked above the content on every visit. The jump bar is gone
+           because collapsing the groups gives you the same eight rows, as
+           headings you can actually read, and Today links straight to a topic
+           anyway. What is left scrolls sideways rather than wrapping. -->
+      <div class="ctrl">
         <div class="seg">
           <button class="${state.lens === "subject" ? "on" : ""}" data-lens="subject">By subject</button>
           <button class="${state.lens === "paper" ? "on" : ""}" data-lens="paper">By paper</button>
         </div>
-        <div class="lens-r">
-          <button class="linky" id="expAll">${anyOpen ? "Collapse all" : "Expand all"}</button>
-        </div>
-      </div>
-      <div class="filters">
+        <span class="cdiv"></span>
         ${[["all", "All"], ["due", "Due " + dueCount], ["high", "High weight"], ["left", "Not done"]]
           .map(([k, l]) => `<button class="fchip ${state.tfilter === k ? "on" : ""}" data-f="${k}">${l}</button>`).join("")}
+        <span class="cdiv"></span>
+        <button class="fchip ghost" id="expAll">${anyOpen ? "Collapse all" : "Expand all"}</button>
       </div>
-      <div class="jump">${gs.map(g => `<button data-jump="${g.id}" title="${esc(g.name)}">${g.icon}</button>`).join("")}</div>
       ${gs.map(g => {
         const shown = g.topics.filter(passesFilter);
         const t = tally(g.topics);
@@ -1033,6 +1068,8 @@ function renderSyllabus(){
 
   const q = document.getElementById("q");
   q.addEventListener("input", () => runSearch(q.value.trim()));
+  const st = document.getElementById("shapeToggle");
+  if(st) st.onclick = () => { state.shape = !state.shape; refreshBehind(); };
   const dj = document.getElementById("dueJump");
   if(dj) dj.onclick = () => { state.tfilter = "due"; state.open = new Set(gs.map(g => g.id)); render(); };
   document.getElementById("expAll").onclick = () => {
@@ -2168,6 +2205,17 @@ function renderScorer(root){
      hanging off the paper. */
   const dropped = new Set(key.reduce((a, k, i) => (k === "X" ? [...a, i + 1] : a), []));
 
+  /* Questions typed in against this exact set, by question number. Nothing is
+     scraped: the Commission publishes its papers as scans with no text layer,
+     so these are typed by hand, and build.py marks each one against the
+     official key before it ships. */
+  const written = {};
+  for(const w of (QUIZ.questions || [])){
+    const t = w.paper;
+    if(t && t.year === yr.year && t.code === paper.code && t.set === state.qset) written[t.n] = w;
+  }
+  const typed = Object.keys(written).length;
+
   let right=0, wrong=0, blank=0;
   key.forEach((k,i)=>{
     const q = i+1;
@@ -2203,9 +2251,26 @@ function renderScorer(root){
     <p class="note">Open the paper on the Prelims tab, mark your answers here, and this scores them
       against the Commission's key using its own scheme — ${mark.correct} for a right answer,
       ${mark.wrong} for a wrong one${dropped.size ? `. ${dropped.size} question${dropped.size>1?"s were":" was"} dropped that year and ${dropped.size>1?"are":"is"} left out of the total` : ""}.</p>
+    ${typed ? `<p class="note" style="margin-top:0"><b>${typed}</b> of ${key.length} questions on this
+      set have been typed in, so they are asked properly below. The rest stay as letters until
+      someone types them — the Commission publishes the paper as a scan, with no text to lift.</p>` : ""}
     <div class="omr">
       ${key.map((k,i)=>{
         const q=i+1, a=mine[q], out=dropped.has(q);
+        const w = written[q];
+        /* A question that has been typed in is asked properly: the stem, and
+           four options you read and choose between. One that has not is still
+           a lettered cell, because a blank row of A B C D is at least honest
+           about being an answer sheet. The two live in the same grid so the
+           paper fills in as it is typed rather than switching mode. */
+        if(w && !out) return `<div class="cell wide">
+          <span class="cq"><b class="mono">${q}</b> ${esc(w.q)}</span>
+          <span class="copts">${w.options.map((o, oi) => `
+            <button class="copt ${a === LET[oi] ? "on" : ""}" data-q="${q}" data-a="${LET[oi]}">
+              <i>${LET[oi]}</i>${esc(o)}</button>`).join("")}</span>
+          ${a ? `<span class="cwhy ${a === k ? "ok" : "no"}">${a === k ? "Right" : `Wrong — the key says ${k}`}${
+            w.why ? ` · ${esc(w.why)}` : ""}</span>` : ""}
+        </div>`;
         return `<div class="cell" ${out?'style="opacity:.4"':""}>
           <span class="cn">${q}${out?" ×":""}</span>
           <span class="cb">${LET.map(L=>`<button class="${a===L?"on":""}" data-q="${q}" data-a="${L}">${L}</button>`).join("")}</span>

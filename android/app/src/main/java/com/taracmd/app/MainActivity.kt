@@ -18,6 +18,8 @@ import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.content.FileProvider
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewAssetLoader
@@ -64,6 +66,30 @@ class MainActivity : AppCompatActivity() {
 
         web = WebView(this)
         setContentView(web)
+
+        /*
+         * Keep the page out from under the status and navigation bars.
+         *
+         * targetSdk 35 means Android 15 draws this activity edge to edge
+         * whether it asks to or not, so the WebView starts at pixel zero and
+         * the page's own top bar ends up underneath the clock and the battery.
+         * The page cannot fix that alone: env(safe-area-inset-*) reads zero
+         * here, because as far as the WebView is concerned it has the whole
+         * window.
+         *
+         * Padding the WebView by the system-bar insets is what actually
+         * moves it, and it handles the gesture bar at the bottom in the same
+         * pass. The window background is @color/paper and follows the theme,
+         * so the strip behind the status bar matches the page rather than
+         * flashing white.
+         */
+        ViewCompat.setOnApplyWindowInsetsListener(web) { v, insets ->
+            val bars = insets.getInsets(
+                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
+            )
+            v.setPadding(bars.left, bars.top, bars.right, bars.bottom)
+            insets
+        }
 
         web.settings.apply {
             javaScriptEnabled = true

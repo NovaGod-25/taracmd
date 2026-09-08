@@ -484,3 +484,45 @@ describe("updates", () => {
       "the update link must not carry or imply a credential");
   });
 });
+
+describe("today's plan and the focus history", () => {
+  test("the plan is drawn from your own data, not invented", () => {
+    // nothing done, nothing due, quiz logged -> nothing to do
+    const today = new Date().toISOString().slice(0, 10);
+    setStore(win, { done: {}, revised: {}, picks: {}, daily: { [today]: {score: 5, of: 5} } });
+    assert.equal(JSON.parse(inPage(win, "JSON.stringify(planItems())")).length, 0,
+      "an empty plan is honest when there is nothing due");
+
+    // a finished topic revised long ago falls due, and lands on the plan
+    inPage(win, `(() => { const tp = ALL_TOPICS[0].tp;
+      store.done[tp.id] = tp.subtopics.map((_, i) => i);
+      store.revised[tp.id] = [Date.now() - 200 * 86400000]; })()`);
+    const items = JSON.parse(inPage(win, "JSON.stringify(planItems())"));
+    assert.equal(items.length, 1);
+    assert.equal(items[0].kind, "topic");
+    assert.match(items[0].note, /overdue/);
+  });
+
+  test("the plan is capped, so a backlog does not become a wall", () => {
+    inPage(win, `(() => { store.done = {}; store.revised = {};
+      ALL_TOPICS.slice(0, 40).forEach(({tp}) => {
+        store.done[tp.id] = tp.subtopics.map((_, i) => i);
+        store.revised[tp.id] = [Date.now() - 300 * 86400000]; }); })()`);
+    const topics = JSON.parse(inPage(win, `JSON.stringify(planItems().filter(i => i.kind === "topic"))`));
+    assert.equal(topics.length, Number(inPage(win, "PLAN_N")),
+      "forty overdue topics is a list nobody reads; the syllabus tab has the rest");
+  });
+
+  test("history counts only runs that were seen out", () => {
+    const DAY = 86400000;
+    inPage(win, `store.focus = [
+      {on: Date.now(),           mins: 25, ran: 1500, kind: "done"},
+      {on: Date.now(),           mins: 45, ran: 600,  kind: "void"},
+      {on: Date.now() - ${DAY},  mins: 30, ran: 1800, kind: "done"}];`);
+    const days = JSON.parse(inPage(win, "JSON.stringify(focusHistory())"));
+    assert.equal(days.length, 14, "a fortnight, including the days with nothing on them");
+    assert.equal(days.at(-1).mins, 25, "the voided 10 minutes are not focused time");
+    assert.equal(days.at(-1).voided, 1, "but they are still shown");
+    assert.equal(days.at(-2).mins, 30);
+  });
+});

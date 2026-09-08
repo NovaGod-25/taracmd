@@ -65,7 +65,11 @@ a{color:var(--accent-ink);text-decoration:none}
 .app{max-width:780px;margin:0 auto;padding:0 14px calc(var(--tab-h) + 28px)}
 
 /* ---------- top bar ---------- */
-.top{position:sticky;top:0;z-index:40;background:var(--paper);padding:12px 0 8px;
+/* env() is zero inside the Android build, where MainActivity pads the WebView
+   by the real insets instead — this is for the PWA, installed to a home screen
+   with viewport-fit=cover, where the page really does own the whole screen. */
+.top{position:sticky;top:0;z-index:40;background:var(--paper);
+  padding:calc(12px + env(safe-area-inset-top)) 0 8px;
   display:flex;align-items:center;gap:10px;border-bottom:1px solid transparent}
 .top.scrolled{border-bottom-color:var(--rule)}
 .brand{display:flex;align-items:baseline;gap:8px;min-width:0;flex:1}
@@ -463,6 +467,9 @@ mark{background:var(--amber-soft);color:inherit;border-radius:3px;padding:0 1px}
 .fdial{width:100%;height:100%;display:block;touch-action:none;cursor:pointer}
 .ftrack{fill:none;stroke:var(--sunk);stroke-width:10}
 .farc{fill:none;stroke:var(--accent);stroke-width:10;stroke-linecap:round;transition:stroke-dasharray .25s linear}
+/* While a finger is on the dial the arc must be where the finger is, not
+   easing towards it a quarter-second later. */
+.fdial.dragging .farc{transition:none}
 .ftick{stroke:var(--rule-2);stroke-width:1}
 .ftick.big{stroke:var(--ink-3);stroke-width:1.6}
 .fgrip{fill:var(--accent);stroke:var(--card);stroke-width:3}
@@ -521,6 +528,37 @@ mark{background:var(--amber-soft);color:inherit;border-radius:3px;padding:0 1px}
 .dnote{margin:16px 10px 0}
 .segwide{display:flex;margin:6px 0 4px}
 .segwide button{flex:1}
+
+/* Fourteen days of focus, as a strip you can read at a glance rather than a
+   list you have to add up. */
+.fhist{display:flex;align-items:flex-end;gap:4px;padding:6px 2px 0}
+.fbar{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0}
+.fbv{position:relative;width:100%;height:74px;border-radius:5px;background:var(--sunk);
+  display:flex;align-items:flex-end;overflow:hidden}
+.fbv > i{display:block;width:100%;background:var(--accent);border-radius:5px}
+.fbv > u{position:absolute;left:50%;top:5px;transform:translateX(-50%);width:9px;height:9px;
+  border:1.5px solid var(--rule-2);border-radius:99px;text-decoration:none;font-size:7px;
+  line-height:6px;text-align:center;color:var(--ink-3)}
+.fbm{font-size:9.5px;color:var(--ink-3);height:11px}
+.fbd{font-size:9.5px;color:var(--ink-3)}
+
+/* ---------------- today's plan ---------------- */
+.plan{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:12px 13px 10px;margin-bottom:14px}
+.phead{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:8px}
+.phead h2{font-size:15px}
+.phead .n{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ink-3)}
+.plist{display:flex;flex-direction:column}
+.pitem{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:9px 2px;
+  border-bottom:1px solid var(--rule);color:inherit;cursor:pointer}
+.pitem:last-child{border-bottom:none}
+.pitem:hover .pt{color:var(--accent-ink)}
+.pdot{flex:none;width:7px;height:7px;border-radius:99px;background:var(--accent)}
+.pdot.daily{background:var(--amber)}
+.pdot.wrong{background:var(--mark)}
+.pbody{flex:1;min-width:0}
+.pt{display:block;font-size:13.5px;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ps{display:block;font-size:11px;color:var(--ink-3);margin-top:2px}
+.pgo{flex:none;color:var(--ink-3);font-size:17px;line-height:1}
 </style>
 </head>
 <body>
@@ -883,6 +921,74 @@ function readHtml(){
   </div>`;
 }
 
+/* ---------------- today ----------------
+   What to study, rather than what exists.
+
+   The app already knew all of this and made you assemble it: which topics had
+   fallen due, whether the daily quiz was logged, which practice answers you
+   got wrong. That is a to-do list, and it was scattered across three tabs.
+
+   Nothing here is a new obligation invented by the app. Every line is
+   something already true of your own data, and every line is one tap from the
+   thing it is about. */
+const PLAN_N = 6;
+
+function planItems(){
+  const out = [];
+  const due = ALL_TOPICS.filter(x => isDue(x.tp)).sort((a, b) => dueIn(a.tp) - dueIn(b.tp));
+  for(const {tp, s} of due.slice(0, PLAN_N)){
+    const d = dueIn(tp);
+    out.push({kind: "topic", id: tp.id, title: tp.name, sub: s.short,
+              note: d < 0 ? `${-d}d overdue` : "due today"});
+  }
+
+  const today = new Date().toISOString().slice(0, 10);
+  const dow = new Date().getDay();
+  if(dow !== 0 && !(store.daily || {})[today])
+    out.push({kind: "daily", title: "Today's current-affairs quiz", sub: "Practice",
+              note: "not logged"});
+
+  const wrong = (QUIZ.questions || []).filter(q =>
+    store.picks[q.id] !== undefined && store.picks[q.id] !== q.answer).length;
+  if(wrong) out.push({kind: "wrong", title: `${wrong} practice answer${wrong > 1 ? "s" : ""} to go back over`,
+                      sub: "Practice", note: "got wrong"});
+  return out;
+}
+
+function planHtml(){
+  const items = planItems();
+  const done = ALL_TOPICS.filter(x => isComplete(x.tp)).length;
+  if(!items.length){
+    return `<div class="plan">
+      <div class="phead"><h2>Today</h2><span class="n">nothing due</span></div>
+      <p class="note" style="margin:0">Nothing has fallen due and today's quiz is logged.
+        ${done < ALL_TOPICS.length
+          ? "Start something new below — the syllabus is sorted by how often it comes up."
+          : "The whole syllabus is ticked off; the decay schedule will bring it back round."}</p>
+    </div>`;
+  }
+  return `<div class="plan">
+    <div class="phead"><h2>Today</h2><span class="n">${items.length} to do</span></div>
+    <div class="plist">
+      ${items.map(i => `<button class="pitem" data-plan="${i.kind}" data-id="${i.id || ""}">
+        <span class="pdot ${i.kind}"></span>
+        <span class="pbody"><span class="pt">${esc(i.title)}</span>
+          <span class="ps">${esc(i.sub)} · ${esc(i.note)}</span></span>
+        <span class="pgo">›</span>
+      </button>`).join("")}
+    </div>
+  </div>`;
+}
+
+function bindPlan(root){
+  root.querySelectorAll("[data-plan]").forEach(b => b.onclick = () => {
+    const k = b.dataset.plan;
+    if(k === "topic"){ openTopic(b.dataset.id); return; }
+    state.tab = "practice"; state.qmode = k === "daily" ? "daily" : "practice";
+    markTab("practice"); render();
+  });
+}
+
 function renderSyllabus(){
   document.getElementById("brandSub").textContent = ALL_TOPICS.length + " topics";
 
@@ -907,6 +1013,7 @@ function renderSyllabus(){
     </div>
     <div id="results"></div>
     <div id="home">
+      ${planHtml()}
       ${paceHtml(ALL_TOPICS.length)}
       ${shapeHtml()}
       <div class="lens">
@@ -965,6 +1072,7 @@ function renderSyllabus(){
     const el = document.getElementById("g-" + id);
     if(el) el.scrollIntoView({behavior: "smooth", block: "start"});
   });
+  bindPlan(view);
   bindOutline(view);
 }
 
@@ -1216,6 +1324,46 @@ function focusClock(){
   focusTick = setInterval(paint, 200);
 }
 
+/* Fourteen days of focused minutes.
+   Only runs that were SEEN OUT count towards a day's total. A voided run is
+   still drawn, as a hollow mark, because the point of the streak is that
+   breaking it costs something visible — a chart that quietly forgot the runs
+   you walked out of would be flattering rather than useful. */
+const FOCUS_DAYS = 14;
+function focusHistory(){
+  const day = ms => new Date(ms).toDateString();
+  const out = [];
+  for(let i = FOCUS_DAYS - 1; i >= 0; i--){
+    const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - i);
+    const key = d.toDateString();
+    const runs = (store.focus || []).filter(x => day(x.on) === key);
+    out.push({
+      date: d,
+      mins: Math.round(runs.filter(x => x.kind === "done").reduce((a, x) => a + x.ran / 60, 0)),
+      voided: runs.filter(x => x.kind !== "done").length,
+    });
+  }
+  return out;
+}
+
+function focusHistoryHtml(){
+  const days = focusHistory();
+  const best = Math.max(30, ...days.map(d => d.mins));
+  const total = days.reduce((a, d) => a + d.mins, 0);
+  const kept = days.filter(d => d.mins > 0).length;
+  return `<div class="head"><h2>Last two weeks</h2><span class="n">${total}m over ${kept} day${kept === 1 ? "" : "s"}</span></div>
+    <div class="fhist">
+      ${days.map(d => `<div class="fbar" title="${d.date.toDateString()}">
+        <span class="fbv">${d.mins ? `<i style="height:${Math.max(3, d.mins / best * 100)}%"></i>` : ""}${
+          d.voided ? `<u>${d.voided > 1 ? d.voided : ""}</u>` : ""}</span>
+        <span class="fbm mono">${d.mins || ""}</span>
+        <span class="fbd">${["S","M","T","W","T","F","S"][d.date.getDay()]}</span>
+      </div>`).join("")}
+    </div>
+    <p class="note">Height is minutes focused that day; a hollow mark is a run you walked out of.
+      Only runs seen out count.</p>`;
+}
+
 function renderFocus(){
   document.getElementById("brandSub").textContent = "focus";
   const r = focusRun();
@@ -1246,7 +1394,7 @@ function renderFocus(){
     return;
   }
 
-  const pick = focusClamp(store.focusPick || FOCUS_DEFAULT);
+  let pick = focusClamp(store.focusPick || FOCUS_DEFAULT);
   view.innerHTML = `
     <div class="focuswrap">
       <div class="fdialwrap">
@@ -1270,37 +1418,45 @@ function renderFocus(){
       </div>
       <p class="note">Drag the dial, ${FOCUS_MIN} to ${FOCUS_MAX} minutes. Nothing here locks the
         phone — leaving the app simply voids the run and puts the streak back to zero.</p>
-      ${log.length ? `<div class="head"><h2>Recent</h2><span class="n">last ${Math.min(log.length, 12)}</span></div>
-        <div class="list">${log.slice().reverse().slice(0, 12).map(x => `
-          <div class="row" style="cursor:default">
-            <span class="stripe ${x.kind === "done" ? "ran" : "gone"}"></span>
-            <span class="body">
-              <span class="t">${x.mins} min · ${x.kind === "done" ? "finished" : "void"}</span>
-              <span class="s">${esc(agoWords(x.on))}${x.kind === "done" ? "" : ` · ran ${Math.round(x.ran / 60)}m`}</span>
-            </span>
-          </div>`).join("")}</div>` : ""}
+      ${log.length ? focusHistoryHtml() : ""}
     </div>`;
 
-  const set = m => {
-    store.focusPick = focusClamp(m);
-    save();
-    const el = document.getElementById("fread");
-    if(el) el.textContent = store.focusPick;
-    const arc = document.querySelector(".farc");
-    if(arc){
-      const d = FOCUS_C * (store.focusPick / 60);
-      arc.setAttribute("stroke-dasharray", `${d.toFixed(1)} ${(FOCUS_C - d).toFixed(1)}`);
+  /* Dragging has to be cheap, and the first version was not.
+     Per pointermove it called save() — JSON.stringify of the whole store,
+     every tick and every logged answer, synchronously — re-queried three
+     elements, and measured the dial with getBoundingClientRect(), which
+     forces layout. Worse, .farc carries a .25s transition, so the arc was
+     animating TOWARDS the finger rather than following it, which is what the
+     lag actually looked like.
+     Now: measure once on pointerdown, hold the nodes, paint on a frame, kill
+     the transition for the duration of the drag, and write to storage once
+     when the finger lifts. */
+  const dial = document.getElementById("fdial");
+  const readEl = document.getElementById("fread");
+  const arcEl = dial.querySelector(".farc");
+  const gripEl = dial.querySelector(".fgrip");
+  let box = null, frame = 0, pending = pick;
+
+  const paint = () => {
+    frame = 0;
+    if(readEl) readEl.textContent = pending;
+    if(arcEl){
+      const d = FOCUS_C * (pending / 60);
+      arcEl.setAttribute("stroke-dasharray", `${d.toFixed(1)} ${(FOCUS_C - d).toFixed(1)}`);
     }
-    const grip = document.querySelector(".fgrip");
-    if(grip){
-      const [x, y] = focusPoint(store.focusPick);
-      grip.setAttribute("cx", x.toFixed(1)); grip.setAttribute("cy", y.toFixed(1));
+    if(gripEl){
+      const [x, y] = focusPoint(pending);
+      gripEl.setAttribute("cx", x.toFixed(1)); gripEl.setAttribute("cy", y.toFixed(1));
     }
   };
+  const set = (m, commit) => {
+    pick = pending = focusClamp(m);
+    if(!frame) frame = requestAnimationFrame(paint);
+    if(commit){ store.focusPick = pick; save(); }
+  };
 
-  const dial = document.getElementById("fdial");
   const fromEvent = e => {
-    const b = dial.getBoundingClientRect();
+    const b = box || (box = dial.getBoundingClientRect());
     const x = e.clientX - (b.left + b.width / 2), y = e.clientY - (b.top + b.height / 2);
     // atan2 measured from twelve o'clock, clockwise; 60 lands on 0 rather than
     // wrapping to a 0-minute run that cannot be started.
@@ -1309,15 +1465,26 @@ function renderFocus(){
   };
   let dragging = false;
   dial.addEventListener("pointerdown", e => {
-    dragging = true; dial.setPointerCapture(e.pointerId); set(fromEvent(e));
+    dragging = true;
+    box = dial.getBoundingClientRect();
+    dial.classList.add("dragging");     // the arc must not lag behind the finger
+    dial.setPointerCapture(e.pointerId);
+    set(fromEvent(e));
   });
   dial.addEventListener("pointermove", e => { if(dragging) set(fromEvent(e)); });
-  dial.addEventListener("pointerup", () => { dragging = false; });
-  dial.addEventListener("pointercancel", () => { dragging = false; });
+  const drop = () => {
+    if(!dragging) return;
+    dragging = false; box = null;
+    dial.classList.remove("dragging");
+    set(pick, true);                    // one write, when the finger lifts
+    if(frame){ cancelAnimationFrame(frame); frame = 0; }
+    paint();                            // never leave the dial showing a stale number
+  };
+  dial.addEventListener("pointerup", drop);
+  dial.addEventListener("pointercancel", drop);
 
-  view.querySelectorAll("[data-step]").forEach(b =>
-    b.onclick = () => set((store.focusPick || FOCUS_DEFAULT) + +b.dataset.step));
-  document.getElementById("fgo").onclick = () => focusStart(store.focusPick || FOCUS_DEFAULT);
+  view.querySelectorAll("[data-step]").forEach(b => b.onclick = () => set(pick + +b.dataset.step, true));
+  document.getElementById("fgo").onclick = () => focusStart(pick);
 }
 
 /* ---------------- topic sheet ---------------- */

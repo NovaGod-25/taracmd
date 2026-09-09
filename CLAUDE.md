@@ -207,10 +207,49 @@ letter, not a value. And the sets are shuffled against each other, so a question
 for Set A cannot be reused for Set B: it is a different number there, with the options in
 a different order.
 
-**None are typed yet, and that is deliberate.** Both the question papers and the answer
-keys are published as scans — 48 pages of 2022 GS-I, zero characters of extractable text
-— so there is nothing to lift, and inventing a question and labelling it as the
-Commission's would be worse than an empty grid.
+**2023 GS-I is typed in — 95 of its 100 questions — and it came from somebody else's
+typesetting, not from UPSC.** The Commission's own PDF is 48 pages of photographs as
+always. What made this paper possible is that Drishti publishes a *typeset* copy of it:
+51,508 characters of real text, where every one of the other thirteen years on the same
+page is a scan of 0. `tools/pyq-text.py` reads that, and reads it far better than OCR
+ever read a scan — 99 of 100 questions parsed, 0 flagged. So **always check for a text
+layer before reaching for OCR**, including on somebody else's copy of a paper UPSC
+publishes as an image.
+
+The answers are still the Commission's own: `pyq-text.py` refuses to invent one, and takes
+each from `content/answer-keys.json` by number against the Series the paper says it is.
+
+Five of the hundred are not in the bank, and each for a reason worth keeping:
+
+| | |
+|---|---|
+| 29 | absent from the source itself — Drishti's text runs 28 straight to 30 |
+| 14 | the Commission dropped it, so there is no answer to mark you against |
+| 55, 56, 64 | sports awards, the Chess Olympiad and the Flag Code: **nothing in the 242 topics covers them.** A forced topic is worse than a missing question — it puts a question in front of you while you are revising something else |
+
+### A paper stops being an answer sheet once its questions are in
+
+A UPSC paper used to open as the OMR grid whatever was in the bank. Now the folder looks
+at what has been typed for the Series you are on: if there are questions it is **sat**,
+one at a time, with the numbers nobody has typed yet still in the palette as four blank
+lettered cells. The grid is still there, behind a link, for when the paper is open on
+paper in front of you.
+
+Two things about this that are easy to get wrong:
+
+- **The sheet is stored per Series, not per paper** — `2023-gs1-B`, which is the key the
+  scorer has always used. The folder used to read `upsc-2023-gs1`, an id nothing was ever
+  written to, so a UPSC paper reported none answered however much of it you had filled
+  in. `paperId()` is now the single place that decides.
+- **The letters have to follow the Series selector.** Switching Series changes the
+  answers *and* moves the dropped question — 2023 dropped one, at 34 in A but 94 in D —
+  so `p.letters` is reassigned alongside `p.set`. Changing one without the other marks
+  your sheet against a paper you did not sit.
+
+A dropped question is struck through in the palette rather than removed, so the paper
+still counts to a hundred and question 62 is still at 62; it is not asked, not scorable,
+and excluded from the total, which is what the Commission's own "taken for Scoring 99"
+means.
 
 ## Decisions that should not be quietly reversed
 
@@ -389,10 +428,13 @@ app, but the shape is easy to get wrong twice.
    The stripes, the legend and the "High weight" filter are the app's central editorial
    claim and at 60% high they carry almost no signal. Needs an editorial pass through
    `subjects.json` — this is a judgment call about UPSC frequency, not a code change.
-2. **Answer keys: 2022 GS-I is in, six papers to go.** Quiz → Score a paper works, for
-   that one paper. Punch in a sheet, pick your Series, and it scores against the
-   Commission's own letters on the Commission's own scheme.
-   The other six are the work. `extract` cannot do them and never could: **every key
+2. **Answer keys: 2022 and 2023 GS-I are in, five papers to go.** 2023 was read the same
+   way as 2022 and holds the same guarantee — see the block-permutation note below; Set C
+   turned out to be an exact reversal of Set A, block for block, and all 400 single-letter
+   mutations of Set A break the property. Punch in a sheet, pick your Series, and it
+   scores against the Commission's own letters on the Commission's own scheme — and for
+   2023, where the questions are typed in, it asks them instead of taking letters.
+   The other five are the work. `extract` cannot do them and never could: **every key
    the Commission publishes is a scan** — four pages, one per Series, a photograph of a
    printed grid, not one character of text in any of the 28 pages. It now says so
    instead of blaming its own regex.

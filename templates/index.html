@@ -622,6 +622,14 @@ mark{background:var(--amber-soft);color:inherit;border-radius:3px;padding:0 1px}
 .pq:hover{border-color:var(--rule-2);color:var(--ink)}
 .pq.done{background:var(--accent-soft);border-color:var(--accent-soft);color:var(--accent-ink)}
 .pq.here{border-color:var(--accent);color:var(--ink);box-shadow:inset 0 0 0 1px var(--accent)}
+/* A dropped question is still in the paper, because the numbering is — it is
+   struck through rather than removed, so the palette keeps counting to a
+   hundred and question 62 is still where question 62 was. */
+.pq.drop{opacity:.45;text-decoration:line-through}
+.mut{color:var(--ink-3)}
+.opts.row4{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.opt.lonly{justify-content:center;padding:12px 0}
+.opt.lonly .ol{font-size:13px}
 .qcard.run{margin-top:2px}
 .runacts{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
 .runacts .fchip[disabled]{opacity:.4;cursor:default}
@@ -2117,37 +2125,76 @@ function paperList(){
      content it did not have. The set still matters inside the sheet, because
      the answers and the dropped question move with it, so it stays a control
      there rather than a folder here. */
+  /* Questions typed against a real UPSC cell, gathered by paper and by Series.
+     A question typed for Series B cannot be shown under Series A: it is a
+     different number there, with its options in a different order, so these
+     never merge. */
+  const typed = new Map();
+  for(const q of (QUIZ.questions || [])){
+    if(!q.paper) continue;
+    const k = `${q.paper.year}-${q.paper.code}`;
+    if(!typed.has(k)) typed.set(k, {});
+    const bySet = typed.get(k);
+    if(!bySet[q.paper.set]) bySet[q.paper.set] = new Map();
+    bySet[q.paper.set].set(q.paper.n, q);
+  }
+
   for(const y of (KEYS.years || [])){
     for(const pp of y.papers || []){
       const sets = Object.keys(pp.keys || {});
       if(!sets.length) continue;
-      const set = sets.includes("A") ? "A" : sets[0];
+      const t = typed.get(`${y.year}-${pp.code}`) || {};
+      /* Open on a Series whose questions have actually been typed in. Series A
+         is the habit, but opening a paper on the one Series that cannot ask you
+         anything makes a paper full of questions look like an empty grid. */
+      const withQs = sets.filter(s => t[s] && t[s].size);
+      const set = withQs[0] || (sets.includes("A") ? "A" : sets[0]);
       out.push({id: `upsc-${y.year}-${pp.code}`, kind: "key", year: y.year,
                 name: `UPSC ${y.year}`, test: (KEYS.marking[pp.code] || {}).name || pp.code,
-                letters: pp.keys[set], code: pp.code, set, sets, url: pp.url});
+                letters: pp.keys[set], keys: pp.keys, code: pp.code, set, sets, typed: t, url: pp.url});
     }
   }
   return out;
 }
 
+/* A UPSC paper is stored per Series, because the numbering, the option order
+   and the dropped question all move between A, B, C and D — an answer sheet
+   that outlived a change of Series would be marking you against a paper you
+   did not sit. The scorer has always keyed on this; the folder did not, so it
+   read an id nothing was ever written to and every UPSC paper reported none
+   answered however much of it you had filled in. */
+const paperId = p => p.kind === "key" ? `${p.year}-${p.code}-${p.set}` : p.id;
 const paperTotal = p => p.kind === "typed" ? p.questions.length : p.letters.length;
-const paperSheet = p => store.attempts[p.id] || {};
+const paperSheet = p => store.attempts[paperId(p)] || {};
+const paperAsked = p => (p.kind === "key" && (p.typed || {})[p.set]) || null;
 function paperAnswered(p){
   const s = paperSheet(p);
   return Object.keys(s).filter(k => s[k] !== undefined && s[k] !== null).length;
 }
 
-/* Right, wrong and left, for a typed paper. A key-only paper is scored by the
-   existing OMR, which already knows the marking scheme. */
+/* Right, wrong and left. A dropped question is not scored and is not counted
+   in the total either, which is what the Commission itself does — its own
+   pages print "Total Questions 100" and "taken for Scoring 99". */
 function paperScore(p){
   const s = paperSheet(p);
-  let right = 0, wrong = 0;
-  p.questions.forEach((q, i) => {
-    const a = s[i + 1];
-    if(a === undefined || a === null) return;
-    a === q.answer ? right++ : wrong++;
-  });
-  return {right, wrong, left: p.questions.length - right - wrong};
+  let right = 0, wrong = 0, of = 0;
+  if(p.kind === "key"){
+    p.letters.forEach((L, i) => {
+      if(L === "X") return;
+      of++;
+      const a = s[i + 1];
+      if(a === undefined || a === null) return;
+      LET[a] === L ? right++ : wrong++;
+    });
+  } else {
+    of = p.questions.length;
+    p.questions.forEach((q, i) => {
+      const a = s[i + 1];
+      if(a === undefined || a === null) return;
+      a === q.answer ? right++ : wrong++;
+    });
+  }
+  return {right, wrong, left: of - right - wrong, of};
 }
 
 function renderPaperFolders(root){
@@ -2165,12 +2212,19 @@ function renderPaperFolders(root){
     <div class="plist2">
       ${papers.map(p => {
         const tot = paperTotal(p), done = paperAnswered(p);
+        const asked = paperAsked(p);
+        /* Say which of the two a paper is, because they are not the same
+           thing to sit: one asks you the questions, the other can only take
+           the letters you marked somewhere else. */
+        const how = p.kind === "typed" ? "asked in full"
+          : asked ? `${asked.size} of ${tot} asked in full`
+          : "answer sheet only";
         return `<button class="pcard" data-paper="${p.id}">
-          <span class="pc-i">${p.kind === "typed" ? "📄" : "🗒"}</span>
+          <span class="pc-i">${p.kind === "typed" || asked ? "📄" : "🗒"}</span>
           <span class="pc-b">
             <span class="pc-t">${esc(p.name)}${p.test ? ` · ${esc(p.test)}` : ""}</span>
-            <span class="pc-s">${tot} question${tot === 1 ? "" : "s"} · ${
-              p.kind === "typed" ? "asked in full" : "answer sheet only"}${done ? ` · ${done} answered` : ""}</span>
+            <span class="pc-s">${tot} question${tot === 1 ? "" : "s"} · ${how}${
+              done ? ` · ${done} answered` : ""}</span>
             <span class="pc-bar"><i style="width:${(done / tot * 100).toFixed(1)}%"></i></span>
           </span>
           <span class="pgo">›</span>
@@ -2181,27 +2235,41 @@ function renderPaperFolders(root){
       palette will bring you back to it.</p>`;
 
   root.querySelectorAll("[data-paper]").forEach(b => b.onclick = () => {
-    state.qpaperId = b.dataset.paper; state.qn = 1; renderQuiz();
+    state.qpaperId = b.dataset.paper; state.qn = 1; state.qsheet = false; renderQuiz();
   });
 }
 
 function renderPaperRun(root, p){
-  // A key-only paper has no questions to ask, so it keeps the answer sheet.
   if(p.kind === "key"){
     state.qyear = p.year; state.qpaper = p.code;
     // Only seed the set. Forcing it on every render would snap the sheet back
     // to Series A the instant you picked another one, and which Series you sat
     // decides both the answers and where the dropped question falls.
     if(!state.qset || !(p.sets || [p.set]).includes(state.qset)) state.qset = p.set;
-    root.innerHTML = `<button class="fchip ghost" id="pback">← All papers</button><div id="omrbody"></div>`;
-    document.getElementById("pback").onclick = () => { state.qpaperId = null; renderQuiz(); };
-    renderScorer(document.getElementById("omrbody"));
-    return;
+    // the letters have to follow the Series, or the sheet is marked against a
+    // paper you did not sit -- the dropped question alone moves by fifty places
+    p.set = state.qset;
+    if(p.keys && p.keys[p.set]) p.letters = p.keys[p.set];
+    /* A paper with none of its questions typed for this Series has nothing to
+       ask, so it keeps the answer sheet — as does a paper you have explicitly
+       asked to mark that way, which is what you want when the paper itself is
+       open in front of you on paper. */
+    if(!paperAsked(p) || state.qsheet){
+      root.innerHTML = `<button class="fchip ghost" id="pback">← All papers</button><div id="omrbody"></div>`;
+      document.getElementById("pback").onclick = () => {
+        state.qpaperId = null; state.qsheet = false; renderQuiz();
+      };
+      renderScorer(document.getElementById("omrbody"));
+      return;
+    }
   }
 
-  const total = p.questions.length;
+  const key = p.kind === "key" ? p.letters : null;
+  const asked = paperAsked(p);
+  const total = paperTotal(p);
   const n = Math.min(Math.max(1, state.qn || 1), total);
-  const q = p.questions[n - 1];
+  const q = asked ? asked.get(n) : p.questions[n - 1];
+  const dropped = !!key && key[n - 1] === "X";
   const sheet = paperSheet(p);
   const picked = sheet[n];
   const sc = paperScore(p);
@@ -2212,30 +2280,50 @@ function renderPaperRun(root, p){
      sweeps up the tail once you reach the end. */
   const firstUnanswered = (() => {
     for(let c = 1; c <= total; c++){
+      if(key && key[c - 1] === "X") continue;
       if(c !== n && (sheet[c] === undefined || sheet[c] === null)) return c;
     }
     return null;
   })();
+
+  /* Four blank lettered cells, for a number whose question nobody has typed
+     in yet. The alternative is to hide the number, and then the palette stops
+     being the paper — you would sit 95 questions and score out of 100. */
+  const blanks = LET.map((L, i) => `<button class="opt lonly ${picked === i ? "pick" : ""}"
+      data-pick="${i}"><span class="ol">${L}</span></button>`).join("");
 
   root.innerHTML = `
     <div class="prun-top">
       <button class="fchip ghost" id="pback">← All papers</button>
       <span class="prun-n mono">${n} / ${total}</span>
     </div>
+    ${key && (p.sets || []).length > 1 ? `<div class="filters" style="margin:2px 0 8px">
+      <span class="mut" style="align-self:center;font-size:12px">Series</span>
+      ${p.sets.map(s => `<button class="fchip ${s === p.set ? "on" : ""}" data-set="${s}">${s}</button>`).join("")}
+    </div>` : ""}
     <div class="palette">
-      ${p.questions.map((_, i) => {
+      ${Array.from({length: total}, (_, i) => {
         const k = i + 1, a = sheet[k];
-        const cls = k === n ? "here" : (a === undefined || a === null) ? "" : "done";
+        const drop = key && key[i] === "X";
+        const cls = [drop ? "drop" : "",
+          k === n ? "here" : (a === undefined || a === null) ? "" : "done"].filter(Boolean).join(" ");
         return `<button class="pq ${cls}" data-goq="${k}">${k}</button>`;
       }).join("")}
     </div>
     <div class="qcard run">
-      <div class="eyebrow">Question ${n}${q.source ? `<span class="qfrom">${esc(q.source.name)}</span>` : ""}</div>
-      <div class="qstem">${esc(q.q)}</div>
-      <div class="opts">
-        ${q.options.map((o, i) => `<button class="opt ${picked === i ? "pick" : ""}" data-pick="${i}">
-          <span class="ol">${LET[i]}</span><span>${esc(o)}</span></button>`).join("")}
-      </div>
+      <div class="eyebrow">Question ${n}${
+        q && q.source ? `<span class="qfrom">${esc(q.source.name)}</span>` : ""}${
+        key ? `<span class="qfrom">Set ${p.set}</span>` : ""}</div>
+      ${dropped
+        ? `<div class="qstem mut">The Commission dropped this question, so it is not asked and not scored. It is still in the paper because the numbering is.</div>`
+        : q
+          ? `<div class="qstem">${esc(q.q)}</div>
+             <div class="opts">
+               ${q.options.map((o, i) => `<button class="opt ${picked === i ? "pick" : ""}" data-pick="${i}">
+                 <span class="ol">${LET[i]}</span><span>${esc(o)}</span></button>`).join("")}
+             </div>`
+          : `<div class="qstem mut">This one has not been typed in yet — the Commission publishes its papers as photographs. Mark what you chose and it still scores against the official key.</div>
+             <div class="opts row4">${blanks}</div>`}
       <div class="runacts">
         <button class="fchip" id="pprev" ${n === 1 ? "disabled" : ""}>← Previous</button>
         ${picked !== undefined && picked !== null
@@ -2249,19 +2337,26 @@ function renderPaperRun(root, p){
       ${firstUnanswered ? `<span><button class="linky" id="pnextun">back to the first unanswered → ${firstUnanswered}</button></span>` : ""}
     </div>
     ${sc.left === 0
-      ? `<div class="score"><span class="big">${sc.right}</span><span class="lil">right of ${total}</span>
+      ? `<div class="score"><span class="big">${sc.right}</span><span class="lil">right of ${sc.of}</span>
            <div class="sgrid"><span>right <b>${sc.right}</b></span><span>wrong <b>${sc.wrong}</b></span>
-             <span>accuracy <b>${Math.round(sc.right / total * 100)}%</b></span></div>
+             <span>accuracy <b>${Math.round(sc.right / sc.of * 100)}%</b></span></div>
            <div class="act"><button class="prim" id="pclearall">Clear the sheet</button></div></div>
          <p class="note">Every question answered. The palette above is still there if you want to change one.</p>`
       : `<p class="note">Nothing is marked right or wrong until the paper is finished — this is a
-           paper, not a flashcard. Skipped questions stay hollow in the palette.</p>`}`;
+           paper, not a flashcard. Skipped questions stay hollow in the palette.</p>`}
+    ${key ? `<p class="note"><button class="linky" id="psheet">Mark it as a plain answer sheet
+       instead</button> — the whole hundred on one grid, for when the paper is open in
+       front of you.</p>` : ""}`;
 
   const rerender = () => { save(); renderQuiz(); };
   document.getElementById("pback").onclick = () => { state.qpaperId = null; renderQuiz(); };
   root.querySelectorAll("[data-goq]").forEach(b => b.onclick = () => { state.qn = +b.dataset.goq; renderQuiz(); });
+  root.querySelectorAll("[data-set]").forEach(b => b.onclick = () => {
+    // the sheet is per Series, so this changes which answers are on screen
+    state.qset = b.dataset.set; renderQuiz();
+  });
   root.querySelectorAll("[data-pick]").forEach(b => b.onclick = () => {
-    store.attempts[p.id] = Object.assign({}, sheet, {[n]: +b.dataset.pick});
+    store.attempts[paperId(p)] = Object.assign({}, sheet, {[n]: +b.dataset.pick});
     // answering moves you on, because stopping to admire an answer is not what
     // sitting a paper feels like
     state.qn = Math.min(total, n + 1);
@@ -2270,7 +2365,7 @@ function renderPaperRun(root, p){
   const clear = document.getElementById("pclear");
   if(clear) clear.onclick = () => {
     const s = Object.assign({}, sheet); delete s[n];
-    store.attempts[p.id] = s; rerender();
+    store.attempts[paperId(p)] = s; rerender();
   };
   const prev = document.getElementById("pprev");
   if(prev) prev.onclick = () => { state.qn = n - 1; renderQuiz(); };
@@ -2278,9 +2373,11 @@ function renderPaperRun(root, p){
   if(next) next.onclick = () => { state.qn = n + 1; renderQuiz(); };
   const nu = document.getElementById("pnextun");
   if(nu) nu.onclick = () => { state.qn = firstUnanswered; renderQuiz(); };
+  const sh = document.getElementById("psheet");
+  if(sh) sh.onclick = () => { state.qsheet = true; renderQuiz(); };
   const ca = document.getElementById("pclearall");
   if(ca) ca.onclick = () => {
-    if(confirm(`Clear every answer on ${p.name}?`)){ delete store.attempts[p.id]; state.qn = 1; rerender(); }
+    if(confirm(`Clear every answer on ${p.name}?`)){ delete store.attempts[paperId(p)]; state.qn = 1; rerender(); }
   };
 }
 

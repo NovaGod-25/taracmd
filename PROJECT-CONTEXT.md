@@ -37,8 +37,8 @@ the three generated targets; CI fails if they drift.
 | Prelims papers | 12 years, 22/24 linked |
 | Mains papers | 12 years, 54/60 linked |
 | Optionals | Geography, Law, Agriculture — 11 years each, 22/22 papers |
-| Answer keys | 18 paper slots, **1 filled** (2022 GS-I, all four Series) |
-| Practice questions | 35 |
+| Answer keys | 18 paper slots, **2 filled** (2022 and 2023 GS-I, all four Series each) |
+| Practice questions | 228 — 35 written here, 98 from a test series, 95 from UPSC 2023 GS-I |
 | Toppers' copies | 102 across 10 publishers |
 
 ---
@@ -96,9 +96,10 @@ tab that explains itself beats one that misleads.
 
 ### Known gaps
 
-- **Practice is thin.** 35 questions for 242 topics. Purely a question-supply problem now
-  that the format exists.
-- **17 of 18 answer-key slots are empty.** Only 2022 GS-I is transcribed.
+- **The bank is no longer thin, but it is uneven.** 228 questions over 242 topics, and
+  they cluster where the 2023 paper happened to go rather than where revision needs them.
+- **16 of 18 answer-key slots are empty.** 2022 and 2023 GS-I are transcribed and
+  structurally verified; the rest are scans nobody has read yet.
 - **Weight bands do not discriminate** — 145 high, 96 medium, 1 low. The stripes and the
   "High weight" filter are the app's central editorial claim and at 60% high they carry
   almost no signal. Needs an editorial pass through `subjects.json`; it is judgement about

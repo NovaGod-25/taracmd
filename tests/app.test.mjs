@@ -543,6 +543,9 @@ describe("typing a past question in", () => {
         // "Score a paper" as a mode of its own is gone
         state.tab = "practice"; state.qmode = "papers";
         state.qpaperId = "upsc-2022-gs1"; state.qset = "A"; state.qn = 1;
+        // the plain grid is still there, behind its own link, for when the
+        // paper is open in front of you and you only want to mark letters
+        state.qsheet = true;
         render();
         const r = { wide: document.querySelectorAll(".cell.wide").length,
                     plain: document.querySelectorAll(".cell:not(.wide)").length,
@@ -564,11 +567,59 @@ describe("typing a past question in", () => {
           paper: {year: 2022, code: "gs1", set: "A", n: 2},
           q: "typed", options: ["a","b","c","d"], answer: 0 });
         // one folder per paper now; the Series is a control inside the sheet
-        state.qpaperId = "upsc-2022-gs1"; state.qset = "B"; render();
+        state.qpaperId = "upsc-2022-gs1"; state.qset = "B"; state.qsheet = true; render();
         const n = document.querySelectorAll(".cell.wide").length;
-        QUIZ.questions.pop(); state.qset = "A"; render();
+        QUIZ.questions.pop(); state.qset = "A"; state.qsheet = false; render();
         return n;
       })()`);
     assert.equal(Number(leaked), 0, "a Set A question must not appear on Set B");
+  });
+
+  /* Once a UPSC paper has its questions typed in it stops being an answer
+     sheet and becomes a paper you sit — one question at a time, with the
+     numbers nobody has typed yet still in the palette so you never score out
+     of 95 on a hundred-question paper. */
+  test("a typed UPSC paper is sat one question at a time", () => {
+    const out = JSON.parse(inPage(win, `
+      (() => {
+        const paper = KEYS.years.find(y => y.year === 2022).papers.find(p => p.code === "gs1");
+        QUIZ.questions.push({ id: "t-3", topic: "polity-basic-structure",
+          paper: {year: 2022, code: "gs1", set: "A", n: 2},
+          q: "the typed one", options: ["w","x","y","z"],
+          answer: "ABCD".indexOf(paper.keys.A[1]) });
+        state.tab = "practice"; state.qmode = "papers";
+        state.qpaperId = "upsc-2022-gs1"; state.qset = "A"; state.qsheet = false;
+        state.qn = 2; render();
+        const asked = { stem: document.querySelector(".qcard.run .qstem").textContent.trim(),
+                        opts: document.querySelectorAll(".qcard.run .opt").length,
+                        palette: document.querySelectorAll(".palette .pq").length,
+                        dropped: document.querySelectorAll(".palette .pq.drop").length };
+        state.qn = 3; render();
+        asked.untypedIsLettersOnly = document.querySelectorAll(".qcard.run .opt.lonly").length;
+        QUIZ.questions.pop(); state.qpaperId = null; render();
+        return JSON.stringify(asked);
+      })()`));
+    assert.equal(out.stem, "the typed one", "the typed question is asked");
+    assert.equal(out.opts, 4);
+    assert.equal(out.palette, 100, "the whole paper is in the palette, not just what is typed");
+    assert.equal(out.dropped, 1, "the question the Commission dropped is marked as dropped");
+    assert.equal(out.untypedIsLettersOnly, 4, "an untyped number still takes a letter");
+  });
+
+  /* The sheet is per Series because the paper is. Reading it off the folder id
+     instead meant a UPSC paper always reported nothing answered, however much
+     of it had been filled in. */
+  test("a UPSC answer sheet is stored per Series", () => {
+    const out = JSON.parse(inPage(win, `
+      (() => {
+        store.attempts["2022-gs1-A"] = {1: 0, 2: 1, 3: 2};
+        const p = paperList().find(x => x.id === "upsc-2022-gs1");
+        p.set = "A"; const onA = paperAnswered(p);
+        p.set = "B"; const onB = paperAnswered(p);
+        delete store.attempts["2022-gs1-A"];
+        return JSON.stringify({onA, onB});
+      })()`));
+    assert.equal(out.onA, 3, "the sheet is found where the scorer writes it");
+    assert.equal(out.onB, 0, "and it does not bleed into another Series");
   });
 });

@@ -25,26 +25,39 @@ Three things make it good enough to be worth reviewing:
 
 HOW GOOD IS IT, MEASURED ON CS(P)-2022 GS-I, ALL 48 PAGES
 
-It locates 79 of the 100 questions and gets the Series right. The text is a
-long way from usable, and the numbers are here so nobody has to rediscover
-them:
+                            first cut    now
+    questions located          79         79   of 100
+    footer swallowed           22          0
+    digit read as a letter    164         20
+    text bled in from the
+      neighbouring column      26         26   ← not fixed
+    usable without a look       ~0         27
 
-    26 of 79   carry text bled in from the neighbouring column
-    22 of 79   swallowed the page footer into an option
-   164 options have a digit read as a letter — "1 and 2 only" comes back as
-               "land 2 only", which for a paper this full of "which of the
-               statements given above are correct" changes the answer
-    21         questions not found at all
+Two of the three defects are gone. The footer is cropped before OCR rather
+than filtered after, so it can no longer be read as a continuation of whatever
+option ended last. And "land 2 only" is "1 and 2 only" again — that one
+mattered most, because an option saying something different from what was
+printed teaches the wrong answer without ever looking broken.
 
-So this is a STARTING POINT, not a transcript, and the last of those defects
-is the one that matters: an option that quietly says something different from
-what was printed teaches the wrong thing, and it does it without looking
-broken. Every question needs reading against the paper before it is imported.
+THE COLUMN BLEED IS NOT FIXED, and the honest reason is that four attempts at
+measuring the gutter all failed: widest quiet run, run nearest the ink
+midpoint, leftmost run, median across pages. The trap is that the widest gap
+in the middle of these pages is usually the hanging indent INSIDE a column —
+between "43." and its text — not the gap between columns. Cutting there sliced
+the question number off every right-column question and the yield fell from 79
+to 9. So the fixed split with its overlap stays: it costs bleed, which is
+visible and flagged, rather than silently losing a third of the paper.
+Fixing it properly needs real layout analysis, not a fifth projection
+heuristic.
 
-What would have to improve before that stops being true: find the gutter by
-pixel projection instead of assuming it sits at 52% of the width; crop the
-footer off before OCR rather than filtering it afterwards; and put a
-digit-versus-letter pass over the options, where the damage is concentrated.
+What the flags are worth: 27 of the 79 come through unflagged, and an
+independent audit of those found nothing wrong with any of them. The rest
+carry a reason. The most useful check turned out to be the paper marking its
+own homework — an option citing statement 38 when the stem lists five is a
+digit that came from the other side of the gutter.
+
+Still a draft. 27 questions you could read and import; 52 to fix by hand; 21
+the reader never found.
 
 Worth knowing before reaching for this at all: a TYPESET paper — anything a
 coaching institute exports from Word — has a real text layer and needs none
@@ -92,11 +105,80 @@ def englishness(t: str) -> float:
     return len(real) / len(words)
 
 
-def columns(img):
+FOOTER = re.compile(r"VGYH|www\.|©|upscpdf|^\s*\d{1,3}\s*$", re.IGNORECASE)
+
+
+def columns(img, foot=0.955, left=0.52, right=0.48):
+    """The two columns, with the footer band cut off first.
+
+    The split is a fixed fraction with a deliberate overlap, and that is a
+    retreat. Measuring the gutter was tried four ways — widest quiet run,
+    the run nearest the ink midpoint, the leftmost run, the median across
+    pages — and none was stable, because the widest gap in the middle of
+    these pages is often the hanging indent INSIDE a column, between "43."
+    and its text, rather than the gap between the columns. Cutting there
+    sliced the question number off every right-column question and the yield
+    collapsed from 79 questions to 9.
+
+    So the overlap stays. It costs some text bleeding in from the neighbour,
+    which is visible and flagged, rather than silently losing a third of the
+    paper. Getting this right needs proper layout analysis, not another
+    projection heuristic.
+
+    The footer crop is not a retreat: the running footer sat below the text
+    and was read as a continuation of whichever option ended last, so it
+    landed inside an answer. Cutting it before OCR is cheaper and safer than
+    recognising it afterwards.
+    """
     W, H = img.size
-    # A little overlap, so a letter sitting on the gutter is not sliced away.
-    yield img.crop((0, 0, int(W * 0.52), H))
-    yield img.crop((int(W * 0.48), 0, W, H))
+    bottom = int(H * foot)
+    yield img.crop((0, 0, int(W * left), bottom))
+    yield img.crop((int(W * right), 0, W, bottom))
+
+
+# An option on this paper is nearly always a reference to the numbered
+# statements in the stem: "1 only", "2 and 3 only", "1, 2 and 3", "Both 1 and
+# 2", "Neither 1 nor 2", "Only two". In that shape a lone "1" is the character
+# tesseract most often loses — it comes back as "l", and "1 and" collapses into
+# the word "land", which reads as English and so survives every spellcheck.
+# 164 of the option defects on CS(P)-2022 GS-I were this one thing.
+COUNTING = re.compile(r"^only (one|two|three|four)$|^all four$|^none$", re.IGNORECASE)
+KEYWORDS = re.compile(r"\b(only|both|neither|and|nor|or|land)\b", re.IGNORECASE)
+
+
+def repair_option(text: str) -> str:
+    """Put back the digits tesseract turned into letters.
+
+    Only inside options that are pure references to statement numbers. A
+    factual option — "Article 368", "Ministry of Home Affairs", "forest land
+    system" — is left completely alone, because there an "l" may well belong
+    and "land" is a word.
+
+    Note the order: the test for "is this a reference to statement numbers"
+    strips `land` as a keyword rather than rewriting it first. Rewriting first
+    would turn every legitimate "land" in the paper into "1 and".
+    """
+    t = " ".join(text.split())
+    if COUNTING.match(t):
+        return t
+
+    # Split runs like "2and" before stripping keywords: there is no word
+    # boundary between a digit and a letter, so \band\b never sees the "and"
+    # in "2and 3 only" and the whole option would look like prose.
+    spaced = re.sub(r"(?<=\d)(?=[A-Za-z])|(?<=[A-Za-z])(?=\d)", " ", t)
+    probe = KEYWORDS.sub(" ", spaced).replace(",", " ").strip()
+    if not probe or not all(re.fullmatch(r"[\dlI]+", tok) for tok in probe.split()):
+        return t
+
+    # From here on work on the spaced form: "1,2and3" has no word boundaries
+    # for the rules below to catch, and by this point the option is known to be
+    # nothing but statement numbers and joining words, so spacing it is safe.
+    t = spaced
+    t = re.sub(r"\bland\b", "1 and", t, flags=re.IGNORECASE)
+    t = re.sub(r"(?<![A-Za-z])[lI](?![A-Za-z])", "1", t)
+    t = re.sub(r"(\d)(and|only|nor|or)\b", r"\1 \2", t, flags=re.IGNORECASE)
+    t = re.sub(r"\b(and|nor|or|both|neither)(\d)", r"\1 \2", t, flags=re.IGNORECASE)
+    return " ".join(t.split())
 
 
 def parse(lines: list[str], total: int) -> list[dict]:
@@ -136,9 +218,11 @@ def parse(lines: list[str], total: int) -> list[dict]:
         if m:
             letter = m.group(1).lower()
             letter = "d" if letter == "q" else letter        # "(dq)" happens
-            cur["options"].append(m.group(2).strip())
+            cur["options"].append(repair_option(m.group(2).strip()))
             opt = len(cur["options"]) - 1
             continue
+        if FOOTER.search(line) and len(line.strip()) < 40:
+            continue                                        # running footer, not content
         # a continuation line belongs to whatever it followed
         if opt is not None:
             cur["options"][opt] += " " + line.strip()
@@ -172,8 +256,9 @@ def main() -> int:
         a, _, b = args.pages.partition("-")
         lo, hi = int(a), int(b or a)
 
+    pages = list(range(lo - 1, min(hi, len(reader.pages))))
     text, sets = [], []
-    for i in range(lo - 1, min(hi, len(reader.pages))):
+    for i in pages:
         page = reader.pages[i]
         im = next(iter(page.images), None)
         if im is None:
@@ -215,8 +300,26 @@ def main() -> int:
             why.append(f"{len(q['options'])} options")
         if letters[n - 1] == "X":
             why.append("the Commission dropped this one")
-        if re.search(r"PM,|,,|\bug/m\b|[^\x00-\x7f]", q["q"] + " ".join(q["options"])):
-            why.append("subscript or non-ascii lost in the scan")
+        if re.search(r"PM,|,,|\bug/m\b", q["q"] + " ".join(q["options"])):
+            why.append("subscript lost in the scan")
+
+        # An option that references a statement the stem does not have is the
+        # signature of text bled in from the neighbouring column: "1 and 3
+        # only" comes back as "1 and 83 only" because a digit from the other
+        # side of the gutter landed in it. The stem numbers its own statements,
+        # so the paper checks itself here.
+        stmts = [int(x) for x in re.findall(r"(?<![\d.])(\d{1,2})\.\s", q["q"])]
+        # A statement list never runs past about five on this paper, and where
+        # the stem sets them out inline the pattern above finds none at all —
+        # so the floor matters as much as the measurement. Anything above it is
+        # a digit that came from somewhere else.
+        top = max(stmts + [5])
+        refs = [int(x) for o in q["options"] for x in re.findall(r"\d+", o)]
+        stray = sorted({x for x in refs if x > top})
+        if stray:
+            why.append(f"option cites {stray}, above the {top} statements in the stem")
+        if re.search(r"\|", q["q"] + " ".join(q["options"])):
+            why.append("text bled in from the other column")
         if len(q["q"]) < 20:
             why.append("stem looks truncated")
 

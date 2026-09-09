@@ -39,12 +39,25 @@ actual syllabus — could only be seen eight at a time, one topic at a time, 242
 deep. Now it is one page: groups open in place, topics open in place, and every subtopic
 is its own tick target.
 
-Two lenses over the same 242 topics, and this is the point of the tab rather than a
-gimmick: **240 of the 242 carry more than one paper tag**, so `By subject` (how the
-material is taught) and `By paper` (how the Commission sets it — Prelims 235, GS-I 69,
-GS-II 82, GS-III 147, GS-IV 5, Essay 28) really are different shapes of one syllabus.
-Anything that regroups topics must keep every topic: `tests/` checks the paper lens holds
-exactly the topics tagged for each paper.
+**Three lenses, and Map is the one it opens on.** Map draws all 242 topics as one square
+each, grouped by subject — the whole of what the Commission examines on a screen and a
+half, which a scrolling outline can never be. Colour there is progress, never weight:
+where you have and have not been is a fact, and weight is an editorial claim that at the
+moment barely discriminates. Tap a square for the topic, a subject's name to drop into
+the outline at that subject.
+
+`By subject` and `By paper` are the other two, and they are the point of the tab rather
+than a gimmick: **240 of the 242 carry more than one paper tag**, so how the material is
+taught and how the Commission sets it (Prelims 235, GS-I 69, GS-II 82, GS-III 147, GS-IV
+5, Essay 28) really are different shapes of one syllabus. Anything that regroups topics
+must keep every topic: `tests/` checks the paper lens holds exactly the topics tagged for
+each paper, and that the map draws every topic exactly once.
+
+**The map view suppresses the dashboard cards on purpose.** The tab is called Syllabus and
+it used to open on three stacked cards — Today, the exam clock, the counts strip — with
+the syllabus itself below the fold. In the map the exam clock folds into the map's own
+header line and Today moves below the picture. There is a test that the pace card is not
+drawn in map view, because the temptation to put it back is real.
 
 Things that will bite:
 
@@ -63,14 +76,14 @@ Things that will bite:
 
 ## Navigation
 
-Four tabs and a drawer, after the bar reached seven and stopped having a shape.
+Five tabs and a drawer, after the bar reached seven and stopped having a shape.
 
 ```
-Syllabus   Papers                     Practice              Focus      ☰ drawer
-           ├ Prelims                  ├ Daily                          ├ Toppers' copies
-           ├ Mains                    ├ Practice                       ├ Read the whole syllabus
-           └ Optional                 └ Score a paper                  ├ Back up or restore
-                                                                       └ Theme
+Syllabus   Papers      Practice    Focus   Shelf     ☰ drawer
+├ Map      ├ Prelims   ├ Daily                       ├ Toppers' copies
+├ Subject  ├ Mains     └ Papers                      ├ Read the whole syllabus
+└ Paper    └ Optional                                ├ Back up or restore
+                                                     └ Theme
 ```
 
 Prelims, Mains and Optional were three of the seven tabs and **one idea** — the
@@ -91,9 +104,61 @@ Things that will bite:
   thing on screen: drawer → sheet → read view → collapse the outline → Syllabus tab → OS.
 - **Toppers lights no tab**, because it is reached from the drawer. `markTab` clears the
   bar rather than leaving the previous tab lit and claiming you are somewhere you are not.
-- **Four columns, and the drawer is why it should stay four.** Anything rare goes in the
-  drawer instead of the bar. The old note about a seventh tab wrapping still applies to
-  the grid: `repeat(4,1fr)` is not decorative.
+- **The grid's column count must equal the number of tabs.** It is `repeat(5,1fr)` now —
+  75px a column on a 375px phone, which is roomier than the six that fitted before the
+  drawer existed. A button more than there are columns does not overflow or clip: it
+  silently wraps onto a second row, which is the kind of bug you only ever see on a
+  phone. `tests/` reads the column count out of the stylesheet and compares it with the
+  number of `.tab` buttons, so the two cannot drift apart again.
+- **Anything rare still goes in the drawer rather than the bar.** Shelf earned a tab
+  because it is somewhere you go on purpose and often; Toppers did not.
+
+## The shelf
+
+Somewhere to keep your own documents, and the whole feature is about *where* they are
+kept rather than that they are listed.
+
+**Every directory the app owns is deleted when the app is** — `filesDir` and
+`getExternalFilesDir()` both, and so is anything written through MediaStore once the
+app's ownership of it goes. So the app does not choose the location. The owner picks a
+folder through `ACTION_OPEN_DOCUMENT_TREE`, Android hands over a persistable grant, and
+the files are then ordinary files in ordinary storage: visible in the phone's own Files
+app, and untouched by uninstalling TaraCmd.
+
+**What an uninstall takes is the grant, not the files.** That is Android's design and not
+something to route around — `MANAGE_EXTERNAL_STORAGE` would survive it and is a
+Play-restricted permission wildly out of proportion to a shelf. Pointing at the same
+folder again after a reinstall costs one tap and brings the whole shelf back, and the
+page says exactly that rather than implying the app is holding anything.
+
+Things that will bite:
+
+- **The remembered URI string is not a permission.** After an uninstall, or if the user
+  revokes it in Settings, the row in `persistedUriPermissions` is gone and reading
+  through the URI throws. `shelf()` checks the grant is actually held and returns null
+  otherwise, which is what makes the page fall back to "pick a folder" instead of showing
+  an empty shelf that should not be empty.
+- **`registerForActivityResult` must run before the activity is STARTED**, which is why
+  both launchers sit at the top of `onCreate` rather than beside the bridge methods that
+  use them.
+- **Deleting removes the file.** The shelf *is* the folder — there is no copy to remove
+  instead — so the page confirms first and says so in the confirmation.
+- **A filename is not a trusted author.** It comes off the phone's filesystem and goes
+  through `innerHTML`; it is escaped, and there is a test that a filename cannot become
+  markup.
+
+## The question palette
+
+Green, red and grey, which is the colour language of every exam hall and worth copying
+exactly. Answered is green, **seen-but-not-answered is red**, not visited is grey, and
+the question the Commission dropped is struck through and out of the total.
+
+The middle state is the one that earns its keep: without it a question you skipped and
+one you have never reached look identical, and the palette stops being able to tell you
+where the work is. It needs `store.seen`, written once the first time a number is shown —
+not on every render, which would put a full `JSON.stringify` of the store behind every
+tap of the palette. Answered beats seen, so coming back to a question and answering it
+turns it green rather than leaving it looking like a failure.
 
 ## Content files
 
@@ -277,9 +342,10 @@ which means a store written by an older build still opens.
 | `picks` | practice answers, `question id -> option index` |
 | `writing` | Mains and Optional answer log, `year-code -> [{q,mins,words,score,of,note,on}]` |
 | `daily` | daily quiz log, `YYYY-MM-DD -> {score,of,src}` — what the streak counts |
+| `seen` | which questions have been looked at, keyed like `attempts` — what makes "not answered" a state distinct from "not visited" |
 
 There is no export bridge function: backup is a copyable blob in a sheet, plus a file
-download on web only. That is deliberate — see the four-function contract below.
+download on web only. That is deliberate — see the bridge contract below.
 
 **The Android page is served over `https://appassets.androidplatform.net/`** via
 `WebViewAssetLoader`, not `file:///android_asset/`. A `file://` page has an opaque
@@ -295,17 +361,13 @@ sits inside a topper's full set rather than being listed on its own. So `copies`
 section pages instead. Filling it automatically would need a crawler per site across ten
 sites, which is the thing already turned down above. Do not quietly build it.
 
-**The tab bar is `repeat(6,1fr)`** — 63 px a column on a 375 px phone, labels at 9.5 px.
-Measured: nothing clips, but a seventh tab would not fit. Fold new surfaces into an
-existing tab, the way the Mains answer log went inside Mains.
-
 **upsc.gov.in rate-limits hard.** It stopped answering entirely after roughly 45 requests
 in one session. `tools/answer-keys.py` waits 4 seconds between requests on purpose. Any
 new scraping should be designed to run locally and unhurried, never in CI.
 
 ## The JS ↔ native contract
 
-Seven functions, and nothing else crosses. Changing a name on either side breaks it
+Thirteen functions, and nothing else crosses. Changing a name on either side breaks it
 silently, because the page checks for the bridge before using it and falls back to
 browser behaviour when it is absent.
 
@@ -318,6 +380,13 @@ browser behaviour when it is absent.
 | page → native | `AndroidHost.focusAwake(on)` | hold the screen awake for a focus run, and let it sleep after |
 | native → page | `window.taracmdBack()` | hardware back. Closes sheet → collapses the outline → returns to the Syllabus tab → returns `false` so the OS takes over |
 | native → page | `window.taracmdInterrupted()` | `onPause` — the app has been left, so a focus run is void |
+| page → native | `AndroidHost.docsFolder()` | the shelf folder's name, or null while none is picked |
+| page → native | `AndroidHost.docsPick()` | choose or change that folder |
+| page → native | `AndroidHost.docsAdd()` | pick documents and copy them onto the shelf |
+| page → native | `AndroidHost.docsList()` | JSON of what is on it — id, name, size, mime, date |
+| page → native | `AndroidHost.docsOpen(id)` | hand one to whatever the phone reads it with |
+| page → native | `AndroidHost.docsRemove(id)` | delete it — the file, not a listing of it |
+| native → page | `window.taracmdDocs()` | the shelf changed (folder picked, files added); re-render |
 
 ### Focus does not control the phone
 
@@ -507,12 +576,10 @@ app, but the shape is easy to get wrong twice.
   simply had ten years instead of eleven, with nothing anywhere to say a year was
   missing. `OPT_LABEL` carries the variants. When a new optional comes up one year short,
   suspect the label before the archive.
-- **The tab bar is a grid with a hard-coded column count, and it is now full.** Seven
-  tabs is 53px each on a 375px phone and 46px on a 320px one, which is why the label
-  shrinks below 360. Adding a button without raising `repeat(7,1fr)` silently wraps the
-  last tab onto a second row — it does not overflow or clip, it just quietly becomes two
-  rows. An eighth does not fit at any size the labels stay readable, so the next surface
-  folds into an existing tab.
+- **The tab bar is a grid with a hard-coded column count.** Raise `repeat(N,1fr)` in
+  lockstep with the number of buttons or the last tab silently wraps onto a second row —
+  no overflow, no clipping, just quietly two rows. Seven was 53px a column and the labels
+  had to shrink below 360px; five is 75px and comfortable. There is a test.
 - **`.prim`'s theme overrides are `:root`-scoped**, so a bare `.custom` class on a `.prim`
   button loses to them and inherits the dark-on-dark ink meant for a filled accent
   button — an invisible label on a visible border. Match the specificity

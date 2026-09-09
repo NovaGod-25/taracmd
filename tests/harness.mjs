@@ -12,12 +12,16 @@
 import { readFileSync } from "node:fs";
 import { JSDOM } from "jsdom";
 
-export function loadApp() {
+export function loadApp(bridge) {
   const html = readFileSync(new URL("../web/taracmd.html", import.meta.url), "utf8");
   const dom = new JSDOM(html, {
     runScripts: "dangerously",
     url: "https://taracmd.test/",
     pretendToBeVisual: true,
+    /* The page reads AndroidHost once, at parse time, because in the real
+       WebView addJavascriptInterface runs before loadUrl. So a fake bridge has
+       to be in place before the scripts run, not after. */
+    beforeParse: bridge ? (w) => { w.AndroidHost = bridge; } : undefined,
   });
   return dom.window;
 }

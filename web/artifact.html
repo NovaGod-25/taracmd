@@ -5,6 +5,7 @@
   --rule:#DBE0E8; --rule-2:#C7CFDA;
   --accent:#2E3D97; --accent-ink:#2E3D97; --accent-soft:#E6E9F8;
   --mark:#B32E1C; --mark-soft:#FAE7E4;
+  --go:#12693C; --go-soft:#DCF0E4;
   --amber:#8A6009; --amber-soft:#F7EEDC;
   --shadow:0 1px 2px rgba(20,28,43,.06), 0 8px 24px -12px rgba(20,28,43,.18);
   --tab-h:66px;
@@ -16,6 +17,7 @@
     --rule:#28313F; --rule-2:#374355;
     --accent:#93A8F7; --accent-ink:#B3C2FB; --accent-soft:#1E2743;
     --mark:#F0958A; --mark-soft:#3A231F;
+    --go:#63C68C; --go-soft:#12301F;
     --amber:#DBAC55; --amber-soft:#33280F;
     --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 26px -14px rgba(0,0,0,.7);
   }
@@ -26,6 +28,7 @@
   --rule:#28313F; --rule-2:#374355;
   --accent:#93A8F7; --accent-ink:#B3C2FB; --accent-soft:#1E2743;
   --mark:#F0958A; --mark-soft:#3A231F;
+  --go:#63C68C; --go-soft:#12301F;
   --amber:#DBAC55; --amber-soft:#33280F;
   --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 26px -14px rgba(0,0,0,.7);
 }
@@ -199,7 +202,7 @@ a{color:var(--accent-ink);text-decoration:none}
 
 /* ---------- tab bar ---------- */
 .tabs{position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--card);border-top:1px solid var(--rule);
-  display:grid;grid-template-columns:repeat(4,1fr);padding-bottom:env(safe-area-inset-bottom)}
+  display:grid;grid-template-columns:repeat(5,1fr);padding-bottom:env(safe-area-inset-bottom)}
 /* Four columns is 93px each on a 375px phone, which is room for an 11px label
    and air around it. It got to seven once — Prelims, Mains and Optional are
    one idea and were three of them — and the row lost its shape long before it
@@ -598,12 +601,65 @@ mark{background:var(--amber-soft);color:inherit;border-radius:3px;padding:0 1px}
 .pq{font-family:"IBM Plex Mono",monospace;font-size:10.5px;height:28px;border-radius:7px;
   border:1px solid var(--rule);background:var(--card);color:var(--ink-3);cursor:pointer}
 .pq:hover{border-color:var(--rule-2);color:var(--ink)}
-.pq.done{background:var(--accent-soft);border-color:var(--accent-soft);color:var(--accent-ink)}
+/* The colours every exam hall uses, and the reason they are worth copying:
+   green/red/grey is not decoration, it is the difference between "done",
+   "I looked at this and could not do it" and "I have not been here yet".
+   Without the middle one a skipped question and an unseen one look the same,
+   and the palette stops being able to tell you where the work is. */
+.pq.done{background:var(--go-soft);border-color:var(--go);color:var(--go)}
+.pq.left{background:var(--mark-soft);border-color:var(--mark);color:var(--mark)}
 .pq.here{border-color:var(--accent);color:var(--ink);box-shadow:inset 0 0 0 1px var(--accent)}
 /* A dropped question is still in the paper, because the numbering is — it is
    struck through rather than removed, so the palette keeps counting to a
    hundred and question 62 is still where question 62 was. */
 .pq.drop{opacity:.45;text-decoration:line-through}
+.plegend{display:flex;flex-wrap:wrap;gap:6px 14px;margin:-4px 0 12px;font-size:11.5px;color:var(--ink-3)}
+.plegend span{display:flex;align-items:center;gap:5px}
+.plegend i{width:11px;height:11px;border-radius:3px;border:1px solid var(--rule);display:inline-block}
+.plegend i.done{background:var(--go-soft);border-color:var(--go)}
+.plegend i.left{background:var(--mark-soft);border-color:var(--mark)}
+.plegend i.here{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+/* The map. Fixed squares in a wrapping row rather than a stretching grid: a
+   topic is a topic, and squares that resize with the column would make
+   Geography's thirty look bigger than Polity's thirty. */
+.mapwrap{margin-top:2px}
+.mapline{display:flex;flex-wrap:wrap;gap:4px 14px;padding:10px 12px;margin:0 0 12px;
+  background:var(--card);border:1px solid var(--rule);border-radius:12px;
+  font-size:12.5px;color:var(--ink-3);box-shadow:var(--shadow)}
+.mapline b{color:var(--ink);font-size:13.5px}
+.mapsub{margin-bottom:13px}
+.maph{display:flex;align-items:center;gap:8px;width:100%;padding:3px 2px 7px;
+  background:none;border:0;color:var(--ink);cursor:pointer;text-align:left}
+.maph .gi{font-size:15px;flex:none}
+.maph .mn{font-weight:600;font-size:13.5px;flex:none}
+.maph .mm{font-size:11.5px;color:var(--ink-3);flex:none;font-family:"IBM Plex Mono",monospace}
+.mbar{flex:1;height:3px;border-radius:2px;background:var(--sunk);overflow:hidden;min-width:20px}
+.mbar i{display:block;height:100%;background:var(--go);border-radius:2px}
+.mtiles{display:flex;flex-wrap:wrap;gap:4px}
+.mt{width:16px;height:16px;border-radius:3px;padding:0;cursor:pointer;
+  border:1px solid var(--rule);background:var(--card)}
+.mt:hover{border-color:var(--rule-2)}
+.mt.part{background:var(--accent-soft);border-color:var(--accent)}
+.mt.done{background:var(--go-soft);border-color:var(--go)}
+.mt.due{background:var(--amber-soft);border-color:var(--amber)}
+.plegend i.mdone{background:var(--go-soft);border-color:var(--go)}
+.plegend i.mpart{background:var(--accent-soft);border-color:var(--accent)}
+.plegend i.mdue{background:var(--amber-soft);border-color:var(--amber)}
+/* the shelf */
+.dbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:2px 0 12px}
+.dfolder{flex:1;min-width:120px;font-size:12px;color:var(--ink-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dlist{display:flex;flex-direction:column;gap:8px}
+.drow{display:flex;align-items:stretch;gap:6px}
+.dopen{flex:1;display:flex;align-items:center;gap:11px;text-align:left;padding:11px 12px;
+  border:1px solid var(--rule);border-radius:12px;background:var(--card);color:var(--ink);cursor:pointer}
+.dopen:hover{border-color:var(--rule-2)}
+.di{font-size:19px;flex:none}
+.db{display:flex;flex-direction:column;gap:2px;min-width:0}
+.dn{font-size:13.5px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ds{font-size:11px;color:var(--ink-3)}
+.dx{flex:none;width:38px;border:1px solid var(--rule);border-radius:12px;background:var(--card);
+  color:var(--ink-3);font-size:17px;line-height:1;cursor:pointer}
+.dx:hover{border-color:var(--mark);color:var(--mark)}
 .mut{color:var(--ink-3)}
 .opts.row4{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
 .opt.lonly{justify-content:center;padding:12px 0}
@@ -640,6 +696,7 @@ mark{background:var(--amber-soft);color:inherit;border-radius:3px;padding:0 1px}
   <button class="tab" data-tab="papers"><svg viewBox="0 0 24 24"><path d="M4 4h11l5 5v11H4z"/><path d="M15 4v5h5"/><path d="M8 13h8M8 17h5"/></svg>Papers</button>
   <button class="tab" data-tab="practice"><svg viewBox="0 0 24 24"><path d="M9.1 9a3 3 0 015.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>Practice</button>
   <button class="tab" data-tab="focus"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/></svg>Focus</button>
+  <button class="tab" data-tab="docs"><svg viewBox="0 0 24 24"><path d="M3 7.5A1.5 1.5 0 014.5 6h4l2 2.5h7A1.5 1.5 0 0119 10v7.5a1.5 1.5 0 01-1.5 1.5h-13A1.5 1.5 0 013 17.5z"/></svg>Shelf</button>
 </nav>
 
 <!-- The long tail. Everything rare or settings-shaped lives here rather than
@@ -705,7 +762,8 @@ const BLANK = {
   writing:  {},   // "year-code" -> [{q,mins,words,score,of,note,on}]  Mains log
   daily:    {},   // "YYYY-MM-DD" -> {score,of,src}           daily quiz log
   focus:    [],   // [{on,mins,ran,kind,left}]                focus sessions
-  focusRun: null  // the session in flight, so a reload cannot lose the clock
+  focusRun: null, // the session in flight, so a reload cannot lose the clock
+  seen:     {}    // "year-paper-set" -> {question: 1}       questions looked at
 };
 let store = Object.assign({}, BLANK);
 try{ const r = localStorage.getItem(KEY); if(r) store = Object.assign(store, JSON.parse(r)); }catch(e){}
@@ -822,7 +880,7 @@ let state = {
   pset: "prelims",        // which paper index the Papers tab is showing
   qpaperId: null,         // the paper being sat, or null for the folder list
   qn: 1,                  // which question of it
-  lens: "subject",        // "subject" | "paper" — two shapes of one syllabus
+  lens: "map",            // "map" | "subject" | "paper" — three shapes of one syllabus
   open: new Set(),        // expanded groups
   openTopics: new Set(),  // topics expanded in place
   shape: false,           // the size-and-progress bars, folded away by default
@@ -893,6 +951,58 @@ const hl = (s, term) => !term ? esc(s)
 /* The shape of the whole thing in one strip: how big is this, and where does
    the mass sit? Nothing answered that before, and it is the first thing you
    want to know about a syllabus you have to finish by a date. */
+/* The syllabus as a picture, which is the one thing a scrolling outline can
+   never be. Eight subjects, 242 topics, one square each — the whole of what
+   the Commission examines on a screen and a half, so "what is the UPSC
+   syllabus" has an answer you can see rather than one you have to scroll.
+
+   Colour is progress, never weight. Weight is an editorial claim and at the
+   moment a weak one (145 of 242 are tagged high); where you have and have not
+   been is a fact, and a fact is what a picture should be made of. */
+function mapHtml(){
+  const ex = nextExam();
+  const days = ex ? Math.max(0, Math.ceil((ex.on - Date.now()) / DAY)) : null;
+  const nSub = SUBJECTS.reduce((a, s) => a + s.topics.reduce((b, t) => b + t.subtopics.length, 0), 0);
+  const t0 = tally(ALL_TOPICS.map(x => x.tp));
+
+  return `<div class="mapwrap">
+    <div class="mapline">
+      <span><b class="mono">${SUBJECTS.length}</b> subjects</span>
+      <span><b class="mono">${ALL_TOPICS.length}</b> topics</span>
+      <span><b class="mono">${nSub.toLocaleString()}</b> subtopics</span>
+      ${days !== null ? `<span><b class="mono">${days}</b> days to ${esc(ex.name)}</span>` : ""}
+      <span><b class="mono">${t0.tDone}</b> finished</span>
+    </div>
+    ${SUBJECTS.map(s => {
+      const t = tally(s.topics);
+      return `<section class="mapsub">
+        <button class="maph" data-mapsub="${s.id}">
+          <span class="gi">${s.icon}</span>
+          <span class="mn">${esc(s.name)}</span>
+          <span class="mm mono">${t.tDone}/${t.tTot}</span>
+          <span class="mbar"><i style="width:${(t.pct * 100).toFixed(1)}%"></i></span>
+        </button>
+        <div class="mtiles">
+          ${s.topics.map(tp => {
+            // due beats finished on purpose: a topic that has come round again
+            // is work, and work is what the picture is for
+            const st = isDue(tp) ? "due" : isComplete(tp) ? "done" : ticked(tp) ? "part" : "";
+            return `<button class="mt ${st}" data-sheet="${tp.id}" title="${esc(tp.name)}"></button>`;
+          }).join("")}
+        </div>
+      </section>`;
+    }).join("")}
+    <div class="plegend" style="margin-top:12px">
+      <span><i class="mdone"></i>finished</span>
+      <span><i class="mpart"></i>started</span>
+      <span><i class="mdue"></i>due again</span>
+      <span><i></i>not started</span>
+    </div>
+    <p class="note">Every square is one topic — tap it to open its subtopics and tick them off.
+      Tap a subject's name to drop into the full outline at that subject.</p>
+  </div>`;
+}
+
 function shapeHtml(){
   const gs = groups();
   const max = Math.max(...gs.map(g => g.topics.length));
@@ -1078,9 +1188,10 @@ function renderSyllabus(){
     </div>
     <div id="results"></div>
     <div id="home">
-      ${planHtml()}
-      ${paceHtml(ALL_TOPICS.length)}
-      ${shapeHtml()}
+      <!-- In the map the syllabus comes first and the day's list after it: the
+           tab is called Syllabus, and it used to open on three stacked cards
+           with the syllabus somewhere below the fold. -->
+      ${state.lens === "map" ? "" : planHtml() + paceHtml(ALL_TOPICS.length) + shapeHtml()}
       <!-- One row. It was three — lens, filters, and a bar of eight jump icons —
            stacked above the content on every visit. The jump bar is gone
            because collapsing the groups gives you the same eight rows, as
@@ -1088,16 +1199,17 @@ function renderSyllabus(){
            anyway. What is left scrolls sideways rather than wrapping. -->
       <div class="ctrl">
         <div class="seg">
+          <button class="${state.lens === "map" ? "on" : ""}" data-lens="map">Map</button>
           <button class="${state.lens === "subject" ? "on" : ""}" data-lens="subject">By subject</button>
           <button class="${state.lens === "paper" ? "on" : ""}" data-lens="paper">By paper</button>
         </div>
-        <span class="cdiv"></span>
+        ${state.lens === "map" ? "" : `<span class="cdiv"></span>
         ${[["all", "All"], ["due", "Due " + dueCount], ["high", "High weight"], ["left", "Not done"]]
           .map(([k, l]) => `<button class="fchip ${state.tfilter === k ? "on" : ""}" data-f="${k}">${l}</button>`).join("")}
         <span class="cdiv"></span>
-        <button class="fchip ghost" id="expAll">${anyOpen ? "Collapse all" : "Expand all"}</button>
+        <button class="fchip ghost" id="expAll">${anyOpen ? "Collapse all" : "Expand all"}</button>`}
       </div>
-      ${gs.map(g => {
+      ${state.lens === "map" ? mapHtml() + planHtml() : gs.map(g => {
         const shown = g.topics.filter(passesFilter);
         const t = tally(g.topics);
         const open = state.open.has(g.id);
@@ -1117,7 +1229,7 @@ function renderSyllabus(){
             : `<div class="empty">Nothing here under this filter.</div>`) : ""}
         </section>`;
       }).join("")}
-      <p class="note">Weight bands come from how often a topic has surfaced in the last ten years of papers. Tick subtopics as you revise, and mark a topic revised when you go back over it. Reading the whole syllabus and backing it up are both in the menu, top right.</p>
+      ${state.lens === "map" ? "" : `<p class="note">Weight bands come from how often a topic has surfaced in the last ten years of papers. Tick subtopics as you revise, and mark a topic revised when you go back over it. Reading the whole syllabus and backing it up are both in the menu, top right.</p>`}
     </div>`;
 
   const q = document.getElementById("q");
@@ -1126,7 +1238,8 @@ function renderSyllabus(){
   if(st) st.onclick = () => { state.shape = !state.shape; refreshBehind(); };
   const dj = document.getElementById("dueJump");
   if(dj) dj.onclick = () => { state.tfilter = "due"; state.open = new Set(gs.map(g => g.id)); render(); };
-  document.getElementById("expAll").onclick = () => {
+  const ea = document.getElementById("expAll");
+  if(ea) ea.onclick = () => {
     state.open = anyOpen ? new Set() : new Set(gs.map(g => g.id));
     render();
   };
@@ -1139,6 +1252,13 @@ function renderSyllabus(){
     state.open.add(id);
     render();
     const el = document.getElementById("g-" + id);
+    if(el) el.scrollIntoView({behavior: "smooth", block: "start"});
+  });
+  view.querySelectorAll("[data-mapsub]").forEach(b => b.onclick = () => {
+    // the map is for seeing; the outline is for working. A subject's name is
+    // the door between them.
+    state.lens = "subject"; state.open = new Set([b.dataset.mapsub]); render();
+    const el = document.getElementById("g-" + b.dataset.mapsub);
     if(el) el.scrollIntoView({behavior: "smooth", block: "start"});
   });
   bindPlan(view);
@@ -2249,6 +2369,12 @@ function renderPaperRun(root, p){
   const sheet = paperSheet(p);
   const picked = sheet[n];
   const sc = paperScore(p);
+  /* Looking at a question is itself a fact worth keeping: it is what separates
+     one you could not do from one you have not reached. Written once, the first
+     time a number is shown — not on every render, which would put a full
+     stringify of the store behind every tap of the palette. */
+  const seen = store.seen[paperId(p)] || (store.seen[paperId(p)] = {});
+  if(!seen[n] && !dropped){ seen[n] = 1; save(); }
   /* The FIRST unanswered, not the next one forward. Searching forward from
      where you are walks you onto questions you have never seen and leaves the
      ones you actually skipped behind you — which is the thing this view exists
@@ -2281,10 +2407,19 @@ function renderPaperRun(root, p){
       ${Array.from({length: total}, (_, i) => {
         const k = i + 1, a = sheet[k];
         const drop = key && key[i] === "X";
-        const cls = [drop ? "drop" : "",
-          k === n ? "here" : (a === undefined || a === null) ? "" : "done"].filter(Boolean).join(" ");
+        const answered = a !== undefined && a !== null;
+        /* Three states, and the order matters: answered wins over seen, so a
+           question you came back to and answered goes green and stays green. */
+        const cls = [drop ? "drop" : answered ? "done" : seen[k] ? "left" : "",
+                     k === n ? "here" : ""].filter(Boolean).join(" ");
         return `<button class="pq ${cls}" data-goq="${k}">${k}</button>`;
       }).join("")}
+    </div>
+    <div class="plegend">
+      <span><i class="done"></i>answered</span>
+      <span><i class="left"></i>not answered</span>
+      <span><i></i>not visited</span>${key ? `
+      <span><i></i><s>dropped</s></span>` : ""}
     </div>
     <div class="qcard run">
       <div class="eyebrow">Question ${n}${
@@ -2356,6 +2491,119 @@ function renderPaperRun(root, p){
     if(confirm(`Clear every answer on ${p.name}?`)){ delete store.attempts[paperId(p)]; state.qn = 1; rerender(); }
   };
 }
+
+/* ---------------- the shelf ----------------
+   Somewhere to keep your own documents, and the whole point of it is where
+   they are kept rather than that they are listed.
+
+   Every directory this app owns is deleted when the app is — getExternalFilesDir
+   and filesDir both — so keeping the files there would lose them on the next
+   uninstall, which is exactly what was asked not to happen. Instead the owner
+   picks a folder once, anywhere in ordinary storage, and Android hands the app
+   a persistable grant to it. The files live in the phone's own Documents (or
+   wherever was picked), show up in the phone's Files app, and an uninstall
+   cannot touch them.
+
+   What an uninstall does take is the grant, not the files. After a reinstall
+   the folder is pointed at once more and the shelf is back exactly as it was.
+   The page says that plainly rather than implying the app is holding them. */
+
+const docsOk = () => !!(NATIVE && NATIVE.docsList);
+
+function docsAll(){
+  if(!docsOk()) return [];
+  try{ return JSON.parse(NATIVE.docsList() || "[]"); }catch(e){ return []; }
+}
+
+const KB = 1024;
+function sizeOf(n){
+  if(!n && n !== 0) return "";
+  if(n < KB) return n + " B";
+  if(n < KB * KB) return (n / KB).toFixed(0) + " KB";
+  return (n / KB / KB).toFixed(n < 10 * KB * KB ? 1 : 0) + " MB";
+}
+
+const DOC_ICON = m => /pdf/i.test(m) ? "📕"
+  : /image|png|jpe?g|webp|gif/i.test(m) ? "🖼"
+  : /word|document|rtf|odt/i.test(m) ? "📘"
+  : /sheet|excel|csv/i.test(m) ? "📗"
+  : /presentation|powerpoint/i.test(m) ? "📙"
+  : /text|plain|markdown/i.test(m) ? "📄" : "📎";
+
+function renderDocs(){
+  document.getElementById("brandSub").textContent = "your documents";
+
+  if(!docsOk()){
+    view.innerHTML = `
+      <div class="head" style="margin-top:6px"><h2>Shelf</h2></div>
+      <div class="empty">The shelf needs the Android app.<br><br>
+        It keeps your documents in a folder you pick on the phone itself, which is
+        something a web page is not allowed to do — a browser can hand you a file, but
+        it cannot put one somewhere that outlives it.</div>
+      <p class="note">Everything else in the app works here. Install the APK and this tab
+        fills in.</p>`;
+    return;
+  }
+
+  const folder = (() => { try{ return NATIVE.docsFolder(); }catch(e){ return null; } })();
+  if(!folder){
+    view.innerHTML = `
+      <div class="head" style="margin-top:6px"><h2>Shelf</h2></div>
+      <div class="qcard">
+        <div class="qstem">Pick a folder for your documents.</div>
+        <p class="note" style="margin-top:10px">Anywhere in ordinary storage —
+          <span class="mono">Documents</span> is the obvious one. Your files go there rather
+          than inside the app, so <b>uninstalling TaraCmd will not delete them</b>. They stay
+          visible in the phone's own Files app the whole time.</p>
+        <p class="note">If you reinstall the app, point it at the same folder again and the
+          whole shelf comes back. Android gives the permission to the app, and taking the app
+          away takes the permission with it — never the files.</p>
+        <div class="act" style="margin-top:12px"><button class="prim" id="dpick">Choose the folder</button></div>
+      </div>`;
+    document.getElementById("dpick").onclick = () => { try{ NATIVE.docsPick(); }catch(e){} };
+    return;
+  }
+
+  const docs = docsAll();
+  view.innerHTML = `
+    <div class="head" style="margin-top:6px"><h2>Shelf</h2><span class="n">${docs.length}</span></div>
+    <div class="dbar">
+      <span class="dfolder mono">📁 ${esc(folder)}</span>
+      <button class="fchip" id="dfold">Change</button>
+      <button class="fchip on" id="dadd">Add documents</button>
+    </div>
+    ${docs.length ? `<div class="dlist">
+      ${docs.map(d => `<div class="drow">
+        <button class="dopen" data-doc="${esc(d.id)}">
+          <span class="di">${DOC_ICON(d.mime || "")}</span>
+          <span class="db">
+            <span class="dn">${esc(d.name)}</span>
+            <span class="ds mono">${sizeOf(d.size)}${d.on ? " · " + new Date(d.on).toLocaleDateString() : ""}</span>
+          </span>
+        </button>
+        <button class="dx" data-del="${esc(d.id)}" title="Remove">×</button>
+      </div>`).join("")}
+    </div>` : `<div class="empty">Nothing on the shelf yet. <b>Add documents</b> copies them into
+      <span class="mono">${esc(folder)}</span>, where they stay whatever happens to the app.</div>`}
+    <p class="note">These are your files, kept outside the app on purpose. Removing one here
+      deletes it from that folder too — the shelf is the folder, not a copy of it.</p>`;
+
+  document.getElementById("dfold").onclick = () => { try{ NATIVE.docsPick(); }catch(e){} };
+  document.getElementById("dadd").onclick = () => { try{ NATIVE.docsAdd(); }catch(e){} };
+  view.querySelectorAll("[data-doc]").forEach(b => b.onclick = () => {
+    try{ NATIVE.docsOpen(b.dataset.doc); }catch(e){}
+  });
+  view.querySelectorAll("[data-del]").forEach(b => b.onclick = () => {
+    const row = b.closest(".drow");
+    const name = row ? row.querySelector(".dn").textContent : "this document";
+    if(!confirm(`Delete ${name} from ${folder}?\n\nThis removes the file itself, not just the listing.`)) return;
+    try{ NATIVE.docsRemove(b.dataset.del); }catch(e){}
+    renderDocs();
+  });
+}
+
+// native → page: the shelf changed under us (a folder picked, files added)
+window.taracmdDocs = function(){ if(state.tab === "docs") renderDocs(); };
 
 /* ---------------- toppers ---------------- */
 function renderToppers(){
@@ -2687,6 +2935,7 @@ function render(){
   else if(state.tab==="papers") renderPapers();
   else if(state.tab==="focus") renderFocus();
   else if(state.tab==="practice") renderQuiz();
+  else if(state.tab==="docs") renderDocs();
   else renderToppers();
   window.scrollTo(0,0);
 }

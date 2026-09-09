@@ -7,8 +7,11 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
+import android.provider.DocumentsContract
+import android.provider.OpenableColumns
 import android.view.WindowManager
 import android.webkit.JavascriptInterface
 import android.webkit.WebResourceRequest
@@ -16,15 +19,20 @@ import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.content.FileProvider
+import androidx.documentfile.provider.DocumentFile
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewFeature
 import java.io.File
+import org.json.JSONArray
+import org.json.JSONObject
 
 /**
  * The WebView shell. The page itself is the whole app; this class exists to do
@@ -37,6 +45,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var web: WebView
     private lateinit var loader: WebViewAssetLoader
     private var downloadWatcher: BroadcastReceiver? = null
+    private lateinit var pickShelf: ActivityResultLauncher<Uri?>
+    private lateinit var pickDocs: ActivityResultLauncher<Array<String>>
 
     companion object {
         /**
@@ -53,11 +63,36 @@ class MainActivity : AppCompatActivity() {
         /** Where a tapped Save lands, and the path prefix the page links to. */
         private const val SAVED_DIR = "saved"
         private const val SAVED_SCHEME = "saved"
+
+        /** Where the shelf folder is remembered. The folder itself is not ours. */
+        private const val PREFS = "taracmd"
+        private const val SHELF_URI = "shelfUri"
     }
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        /* Both of these must be registered before the activity is STARTED,
+           which is why they sit at the top of onCreate rather than next to the
+           bridge methods that use them. */
+        pickShelf = registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
+            if (uri != null) {
+                runCatching {
+                    contentResolver.takePersistableUriPermission(
+                        uri,
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION or
+                            Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                    )
+                    prefs().edit().putString(SHELF_URI, uri.toString()).apply()
+                }
+            }
+            notifyShelf()
+        }
+        pickDocs = registerForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) { uris ->
+            uris.forEach { copyToShelf(it) }
+            notifyShelf()
+        }
 
         loader = WebViewAssetLoader.Builder()
             .setDomain(APP_HOST)
@@ -206,6 +241,76 @@ class MainActivity : AppCompatActivity() {
         Uri.parse(url).lastPathSegment?.takeIf { it.endsWith(".pdf", true) }
             ?: (url.hashCode().toString().replace("-", "0") + ".pdf")
 
+    /* ---- the shelf -------------------------------------------------------
+     *
+     * Documents the owner puts here have to outlive the app, and that single
+     * requirement rules out everything the app owns: filesDir and
+     * getExternalFilesDir() are both wiped by an uninstall, and so is anything
+     * this app writes through MediaStore once its ownership is gone.
+     *
+     * So the app does not choose where they go. The owner picks a folder —
+     * Documents, or wherever — and Android hands over a persistable grant to
+     * it. The files are then ordinary files in ordinary storage: visible in
+     * the phone's own Files app, editable by anything else, and untouched by
+     * uninstalling TaraCmd.
+     *
+     * The grant does not survive an uninstall, which is Android's design and
+     * not something to work around: MANAGE_EXTERNAL_STORAGE would, and it is
+     * a Play-restricted permission that would be wildly disproportionate for
+     * a shelf. Pointing at the same folder again after a reinstall costs one
+     * tap and brings the whole shelf back. The page says so.
+     */
+    private fun prefs(): SharedPreferences =
+        getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+
+    /** The shelf, or null if none is picked or the grant has lapsed. */
+    private fun shelf(): DocumentFile? {
+        val raw = prefs().getString(SHELF_URI, null) ?: return null
+        val uri = runCatching { Uri.parse(raw) }.getOrNull() ?: return null
+        // A remembered string is not a permission. After an uninstall, or if
+        // the user revokes it in Settings, the row is gone and reading through
+        // it would throw — so ask, rather than assume.
+        val held = contentResolver.persistedUriPermissions.any {
+            it.uri == uri && it.isReadPermission && it.isWritePermission
+        }
+        if (!held) return null
+        return runCatching { DocumentFile.fromTreeUri(this, uri) }
+            .getOrNull()?.takeIf { it.isDirectory }
+    }
+
+    private fun notifyShelf() {
+        runOnUiThread {
+            web.evaluateJavascript("window.taracmdDocs && window.taracmdDocs()", null)
+        }
+    }
+
+    private fun displayName(uri: Uri): String? =
+        runCatching {
+            contentResolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)
+                ?.use { c -> if (c.moveToFirst()) c.getString(0) else null }
+        }.getOrNull()
+
+    /** Copy one picked document onto the shelf, without overwriting a namesake. */
+    private fun copyToShelf(src: Uri) {
+        val dir = shelf() ?: return
+        val name = displayName(src) ?: "document"
+        val mime = contentResolver.getType(src) ?: "application/octet-stream"
+        runCatching {
+            var target = name
+            var n = 2
+            while (dir.findFile(target) != null) {
+                val dot = name.lastIndexOf('.')
+                target = if (dot > 0) name.substring(0, dot) + " (" + n + ")" + name.substring(dot)
+                         else name + " (" + n + ")"
+                n++
+            }
+            val out = dir.createFile(mime, target) ?: return
+            contentResolver.openInputStream(src)?.use { input ->
+                contentResolver.openOutputStream(out.uri)?.use { output -> input.copyTo(output) }
+            }
+        }
+    }
+
     /** Flip the row to "saved" once a download actually lands. */
     private fun watchDownloads() {
         val r = object : BroadcastReceiver() {
@@ -281,6 +386,69 @@ class MainActivity : AppCompatActivity() {
             runCatching {
                 (getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager).enqueue(req)
             }
+        }
+
+        /** The shelf folder's name, or null while none is picked. */
+        @JavascriptInterface
+        fun docsFolder(): String? = shelf()?.name
+
+        /** Choose (or change) the folder the shelf lives in. */
+        @JavascriptInterface
+        fun docsPick() {
+            runOnUiThread { runCatching { pickShelf.launch(null) } }
+        }
+
+        /** Add documents to it. Any type — this is the owner's own shelf. */
+        @JavascriptInterface
+        fun docsAdd() {
+            runOnUiThread { runCatching { pickDocs.launch(arrayOf("*/*")) } }
+        }
+
+        /** What is on the shelf, newest first. */
+        @JavascriptInterface
+        fun docsList(): String {
+            val dir = shelf() ?: return "[]"
+            val out = JSONArray()
+            runCatching {
+                dir.listFiles()
+                    .filter { it.isFile }
+                    .sortedByDescending { it.lastModified() }
+                    .forEach { f ->
+                        out.put(JSONObject().apply {
+                            put("id", f.uri.toString())
+                            put("name", f.name ?: "document")
+                            put("size", f.length())
+                            put("mime", f.type ?: "")
+                            put("on", f.lastModified())
+                        })
+                    }
+            }
+            return out.toString()
+        }
+
+        /** Hand one to whatever the phone uses to read it. */
+        @JavascriptInterface
+        fun docsOpen(id: String) {
+            val uri = runCatching { Uri.parse(id) }.getOrNull() ?: return
+            val mime = contentResolver.getType(uri) ?: "*/*"
+            val intent = Intent(Intent.ACTION_VIEW).apply {
+                setDataAndType(uri, mime)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            // A phone with nothing that opens this type is a normal phone, not
+            // a crash.
+            runCatching { startActivity(intent) }
+        }
+
+        /**
+         * Delete one — the file, not a listing of it. The shelf IS the folder,
+         * so there is no copy to remove instead, and the page asks first.
+         */
+        @JavascriptInterface
+        fun docsRemove(id: String): Boolean {
+            val uri = runCatching { Uri.parse(id) }.getOrNull() ?: return false
+            return runCatching { DocumentsContract.deleteDocument(contentResolver, uri) }
+                .getOrDefault(false)
         }
     }
 }

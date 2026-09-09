@@ -395,13 +395,34 @@ describe("the focus dial", () => {
 });
 
 describe("navigation", () => {
-  test("four tabs, and Papers holds the three paper indexes as segments", () => {
+  test("five tabs, and Papers holds the three paper indexes as segments", () => {
     const tabs = JSON.parse(inPage(win,
       `JSON.stringify([...document.querySelectorAll(".tab")].map(t => t.dataset.tab))`));
-    assert.deepEqual(tabs, ["syllabus", "papers", "practice", "focus"],
+    assert.deepEqual(tabs, ["syllabus", "papers", "practice", "focus", "docs"],
       "seven tabs was three tabs for one idea; Prelims/Mains/Optional are segments now");
     const segs = JSON.parse(inPage(win, "JSON.stringify(PAPER_SEGS.map(s => s[0]))"));
     assert.deepEqual(segs, ["prelims", "mains", "optional"]);
+  });
+
+  /* The bar is a grid with a hard-coded column count. A button more than there
+     are columns does not overflow or clip — it silently wraps onto a second
+     row, which is the kind of bug you only see on a phone. So the count is
+     pinned to the buttons rather than trusted. */
+  test("the tab bar has exactly as many columns as it has tabs", () => {
+    const out = JSON.parse(inPage(win, `
+      (() => {
+        // no regex: this string is a template literal on its way through
+        // eval, and a template literal eats the backslash in \d before the
+        // regex ever sees it, which quietly matches nothing.
+        const css = [...document.querySelectorAll("style")].map(s => s.textContent).join("");
+        const at = css.indexOf(".tabs{");
+        const rule = at < 0 ? "" : css.slice(at, css.indexOf("}", at));
+        const key = "grid-template-columns:repeat(";
+        const k = rule.indexOf(key);
+        const cols = k < 0 ? null : Number(rule.slice(k + key.length, rule.indexOf(",", k)));
+        return JSON.stringify({ cols, tabs: document.querySelectorAll(".tab").length });
+      })()`));
+    assert.equal(out.cols, out.tabs, "a fifth tab in a four-column grid quietly wraps");
   });
 
   test("every paper index still renders behind its segment", () => {
@@ -621,5 +642,158 @@ describe("typing a past question in", () => {
       })()`));
     assert.equal(out.onA, 3, "the sheet is found where the scorer writes it");
     assert.equal(out.onB, 0, "and it does not bleed into another Series");
+  });
+});
+
+/* The exam hall's colour language. Green/red/grey is not decoration: without
+   the middle state a question you skipped and one you have never reached look
+   identical, and the palette stops being able to tell you where the work is. */
+describe("the question palette", () => {
+  test("answered, seen-but-not-answered and not-visited are three states", () => {
+    const out = JSON.parse(inPage(win, `
+      (() => {
+        state.tab = "practice"; state.qmode = "papers";
+        state.qpaperId = "upsc-2023-gs1"; state.qset = "B"; state.qsheet = false;
+        delete store.attempts["2023-gs1-B"]; delete store.seen["2023-gs1-B"];
+        state.qn = 1; render();
+        // answer 1 and 2, then look at 3 and 4 and leave them
+        for(const k of [1, 2]){ state.qn = k; render();
+          document.querySelectorAll(".qcard.run .opt")[0].click(); }
+        for(const k of [3, 4]){ state.qn = k; render(); }
+        state.qn = 50; render();
+        const cls = n => document.querySelector(\`.pq[data-goq="\${n}"]\`).className;
+        const r = { answered: cls(1), alsoAnswered: cls(2), seen: cls(3), seen2: cls(4),
+                    untouched: cls(80), here: cls(50), dropped: cls(14) };
+        delete store.attempts["2023-gs1-B"]; delete store.seen["2023-gs1-B"];
+        state.qpaperId = null; save();
+        return JSON.stringify(r);
+      })()`));
+    assert.match(out.answered, /\bdone\b/, "an answered question is green");
+    assert.match(out.alsoAnswered, /\bdone\b/);
+    assert.match(out.seen, /\bleft\b/, "one you looked at and left is red");
+    assert.match(out.seen2, /\bleft\b/);
+    assert.doesNotMatch(out.untouched, /\b(done|left)\b/, "one you never reached stays grey");
+    assert.match(out.here, /\bhere\b/);
+    assert.match(out.dropped, /\bdrop\b/);
+  });
+
+  test("answering a question you had skipped turns it green", () => {
+    const out = inPage(win, `
+      (() => {
+        state.tab = "practice"; state.qmode = "papers";
+        state.qpaperId = "upsc-2023-gs1"; state.qset = "B"; state.qsheet = false;
+        delete store.attempts["2023-gs1-B"]; delete store.seen["2023-gs1-B"];
+        state.qn = 5; render();                       // seen, left alone
+        state.qn = 6; render();
+        state.qn = 5; render();                       // came back
+        document.querySelectorAll(".qcard.run .opt")[2].click();
+        state.qn = 9; render();
+        const c = document.querySelector('.pq[data-goq="5"]').className;
+        delete store.attempts["2023-gs1-B"]; delete store.seen["2023-gs1-B"];
+        state.qpaperId = null; save();
+        return c;
+      })()`);
+    assert.match(out, /\bdone\b/, "answered beats seen, or coming back would look like failing");
+  });
+});
+
+/* The syllabus tab is called Syllabus, and used to open on three stacked
+   dashboard cards with the syllabus itself below the fold. The map is the
+   whole of it on one screen — every topic, one square. */
+describe("the syllabus map", () => {
+  test("every topic gets a square, and none is invented", () => {
+    const out = JSON.parse(inPage(win, `
+      (() => {
+        state.tab = "syllabus"; state.lens = "map"; render();
+        const tiles = [...document.querySelectorAll(".mt")];
+        const ids = tiles.map(t => t.dataset.sheet);
+        return JSON.stringify({
+          tiles: tiles.length,
+          topics: ALL_TOPICS.length,
+          subjects: document.querySelectorAll(".mapsub").length,
+          allReal: ids.every(id => !!OWNER[id]),
+          unique: new Set(ids).size
+        });
+      })()`));
+    assert.equal(out.tiles, out.topics, "one square per topic, all 242 of them");
+    assert.equal(out.unique, out.topics, "and no topic drawn twice");
+    assert.equal(out.subjects, 8);
+    assert.ok(out.allReal, "every square resolves to a real topic");
+  });
+
+  test("the map opens on the syllabus, not on a stack of cards", () => {
+    const out = JSON.parse(inPage(win, `
+      (() => {
+        state.tab = "syllabus"; state.lens = "map"; render();
+        return JSON.stringify({ pace: document.querySelectorAll(".pace").length,
+                                map: document.querySelectorAll(".mapwrap").length });
+      })()`));
+    assert.equal(out.map, 1);
+    assert.equal(out.pace, 0, "the exam clock folds into the map's own header line");
+  });
+});
+
+/* The shelf. What matters is not the listing but WHERE the files are: every
+   directory the app owns is deleted with the app, so the shelf is a folder the
+   user picks and the app is only a guest in it. */
+describe("the shelf", () => {
+  test("without the Android bridge it says so instead of pretending", () => {
+    const out = inPage(win, `
+      (() => { state.tab = "docs"; render(); return view.textContent; })()`);
+    assert.match(out, /needs the Android app/);
+    assert.doesNotMatch(out, /Add documents/, "no controls that could not work");
+  });
+
+  test("with a bridge but no folder yet, it asks for one and is honest about uninstalling", () => {
+    const w = loadApp({ docsList: () => "[]", docsFolder: () => null,
+                        docsPick: () => {}, docsAdd: () => {},
+                        docsOpen: () => {}, docsRemove: () => true });
+    const out = inPage(w, `(() => { state.tab = "docs"; render(); return view.textContent; })()`);
+    assert.match(out, /Choose the folder/);
+    assert.match(out, /will not delete them/, "the whole point of the feature is stated");
+  });
+
+  test("with a folder it lists what is in it, and nothing else", () => {
+    const files = [
+      { id: "content://tree/doc/1", name: "Laxmikanth notes.pdf", size: 2411724,
+        mime: "application/pdf", on: 1757000000000 },
+      { id: "content://tree/doc/2", name: "map practice.png", size: 51200,
+        mime: "image/png", on: 1756900000000 },
+    ];
+    const w = loadApp({ docsList: () => JSON.stringify(files),
+                        docsFolder: () => "TaraCmd", docsPick: () => {}, docsAdd: () => {},
+                        docsOpen: () => {}, docsRemove: () => true });
+    const out = JSON.parse(inPage(w, `
+      (() => {
+        state.tab = "docs"; render();
+        return JSON.stringify({
+          rows: document.querySelectorAll(".drow").length,
+          names: [...document.querySelectorAll(".dn")].map(n => n.textContent),
+          sizes: [...document.querySelectorAll(".ds")].map(n => n.textContent),
+          ids: [...document.querySelectorAll("[data-doc]")].map(n => n.dataset.doc),
+          folder: document.querySelector(".dfolder").textContent.trim()
+        });
+      })()`));
+    assert.equal(out.rows, 2);
+    assert.deepEqual(out.names, ["Laxmikanth notes.pdf", "map practice.png"]);
+    assert.match(out.sizes[0], /2\.3 MB/);
+    assert.deepEqual(out.ids, ["content://tree/doc/1", "content://tree/doc/2"]);
+    assert.match(out.folder, /TaraCmd/);
+  });
+
+  test("a document's name is escaped, because the phone's filesystem is not a trusted author", () => {
+    const w = loadApp({
+      docsList: () => JSON.stringify([{ id: "content://x", name: "<img src=x onerror=alert(1)>.pdf",
+                                        size: 10, mime: "application/pdf", on: 0 }]),
+      docsFolder: () => "TaraCmd", docsPick: () => {}, docsAdd: () => {},
+      docsOpen: () => {}, docsRemove: () => true });
+    const out = JSON.parse(inPage(w, `
+      (() => {
+        state.tab = "docs"; render();
+        return JSON.stringify({ imgs: document.querySelectorAll(".dn img").length,
+                                text: document.querySelector(".dn").textContent });
+      })()`));
+    assert.equal(out.imgs, 0, "a filename must never become markup");
+    assert.match(out.text, /onerror/, "it is shown as the text it is");
   });
 });

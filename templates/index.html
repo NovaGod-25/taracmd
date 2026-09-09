@@ -2217,6 +2217,19 @@ function renderOptional(){
 const paperKey = s => [s.name, s.test, s.year].filter(Boolean).join(" · ");
 const paperSlug = s => paperKey(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
+/* Which Series of a paper actually have their questions typed in.
+   A, B, C and D are the same hundred questions shuffled, so offering all four
+   when only one can ask you anything is offering three empty grids. The other
+   three still matter if you sat one of them and want your sheet marked, so
+   they are put behind a link rather than removed. */
+function setsWithQuestions(year, code){
+  const out = new Set();
+  for(const q of (QUIZ.questions || [])){
+    if(q.paper && q.paper.year === year && q.paper.code === code) out.add(q.paper.set);
+  }
+  return out;
+}
+
 function paperList(){
   const out = [];
 
@@ -2386,6 +2399,9 @@ function renderPaperRun(root, p){
 
   const key = p.kind === "key" ? p.letters : null;
   const asked = paperAsked(p);
+  const withQs = p.kind === "key" ? setsWithQuestions(p.year, p.code) : new Set();
+  const runSets = (state.qallsets || !(p.sets || []).some(x => withQs.has(x)))
+    ? (p.sets || []) : (p.sets || []).filter(x => withQs.has(x) || x === p.set);
   const total = paperTotal(p);
   const n = Math.min(Math.max(1, state.qn || 1), total);
   const q = asked ? asked.get(n) : p.questions[n - 1];
@@ -2423,10 +2439,13 @@ function renderPaperRun(root, p){
       <button class="fchip ghost" id="pback">← All papers</button>
       <span class="prun-n mono">${n} / ${total}</span>
     </div>
-    ${key && (p.sets || []).length > 1 ? `<div class="filters" style="margin:2px 0 8px">
+    ${key && runSets.length > 1 ? `<div class="filters" style="margin:2px 0 8px">
       <span class="mut" style="align-self:center;font-size:12px">Series</span>
-      ${p.sets.map(s => `<button class="fchip ${s === p.set ? "on" : ""}" data-set="${s}">${s}</button>`).join("")}
+      ${runSets.map(s => `<button class="fchip ${s === p.set ? "on" : ""}" data-set="${s}">${s}</button>`).join("")}
     </div>` : ""}
+    ${key && runSets.length < (p.sets || []).length ? `<p class="note" style="margin:-4px 0 10px">
+      Showing Series ${esc(p.set)}, the one whose questions are typed in.
+      <button class="linky" id="allsets2">I sat a different Series</button></p>` : ""}
     <div class="palette">
       ${Array.from({length: total}, (_, i) => {
         const k = i + 1, a = sheet[k];
@@ -2508,6 +2527,8 @@ function renderPaperRun(root, p){
   if(next) next.onclick = () => { state.qn = n + 1; renderQuiz(); };
   const nu = document.getElementById("pnextun");
   if(nu) nu.onclick = () => { state.qn = firstUnanswered; renderQuiz(); };
+  const as2 = document.getElementById("allsets2");
+  if(as2) as2.onclick = () => { state.qallsets = true; renderQuiz(); };
   const sh = document.getElementById("psheet");
   if(sh) sh.onclick = () => { state.qsheet = true; renderQuiz(); };
   const ca = document.getElementById("pclearall");
@@ -2860,6 +2881,12 @@ function renderScorer(root){
   });
   const marks = right*mark.correct + wrong*mark.wrong;
   const answered = right + wrong;
+  /* Only the Series that can ask you something, unless you say otherwise —
+     the other three are the same paper with the questions in another order,
+     and shown as chips they read as three more papers than there are. */
+  const asked = setsWithQuestions(yr.year, paper.code);
+  const shownSets = (state.qallsets || !sets.some(x => asked.has(x)))
+    ? sets : sets.filter(x => asked.has(x) || x === state.qset);
 
   root.innerHTML = `
     <div class="filters">
@@ -2867,7 +2894,9 @@ function renderScorer(root){
     </div>
     <div class="filters">
       ${papers.map(p=>`<button class="fchip ${p.code===state.qpaper?"on":""}" data-pp="${p.code}">${KEYS.marking[p.code].name}</button>`).join("")}
-      ${sets.map(s=>`<button class="fchip ${s===state.qset?"on":""}" data-set="${s}">Set ${s}</button>`).join("")}
+      ${shownSets.map(s=>`<button class="fchip ${s===state.qset?"on":""}" data-set="${s}">Set ${s}</button>`).join("")}
+      ${shownSets.length < sets.length
+        ? `<button class="fchip ghost" id="allsets">I sat a different Series</button>` : ""}
     </div>
     <div class="score">
       <span class="big">${answered ? marks.toFixed(2) : "—"}</span>
@@ -2913,9 +2942,30 @@ function renderScorer(root){
       }).join("")}
     </div>`;
 
-  root.querySelectorAll("[data-yr]").forEach(b=>b.onclick=()=>{state.qyear=+b.dataset.yr;state.qpaper=null;state.qset=null;renderQuiz();});
-  root.querySelectorAll("[data-pp]").forEach(b=>b.onclick=()=>{state.qpaper=b.dataset.pp;state.qset=null;renderQuiz();});
+  /* Inside a paper's folder these chips were dead: renderPaperRun pins
+     state.qyear and state.qpaper to the folder on every render, so setting
+     them here was overwritten before anything drew. Move the folder instead —
+     the chips are how you cross from one year to another without going back
+     to the list, and with ten years on the shelf that is worth having. */
+  const goPaper = (year, code) => {
+    if(state.qpaperId) state.qpaperId = `upsc-${year}-${code}`;
+    state.qn = 1; state.qallsets = false; renderQuiz();
+  };
+  root.querySelectorAll("[data-yr]").forEach(b=>b.onclick=()=>{
+    const y = +b.dataset.yr;
+    state.qyear = y; state.qset = null;
+    // keep the paper you were on if that year has it
+    const yy = (KEYS.years||[]).find(x=>x.year===y);
+    const has = (yy?.papers||[]).some(x=>x.code===state.qpaper && hasLetters(x));
+    if(!has) state.qpaper = null;
+    goPaper(y, state.qpaper || ((yy?.papers||[]).filter(hasLetters)[0]||{}).code);
+  });
+  root.querySelectorAll("[data-pp]").forEach(b=>b.onclick=()=>{
+    state.qpaper=b.dataset.pp; state.qset=null; goPaper(state.qyear, b.dataset.pp);
+  });
   root.querySelectorAll("[data-set]").forEach(b=>b.onclick=()=>{state.qset=b.dataset.set;renderQuiz();});
+  const as = document.getElementById("allsets");
+  if(as) as.onclick = () => { state.qallsets = true; renderQuiz(); };
   root.querySelector("[data-clear]").onclick=()=>{ delete store.attempts[aid]; save(); renderQuiz(); };
   root.querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>{
     const y = window.scrollY;

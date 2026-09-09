@@ -147,6 +147,21 @@ Things that will bite:
   through `innerHTML`; it is escaped, and there is a test that a filename cannot become
   markup.
 
+## Which Series a paper offers
+
+A, B, C and D are the same hundred questions shuffled. When only one Series has
+its questions typed in, offering all four offers three empty grids dressed as
+three more papers — so the chips show the Series that can actually ask you
+something, with **I sat a different Series** revealing the rest. A paper with
+nothing typed offers all four and hides nothing, because then every Series is
+equally worth marking a sheet against.
+
+The year and paper chips inside a folder used to be dead: `renderPaperRun`
+pins `state.qyear` and `state.qpaper` to the folder on every render, so setting
+them from a chip was overwritten before anything drew. They move the folder now
+instead, which is what makes ten years of keys reachable without going back to
+the list each time.
+
 ## The question palette
 
 Green, red and grey, which is the colour language of every exam hall and worth copying
@@ -166,7 +181,7 @@ turns it green rather than leaving it looking like a failure.
 |---|---|
 | `subjects.json` | 8 subjects → 242 topics → 1,723 subtopics; each topic tagged with papers + weight |
 | `pyq-papers.json` | official upsc.gov.in paper links per year — Prelims 22/24, Mains 54/60 |
-| `answer-keys.json` | Prelims answer keys: links, marking scheme, dropped questions, set-wise letters |
+| `answer-keys.json` | Prelims answer keys: links, marking scheme, set-wise letters. GS-I complete 2017-2026; CSAT has links but no letters |
 | `quiz.json` | 35 practice questions, each tagged to a topic id |
 | `toppers.json` | 102 published answer copies across 10 publishers |
 | `daily.json` | daily current-affairs quiz sources: a URL pattern the page expands against the date |
@@ -497,40 +512,51 @@ app, but the shape is easy to get wrong twice.
    The stripes, the legend and the "High weight" filter are the app's central editorial
    claim and at 60% high they carry almost no signal. Needs an editorial pass through
    `subjects.json` — this is a judgment call about UPSC frequency, not a code change.
-2. **Answer keys: 2022 and 2023 GS-I are in, five papers to go.** 2023 was read the same
-   way as 2022 and holds the same guarantee — see the block-permutation note below; Set C
-   turned out to be an exact reversal of Set A, block for block, and all 400 single-letter
-   mutations of Set A break the property. Punch in a sheet, pick your Series, and it
-   scores against the Commission's own letters on the Commission's own scheme — and for
-   2023, where the questions are typed in, it asks them instead of taking letters.
-   The other five are the work. `extract` cannot do them and never could: **every key
-   the Commission publishes is a scan** — four pages, one per Series, a photograph of a
-   printed grid, not one character of text in any of the 28 pages. It now says so
-   instead of blaming its own regex.
-   How 2022 GS-I was actually read, because the method is the reusable part:
-   read off the scan by eye, then verified structurally. **UPSC builds the four Series
-   by shuffling the same ten ten-question blocks**, so every block in Set A reappears
-   intact in B, C and D. That makes each letter effectively read four times. All 301
-   single-letter mutations of Set A break the property, so a misreading cannot survive
-   it — and `tests/` now pins the property, so it guards the data permanently. The
-   `dropped_count` printed on each page is a second, independent check.
-   OCR also works and is proven, if a general reader is wanted: deskew (the scans sit up
-   to 1.8° off square, which smears every rule and defeats projection), take the cell
-   grid from the table's own printed rules rather than an assumed pitch (pitch drifts,
-   and drift silently reads the wrong row near the bottom of a column), then read each
-   cell with several tesseract modes and vote. On 2022 GS-I Set A that read 100 of 100
-   and agreed with the eye on every one. What defeated it was **finding the table** on
-   the other scans: they run 2,481×3,507 to 9,992×14,096 pixels, and run-length and
-   projection heuristics both fail across that range. Morphological line extraction is
-   the approach to try next, not more tuning of the current one.
-   **Schema, worth knowing before adding a paper.** `X` is a valid key letter — it is
-   the Commission's own mark for a dropped question — and it falls at a *different
-   number in each Series*: 2022 GS-I dropped one, at 61 in A, 71 in B, 31 in C, 11 in D.
-   The old per-paper `dropped` list could not express that and is gone; the page reads
-   droppedness off the letters of the set you sat.
-   Eleven papers still have no URL at all. `discover` will not help: checked 25 Aug 2026,
-   the Commission's answer-key page lists only CDS-II and CAPF keys and no Civil Services
-   Prelims at all. Those years are archived off it and need finding by hand.
+2. **Answer keys: GS Paper I is complete for 2017-2026 — ten years, all four
+   Series each, 4,000 letters.** Every one was read off the Commission's own
+   scan by eye and then verified structurally by `tools/keycheck.py`, which is
+   the reusable part and now a real tool rather than a method in a paragraph.
+
+   **How the verification works, and why it is not a heuristic.** UPSC builds
+   the four Series by shuffling the same blocks of questions, so every block of
+   Set A reappears intact in B, C and D — each letter is effectively read four
+   times, from four places on four pages. `keycheck.py` then tries all 400
+   single-letter changes to Set A and confirms every one breaks the property.
+   A key that passes cannot contain a single misread letter. Two independent
+   checks ride along: the "No. of Questions Dropped" printed on each page must
+   equal the count of `X`, and 2021's pages even name the dropped question by
+   hand (80/100/30/10 — all four matched).
+
+   **The block size is not fixed, and assuming it is will reject a good key.**
+   This cost a full debugging pass: 2017 came back "BROKEN" against a
+   ten-block assumption and is in fact **four blocks of twenty-five**, with
+   involution permutations (B = A[2,1,4,3], C = A[4,3,1,2], D = A[3,4,2,1]).
+   2018 and 2026 are blocks of five; every other year is ten. The size is
+   discovered, largest first. Two of 2026's blocks are identical, so the
+   permutation readout names the first match — the check itself is a multiset
+   comparison and is unaffected, and it says so.
+
+   **The same shuffle template recurs.** 2019, 2020, 2021, 2023, 2024 and 2025
+   all use B = A[5,4,2,1,3,10,9,7,6,8], C = an exact reversal of A, D =
+   A[8,7,9,6,10,1,3,2,5,4]. Six years, one template. That is corroboration, not
+   something to fill a key in from — a key read from the template rather than
+   the page would pass the check while saying nothing.
+
+   **The option order is untouched between Series**, which shows up
+   independently: all four carry the identical distribution of letters. If UPSC
+   ever reorders options, that breaks first and this whole method stops
+   applying.
+
+   Still open: **CSAT (gs2) has no letters for any year** — the URLs are on
+   file for 2018-2026, it is qualifying rather than ranked, and it was left
+   until GS-I was done. 2015 and 2016 are not on upsc.gov.in at all under any
+   pattern tried; ForumIAS mirrors older keys on its own domain and a mirror is
+   not the Commission's document, so they are not taken from there.
+   `tools/answer-keys.py discover` cannot find any of these: it reads
+   /examinations/answer-key, which carries only the current cycle. The archive
+   page behind it is JS-driven and serves no links. The URLs here were found by
+   search and confirmed by fetching.
+
 3. **`gradle-wrapper.jar` is not committed** (binary). Open `android/` in Android Studio
    once, or run `gradle wrapper`, and `./gradlew` starts working. CI sidesteps this by
    installing Gradle directly.
@@ -619,6 +645,7 @@ python3 tools/pyq-papers.py discover        # fill in missing question-paper URL
 python3 tools/pyq-papers.py optionals       # rebuild the Optional tab paper lists
 python3 tools/answer-keys.py discover       # find answer-key PDFs still missing
 python3 tools/answer-keys.py extract --dry-run   # read Set A/B/C/D letters, print only
+python3 tools/keycheck.py intake/key-2017-gs1.json --write   # verify a hand-read key, then store it
 perl tools/make-icons.pl                    # regenerate the API 24–25 launcher rasters
 cd android && ./gradlew assembleDebug       # local APK, needs Android SDK + wrapper
 ```

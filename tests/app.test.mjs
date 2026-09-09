@@ -163,22 +163,61 @@ describe("scoring a Prelims paper against the official key", () => {
     assert.equal(shape.droppedCount, 1, "and the paper's own header agrees");
   });
 
-  /* The transcription guard. UPSC builds the four Series by shuffling the same
-     ten-question blocks, so every block in Set A must reappear intact in B, C
-     and D. A single letter read wrong off the scan breaks the block it sits in
-     and this fails — which is what makes a hand-read key trustworthy. */
-  test("the four Series are permutations of one set of ten-question blocks", () => {
-    const blocks = JSON.parse(inPage(win, `
+  /* The transcription guard, and it now guards ten years rather than one.
+     UPSC builds the four Series by shuffling the same blocks of questions, so
+     every block of Set A must reappear intact in B, C and D. One letter read
+     wrong off a scan breaks the block it sits in and this fails.
+
+     The block size is NOT fixed — 2017 shuffles four blocks of twenty-five,
+     2018 and 2026 five, the rest ten — so it is discovered, largest first,
+     exactly as tools/keycheck.py does. A key that matches at no block size of
+     five or more is a misread, not a new format. */
+  test("every stored key is a block permutation of its own Set A", () => {
+    const out = JSON.parse(inPage(win, `
       (() => {
-        const p = KEYS.years.find(y => y.year === 2022).papers.find(p => p.code === "gs1");
-        const cut = k => Array.from({length: 10}, (_, i) => k.slice(i*10, i*10+10).join(""));
-        return JSON.stringify(Object.fromEntries(
-          Object.entries(p.keys).map(([s, k]) => [s, cut(k).sort()])));
+        const cut = (k, b) => Array.from({length: k.length / b}, (_, i) => k.slice(i*b, i*b+b).join(""));
+        const same = (x, y) => x.length === y.length && x.every((v, i) => v === y[i]);
+        const res = [];
+        for(const y of KEYS.years) for(const p of y.papers){
+          const sets = Object.keys(p.keys || {});
+          if(!sets.length) continue;
+          const n = p.keys.A.length;
+          let found = null;
+          for(let b = Math.floor(n / 2); b >= 5; b--){
+            if(n % b) continue;
+            const a = cut(p.keys.A, b).sort();
+            if(["B","C","D"].every(s => same(cut(p.keys[s], b).sort(), a))){ found = b; break; }
+          }
+          res.push({ id: y.year + " " + p.code, block: found,
+                     lens: sets.map(s => p.keys[s].length),
+                     xs: sets.map(s => p.keys[s].filter(l => l === "X").length) });
+        }
+        return JSON.stringify(res);
       })()`));
-    for (const s of ["B", "C", "D"]) {
-      assert.deepEqual(blocks[s], blocks.A,
-        `Set ${s} does not use the same blocks as Set A — a letter is misread`);
+    assert.ok(out.length >= 10, `only ${out.length} papers carry a key`);
+    for (const r of out) {
+      assert.ok(r.block, `${r.id}: the four Series match at no block size — a letter is misread`);
+      assert.deepEqual(r.lens, [100, 100, 100, 100], `${r.id}: a Series is the wrong length`);
+      assert.equal(new Set(r.xs).size, 1,
+        `${r.id}: the Series disagree on how many questions were dropped`);
     }
+  });
+
+  /* Ten years of GS-I, which is what the year chips offer. Fewer means a key
+     was lost, not that a year stopped existing. */
+  test("GS Paper I carries a key for every year from 2017 to 2026", () => {
+    const years = JSON.parse(inPage(win, `
+      JSON.stringify(KEYS.years
+        .filter(y => y.papers.some(p => p.code === "gs1" && Object.keys(p.keys || {}).length))
+        .map(y => y.year).sort())`));
+    assert.deepEqual(years, [2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026]);
+  });
+
+  /* The 2026 key is provisional — published weeks after the exam and open to
+     representations. The app must not call it final. */
+  test("a provisional key is labelled provisional", () => {
+    const st = inPage(win, `KEYS.years.find(y => y.year === 2026).status`);
+    assert.equal(st, "provisional");
   });
 
   test("the dropped question follows the Series you sat, not the paper", () => {
@@ -797,3 +836,49 @@ describe("the shelf", () => {
     assert.match(out.text, /onerror/, "it is shown as the text it is");
   });
 });
+
+/* A, B, C and D are the same hundred questions shuffled, so a paper that can
+   only ask you one of them was offering three empty grids as if they were
+   three more papers. */
+describe("the Series chips", () => {
+  test("only the Series whose questions are typed in is offered", () => {
+    const out = JSON.parse(inPage(win, `
+      (() => {
+        state.tab = "practice"; state.qmode = "papers";
+        state.qpaperId = "upsc-2023-gs1"; state.qset = "B";
+        state.qsheet = true; state.qallsets = false; render();
+        const shown = [...document.querySelectorAll("[data-set]")].map(b => b.textContent.trim());
+        const link = !!document.getElementById("allsets");
+        return JSON.stringify({ shown, link });
+      })()`));
+    assert.deepEqual(out.shown, ["Set B"], "2023 has questions typed for Set B only");
+    assert.ok(out.link, "and the other three are one tap away, not gone");
+  });
+
+  test("the other Series come back when you say you sat one", () => {
+    const shown = JSON.parse(inPage(win, `
+      (() => {
+        document.getElementById("allsets").click();
+        const s = [...document.querySelectorAll("[data-set]")].map(b => b.textContent.trim());
+        state.qallsets = false;
+        return JSON.stringify(s);
+      })()`));
+    assert.deepEqual(shown, ["Set A", "Set B", "Set C", "Set D"]);
+  });
+
+  test("a paper with nothing typed offers all four and hides nothing", () => {
+    const out = JSON.parse(inPage(win, `
+      (() => {
+        state.qpaperId = "upsc-2020-gs1"; state.qset = null;
+        state.qsheet = true; state.qallsets = false; renderQuiz();
+        const shown = [...document.querySelectorAll("[data-set]")].map(b => b.textContent.trim());
+        const link = !!document.getElementById("allsets");
+        state.qpaperId = null; state.qsheet = false; render();
+        return JSON.stringify({ shown, link });
+      })()`));
+    assert.deepEqual(out.shown, ["Set A", "Set B", "Set C", "Set D"],
+      "with no questions typed, every Series is equally worth marking a sheet against");
+    assert.equal(out.link, false, "and there is nothing to reveal");
+  });
+});
+

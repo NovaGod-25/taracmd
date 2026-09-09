@@ -542,7 +542,7 @@ describe("typing a past question in", () => {
         // the answer sheet is reached by opening the UPSC paper as a paper;
         // "Score a paper" as a mode of its own is gone
         state.tab = "practice"; state.qmode = "papers";
-        state.qpaperId = "upsc-2022-gs1-A"; state.qn = 1;
+        state.qpaperId = "upsc-2022-gs1"; state.qset = "A"; state.qn = 1;
         render();
         const r = { wide: document.querySelectorAll(".cell.wide").length,
                     plain: document.querySelectorAll(".cell:not(.wide)").length,
@@ -563,9 +563,10 @@ describe("typing a past question in", () => {
         QUIZ.questions.push({ id: "t-2", topic: "polity-basic-structure",
           paper: {year: 2022, code: "gs1", set: "A", n: 2},
           q: "typed", options: ["a","b","c","d"], answer: 0 });
-        state.qpaperId = "upsc-2022-gs1-B"; render();
+        // one folder per paper now; the Series is a control inside the sheet
+        state.qpaperId = "upsc-2022-gs1"; state.qset = "B"; render();
         const n = document.querySelectorAll(".cell.wide").length;
-        QUIZ.questions.pop(); state.qpaperId = "upsc-2022-gs1-A"; render();
+        QUIZ.questions.pop(); state.qset = "A"; render();
         return n;
       })()`);
     assert.equal(Number(leaked), 0, "a Set A question must not appear on Set B");

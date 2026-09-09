@@ -1018,10 +1018,18 @@ function planItems(){
     out.push({kind: "daily", title: "Today's current-affairs quiz", sub: "Practice",
               note: "not logged"});
 
-  const wrong = (QUIZ.questions || []).filter(q =>
-    store.picks[q.id] !== undefined && store.picks[q.id] !== q.answer).length;
-  if(wrong) out.push({kind: "wrong", title: `${wrong} practice answer${wrong > 1 ? "s" : ""} to go back over`,
-                      sub: "Practice", note: "got wrong"});
+  /* Wrong answers now come off finished papers rather than a practice pile:
+     a paper is only marked once every question on it has been answered, so
+     nothing here counts a question you are still in the middle of. */
+  let wrong = 0;
+  for(const pp of paperList()){
+    if(pp.kind !== "typed") continue;
+    const sheet = store.attempts[pp.id] || {};
+    if(Object.keys(sheet).length < pp.questions.length) continue;
+    pp.questions.forEach((q, i) => { if(sheet[i + 1] !== q.answer) wrong++; });
+  }
+  if(wrong) out.push({kind: "wrong", title: `${wrong} answer${wrong > 1 ? "s" : ""} to go back over`,
+                      sub: "Papers", note: "got wrong"});
   return out;
 }
 
@@ -1054,7 +1062,7 @@ function bindPlan(root){
   root.querySelectorAll("[data-plan]").forEach(b => b.onclick = () => {
     const k = b.dataset.plan;
     if(k === "topic"){ openTopic(b.dataset.id); return; }
-    state.tab = "practice"; state.qmode = k === "daily" ? "daily" : "practice";
+    state.tab = "practice"; state.qmode = k === "daily" ? "daily" : "papers";
     markTab("practice"); render();
   });
 }
@@ -2091,19 +2099,29 @@ function paperList(){
                                           year: q.source.year, questions: []});
     bySource.get(k).questions.push(q);
   }
+  const own = (QUIZ.questions || []).filter(q => !q.source && !q.paper);
+  if(own.length) bySource.set("taracmd-own", {id: "taracmd-own", kind: "typed",
+    name: "Written for this app", test: "", questions: own});
+
   for(const p of bySource.values()){
     p.questions.sort((a, b) => (a.paper?.n || 0) - (b.paper?.n || 0) || a.id.localeCompare(b.id, undefined, {numeric: true}));
     out.push(p);
   }
 
-  // UPSC papers the Commission has published a key for.
+  /* UPSC papers the Commission has published a key for — ONE folder each, not
+     one per Series. A/B/C/D are the same hundred questions shuffled, so four
+     folders offered the same paper four times and made the list look full of
+     content it did not have. The set still matters inside the sheet, because
+     the answers and the dropped question move with it, so it stays a control
+     there rather than a folder here. */
   for(const y of (KEYS.years || [])){
     for(const pp of y.papers || []){
-      for(const set of Object.keys(pp.keys || {})){
-        out.push({id: `upsc-${y.year}-${pp.code}-${set}`, kind: "key", year: y.year,
-                  name: `UPSC ${y.year}`, test: `${(KEYS.marking[pp.code] || {}).name || pp.code} · Set ${set}`,
-                  letters: pp.keys[set], code: pp.code, set, url: pp.url});
-      }
+      const sets = Object.keys(pp.keys || {});
+      if(!sets.length) continue;
+      const set = sets.includes("A") ? "A" : sets[0];
+      out.push({id: `upsc-${y.year}-${pp.code}`, kind: "key", year: y.year,
+                name: `UPSC ${y.year}`, test: (KEYS.marking[pp.code] || {}).name || pp.code,
+                letters: pp.keys[set], code: pp.code, set, sets, url: pp.url});
     }
   }
   return out;
@@ -2167,7 +2185,11 @@ function renderPaperFolders(root){
 function renderPaperRun(root, p){
   // A key-only paper has no questions to ask, so it keeps the answer sheet.
   if(p.kind === "key"){
-    state.qyear = p.year; state.qpaper = p.code; state.qset = p.set;
+    state.qyear = p.year; state.qpaper = p.code;
+    // Only seed the set. Forcing it on every render would snap the sheet back
+    // to Series A the instant you picked another one, and which Series you sat
+    // decides both the answers and where the dropped question falls.
+    if(!state.qset || !(p.sets || [p.set]).includes(state.qset)) state.qset = p.set;
     root.innerHTML = `<button class="fchip ghost" id="pback">← All papers</button><div id="omrbody"></div>`;
     document.getElementById("pback").onclick = () => { state.qpaperId = null; renderQuiz(); };
     renderScorer(document.getElementById("omrbody"));
@@ -2316,12 +2338,11 @@ function renderQuiz(){
     <div class="head" style="margin-top:6px"><h2>Quiz</h2></div>
     <div class="modes">
       <button data-m="daily" class="${mode==="daily"?"on":""}">Daily</button>
-      <button data-m="practice" class="${mode==="practice"?"on":""}">Practice</button>
       <button data-m="papers" class="${mode==="papers"?"on":""}">Papers</button>
     </div>
     <div id="qbody"></div>`;
   view.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{state.qmode=b.dataset.m;renderQuiz();});
-  ({daily: renderDaily, papers: renderPaperFolders, practice: renderPractice}[mode]
+  ({daily: renderDaily, papers: renderPaperFolders}[mode]
     || renderDaily)(document.getElementById("qbody"));
 }
 
@@ -2558,81 +2579,6 @@ function renderScorer(root){
 }
 
 /* --- mode 2: the authored practice bank --- */
-function renderPractice(root){
-  const qs = QUIZ.questions || [];
-  if(!qs.length){
-    root.innerHTML = `<div class="empty">No practice questions yet — add them to
-      <span class="mono">content/quiz.json</span> and rebuild.</div>`;
-    return;
-  }
-  const subjOf = tid => SUBJECTS.find(s=>s.topics.some(t=>t.id===tid));
-  const subs = [...new Set(qs.map(q=>{const s=subjOf(q.topic); return s && s.id;}).filter(Boolean))];
-
-  /* Answers persist. They used to live in a plain state object, so a reload
-     threw away every answer — including which ones you got wrong, which is
-     the only part worth keeping. */
-  const wrongOnes = qs.filter(q => store.picks[q.id] !== undefined && store.picks[q.id] !== q.answer);
-  const answered = qs.filter(q => store.picks[q.id] !== undefined).length;
-
-  let shown = qs;
-  if(state.qsubj === "wrong") shown = wrongOnes;
-  else if(state.qsubj && state.qsubj !== "all")
-    shown = qs.filter(q=>{const s=subjOf(q.topic); return s && s.id===state.qsubj;});
-
-  root.innerHTML = `
-    <div class="filters">
-      <button class="fchip ${!state.qsubj||state.qsubj==="all"?"on":""}" data-qs="all">All ${qs.length}</button>
-      ${wrongOnes.length ? `<button class="fchip ${state.qsubj==="wrong"?"on":""}" data-qs="wrong">Got wrong ${wrongOnes.length}</button>` : ""}
-      ${subs.map(id=>{const s=SUBJECTS.find(x=>x.id===id);
-        return `<button class="fchip ${state.qsubj===id?"on":""}" data-qs="${id}">${esc(s.short)}</button>`;}).join("")}
-    </div>
-    ${answered ? `<div class="progline"><span>${answered}/${qs.length} attempted</span><span class="bar"><i style="width:${(answered/qs.length*100).toFixed(1)}%"></i></span><span>${Math.round((answered-wrongOnes.length)/answered*100)}% right</span></div>` : ""}
-    ${!shown.length ? `<div class="empty">Nothing here yet.</div>` : ""}
-    ${shown.map(q=>{
-      const pick = store.picks[q.id], done = pick!==undefined;
-      const tp = (subjOf(q.topic)||{topics:[]}).topics.find(t=>t.id===q.topic);
-      /* Where the question is from, on the question. A test-series answer is
-         that institute's claim; a UPSC one is the Commission's. The app must
-         never let the first wear the authority of the second. */
-      const from = q.paper
-        ? `UPSC ${q.paper.year} ${(KEYS.marking[q.paper.code]||{}).name || q.paper.code} · Q${q.paper.n}`
-        : q.source ? [q.source.name, q.source.test].filter(Boolean).join(" · ") : "";
-      return `<div class="qcard">
-        <div class="eyebrow">${esc(tp ? tp.name : q.topic)}${
-          from ? `<span class="qfrom ${q.paper ? "official" : ""}">${esc(from)}</span>` : ""}</div>
-        <div class="qstem">${esc(q.q)}</div>
-        <div class="opts">
-          ${q.options.map((o,i)=>{
-            let cls = "opt";
-            if(done){ if(i===q.answer) cls+=" right"; else if(i===pick) cls+=" wrong"; }
-            else if(i===pick) cls+=" pick";
-            return `<button class="${cls}" data-qid="${q.id}" data-oi="${i}">
-              <span class="ol">${LET[i]}</span><span>${esc(o)}</span></button>`;
-          }).join("")}
-        </div>
-        ${done ? `<div class="why2"><b>${pick===q.answer?"Right":"Not quite"}.</b> ${esc(q.why||"")}
-          ${tp ? `<br><button data-goto="${q.topic}" style="color:var(--accent-ink);font-weight:500;padding:0;margin-top:6px">Revise ${esc(tp.name)} →</button>` : ""}</div>` : ""}
-      </div>`;
-    }).join("")}
-    <p class="note">A question carries where it came from. <b>UPSC</b> means it is from a
-      real paper and its answer is the Commission's own — <span class="mono">build.py</span>
-      refuses to ship one that disagrees with the official key. Anything else is a test
-      series, and its answer is that institute's claim, which is not the same thing.
-      ${answered ? `<button class="linky" id="qreset">Forget my answers</button>` : ""}</p>`;
-
-  root.querySelectorAll("[data-qs]").forEach(b=>b.onclick=()=>{state.qsubj=b.dataset.qs;renderQuiz();});
-  root.querySelectorAll("[data-qid]").forEach(b=>b.onclick=()=>{
-    const y = window.scrollY;
-    if(store.picks[b.dataset.qid]===undefined){
-      store.picks[b.dataset.qid] = +b.dataset.oi;
-      save();
-    }
-    renderQuiz(); window.scrollTo(0,y);
-  });
-  const qr = root.querySelector("#qreset");
-  if(qr) qr.onclick = ()=>{ store.picks = {}; save(); state.qsubj = "all"; renderQuiz(); };
-  root.querySelectorAll("[data-goto]").forEach(b=>b.onclick=()=>openTopic(b.dataset.goto));
-}
 
 /* ---------------- shell ---------------- */
 const backBtn = document.getElementById("backBtn"), brand = document.getElementById("brand");

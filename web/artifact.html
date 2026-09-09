@@ -237,7 +237,11 @@ a{color:var(--accent-ink);text-decoration:none}
 :root:not([data-theme="light"]) .modes button.on{color:#0E131B}
 @media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .modes button.on{color:#fff}}
 .qcard{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:14px;margin-bottom:10px;box-shadow:var(--shadow)}
-.qstem{font-size:14.5px;line-height:1.45;margin:6px 0 12px}
+.qstem{font-size:14.5px;line-height:1.45;margin:6px 0 12px;white-space:pre-line}
+/* A UPSC stem is a list: "consider the following statements: 1. … 2. … 3. …".
+   The line breaks are in the question text; HTML collapses them, which runs
+   the statements into one paragraph and makes a statement question far harder
+   to read than it is on paper. pre-line puts them back. */
 .opts{display:flex;flex-direction:column;gap:7px}
 .opt{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;padding:10px 11px;border-radius:10px;
   border:1px solid var(--rule);background:var(--card-2);font-size:13.5px;line-height:1.4}
@@ -572,6 +576,33 @@ mark{background:var(--amber-soft);color:inherit;border-radius:3px;padding:0 1px}
 .qfrom{margin-left:8px;padding:1px 6px;border-radius:5px;background:var(--sunk);
   color:var(--ink-3);letter-spacing:.02em}
 .qfrom.official{background:var(--accent-soft);color:var(--accent-ink)}
+
+/* ---------------- papers: folders, then one question at a time ---------- */
+.plist2{display:flex;flex-direction:column;gap:9px}
+.pcard{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:13px 13px;
+  background:var(--card);border:1px solid var(--rule);border-radius:13px;cursor:pointer;color:inherit}
+.pcard:hover{border-color:var(--accent);transform:translateY(-1px)}
+.pc-i{font-size:20px;line-height:1;flex:none}
+.pc-b{flex:1;min-width:0}
+.pc-t{display:block;font-family:"IBM Plex Serif",Georgia,serif;font-weight:600;font-size:14.5px;line-height:1.3}
+.pc-s{display:block;font-size:11.5px;color:var(--ink-3);margin-top:3px}
+.pc-bar{display:block;height:3px;border-radius:99px;background:var(--sunk);margin-top:8px;overflow:hidden}
+.pc-bar > i{display:block;height:100%;background:var(--accent);border-radius:99px}
+
+.prun-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:2px 0 12px}
+.prun-n{font-size:12px;color:var(--ink-3)}
+/* The palette is the whole point of a paper view: it is how a question you
+   skipped stays visible instead of disappearing behind you. */
+.palette{display:grid;grid-template-columns:repeat(auto-fill,minmax(30px,1fr));gap:5px;
+  max-height:132px;overflow-y:auto;padding:2px 2px 10px}
+.pq{font-family:"IBM Plex Mono",monospace;font-size:10.5px;height:28px;border-radius:7px;
+  border:1px solid var(--rule);background:var(--card);color:var(--ink-3);cursor:pointer}
+.pq:hover{border-color:var(--rule-2);color:var(--ink)}
+.pq.done{background:var(--accent-soft);border-color:var(--accent-soft);color:var(--accent-ink)}
+.pq.here{border-color:var(--accent);color:var(--ink);box-shadow:inset 0 0 0 1px var(--accent)}
+.qcard.run{margin-top:2px}
+.runacts{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.runacts .fchip[disabled]{opacity:.4;cursor:default}
 </style>
 
 
@@ -781,6 +812,8 @@ const DOWNI = '<svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="M7 11l5 5 5
 let state = {
   tab: "syllabus", filter: "all", tfilter: "all",
   pset: "prelims",        // which paper index the Papers tab is showing
+  qpaperId: null,         // the paper being sat, or null for the folder list
+  qn: 1,                  // which question of it
   lens: "subject",        // "subject" | "paper" — two shapes of one syllabus
   open: new Set(),        // expanded groups
   openTopics: new Set(),  // topics expanded in place
@@ -1899,7 +1932,8 @@ function renderPYQ(kind){
       </div>`;}).join("")}
     <p class="note">Every link points at the paper on <a href="${ARCHIVE}" target="_blank" rel="noopener">upsc.gov.in</a> — nothing here is a mirror or a re-upload. Dashed buttons are years whose PDF the UPSC archive did not serve up; they open the archive so you can pull the paper yourself.${kind==="prelims" ? ` Answer keys come from the Commission's own <a href="${KEYINDEX}" target="_blank" rel="noopener">answer-key page</a>; there is no official key for Mains, and none has ever been published.` : ""}</p>`;
   view.querySelectorAll("[data-score]").forEach(b=>b.onclick=()=>{
-    state.tab="quiz"; state.qmode="score"; state.qyear=+b.dataset.score;
+    state.tab="practice"; state.qmode="papers"; state.qyear=+b.dataset.score;
+    state.qpaperId=null;
     document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("on", x.dataset.tab==="quiz"));
     render();
   });
@@ -1998,6 +2032,212 @@ function renderOptional(){
   });
 }
 
+/* ---------------- mode 2: papers ----------------
+   A paper is a thing you sit, not a list you scroll.
+
+   This replaced "Score a paper", which was a hundred rows of A B C D in one
+   continuous column. Two things were wrong with it. It never ended — you
+   scrolled through a hundred questions in one go with no sense of place — and
+   once you skipped something it was gone, because nothing in the page knew
+   you had skipped it.
+
+   So: pick a paper, then one question at a time, with the palette above it
+   showing which are answered and which are not. Skipping is a real move, and
+   the palette is how you come back — tap the number, or take the next
+   unanswered one, which is the button you actually want at the end.
+
+   Papers come from two places and behave differently on purpose:
+
+     typed     a test series whose questions are in the bank. Asked properly.
+     key only  a UPSC paper where the Commission published a key but the
+               questions are photographs, so there is nothing to ask. Still an
+               answer sheet, because a sheet you can score is worth having.
+*/
+
+const paperKey = s => [s.name, s.test, s.year].filter(Boolean).join(" · ");
+const paperSlug = s => paperKey(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+function paperList(){
+  const out = [];
+
+  // Test-series papers, grouped by where they came from.
+  const bySource = new Map();
+  for(const q of (QUIZ.questions || [])){
+    if(!q.source) continue;
+    const k = paperSlug(q.source);
+    if(!bySource.has(k)) bySource.set(k, {id: k, kind: "typed", src: q.source,
+                                          name: q.source.name, test: q.source.test || "",
+                                          year: q.source.year, questions: []});
+    bySource.get(k).questions.push(q);
+  }
+  for(const p of bySource.values()){
+    p.questions.sort((a, b) => (a.paper?.n || 0) - (b.paper?.n || 0) || a.id.localeCompare(b.id, undefined, {numeric: true}));
+    out.push(p);
+  }
+
+  // UPSC papers the Commission has published a key for.
+  for(const y of (KEYS.years || [])){
+    for(const pp of y.papers || []){
+      for(const set of Object.keys(pp.keys || {})){
+        out.push({id: `upsc-${y.year}-${pp.code}-${set}`, kind: "key", year: y.year,
+                  name: `UPSC ${y.year}`, test: `${(KEYS.marking[pp.code] || {}).name || pp.code} · Set ${set}`,
+                  letters: pp.keys[set], code: pp.code, set, url: pp.url});
+      }
+    }
+  }
+  return out;
+}
+
+const paperTotal = p => p.kind === "typed" ? p.questions.length : p.letters.length;
+const paperSheet = p => store.attempts[p.id] || {};
+function paperAnswered(p){
+  const s = paperSheet(p);
+  return Object.keys(s).filter(k => s[k] !== undefined && s[k] !== null).length;
+}
+
+/* Right, wrong and left, for a typed paper. A key-only paper is scored by the
+   existing OMR, which already knows the marking scheme. */
+function paperScore(p){
+  const s = paperSheet(p);
+  let right = 0, wrong = 0;
+  p.questions.forEach((q, i) => {
+    const a = s[i + 1];
+    if(a === undefined || a === null) return;
+    a === q.answer ? right++ : wrong++;
+  });
+  return {right, wrong, left: p.questions.length - right - wrong};
+}
+
+function renderPaperFolders(root){
+  const papers = paperList();
+  if(!papers.length){
+    root.innerHTML = `<div class="empty">No papers yet. Add questions with a
+      <span class="mono">source</span>, or an answer key with letters, and they appear here.</div>`;
+    return;
+  }
+  const open = papers.find(p => p.id === state.qpaperId);
+  if(open) return renderPaperRun(root, open);
+
+  root.innerHTML = `
+    <div class="head" style="margin-top:2px"><h2>Papers</h2><span class="n">${papers.length}</span></div>
+    <div class="plist2">
+      ${papers.map(p => {
+        const tot = paperTotal(p), done = paperAnswered(p);
+        return `<button class="pcard" data-paper="${p.id}">
+          <span class="pc-i">${p.kind === "typed" ? "📄" : "🗒"}</span>
+          <span class="pc-b">
+            <span class="pc-t">${esc(p.name)}${p.test ? ` · ${esc(p.test)}` : ""}</span>
+            <span class="pc-s">${tot} question${tot === 1 ? "" : "s"} · ${
+              p.kind === "typed" ? "asked in full" : "answer sheet only"}${done ? ` · ${done} answered` : ""}</span>
+            <span class="pc-bar"><i style="width:${(done / tot * 100).toFixed(1)}%"></i></span>
+          </span>
+          <span class="pgo">›</span>
+        </button>`;
+      }).join("")}
+    </div>
+    <p class="note">A paper opens one question at a time. Skip what you cannot do and the
+      palette will bring you back to it.</p>`;
+
+  root.querySelectorAll("[data-paper]").forEach(b => b.onclick = () => {
+    state.qpaperId = b.dataset.paper; state.qn = 1; renderQuiz();
+  });
+}
+
+function renderPaperRun(root, p){
+  // A key-only paper has no questions to ask, so it keeps the answer sheet.
+  if(p.kind === "key"){
+    state.qyear = p.year; state.qpaper = p.code; state.qset = p.set;
+    root.innerHTML = `<button class="fchip ghost" id="pback">← All papers</button><div id="omrbody"></div>`;
+    document.getElementById("pback").onclick = () => { state.qpaperId = null; renderQuiz(); };
+    renderScorer(document.getElementById("omrbody"));
+    return;
+  }
+
+  const total = p.questions.length;
+  const n = Math.min(Math.max(1, state.qn || 1), total);
+  const q = p.questions[n - 1];
+  const sheet = paperSheet(p);
+  const picked = sheet[n];
+  const sc = paperScore(p);
+  /* The FIRST unanswered, not the next one forward. Searching forward from
+     where you are walks you onto questions you have never seen and leaves the
+     ones you actually skipped behind you — which is the thing this view exists
+     to stop. Lowest number first returns you to what you passed over, and
+     sweeps up the tail once you reach the end. */
+  const firstUnanswered = (() => {
+    for(let c = 1; c <= total; c++){
+      if(c !== n && (sheet[c] === undefined || sheet[c] === null)) return c;
+    }
+    return null;
+  })();
+
+  root.innerHTML = `
+    <div class="prun-top">
+      <button class="fchip ghost" id="pback">← All papers</button>
+      <span class="prun-n mono">${n} / ${total}</span>
+    </div>
+    <div class="palette">
+      ${p.questions.map((_, i) => {
+        const k = i + 1, a = sheet[k];
+        const cls = k === n ? "here" : (a === undefined || a === null) ? "" : "done";
+        return `<button class="pq ${cls}" data-goq="${k}">${k}</button>`;
+      }).join("")}
+    </div>
+    <div class="qcard run">
+      <div class="eyebrow">Question ${n}${q.source ? `<span class="qfrom">${esc(q.source.name)}</span>` : ""}</div>
+      <div class="qstem">${esc(q.q)}</div>
+      <div class="opts">
+        ${q.options.map((o, i) => `<button class="opt ${picked === i ? "pick" : ""}" data-pick="${i}">
+          <span class="ol">${LET[i]}</span><span>${esc(o)}</span></button>`).join("")}
+      </div>
+      <div class="runacts">
+        <button class="fchip" id="pprev" ${n === 1 ? "disabled" : ""}>← Previous</button>
+        ${picked !== undefined && picked !== null
+          ? `<button class="fchip" id="pclear">Clear</button>` : ""}
+        <button class="fchip" id="pnext" ${n === total ? "disabled" : ""}>Skip →</button>
+      </div>
+    </div>
+    <div class="sgrid" style="margin:16px 0 6px">
+      <span>answered <b class="mono">${sc.right + sc.wrong}</b></span>
+      <span>left <b class="mono">${sc.left}</b></span>
+      ${firstUnanswered ? `<span><button class="linky" id="pnextun">back to the first unanswered → ${firstUnanswered}</button></span>` : ""}
+    </div>
+    ${sc.left === 0
+      ? `<div class="score"><span class="big">${sc.right}</span><span class="lil">right of ${total}</span>
+           <div class="sgrid"><span>right <b>${sc.right}</b></span><span>wrong <b>${sc.wrong}</b></span>
+             <span>accuracy <b>${Math.round(sc.right / total * 100)}%</b></span></div>
+           <div class="act"><button class="prim" id="pclearall">Clear the sheet</button></div></div>
+         <p class="note">Every question answered. The palette above is still there if you want to change one.</p>`
+      : `<p class="note">Nothing is marked right or wrong until the paper is finished — this is a
+           paper, not a flashcard. Skipped questions stay hollow in the palette.</p>`}`;
+
+  const rerender = () => { save(); renderQuiz(); };
+  document.getElementById("pback").onclick = () => { state.qpaperId = null; renderQuiz(); };
+  root.querySelectorAll("[data-goq]").forEach(b => b.onclick = () => { state.qn = +b.dataset.goq; renderQuiz(); });
+  root.querySelectorAll("[data-pick]").forEach(b => b.onclick = () => {
+    store.attempts[p.id] = Object.assign({}, sheet, {[n]: +b.dataset.pick});
+    // answering moves you on, because stopping to admire an answer is not what
+    // sitting a paper feels like
+    state.qn = Math.min(total, n + 1);
+    rerender();
+  });
+  const clear = document.getElementById("pclear");
+  if(clear) clear.onclick = () => {
+    const s = Object.assign({}, sheet); delete s[n];
+    store.attempts[p.id] = s; rerender();
+  };
+  const prev = document.getElementById("pprev");
+  if(prev) prev.onclick = () => { state.qn = n - 1; renderQuiz(); };
+  const next = document.getElementById("pnext");
+  if(next) next.onclick = () => { state.qn = n + 1; renderQuiz(); };
+  const nu = document.getElementById("pnextun");
+  if(nu) nu.onclick = () => { state.qn = firstUnanswered; renderQuiz(); };
+  const ca = document.getElementById("pclearall");
+  if(ca) ca.onclick = () => {
+    if(confirm(`Clear every answer on ${p.name}?`)){ delete store.attempts[p.id]; state.qn = 1; rerender(); }
+  };
+}
+
 /* ---------------- toppers ---------------- */
 function renderToppers(){
   document.getElementById("brandSub").textContent = TOPPERS.copies.length + " copies";
@@ -2056,11 +2296,11 @@ function renderQuiz(){
     <div class="modes">
       <button data-m="daily" class="${mode==="daily"?"on":""}">Daily</button>
       <button data-m="practice" class="${mode==="practice"?"on":""}">Practice</button>
-      <button data-m="score" class="${mode==="score"?"on":""}">Score a paper</button>
+      <button data-m="papers" class="${mode==="papers"?"on":""}">Papers</button>
     </div>
     <div id="qbody"></div>`;
   view.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{state.qmode=b.dataset.m;renderQuiz();});
-  ({daily: renderDaily, score: renderScorer, practice: renderPractice}[mode]
+  ({daily: renderDaily, papers: renderPaperFolders, practice: renderPractice}[mode]
     || renderDaily)(document.getElementById("qbody"));
 }
 

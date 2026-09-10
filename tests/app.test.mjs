@@ -171,12 +171,40 @@ describe("scoring a Prelims paper against the official key", () => {
      The block size is NOT fixed — 2017 shuffles four blocks of twenty-five,
      2018 and 2026 five, the rest ten — so it is discovered, largest first,
      exactly as tools/keycheck.py does. A key that matches at no block size of
-     five or more is a misread, not a new format. */
+     five or more is a misread, not a new format.
+
+     Except CSAT, which keeps each passage's questions together, so its blocks
+     are passages of uneven length — 2018 is 10,10,13,15,12,20 — and no size
+     fits. Then each Series must be spelled out of disjoint runs of Set A, every
+     run at least four long, using each of A's letters once: the same cover
+     keycheck.py falls back to. */
   test("every stored key is a block permutation of its own Set A", () => {
     const out = JSON.parse(inPage(win, `
       (() => {
         const cut = (k, b) => Array.from({length: k.length / b}, (_, i) => k.slice(i*b, i*b+b).join(""));
         const same = (x, y) => x.length === y.length && x.every((v, i) => v === y[i]);
+        const covers = (v, A, min) => {
+          const used = A.map(() => false);
+          let budget = 200000;
+          const go = i => {
+            if(i === v.length) return true;
+            if(--budget < 0) return false;
+            const cands = [];
+            for(let j = 0; j < A.length; j++){
+              let L = 0;
+              while(i + L < v.length && j + L < A.length && !used[j + L] && A[j + L] === v[i + L]) L++;
+              if(L >= min) cands.push([j, L]);
+            }
+            cands.sort((a, b) => b[1] - a[1]);
+            for(const [j, L] of cands) for(let l = L; l >= min; l--){
+              for(let t = 0; t < l; t++) used[j + t] = true;
+              if(go(i + l)) return true;
+              for(let t = 0; t < l; t++) used[j + t] = false;
+            }
+            return false;
+          };
+          return go(0);
+        };
         const res = [];
         for(const y of KEYS.years) for(const p of y.papers){
           const sets = Object.keys(p.keys || {});
@@ -188,16 +216,19 @@ describe("scoring a Prelims paper against the official key", () => {
             const a = cut(p.keys.A, b).sort();
             if(["B","C","D"].every(s => same(cut(p.keys[s], b).sort(), a))){ found = b; break; }
           }
+          if(!found && p.code === "gs2" && ["B","C","D"].every(s => covers(p.keys[s], p.keys.A, 4)))
+            found = "passages";
           res.push({ id: y.year + " " + p.code, block: found,
+                     want: (KEYS.marking[p.code] || {}).questions,
                      lens: sets.map(s => p.keys[s].length),
                      xs: sets.map(s => p.keys[s].filter(l => l === "X").length) });
         }
         return JSON.stringify(res);
       })()`));
-    assert.ok(out.length >= 10, `only ${out.length} papers carry a key`);
+    assert.ok(out.length >= 20, `only ${out.length} papers carry a key`);
     for (const r of out) {
       assert.ok(r.block, `${r.id}: the four Series match at no block size — a letter is misread`);
-      assert.deepEqual(r.lens, [100, 100, 100, 100], `${r.id}: a Series is the wrong length`);
+      assert.deepEqual(r.lens, [r.want, r.want, r.want, r.want], `${r.id}: a Series is the wrong length`);
       assert.equal(new Set(r.xs).size, 1,
         `${r.id}: the Series disagree on how many questions were dropped`);
     }
@@ -1026,5 +1057,162 @@ describe("the progress backup on the shelf", () => {
     inPage(w, 'store.done["t-new"] = [2]; save(); shelfBackupNow();');
     assert.ok(written && JSON.parse(written).done["t-new"], "and a change is written back out");
     w.close();
+  });
+});
+
+/* CSAT: the Commission's GS Paper II keys, sat on the answer grid against the
+   same two-hour clock, marked +2.5 / -0.83 and qualifying at a third. */
+describe("CSAT on the answer grid", () => {
+  test("all ten years carry four Series of eighty, and 2021's C-or-D cell takes either", () => {
+    const out = JSON.parse(inPage(win, `(() => {
+      const yrs = KEYS.years.filter(y => y.year >= 2017 && y.year <= 2026).map(y =>
+        Object.values(y.papers.find(p => p.code === "gs2").keys).map(v => v.length).join("/"));
+      const p = paperList().find(x => x.id === "upsc-2021-gs2"); p.set = "A"; p.letters = p.keys.A;
+      const id = paperId(p), n = p.letters.indexOf("CD") + 1;
+      const at = a => { store.attempts[id] = {[n]: a}; return paperRightAt(p, n); };
+      const r = { yrs, n, c: at("C"), d: at("D"), dIdx: at(3), a: at("A") };
+      store.attempts[id] = {[n]: "D"}; r.score = paperScore(p).right;
+      delete store.attempts[id];
+      return JSON.stringify(r); })()`));
+    assert.equal(out.yrs.length, 10);
+    assert.ok(out.yrs.every(x => x === "80/80/80/80"), out.yrs.join(" "));
+    assert.equal(out.n, 39, "the Commission accepted C or D at 39 in Series A");
+    assert.equal(out.c, true);
+    assert.equal(out.d, true, "either letter scores");
+    assert.equal(out.dIdx, true, "whether the sheet holds a letter or an option number");
+    assert.equal(out.a, false);
+    assert.equal(out.score, 1);
+  });
+
+  test("the grid runs the two-hour clock, then locks and marks itself at +2.5 / -0.83", () => {
+    const out = JSON.parse(inPage(win, `(() => {
+      const id = "2024-gs2-A", L = KEYS.years.find(y => y.year === 2024).papers.find(p => p.code === "gs2").keys.A;
+      delete store.attempts[id]; delete store.sit[id]; delete store.past[id];
+      state.tab = "practice"; state.qmode = "papers"; state.qpaperId = "upsc-2024-gs2";
+      state.qset = "A"; state.qsheet = false; render();
+      const r = { go: !!document.getElementById("pclockgo") };
+      const wrongL = LET[(LET.indexOf(L[1]) + 1) % 4];
+      document.querySelector('.omr [data-q="1"][data-a="' + L[0] + '"]').click();
+      document.querySelector('.omr [data-q="2"][data-a="' + wrongL + '"]').click();
+      const pp = paperList().find(x => x.id === "upsc-2024-gs2"); pp.set = "A"; pp.letters = L;
+      paperStartClock(pp); render();
+      r.clock = !!document.getElementById("pclock");
+      r.unmarked = document.querySelectorAll(".omr .cell.ok, .omr .cell.no").length;
+      store.sit[id].start = Date.now() - 121 * 60000; render();
+      r.ok = document.querySelectorAll(".omr .cell.ok").length;
+      r.no = document.querySelectorAll(".omr .cell.no").length;
+      r.marks = document.querySelector(".score .big").textContent.trim();
+      r.verdict = document.querySelector(".score .lil").textContent;
+      r.retake = !!document.getElementById("pretake") && !!document.getElementById("pretry");
+      document.querySelector('.omr [data-q="3"][data-a="A"]').click();
+      r.locked = store.attempts[id][3] === undefined;
+      document.getElementById("pretry").click();
+      r.kept = Object.keys(store.attempts[id]).join(",");
+      r.past = store.past[id].length;
+      r.hist = !!document.querySelector(".phist");
+      delete store.attempts[id]; delete store.sit[id]; delete store.past[id]; delete store.seen[id];
+      state.qpaperId = null;
+      return JSON.stringify(r); })()`));
+    assert.equal(out.go, true, "a CSAT paper offers the clock");
+    assert.equal(out.clock, true);
+    assert.equal(out.unmarked, 0, "nothing is marked while the clock runs");
+    assert.equal(out.ok, 1, "after the submit the right answer is green");
+    assert.equal(out.no, 1, "and the wrong one red");
+    assert.equal(out.marks, "1.67", "one right and one wrong is 2.5 - 0.83");
+    assert.match(out.verdict, /below the qualifying mark/);
+    assert.equal(out.retake, true);
+    assert.equal(out.locked, true, "a submitted sheet does not take new marks");
+    assert.equal(out.kept, "1", "redoing the mistakes keeps only the right answer");
+    assert.equal(out.past, 1, "and the attempt it replaced is kept");
+    assert.equal(out.hist, true);
+  });
+});
+
+/* The mistakes notebook: every question got wrong on a submitted paper, kept
+   across all papers, grouped by topic, and asked again on a widening schedule. */
+describe("the mistakes notebook", () => {
+  test("a submit keeps every wrong answer, and nothing is kept before it", () => {
+    const out = JSON.parse(inPage(win, `(() => {
+      store.mistakes = {};
+      const p = paperList().find(x => x.kind === "typed" && x.questions.length >= 3);
+      const id = paperId(p), q = p.questions;
+      store.attempts[id] = {1: (q[0].answer + 1) % 4, 2: q[1].answer};
+      delete store.sit[id];
+      const before = Object.keys(store.mistakes).length;
+      paperSubmit(p);
+      const m = store.mistakes[q[0].id] || {};
+      const r = { before, keys: Object.keys(store.mistakes), first: q[0].id,
+                  due: Math.round((m.due - Date.now()) / 86400000), step: m.step, wrong: m.wrong };
+      delete store.attempts[id]; delete store.sit[id];
+      const u = paperList().find(x => x.id === "upsc-2023-gs1"); u.set = "B"; u.letters = u.keys.B;
+      const uid = paperId(u), uq = paperAsked(u).get(1);
+      store.attempts[uid] = {1: (uq.answer + 1) % 4};
+      delete store.sit[uid]; paperSubmit(u);
+      r.upsc = !!store.mistakes[uq.id];
+      delete store.attempts[uid]; delete store.sit[uid]; store.mistakes = {};
+      return JSON.stringify(r); })()`));
+    assert.equal(out.before, 0, "an answer on a paper still being sat is not a mistake yet");
+    assert.deepEqual(out.keys, [out.first], "the wrong one is kept, the right one is not");
+    assert.equal(out.due, 1, "and it comes back tomorrow");
+    assert.equal(out.step, 0);
+    assert.equal(out.wrong, 1);
+    assert.equal(out.upsc, true, "a UPSC paper's typed questions are kept the same way");
+  });
+
+  test("right answers widen the gap 1, 3, 7, 21, 60 and then clear it; a wrong one starts over", () => {
+    const out = JSON.parse(inPage(win, `(() => {
+      store.mistakes = {}; const t0 = Date.now(), d = x => Math.round((x - t0) / 86400000);
+      mistakeNote("zz", true, t0); const untouched = !store.mistakes.zz;
+      mistakeNote("zz", false, t0); const gaps = [d(store.mistakes.zz.due)];
+      for(let i = 0; i < 4; i++){ mistakeNote("zz", true, t0); gaps.push(d(store.mistakes.zz.due)); }
+      mistakeNote("zz", false, t0); const reset = d(store.mistakes.zz.due);
+      for(let i = 0; i < 5; i++) mistakeNote("zz", true, t0);
+      const m = store.mistakes.zz; store.mistakes = {};
+      return JSON.stringify({untouched, gaps, reset, done: !!m.done, due: m.due, wrong: m.wrong, right: m.right}); })()`));
+    assert.equal(out.untouched, true, "right first time is not a mistake");
+    assert.deepEqual(out.gaps, [1, 3, 7, 21, 60]);
+    assert.equal(out.reset, 1, "wrong again is tomorrow again");
+    assert.equal(out.done, true, "right at the last interval clears it");
+    assert.equal(out.due, null);
+    assert.equal(out.wrong, 2);
+    assert.equal(out.right, 9);
+  });
+
+  test("due mistakes go on the plan, and the notebook asks them one at a time", () => {
+    const out = JSON.parse(inPage(win, `(() => {
+      const q = QUIZ.questions.find(x => x.source), q2 = QUIZ.questions.find(x => x.paper);
+      store.mistakes = {
+        [q.id]: {on: Date.now() - 3 * 86400000, step: 0, wrong: 1, right: 0, due: Date.now() - 1000},
+        [q2.id]: {on: Date.now(), step: 0, wrong: 1, right: 0, due: Date.now() + 86400000}};
+      const r = { plan: planItems().filter(i => i.kind === "mistakes").map(i => i.title) };
+      const box = document.createElement("div"); box.innerHTML = planHtml(); document.body.appendChild(box);
+      bindPlan(box); box.querySelector('[data-plan="mistakes"]').click(); box.remove();
+      r.mode = state.qmode;
+      r.badge = (document.querySelector(".modes .mbadge") || {}).textContent;
+      r.rows = document.querySelectorAll(".mrow").length;
+      r.upscLabel = [...document.querySelectorAll(".mrow .ms")].some(e => /^UPSC \\d{4}/.test(e.textContent));
+      document.getElementById("mgo").click();
+      r.asked = document.querySelector(".qcard.run .qstem").textContent === q.q;
+      document.querySelector('[data-mpick="' + q.answer + '"]').click();
+      r.step = store.mistakes[q.id].step;
+      r.note = document.querySelector(".qcard.run .note").textContent;
+      document.getElementById("mnext").click();
+      r.after = !!document.getElementById("mgo") || !!document.querySelector(".modes .mbadge");
+      document.querySelector('[data-mclear="' + q2.id + '"]').click();
+      r.cleared = !!store.mistakes[q2.id].done;
+      r.left = document.querySelectorAll(".mrow").length;
+      store.mistakes = {}; state.qmode = "daily";
+      return JSON.stringify(r); })()`));
+    assert.deepEqual(out.plan, ["1 mistake to try again"], "only the one due today is on the plan");
+    assert.equal(out.mode, "mistakes", "and it opens the notebook");
+    assert.equal(out.badge, "1");
+    assert.equal(out.rows, 2, "the notebook holds every open mistake, due or not");
+    assert.equal(out.upscLabel, true, "a UPSC question says which paper it came from");
+    assert.equal(out.asked, true);
+    assert.equal(out.step, 1, "a right answer moves it on");
+    assert.match(out.note, /3 days/);
+    assert.equal(out.after, false, "nothing is due once it has been answered");
+    assert.equal(out.cleared, true, "I know it now clears a mistake");
+    assert.equal(out.left, 1);
   });
 });

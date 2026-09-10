@@ -725,6 +725,27 @@ button.fbar{background:none;border:0;padding:0;color:inherit;font:inherit;cursor
 .frun{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;color:var(--ink-2);padding:7px 10px;
   border:1px solid var(--rule);border-radius:9px;background:var(--card)}
 .frun.void{color:var(--ink-3);border-style:dashed}
+/* the answer grid after its submit */
+.omr .cell.ok{border-color:var(--go);background:var(--go-soft)}
+.omr .cell.no{border-color:var(--mark);background:var(--mark-soft)}
+.omr .cell .ck{display:block;font-family:"IBM Plex Mono",monospace;font-size:9.5px;color:var(--go);margin-top:3px}
+.omr .cb button[disabled],.copt[disabled]{cursor:default}
+/* the mistakes notebook */
+.pdot.mistakes{background:var(--mark)}
+.modes .mbadge{display:inline-block;min-width:16px;padding:0 5px;margin-left:5px;border-radius:99px;
+  background:var(--mark);color:#fff;font-size:10.5px;line-height:16px;font-weight:600}
+.mgroup{margin:14px 0 6px}
+.mgh{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:13px;font-weight:600;margin:0 2px 6px}
+.mgh span{font-size:11.5px;color:var(--ink-3);font-weight:400;flex:none}
+.mrow{border:1px solid var(--rule);border-radius:12px;background:var(--card);margin-bottom:7px;padding:10px 12px}
+.mrow summary{cursor:pointer;list-style:none;display:flex;flex-direction:column;gap:3px}
+.mrow summary::-webkit-details-marker{display:none}
+.mrow .mt{font-size:13.5px;line-height:1.4}
+.mrow .ms{font-size:11.5px;color:var(--ink-3)}
+.mrow .ms b{color:var(--mark);font-weight:600}
+.mrow[open] .mt{display:none}
+.mrow .qstem{margin:4px 0 10px}
+.mrow .why2{margin-top:10px}
 </style>
 </head>
 <body>
@@ -827,7 +848,8 @@ const BLANK = {
   sit:      {},   // paper id -> {start, mins, sub}          the exam clock, and the submit
   past:     {},   // paper id -> [{on,right,wrong,left,of,marks,secs,how}]  earlier attempts
   focusGoal: 0,   // minutes a day to aim for; 0 is no goal
-  focusDays: {}   // "YYYY-MM-DD" -> {mins, runs, voided}    day totals, kept past the run log
+  focusDays: {},  // "YYYY-MM-DD" -> {mins, runs, voided}    day totals, kept past the run log
+  mistakes: {}    // question id -> {on, last, step, due, wrong, right, done}  the mistakes notebook
 };
 /* Copies, never BLANK itself: the defaults are objects, and a store that
    shared them would quietly write every answer into the defaults too. */
@@ -1183,18 +1205,11 @@ function planItems(){
     out.push({kind: "daily", title: "Today's current-affairs quiz", sub: "Practice",
               note: "not logged"});
 
-  /* Wrong answers now come off finished papers rather than a practice pile:
-     a paper is only marked once every question on it has been answered, so
-     nothing here counts a question you are still in the middle of. */
-  let wrong = 0;
-  for(const pp of paperList()){
-    if(pp.kind !== "typed") continue;
-    const sheet = store.attempts[pp.id] || {};
-    if(Object.keys(sheet).length < pp.questions.length) continue;
-    pp.questions.forEach((q, i) => { if(sheet[i + 1] !== q.answer) wrong++; });
-  }
-  if(wrong) out.push({kind: "wrong", title: `${wrong} answer${wrong > 1 ? "s" : ""} to go back over`,
-                      sub: "Papers", note: "got wrong"});
+  /* Mistakes come back on their own schedule, and only the ones due today
+     are on the plan -- the notebook has the rest. */
+  const mdue = mistakesDue().length;
+  if(mdue) out.push({kind: "mistakes", title: `${mdue} mistake${mdue > 1 ? "s" : ""} to try again`,
+                     sub: "Practice", note: "due today"});
   return out;
 }
 
@@ -1227,7 +1242,8 @@ function bindPlan(root){
   root.querySelectorAll("[data-plan]").forEach(b => b.onclick = () => {
     const k = b.dataset.plan;
     if(k === "topic"){ openTopic(b.dataset.id); return; }
-    state.tab = "practice"; state.qmode = k === "daily" ? "daily" : "papers";
+    state.tab = "practice"; state.qmode = k === "daily" ? "daily" : k === "mistakes" ? "mistakes" : "papers";
+    state.mretry = false; state.mres = null;
     markTab("practice"); render();
   });
 }
@@ -2057,7 +2073,7 @@ function mergeStore(incoming){
     store.revised[tid] = uniqSort(store.revised[tid], incoming.revised[tid]).slice(-12);
   }
   // Maps of answers: what is already here wins, the backup only fills gaps.
-  for(const k of ["attempts", "picks", "writing", "seen", "sit", "daily"]){
+  for(const k of ["attempts", "picks", "writing", "seen", "sit", "daily", "mistakes"]){
     if(!store[k]) store[k] = {};
     for(const id in incoming[k] || {}){
       if(store[k][id] === undefined){ store[k][id] = incoming[k][id]; touched++; }
@@ -2102,6 +2118,7 @@ function openData(){
       <span>answer sheets <b class="mono">${n(store.attempts)}</b></span>
       <span>practice answers <b class="mono">${n(store.picks)}</b></span>
       <span>answers logged <b class="mono">${n(store.writing)}</b></span>
+      <span>mistakes kept <b class="mono">${n(store.mistakes)}</b></span>
     </div>
     <div class="eyebrow">Backup</div>
     <textarea class="dump" id="dumpOut" rows="4" readonly>${esc(json)}</textarea>
@@ -2466,7 +2483,7 @@ function paperScore(p){
       of++;
       const a = s[i + 1];
       if(a === undefined || a === null) return;
-      LET[a] === L ? right++ : wrong++;
+      keyTakes(L, a) ? right++ : wrong++;
     });
   } else {
     of = p.questions.length;
@@ -2514,14 +2531,14 @@ function paperMarks(p, sc){
 function paperRightAt(p, n){
   const a = paperSheet(p)[n];
   if(a === undefined || a === null) return false;
-  return p.kind === "key" ? LET[a] === p.letters[n - 1] : a === p.questions[n - 1].answer;
+  return p.kind === "key" ? keyTakes(p.letters[n - 1], a) : a === p.questions[n - 1].answer;
 }
 /* Time up is submitted whenever anything next looks at the paper — the app
    does not have to have been open at the two-hour mark. */
 function paperSubmitted(p){
   const s = paperSit(p);
   if(!s) return false;
-  if(!s.sub && s.mins && sitLeft(s) === 0){ s.sub = s.start + s.mins * 60000; save(); }
+  if(!s.sub && s.mins && sitLeft(s) === 0){ s.sub = s.start + s.mins * 60000; recordMistakes(p); save(); }
   return !!s.sub;
 }
 function paperStartClock(p){
@@ -2533,6 +2550,7 @@ function paperSubmit(p){
   store.sit[id] = s && s.mins
     ? Object.assign({}, s, {sub: Math.min(Date.now(), s.start + s.mins * 60000)})
     : {start: null, mins: 0, sub: Date.now()};
+  recordMistakes(p);
   save();
 }
 function paperRetake(p, how){
@@ -3101,21 +3119,193 @@ window.taracmdSaved = function(){
 
 /* ---------------- quiz ---------------- */
 const LET = ["A","B","C","D"];
+/* A key cell names one letter -- except 2021's CSAT, which accepts "C or D"
+   for one question and stores it as "CD", either of which scores. And a sheet
+   holds letters when it was marked on the answer grid but option numbers when
+   the paper was sat question by question, so both are read as letters. */
+const asLetter = a => typeof a === "number" ? LET[a] : a;
+const keyTakes = (k, a) => !!k && k !== "X" && a !== undefined && a !== null && k.includes(asLetter(a));
 
 function renderQuiz(){
   document.getElementById("brandSub").textContent = "";
   /* Daily leads because it is the only one that expires. */
   const mode = state.qmode || "daily";
+  const mdue = mistakesDue().length;
   view.innerHTML = `
     <div class="head" style="margin-top:6px"><h2>Quiz</h2></div>
     <div class="modes">
       <button data-m="daily" class="${mode==="daily"?"on":""}">Daily</button>
       <button data-m="papers" class="${mode==="papers"?"on":""}">Papers</button>
+      <button data-m="mistakes" class="${mode==="mistakes"?"on":""}">Mistakes${mdue ? ` <span class="mbadge">${mdue}</span>` : ""}</button>
     </div>
     <div id="qbody"></div>`;
   view.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{state.qmode=b.dataset.m;renderQuiz();});
-  ({daily: renderDaily, papers: renderPaperFolders}[mode]
+  ({daily: renderDaily, papers: renderPaperFolders, mistakes: renderMistakes}[mode]
     || renderDaily)(document.getElementById("qbody"));
+}
+
+/* ---------------- the mistakes notebook ----------------
+   Every question you get wrong on a submitted paper is kept here, whichever
+   paper it came from, and comes back on a widening schedule like a finished
+   topic does: 1, 3, 7, 21, then 60 days. Right when it comes back, it waits
+   longer; wrong again, it starts over tomorrow; right at the last interval,
+   it is cleared -- still counted, no longer asked. Only a question whose text
+   is typed in can be kept: a bare lettered cell has nothing to show again.
+
+   A mistake is recorded at the submit and at no other moment. Before it a
+   paper is still being sat, and an answer you are about to change is not a
+   mistake yet. */
+const RETRY_DAYS = [1, 3, 7, 21, 60];
+let qByIdMap = null;
+const qById = id => (qByIdMap || (qByIdMap = new Map((QUIZ.questions || []).map(q => [q.id, q])))).get(id);
+
+function mistakeNote(qid, right, now = Date.now()){
+  const had = (store.mistakes || {})[qid];
+  if(right && !had) return;                 // right first time: nothing to note
+  const m = Object.assign({on: now, step: 0, wrong: 0, right: 0}, had);
+  if(right){
+    m.right++; m.step++;
+    if(m.step >= RETRY_DAYS.length){ m.done = now; m.due = null; }
+    else m.due = now + RETRY_DAYS[m.step] * DAY;
+  } else {
+    m.wrong++; m.step = 0; m.done = null; m.due = now + RETRY_DAYS[0] * DAY;
+  }
+  m.last = now;
+  store.mistakes = Object.assign({}, store.mistakes, {[qid]: m});
+}
+
+/* The typed question at number n of a paper, if there is one. */
+function paperQuestionAt(p, n){
+  if(p.kind === "typed") return p.questions[n - 1] || null;
+  const t = paperAsked(p);
+  return t ? t.get(n) || null : null;
+}
+
+function recordMistakes(p){
+  const sheet = paperSheet(p), total = paperTotal(p);
+  for(let n = 1; n <= total; n++){
+    const q = paperQuestionAt(p, n), a = sheet[n];
+    if(!q || a === undefined || a === null) continue;
+    if(p.kind === "key" && p.letters[n - 1] === "X") continue;
+    mistakeNote(q.id, paperRightAt(p, n));
+  }
+}
+
+const mistakeList = () => Object.entries(store.mistakes || {})
+  .map(([id, m]) => ({id, m, q: qById(id)})).filter(x => x.q);
+const mistakesDue = () => mistakeList().filter(x => !x.m.done && x.m.due <= Date.now());
+
+function sourceLabel(q){
+  if(q.paper) return `UPSC ${q.paper.year} · ${(KEYS.marking[q.paper.code] || {}).name || q.paper.code} · Q${q.paper.n}`;
+  if(q.source) return `${q.source.name} · ${String(q.source.test || "")
+    .replace(/^(PowerUp )?Prelims Test Series \d{4},\s*/, "")}`;
+  return "Written for this app";
+}
+
+function whenDue(ms){
+  const d = Math.round((ms - Date.now()) / DAY);
+  return d <= 0 ? "due today" : d === 1 ? "back tomorrow" : `back in ${d} days`;
+}
+
+function renderMistakes(root){
+  const all = mistakeList();
+  const open = all.filter(x => !x.m.done), cleared = all.length - open.length;
+  const due = open.filter(x => x.m.due <= Date.now());
+  if(state.mretry && (due.length || state.mres)) return renderRetry(root, due);
+  state.mretry = false;
+  if(!all.length){
+    root.innerHTML = `<div class="empty">No mistakes kept yet.<br><br>Submit a paper — any UPSC year or
+      test — and every question you got wrong lands here, grouped by topic, and comes back to be
+      tried again.</div>`;
+    return;
+  }
+  const topicOf = id => ALL_TOPICS.find(x => x.tp.id === id);
+  const subjectsHere = [...new Set(open.map(x => (topicOf(x.q.topic) || {s: {name: "Other"}}).s.name))];
+  const pick = subjectsHere.includes(state.msub) ? state.msub : "all";
+  const groups = new Map();
+  for(const x of open.slice().sort((a, b) => a.m.due - b.m.due)){
+    const t = topicOf(x.q.topic);
+    const sn = t ? t.s.name : "Other";
+    if(pick !== "all" && sn !== pick) continue;
+    const key = t ? t.tp.name : "Other";
+    if(!groups.has(key)) groups.set(key, {sn, id: t ? t.tp.id : null, rows: []});
+    groups.get(key).rows.push(x);
+  }
+  const next = open.filter(x => x.m.due > Date.now()).sort((a, b) => a.m.due - b.m.due)[0];
+
+  root.innerHTML = `
+    <div class="score">
+      <span class="big">${due.length}</span>
+      <span class="lil">due to try again today · ${open.length} in the notebook · ${cleared} cleared</span>
+      <div class="act">${due.length
+        ? `<button class="prim" id="mgo">Try the ${due.length} due now</button>`
+        : `<span class="mut" style="font-size:12.5px">Nothing due today${next ? ` — the next is ${whenDue(next.m.due)}` : ""}.</span>`}</div>
+    </div>
+    ${subjectsHere.length > 1 ? `<div class="filters">
+      ${["all", ...subjectsHere].map(sn => `<button class="fchip ${sn === pick ? "on" : ""}" data-msub="${esc(sn)}">${sn === "all" ? "All" : esc(sn)}</button>`).join("")}
+    </div>` : ""}
+    ${[...groups.entries()].map(([name, g]) => `<div class="mgroup">
+      <div class="mgh">${esc(name)}<span>${esc(g.sn)} · ${g.rows.length}</span></div>
+      ${g.rows.map(({id, m, q}) => `<details class="mrow">
+        <summary><span class="mt">${esc(q.q.length > 140 ? q.q.slice(0, 140) + "…" : q.q)}</span>
+          <span class="ms">${esc(sourceLabel(q))} · wrong ${m.wrong}× · <b>${whenDue(m.due)}</b></span></summary>
+        <div class="qstem">${esc(q.q)}</div>
+        <div class="opts">${q.options.map((o, i) => `<div class="opt ${i === q.answer ? "key" : ""}">
+          <span class="ol">${LET[i]}</span><span>${esc(o)}</span></div>`).join("")}</div>
+        ${q.why ? `<div class="why2"><b>Why.</b> ${esc(q.why)}</div>` : ""}
+        <div class="act">
+          <button class="fchip" data-mclear="${esc(id)}">I know it now — clear it</button>
+          ${g.id ? `<button class="fchip" data-mtopic="${esc(g.id)}">Open the topic</button>` : ""}
+        </div>
+      </details>`).join("")}
+    </div>`).join("")}
+    <p class="note">Every question you get wrong on a submitted paper is kept here and comes back
+      ${RETRY_DAYS.join(", ")} days later — each right answer pushes it to the next, a wrong one starts
+      it over tomorrow, and after the last it is cleared.</p>`;
+
+  const go = document.getElementById("mgo");
+  if(go) go.onclick = () => { state.mretry = true; state.mres = null; renderQuiz(); };
+  root.querySelectorAll("[data-msub]").forEach(b => b.onclick = () => { state.msub = b.dataset.msub; renderQuiz(); });
+  root.querySelectorAll("[data-mclear]").forEach(b => b.onclick = () => {
+    const m = store.mistakes[b.dataset.mclear];
+    if(!m) return;
+    store.mistakes = Object.assign({}, store.mistakes, {[b.dataset.mclear]: Object.assign({}, m, {done: Date.now(), due: null})});
+    save(); renderQuiz();
+  });
+  root.querySelectorAll("[data-mtopic]").forEach(b => b.onclick = () => openTopic(b.dataset.mtopic));
+}
+
+/* Due mistakes, one at a time, marked as you go -- this is revision, not a
+   paper, so each answer is told at once. */
+function renderRetry(root, due){
+  const res = state.mres;
+  const x = res ? {id: res.id, q: qById(res.id), m: store.mistakes[res.id]} : due[0];
+  const q = x.q;
+  root.innerHTML = `
+    <div class="prun-top">
+      <button class="fchip ghost" id="mback">← Notebook</button>
+      <span class="prun-n mono">${due.length} due</span>
+    </div>
+    <div class="qcard run">
+      <div class="eyebrow">${esc(sourceLabel(q))}</div>
+      <div class="qstem">${esc(q.q)}</div>
+      <div class="opts">${q.options.map((o, i) => `<button class="opt ${res ? (i === q.answer ? "key" : i === res.pick ? "wrong" : "") : ""}"
+          data-mpick="${i}" ${res ? "disabled" : ""}><span class="ol">${LET[i]}</span><span>${esc(o)}</span></button>`).join("")}</div>
+      ${res ? `<p class="note" style="margin:10px 0 0">${res.pick === q.answer
+          ? (x.m.done ? "Right — and that was its last interval, so it is cleared." : `Right. It comes back in ${RETRY_DAYS[x.m.step]} days.`)
+          : `Not yet — the answer is <b>${LET[q.answer]}</b>. It comes back tomorrow.`}</p>
+        ${q.why ? `<div class="why2"><b>Why.</b> ${esc(q.why)}</div>` : ""}
+        <div class="runacts"><button class="prim" id="mnext">${due.length ? "Next" : "Done"}</button></div>` : ""}
+    </div>`;
+  document.getElementById("mback").onclick = () => { state.mretry = false; state.mres = null; renderQuiz(); };
+  root.querySelectorAll("[data-mpick]").forEach(b => b.onclick = () => {
+    const pick = +b.dataset.mpick;
+    mistakeNote(q.id, pick === q.answer);
+    state.mres = {id: q.id, pick};
+    save(); renderQuiz();
+  });
+  const nx = document.getElementById("mnext");
+  if(nx) nx.onclick = () => { state.mres = null; renderQuiz(); };
 }
 
 /* ---------------- mode 0: the daily current-affairs quiz ----------------
@@ -3258,6 +3448,15 @@ function renderScorer(root){
   const mine = store.attempts[aid] || {};
   const mark = KEYS.marking[paper.code];
   const key = paper.keys[state.qset];
+  /* The same clock, submit and retake as a paper sat question by question.
+     CSAT has no question typed in, so this grid is the only way it is sat. */
+  const pp = paperList().find(x => x.id === `upsc-${yr.year}-${paper.code}`);
+  if(pp){ pp.set = state.qset; pp.letters = key; }
+  const sub = pp ? paperSubmitted(pp) : false;
+  const sit = pp ? paperSit(pp) : null;
+  const past = store.past[aid] || [];
+  const left = sitLeft(sit);
+  const took = sit && sit.start ? Math.round(((sit.sub || Date.now()) - sit.start) / 1000) : null;
   /* A dropped question is marked X in the key, and lands at a different
      number in each Series — 2022 GS-I dropped one, at 61 in Set A but 11 in
      Set D. So it has to be read off the set you actually sat, not from a list
@@ -3280,7 +3479,7 @@ function renderScorer(root){
     const q = i+1;
     if(dropped.has(q)) return;
     const a = mine[q];
-    if(!a) blank++; else if(a===k) right++; else wrong++;
+    if(!a) blank++; else if(keyTakes(k, a)) right++; else wrong++;
   });
   const marks = right*mark.correct + wrong*mark.wrong;
   const answered = right + wrong;
@@ -3301,9 +3500,17 @@ function renderScorer(root){
       ${shownSets.length < sets.length
         ? `<button class="fchip ghost" id="allsets">I sat a different Series</button>` : ""}
     </div>
+    ${pp ? `<div class="ptools">
+      ${sub ? `<span class="pclock over">Submitted${took !== null ? ` · took ${hms(took)}` : ""}</span>`
+        : sit && sit.mins ? `<span class="pclock${left < 600000 ? " low" : ""}" id="pclock">⏱ ${hms(Math.ceil(left / 1000))}</span>`
+        : `<button class="fchip" id="pclockgo">⏱ Start the 2-hour clock</button>`}
+      ${!sub && (sit || answered) ? `<button class="fchip" id="psubmit">Submit sheet</button>` : ""}
+    </div>` : ""}
     <div class="score">
       <span class="big">${answered ? marks.toFixed(2) : "—"}</span>
-      <span class="lil">out of ${mark.total}${mark.qualifying ? ` · qualifying at ${mark.qualifying_pct}% (${(mark.total*mark.qualifying_pct/100).toFixed(0)})` : ""}</span>
+      <span class="lil">out of ${mark.total}${mark.qualifying ? ` · qualifying at ${mark.qualifying_pct}% (${(mark.total*mark.qualifying_pct/100).toFixed(0)})` : ""}${
+        sub && mark.qualifying ? (marks >= mark.total * mark.qualifying_pct / 100
+          ? " · <b>qualified</b>" : " · <b>below the qualifying mark</b>") : ""}</span>
       <div class="sgrid">
         <span>right <b>${right}</b></span><span>wrong <b>${wrong}</b></span>
         <span>left <b>${blank}</b></span>
@@ -3311,7 +3518,9 @@ function renderScorer(root){
         <span>accuracy <b>${answered ? Math.round(right/answered*100) : 0}%</b></span>
       </div>
       <div class="act">
-        <button class="prim" data-clear="1">Clear sheet</button>
+        ${sub && pp ? `<button class="prim" id="pretake">Reattempt from scratch</button>${
+          wrong + blank ? `<button id="pretry">Redo only my mistakes</button>` : ""}`
+          : `<button class="prim" data-clear="1">Clear sheet</button>`}
         ${paper.url ? `<a href="${esc(paper.url)}" target="_blank" rel="noopener">Official key ${LINKI}</a>` : ""}
       </div>
     </div>
@@ -3333,17 +3542,26 @@ function renderScorer(root){
         if(w && !out) return `<div class="cell wide">
           <span class="cq"><b class="mono">${q}</b> ${esc(w.q)}</span>
           <span class="copts">${w.options.map((o, oi) => `
-            <button class="copt ${a === LET[oi] ? "on" : ""}" data-q="${q}" data-a="${LET[oi]}">
+            <button class="copt ${a === LET[oi] ? "on" : ""}" data-q="${q}" data-a="${LET[oi]}" ${sub ? "disabled" : ""}>
               <i>${LET[oi]}</i>${esc(o)}</button>`).join("")}</span>
-          ${a ? `<span class="cwhy ${a === k ? "ok" : "no"}">${a === k ? "Right" : `Wrong — the key says ${k}`}${
+          ${a && !(sit && sit.mins && !sub) ? `<span class="cwhy ${keyTakes(k, a) ? "ok" : "no"}">${keyTakes(k, a) ? "Right" : `Wrong — the key says ${k.split("").join(" or ")}`}${
             w.why ? ` · ${esc(w.why)}` : ""}</span>` : ""}
         </div>`;
-        return `<div class="cell" ${out?'style="opacity:.4"':""}>
+        /* After the submit the grid marks itself: green where you were
+           right, red where you were not, and the key under anything missed. */
+        const mk = sub && !out && a ? (keyTakes(k, a) ? " ok" : " no") : "";
+        return `<div class="cell${mk}" ${out?'style="opacity:.4"':""}>
           <span class="cn">${q}${out?" ×":""}</span>
-          <span class="cb">${LET.map(L=>`<button class="${a===L?"on":""}" data-q="${q}" data-a="${L}">${L}</button>`).join("")}</span>
+          <span class="cb">${LET.map(L=>`<button class="${a===L?"on":""}" data-q="${q}" data-a="${L}" ${sub ? "disabled" : ""}>${L}</button>`).join("")}</span>
+          ${sub && !out && !keyTakes(k, a) ? `<span class="ck">key ${k.split("").join("/")}</span>` : ""}
         </div>`;
       }).join("")}
-    </div>`;
+    </div>
+    ${past.length ? `<div class="head"><h2>Earlier attempts</h2><span class="n">${past.length}</span></div>
+      <div class="phist">${past.map((x, i) => ({x, i})).reverse().map(({x, i}) => `<div class="phrow">
+        <span>Attempt ${i + 1} · ${new Date(x.on).toLocaleDateString()}${x.how === "timed" ? " · timed" : ""}</span>
+        <span><b>${fmtMarks(x.marks)}</b> · ${x.right} right, ${x.wrong} wrong${x.secs ? " · " + hms(x.secs) : ""}</span>
+      </div>`).join("")}</div>` : ""}`;
 
   /* Inside a paper's folder these chips were dead: renderPaperRun pins
      state.qyear and state.qpaper to the folder on every render, so setting
@@ -3369,14 +3587,36 @@ function renderScorer(root){
   root.querySelectorAll("[data-set]").forEach(b=>b.onclick=()=>{state.qset=b.dataset.set;renderQuiz();});
   const as = document.getElementById("allsets");
   if(as) as.onclick = () => { state.qallsets = true; renderQuiz(); };
-  root.querySelector("[data-clear]").onclick=()=>{ delete store.attempts[aid]; save(); renderQuiz(); };
+  const clr = root.querySelector("[data-clear]");
+  if(clr) clr.onclick = () => { delete store.attempts[aid]; delete store.sit[aid]; save(); renderQuiz(); };
   root.querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>{
+    if(sub) return;                          // a submitted sheet is marked, not reopened
     const y = window.scrollY;
     const q = +b.dataset.q, a = b.dataset.a;
     const cur = store.attempts[aid] || (store.attempts[aid] = {});
     cur[q] === a ? delete cur[q] : cur[q] = a;
     save(); renderQuiz(); window.scrollTo(0,y);
   });
+  if(pp){
+    const go = document.getElementById("pclockgo");
+    if(go) go.onclick = () => {
+      if(!confirm(`Start the clock? ${EXAM_MINS / 60} hours, as in the exam. It keeps running if you leave the app, and when it runs out the sheet is submitted.`)) return;
+      paperStartClock(pp); renderQuiz();
+    };
+    const sb = document.getElementById("psubmit");
+    if(sb) sb.onclick = () => {
+      if(!confirm(blank ? `Submit with ${blank} question${blank === 1 ? "" : "s"} left blank? The sheet locks and is marked.`
+                        : "Submit the sheet? It locks and is marked.")) return;
+      paperSubmit(pp); renderQuiz();
+    };
+    const rt = document.getElementById("pretake");
+    if(rt) rt.onclick = () => {
+      if(confirm("Sit this paper again from nothing? This attempt's score is kept in the list.")){ paperRetake(pp, "all"); renderQuiz(); }
+    };
+    const rm = document.getElementById("pretry");
+    if(rm) rm.onclick = () => { paperRetake(pp, "mistakes"); renderQuiz(); };
+    paperClockRun(pp);
+  }
 }
 
 /* --- mode 2: the authored practice bank --- */

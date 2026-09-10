@@ -243,7 +243,10 @@ def check_keys(keys) -> None:
                         f"{y} {code} set {set_name}: {len(letters)} letters "
                         f"for a {expected}-question paper"
                     )
-                stray = sorted(set(letters) - SET_LETTERS)
+                # A cell is one letter, X for dropped, or -- 2021's CSAT -- the
+                # two letters the Commission accepts either of, written "CD".
+                stray = sorted({c for c in letters if not (
+                    c in SET_LETTERS or (1 < len(c) <= 4 and set(c) <= {"A", "B", "C", "D"}))})
                 if stray:
                     fail(f"{y} {code} set {set_name} contains {stray}")
 

@@ -81,8 +81,8 @@ Five tabs and a drawer, after the bar reached seven and stopped having a shape.
 ```
 Syllabus   Papers      Practice    Focus   Shelf     ☰ drawer
 ├ Map      ├ Prelims   ├ Daily                       ├ Toppers' copies
-├ Subject  ├ Mains     └ Papers                      ├ Read the whole syllabus
-└ Paper    └ Optional                                ├ Back up or restore
+├ Subject  ├ Mains     ├ Papers                      ├ Read the whole syllabus
+└ Paper    └ Optional  └ Mistakes                    ├ Back up or restore
                                                      └ Theme
 ```
 
@@ -193,7 +193,7 @@ turns it green rather than leaving it looking like a failure.
 |---|---|
 | `subjects.json` | 8 subjects → 242 topics → 1,723 subtopics; each topic tagged with papers + weight |
 | `pyq-papers.json` | official upsc.gov.in paper links per year — Prelims 22/24, Mains 54/60 |
-| `answer-keys.json` | Prelims answer keys: links, marking scheme, set-wise letters. GS-I complete 2017-2026; CSAT has links but no letters |
+| `answer-keys.json` | Prelims answer keys: links, marking scheme, set-wise letters. GS-I and CSAT both complete 2017-2026, all four Series |
 | `quiz.json` | 2,356 questions: 35 written here, 846 from UPSC GS-I — every year 2017–2026 — and 1,475 from fifteen 2027 test series papers (Vision IAS 1, 3–6; ForumIAS 1–4 and Level 2 1–3; Vajiram PowerUp 2–4), with the institute's explanation as `why` |
 | `toppers.json` | 102 published answer copies across 10 publishers |
 | `daily.json` | daily current-affairs quiz sources: a URL pattern the page expands against the date |
@@ -553,6 +553,7 @@ which means a store written by an older build still opens.
 | `focus` | the last sixty focus runs, `[{on,mins,ran,kind}]` |
 | `focusGoal` | minutes a day to aim for; 0 is no goal |
 | `focusDays` | each day's focus totals for good, `YYYY-MM-DD -> {mins,runs,voided}` |
+| `mistakes` | the mistakes notebook, `question id -> {on,last,step,due,wrong,right,done}` |
 
 Backup is a copyable blob in a sheet (plus a file download on the web), and in the
 Android app the whole store is also written to the shelf folder — see The shelf.
@@ -611,6 +612,28 @@ from `answer-keys.json`'s marking scheme (+2 / −0.66 on GS-I, used for the tes
 too). A reattempt pushes the attempt's score into `past`, then either clears the sheet or
 keeps only the right answers, so "redo my mistakes" spends the second pass only where the
 first went wrong.
+
+**CSAT is sat on the answer grid**, because none of its questions is typed in. The grid
+has the same clock, submit and retake, through the same `paperSit` / `paperSubmit` /
+`paperRetake` on the `upsc-<year>-gs2` paper object with `set` and `letters` pinned to the
+Series on screen. After the submit the cells colour themselves, show the key under
+anything missed, and the score card says whether the sheet cleared the qualifying 33%.
+**A sheet holds letters when marked on the grid and option numbers when sat question by
+question**, under the same id, so everything that marks reads through `asLetter()` and
+`keyTakes()`. `paperScore` used to compare `LET[a]` and silently counted every grid
+answer wrong.
+
+### The mistakes notebook
+
+Every question got wrong on a submitted paper — any UPSC year, any test series — is kept
+in `store.mistakes` and comes back 1, 3, 7, 21, then 60 days later. A right answer pushes
+it to the next gap, a wrong one starts it over tomorrow, and a right answer at the last gap
+clears it. It is recorded **at the submit and at no other moment** (`recordMistakes`,
+called from `paperSubmit` and from the time-up in `paperSubmitted`): before that, an answer
+you are about to change is not a mistake yet. Only a question with typed text can be kept —
+a bare lettered cell has nothing to ask again, which is why CSAT adds nothing here.
+Practice → Mistakes groups them by subject and topic, with a due badge on the mode button;
+the due ones go on Today's plan, replacing the old "answers to go back over" count.
 
 ### Focus by the day
 
@@ -764,9 +787,19 @@ app, but the shape is easy to get wrong twice.
    ever reorders options, that breaks first and this whole method stops
    applying.
 
-   Still open: **CSAT (gs2) has no letters for any year** — the URLs are on
-   file for 2018-2026, it is qualifying rather than ranked, and it was left
-   until GS-I was done. 2015 and 2016 are not on upsc.gov.in at all under any
+   **CSAT (gs2) is complete too, 2017-2026** — 80 questions, four Series,
+   read by eye and verified by the same tool, which had to learn two things.
+   CSAT keeps a passage's questions together, so its blocks are **passages of
+   uneven length** (2018: 10,10,13,15,12,20; 2019: 8,12,8,12,7,13,7,13) and no
+   fixed size fits. When none does, `keycheck.py` covers each Series with runs
+   of Set A, merges the cut points, coarsens them while every Series still
+   decomposes, and runs every single-letter mutation against those blocks. And
+   **2021 accepted "C or D" for one question** (39 in A, 9 in B, 29 in C, 19 in
+   D): the intake file writes it as a placeholder letter mapped in `either`,
+   and the stored key cell is `"CD"`. `build.py` allows a cell of distinct
+   letters, and the page scores either one through `keyTakes()`.
+
+   Still open: 2015 and 2016 are not on upsc.gov.in at all under any
    pattern tried; ForumIAS mirrors older keys on its own domain and a mirror is
    not the Commission's document, so they are not taken from there.
    `tools/answer-keys.py discover` cannot find any of these: it reads

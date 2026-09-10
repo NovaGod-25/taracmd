@@ -36,6 +36,11 @@ internally consistent and still not the paper in front of you:
     alphabet    only A-D and X. A stray letter is a slip of the hand.
     length      exactly as many letters as the paper had questions.
 
+**A cell can accept two letters.** 2021's CSAT key prints "C or D" against one question
+in each Series. Give it a placeholder letter and say what it stands for --
+`"either": {"E": "CD"}` -- and the placeholder moves through the blocks like any
+other letter, so it is checked four times too, and is written out as "CD".
+
 The input is what you read, nothing more:
 
     {"year": 2017, "code": "gs1", "dropped": 1,
@@ -63,18 +68,147 @@ def fail(msg: str) -> None:
     print(f"  REJECTED: {msg}")
 
 
-def check(year: int, code: str, rows: dict, dropped: int | None) -> tuple[bool, dict]:
+def cover(v: str, A: str, budget: int = 200000):
+    """Spell v out of runs of A, each letter of A used exactly once.
+
+    Longest runs first, backing off when that strands the rest: a run can
+    carry on a letter past the end of its passage by coincidence -- 2018's
+    Series D takes question 11 along with 1-10 -- and taking it leaves the
+    tail with nowhere to go. Bounded, so a misread key fails quickly rather
+    than searching for ever."""
+    n = len(A)
+    used, out, left = [False] * n, [], [budget]
+
+    def go(i):
+        if i == n:
+            return True
+        left[0] -= 1
+        if left[0] < 0:
+            return False
+        cands = []
+        for j in range(n):
+            L = 0
+            while i + L < n and j + L < n and not used[j + L] and v[i + L] == A[j + L]:
+                L += 1
+            if L:
+                cands.append((L, j))
+        for L0, j in sorted(cands, reverse=True):
+            for L in range(L0, 0, -1):
+                for t in range(j, j + L):
+                    used[t] = True
+                out.append((j, L))
+                if go(i + L):
+                    return True
+                out.pop()
+                for t in range(j, j + L):
+                    used[t] = False
+        return False
+    return out if go(0) else None
+
+
+def runs_partition(keys: dict):
+    """Set A cut wherever another Series' longest matching run starts or ends.
+
+    For a paper whose blocks are not one size -- CSAT's are passages -- the
+    blocks are read off the Series themselves: walk B, C and D, take the
+    longest stretch of A each place matches, and every edge of every such
+    stretch is a cut in A."""
+    A = keys["A"]
+    n = len(A)
+    cuts = {0, n}
+    for s in "BCD":
+        got = cover(keys[s], A)
+        if got is None:
+            return None
+        for j, L in got:
+            cuts.update((j, j + L))
+    c = sorted(cuts)
+    # A run that happens to carry on a letter past the end of its passage
+    # leaves a cut one letter off the true one, and a one-letter splinter
+    # beside it. Two neighbouring blocks that stay together in every Series
+    # are one passage, so merge them -- the smallest splinters first.
+    merged = True
+    while merged:
+        merged = False
+        order = sorted(range(1, len(c) - 1), key=lambda k: min(c[k] - c[k - 1], c[k + 1] - c[k]))
+        for k in order:
+            trial = c[:k] + c[k + 1:]
+            parts = [A[trial[m]:trial[m + 1]] for m in range(len(trial) - 1)]
+            if all(decomposes(keys[s], parts) for s in "BCD"):
+                c, merged = trial, True
+                break
+    return [A[c[k]:c[k + 1]] for k in range(len(c) - 1)]
+
+
+def decomposes(v: str, parts: list) -> bool:
+    """Is v exactly these blocks, each used once, in some order?"""
+    from collections import Counter
+
+    def go(i, need):
+        if i == len(v):
+            return not +need
+        for b in list(need):
+            if need[b] and v.startswith(b, i):
+                need[b] -= 1
+                if go(i + len(b), need):
+                    return True
+                need[b] += 1
+        return False
+    return go(0, Counter(parts))
+
+
+def uneven(keys: dict, n: int, counts: dict, drops: dict) -> tuple[bool, dict]:
+    parts = runs_partition(keys)
+    if not parts or not all(decomposes(keys[s], parts) for s in "BCD"):
+        fail("the four Series are not permutations of one another, at any block "
+             "size or as passages -- either a letter is misread, or this paper "
+             "was not built the way every other one was")
+        return False, {}
+    lens = [len(p) for p in parts]
+    # Blocks this short would match somewhere by chance, and then a misread
+    # could hide inside one. Four is the least that still proves something.
+    if min(lens) < 4:
+        fail(f"the passages come out as blocks of {lens} -- too short to prove anything")
+        return False, {}
+    tried = survived = 0
+    A = keys["A"]
+    for i in range(n):
+        for c in "ABCDX":
+            if c == A[i]:
+                continue
+            tried += 1
+            m = A[:i] + c + A[i + 1:]
+            mparts, k = [], 0
+            for L in lens:
+                mparts.append(m[k:k + L]); k += L
+            if all(decomposes(keys[s], mparts) for s in "BCD"):
+                survived += 1
+    if survived:
+        fail(f"{survived} single-letter misreadings would have gone unnoticed")
+        return False, {}
+    where = ", ".join(f"{s} at {drops[s]}" for s in SETS) if counts["A"] else "none"
+    print(f"  {n} letters a Series, {counts['A']} dropped ({where})")
+    print(f"  built from {len(parts)} passages of {lens} questions, shuffled whole")
+    print(f"  {tried} single-letter mutations of Set A tried, none survived")
+    return True, keys
+
+
+def check(year: int, code: str, rows: dict, dropped: int | None,
+          either: dict | None = None) -> tuple[bool, dict]:
     ok = True
     keys = {}
 
+    # GS-I is a hundred questions, CSAT (gs2) eighty -- ten rows of ten, or eight
+    want = {"gs2": 8}.get(code, 10)
     for s in SETS:
         if s not in rows:
             fail(f"set {s} is missing"); return False, {}
         r = rows[s]
-        if len(r) != 10 or any(len(x) != 10 for x in r):
-            fail(f"set {s} is not ten rows of ten: {[len(x) for x in r]}"); ok = False
+        if len(r) != want or any(len(x) != 10 for x in r):
+            fail(f"set {s} is not {want} rows of ten: {[len(x) for x in r]}"); ok = False
         v = "".join(r)
-        bad = sorted(set(v) - LETTERS)
+        # a placeholder stands for a cell the Commission accepts two letters in
+        bad = sorted(set(v) - LETTERS - set(either or {}))
         if bad:
             fail(f"set {s} has letters that are not A-D or X: {bad}"); ok = False
         keys[s] = v
@@ -108,10 +242,9 @@ def check(year: int, code: str, rows: dict, dropped: int | None) -> tuple[bool, 
 
     sizes = [b for b in range(n // 2, 4, -1) if n % b == 0 and holds(b)]
     if not sizes:
-        fail("the four Series are not permutations of one another at any block "
-             "size — either a letter is misread, or this paper was not built "
-             "the way every other one was")
-        return False, {}
+        # CSAT keeps a passage's questions together, so its blocks are
+        # passages -- seven questions, thirteen, eight -- not a fixed size
+        return uneven(keys, n, counts, drops)
     b = sizes[0]
     nb = n // b
 
@@ -155,7 +288,7 @@ def check(year: int, code: str, rows: dict, dropped: int | None) -> tuple[bool, 
     return True, keys
 
 
-def write(year: int, code: str, keys: dict) -> int:
+def write(year: int, code: str, keys: dict, either: dict | None = None) -> int:
     p = ROOT / "content" / "answer-keys.json"
     raw = p.read_text(encoding="utf-8")
     data = json.loads(raw)
@@ -167,7 +300,7 @@ def write(year: int, code: str, keys: dict) -> int:
         sys.exit(f"{year} has no paper {code}")
     if paper.get("keys"):
         sys.exit(f"{year} {code} already has letters — delete them first if you mean to replace")
-    paper["keys"] = {s: list(v) for s, v in keys.items()}
+    paper["keys"] = {s: [(either or {}).get(c, c) for c in v] for s, v in keys.items()}
     p.write_text(json.dumps(data, ensure_ascii=False, indent=2)
                  + ("\n" if raw.endswith("\n") else ""), encoding="utf-8", newline="\n")
     print(f"  written into content/answer-keys.json")
@@ -185,11 +318,11 @@ def main() -> int:
     for f in args.staged:
         d = json.loads(f.read_text(encoding="utf-8"))
         print(f"{d['year']} {d['code']}  ({f.name})")
-        ok, keys = check(d["year"], d["code"], d["rows"], d.get("dropped"))
+        ok, keys = check(d["year"], d["code"], d["rows"], d.get("dropped"), d.get("either"))
         if not ok:
             bad += 1
         elif args.write:
-            write(d["year"], d["code"], keys)
+            write(d["year"], d["code"], keys, d.get("either"))
         print()
     if bad:
         print(f"{bad} key(s) rejected — nothing written for those")

@@ -587,17 +587,19 @@ describe("today's plan and the focus history", () => {
   });
 });
 
-/* A paper that has the Commission's key but none of its questions typed in.
-   These tests are about the MECHANISM -- a tagged question being asked, an
-   untyped number staying a lettered cell -- so they must not pin a particular
-   year: 2022 had nothing typed when they were written and has 97 now. */
-const untypedPaper = (w) => inPage(w, `
-  (() => {
-    const y = KEYS.years.find(y => y.papers.some(p => p.code === "gs1"
-      && Object.keys(p.keys || {}).length
-      && !QUIZ.questions.some(q => q.paper && q.paper.year === y.year && q.paper.code === "gs1")));
-    return y ? String(y.year) : "";
-  })()`);
+/* These tests are about the MECHANISM -- a tagged question being asked, an
+   untyped number staying a lettered cell -- so they must not depend on what
+   happens to be in the bank. They used to go looking for a paper with nothing
+   typed in; 2022 was that paper when they were written, then 2020 was, and
+   once every year is imported there is no such paper at all.
+
+   So each test takes one paper, sets its real questions aside for the length
+   of the test, and puts them back. SETASIDE opens that, PUTBACK closes it. */
+const YR = 2022;
+const SETASIDE = `
+        const __saved = QUIZ.questions;
+        QUIZ.questions = __saved.filter(q => !(q.paper && q.paper.year === ${YR} && q.paper.code === "gs1"));`;
+const PUTBACK = `QUIZ.questions = __saved;`;
 
 describe("typing a past question in", () => {
   /* The scorer used to be a bare answer sheet. A question tagged with its
@@ -606,7 +608,7 @@ describe("typing a past question in", () => {
   test("a tagged question is asked with its options; the rest stay letters", () => {
     const out = JSON.parse(inPage(win, `
       (() => {
-        const YR = ${Number(untypedPaper(win))};
+        const YR = ${YR};${SETASIDE}
         const paper = KEYS.years.find(y => y.year === YR).papers.find(p => p.code === "gs1");
         QUIZ.questions.push({ id: "t-1", topic: "polity-basic-structure",
           paper: {year: YR, code: "gs1", set: "A", n: 2},
@@ -623,7 +625,7 @@ describe("typing a past question in", () => {
         const r = { wide: document.querySelectorAll(".cell.wide").length,
                     plain: document.querySelectorAll(".cell:not(.wide)").length,
                     opts: document.querySelectorAll(".copt").length };
-        QUIZ.questions.pop();
+        QUIZ.questions.pop(); ${PUTBACK}
         return JSON.stringify(r);
       })()`));
     assert.equal(out.wide, 1, "the typed question is asked properly");
@@ -636,14 +638,14 @@ describe("typing a past question in", () => {
     // as a number and must not leak into another set's paper
     const leaked = inPage(win, `
       (() => {
-        const YR = ${Number(untypedPaper(win))};
+        const YR = ${YR};${SETASIDE}
         QUIZ.questions.push({ id: "t-2", topic: "polity-basic-structure",
           paper: {year: YR, code: "gs1", set: "A", n: 2},
           q: "typed", options: ["a","b","c","d"], answer: 0 });
         // one folder per paper now; the Series is a control inside the sheet
         state.qpaperId = "upsc-" + YR + "-gs1"; state.qset = "B"; state.qsheet = true; render();
         const n = document.querySelectorAll(".cell.wide").length;
-        QUIZ.questions.pop(); state.qset = "A"; state.qsheet = false; render();
+        QUIZ.questions.pop(); ${PUTBACK} state.qset = "A"; state.qsheet = false; render();
         return n;
       })()`);
     assert.equal(Number(leaked), 0, "a Set A question must not appear on Set B");
@@ -656,7 +658,7 @@ describe("typing a past question in", () => {
   test("a typed UPSC paper is sat one question at a time", () => {
     const out = JSON.parse(inPage(win, `
       (() => {
-        const YR = ${Number(untypedPaper(win))};
+        const YR = ${YR};${SETASIDE}
         const paper = KEYS.years.find(y => y.year === YR).papers.find(p => p.code === "gs1");
         QUIZ.questions.push({ id: "t-3", topic: "polity-basic-structure",
           paper: {year: YR, code: "gs1", set: "A", n: 2},
@@ -671,7 +673,7 @@ describe("typing a past question in", () => {
                         dropped: document.querySelectorAll(".palette .pq.drop").length };
         state.qn = 3; render();
         asked.untypedIsLettersOnly = document.querySelectorAll(".qcard.run .opt.lonly").length;
-        QUIZ.questions.pop(); state.qpaperId = null; render();
+        QUIZ.questions.pop(); ${PUTBACK} state.qpaperId = null; render();
         return JSON.stringify(asked);
       })()`));
     assert.equal(out.stem, "the typed one", "the typed question is asked");
@@ -884,11 +886,14 @@ describe("the Series chips", () => {
   test("a paper with nothing typed offers all four and hides nothing", () => {
     const out = JSON.parse(inPage(win, `
       (() => {
+        const __s2 = QUIZ.questions;
+        QUIZ.questions = __s2.filter(q => !(q.paper && q.paper.year === 2020));
         state.qpaperId = "upsc-2020-gs1"; state.qset = null;
         state.qsheet = true; state.qallsets = false; renderQuiz();
         const shown = [...document.querySelectorAll("[data-set]")].map(b => b.textContent.trim());
         const link = !!document.getElementById("allsets");
         state.qpaperId = null; state.qsheet = false; render();
+        QUIZ.questions = __s2;
         return JSON.stringify({ shown, link });
       })()`));
     assert.deepEqual(out.shown, ["Set A", "Set B", "Set C", "Set D"],

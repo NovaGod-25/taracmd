@@ -95,6 +95,26 @@ def rank(text: str, docs, idf, k: int = 3):
     return sorted(scores.items(), key=lambda kv: -kv[1])[:k]
 
 
+# An institute that files its own question under "Polity" has already made the
+# coarse call, and made it well; the scorer only has to choose among polity's
+# thirty topics instead of all 242. "Current Affairs" says nothing about subject.
+SUBJECT_OF = {"polity": "polity", "economics": "economics", "economy": "economics",
+              "history": "history", "modern history": "history", "ancient history": "history",
+              "medieval history": "history", "art and culture": "history", "geography": "geography",
+              "environment": "environment", "ecology": "environment", "science": "scitech",
+              "science and technology": "scitech", "international relations": "ir",
+              "security": "security", "internal security": "security"}
+
+
+def subject_of(q: dict, src: dict) -> str | None:
+    test = re.search(r" - ([A-Za-z &]+) \(V", (src or {}).get("test", ""))
+    for label in ((q.get("hint") or "").split(" / ")[0], test.group(1) if test else ""):
+        s = SUBJECT_OF.get(label.strip().lower())
+        if s:
+            return s
+    return None
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("staged", type=Path, nargs="+")
@@ -111,8 +131,13 @@ def main() -> int:
         qs = d["questions"]
         weak, filled = [], 0
         for q in qs:
-            text = q["q"] + " " + " ".join(q.get("options", []))
-            top = rank(text, docs, idf)
+            # an institute's explanation names the topic in its first lines far
+            # more plainly than the question does
+            text = " ".join([q["q"], " ".join(q.get("options", [])), q.get("hint", ""),
+                             q.get("why", "")[:400]])
+            subj = subject_of(q, d.get("source"))
+            pool = {t: b for t, b in docs.items() if t.startswith(subj + "-")} if subj else docs
+            top = rank(text, pool, idf)
             if not top:
                 q["_topics"] = []
                 weak.append(q["n"])

@@ -182,7 +182,7 @@ turns it green rather than leaving it looking like a failure.
 | `subjects.json` | 8 subjects → 242 topics → 1,723 subtopics; each topic tagged with papers + weight |
 | `pyq-papers.json` | official upsc.gov.in paper links per year — Prelims 22/24, Mains 54/60 |
 | `answer-keys.json` | Prelims answer keys: links, marking scheme, set-wise letters. GS-I complete 2017-2026; CSAT has links but no letters |
-| `quiz.json` | 656 questions: 35 written here, 98 from a test series, and six UPSC GS-I papers — 2018, 2019, 2021, 2022, 2023, 2025 |
+| `quiz.json` | 2,356 questions: 35 written here, 846 from UPSC GS-I — every year 2017–2026 — and 1,475 from fifteen 2027 test series papers (Vision IAS 1, 3–6; ForumIAS 1–4 and Level 2 1–3; Vajiram PowerUp 2–4), with the institute's explanation as `why` |
 | `toppers.json` | 102 published answer copies across 10 publishers |
 | `daily.json` | daily current-affairs quiz sources: a URL pattern the page expands against the date |
 | `optionals.json` | the Optional tab: Geography, Law and Agriculture, 22/22 papers each 2016–2026, plus curated copies |
@@ -246,6 +246,20 @@ part: it mints ids from the source, checks the topic resolves, rejects empty or 
 options and out-of-range answers, refuses a question already in the bank under another id,
 and stamps the provenance. `--dry-run` says what it would do. `build.py` then re-checks all
 of it independently.
+
+**Reading a typeset test is `tools/test-parse.py`.** Question and solution PDFs go in
+`intake/tests/` as `<institute>-<code>-qp.pdf` and `-sol.pdf` (or `-sol.txt`, Drive's own
+text export, which is preferred when a PDF stores a letter per line). It reads three
+layouts — ForumIAS `Q.12) … a)`, Vision `12. … (a)` with `Q 12. C`, Vajiram `12. … (a)`
+with `Q12. Answer: c` and a key table — and **checks each answer against the solution's own
+second statement of it** ("Ans) c" against "Option c is the correct answer"; Vajiram's key
+table against both). Where the institute contradicts itself the question is left out. It
+also leaves out questions that lean on a map or figure, keeps the English copy of a
+bilingual booklet, strips page furniture, and caps `why` at 1,200 characters. Then
+`tools/topic-suggest.py --apply` prefills topics — scoring the explanation's first lines
+and the institute's own subject label, and choosing only among that subject's topics — and
+a person reads every one before import. On the first fifteen papers about a third needed
+a different topic. CSAT papers are not imported: none of the 242 topics is theirs.
 
 **What cannot be carried:** anything that is not text. Map questions, diagrams, and
 image-based match-the-following have nowhere to live in this format — the app is one HTML
@@ -373,6 +387,64 @@ the stem with confidence. Anything failing one of those is left out and counted.
 pattern thirty-nine of its questions came out with three options instead of
 four, and it went from 46 importable to 81 when the pattern learned the shapes
 OCR confuses brackets with.
+
+`tools/pyq-stage.py` applies that rule, and adds two things OCR taught it. It
+cleans the footer scraps the column crop leaves on the last option ("1,2and3 A)",
+"-~A)"), and it **rejects a statement-reference option that cites a statement
+above nine** — "2 and 83 only" is OCR for "2 and 3 only" with a digit doubled,
+the vocabulary cannot snap it back, and importing it would show the Commission's
+correct answer as nonsense. The question is left out instead.
+
+### A scan is not flat
+
+Two geometry problems came out of bound booklets, and both looked like OCR
+failures until the pages were measured.
+
+**The binding offsets left and right pages.** A booklet goes on the glass open,
+and the spine pushes odd and even pages opposite ways: on 2026 every odd page puts
+the column rule at 0.471–0.494 of the width and every even page at 0.501–0.523.
+The tool used to take ONE median across the booklet — 0.501, between the two —
+and overrule any page more than 0.02 from it, so six English pages whose own rule
+had been found correctly were split sixty pixels into their left column. Question
+10 vanished that way and 7, 8 and 9 lost their starts. The median is now taken
+**per side of the spread**. That alone took 2026 from 99/100 with 81 numbers read
+to whole with 93, and 2024 from 83/100 with 30 read to whole with 95.
+
+**Some scans are tilted.** 2020 sits one to two degrees off square with a faint,
+broken rule, so no single column of pixels holds a long run of ink and neither the
+rule test nor the gutter test finds anything. `straighten()` turns the page a
+quarter degree at a time to whichever angle makes the rule's unbroken run longest,
+and accepts it only if that run is long enough to be a rule. A page with no rule
+at any angle comes back untouched. `longest_runs()` vectorises the run length
+across the whole width, because the old column-by-column loop could afford one
+page and not twenty-five angles of it.
+
+**The gutter can lie.** On 2020 the widest white gap is not between the columns:
+it is between the right column's question numbers and their text. Splitting there
+hands "3.", "4.", "5." to the LEFT column and wrecks the numbering. So the rule
+always wins when there is one; the gutter is only for papers that print no rule at
+all (2021, 2025).
+
+**A printed rule is trusted further than a gutter.** 2020's rule wanders 0.46–0.57 of
+the width as the booklet shifted on the glass. Held to 0.02 of its side's median, nine
+good rules were overruled and their left column lost its line ends — "Inc" for "India,",
+"corr" for "correct". A rule found on the page now stands if it is within 0.05 of its
+side; a gutter is still held to 0.02. Measured across every year, this changes 2020's
+split and nothing else.
+
+**Cleaning what OCR left is `tools/pyq-tidy.py`**, run on the bank and on everything
+`pyq-stage.py` stages: booklet codes and "[ P.T.O." cut off options, the next question's
+text cut where it ran into option (d), "3" read as "8" (or as "38", "B8", "80") put back
+where a statement list cannot have an 8, Roman "Il"/"Ill" restored to II/III. It never
+guesses: what it cannot settle it reports, and those options were read off the page by a
+person into `tools/pyq-page-reads.json`, which wins over any rule.
+
+**The Series in the filename is not the Series.** `QP-CSP-18-GS-I-C.pdf` and
+`CSP-17-GS_PAPER-1-C.pdf` are both Series A booklets — the boxed letter on the
+cover and the `( 1 – A )` footer say so. Where the tool cannot read the footer
+(2017) or reads it off only two or three pages (2024), look at the cover before
+trusting it, and pass `--set` from what the cover says. A wrong Series is every
+answer wrong.
 
 ### Verification, and what it is not
 

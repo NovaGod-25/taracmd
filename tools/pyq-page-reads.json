@@ -1,0 +1,17 @@
+{
+  "note": "Options read off the Commission's own scan by a person, where OCR garbled them past what tools/pyq-tidy.py can repair without guessing. Keyed by question id. Only the option text is replaced, in the paper's own (a)-(d) order; the answer stays the Commission's key and build.py still checks it.",
+  "options": {
+    "csp21-gs1-a-63": ["1, 2, 4 and 5", "3, 4 and 5", "1, 3 and 4", "1, 2, 3 and 5"],
+    "csp24-gs1-a-68": ["1 and 2 only", "2 and 3 only", "1, 2 and 3", "1, 3 and 4"],
+    "csp24-gs1-a-82": ["1, 2 and 3", "1, 2 and 4", "1, 3 and 4", "2, 3 and 4"],
+    "csp25-gs1-a-6": ["I and II only", "II and III only", "I and III only", "I, II and III"],
+    "csp25-gs1-a-24": ["I and II only", "II and III only", "I and III only", "I, II and III"],
+    "csp25-gs1-a-29":["I and III only", "I and II only", "I, II and III", "II and III only"],
+    "csp25-gs1-a-37": ["I only", "I and III", "II only", "II and III"],
+    "csp25-gs1-a-59": ["I and II only", "II and III only", "I and III only", "I, II and III"],
+    "csp25-gs1-a-40": ["I and II", "II only", "I and III", "None of the above statements is correct"],
+    "csp25-gs1-a-82": ["I and II only", "II and III only", "I and III only", "I, II and III"],
+    "csp26-gs1-a-70": ["1", "2", "3", "4"],
+    "csp26-gs1-a-99": ["1 and 4", "1, 2 and 3", "4 only", "2, 3 and 4"]
+  }
+}

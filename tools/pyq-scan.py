@@ -99,16 +99,59 @@ def rule_x(gray) -> int:
     a = np.asarray(gray) < 160
     h, w = a.shape
     lo, hi = int(0.30 * w), int(0.70 * w)
-    best_x, best = lo, 0
-    for x in range(lo, hi):
-        cur = run = 0
-        for v in a[:, x]:
-            cur = cur + 1 if v else 0
-            if cur > run:
-                run = cur
-        if run > best:
-            best, best_x = run, x
-    return best_x if best > 0.06 * h else -1
+    runs = longest_runs(a)[lo:hi]
+    x = lo + int(runs.argmax())
+    return x if runs.max() > 0.06 * h else -1
+
+
+def longest_runs(a):
+    """The longest unbroken vertical run of ink in every column at once.
+
+    Walks the rows rather than the columns, so the work per row is one numpy
+    operation across the whole width. The old column-by-column Python loop gave
+    the same answer and was fine once per page; straightening asks it again at
+    twenty-five angles per page, which that loop could not afford."""
+    import numpy as np
+    best = np.zeros(a.shape[1], dtype=np.int32)
+    cur = np.zeros(a.shape[1], dtype=np.int32)
+    for row in a:
+        cur = np.where(row, cur + 1, 0)
+        np.maximum(best, cur, out=best)
+    return best
+
+
+def straighten(gray, Image):
+    """Rotate a tilted page until its column rule stands up straight.
+
+    2020 was scanned about one to two degrees off square, and its rule is
+    printed faint and broken. No single column of pixels then holds a long run
+    of ink, so rule_x finds nothing -- and the white gutter cannot be trusted
+    instead, because the tilt lets each column's text creep across it. Worse,
+    on 2020 the widest white gap is not between the columns at all: it is
+    between the right column's question numbers and their text, so splitting
+    there hands "3.", "4.", "5." to the LEFT column and ruins the numbering.
+
+    So the page is turned, a quarter degree at a time, to whichever angle makes
+    the rule's unbroken run longest -- the angle that makes it a line again --
+    and only accepted if that run is long enough to be a rule. A page with no
+    rule at any angle (2021 and 2025 print none) comes back untouched and falls
+    through to the gutter as before."""
+    import numpy as np
+    small = gray.resize((gray.width // 2, gray.height // 2))
+    h, w = small.height, small.width
+    lo, hi = int(0.30 * w), int(0.70 * w)
+    best_run, best_ang = 0, 0.0
+    for k in range(-12, 13):
+        ang = k * 0.25
+        if ang == 0:
+            continue
+        a = np.asarray(small.rotate(ang, resample=Image.BILINEAR, fillcolor=255)) < 160
+        run = int(longest_runs(a)[lo:hi].max())
+        if run > best_run:
+            best_run, best_ang = run, ang
+    if best_run <= 0.10 * h:
+        return gray
+    return gray.rotate(best_ang, resample=Image.BICUBIC, fillcolor=255)
 
 
 def page_image(pg, Image):
@@ -194,7 +237,9 @@ GLUED = re.compile(r"\b[lJI]and\b")
 
 # What is left of the booklet footer once the column crop has cut it in half:
 # "VGYH-U-FGT (19", "-A)", and the stray rules tesseract sees as pipes.
-TAIL_JUNK = re.compile(r"(\s*\|)+\s*$|\s*[A-Z]{3,}[-A-Z0-9]*\s*\(?\s*\d*\s*$"
+# The booklet code has a shape, AAAA-A-AAAA; "any capitals at the end" was the
+# old test and it ate the "III" off "I, II and III" and would eat a NATO.
+TAIL_JUNK = re.compile(r"(\s*\|)+\s*$|\s*[A-Z]{3,4}-[A-Z]-[A-Z]{3,4}\S*\s*\(?\s*\d*\s*$"
                        r"|\s*[-–—]\s*[A-D]\s*\)\s*$")
 
 
@@ -292,31 +337,56 @@ def main() -> int:
         a, _, b = args.pages.partition("-")
         lo, hi = int(a), int(b or a)
 
-    # Pass one: where is the rule on each page? A booklet is printed to one
-    # layout, so the median settles it, and a page that disagrees is a page
-    # whose rule came out faint rather than a page built differently.
+    # Pass one: where is the rule on each page?
+    #
+    # This used to take ONE median across the booklet, on the idea that a
+    # booklet is printed to one layout. It is -- but it is not SCANNED to one.
+    # A bound booklet goes on the glass open, and the binding pushes left-hand
+    # and right-hand pages opposite ways: on 2026 every odd page puts the rule
+    # at 0.471-0.494 and every even page at 0.501-0.523. The single median fell
+    # at 0.501, between the two, and six English pages whose own rule had been
+    # found correctly were overruled and split sixty pixels into their left
+    # column. Question 10 vanished that way and 7, 8 and 9 lost their starts.
+    #
+    # So each side of the spread gets its own median. Within a side the pages
+    # really do agree, and a page that disagrees with its OWN side is the faint
+    # rule this was always meant to catch.
     print("  finding the column rule...", flush=True)
-    imgs, xs = {}, []
+    imgs, own_x, printed, side = {}, {}, {}, {0: [], 1: []}
     for i, pg in enumerate(pages, 1):
         if not (lo <= i <= hi):
             continue
         im = page_image(pg, Image)
         if im is None:
             continue
+        # a tilted page with a faint rule: stand it up before measuring it
+        if rule_x(im) <= 0:
+            im = straighten(im, Image)
         imgs[i] = im
-        x = split_x(im)
+        r = rule_x(im)
+        x = r if r > 0 else gutter_x(im)
+        own_x[i], printed[i] = x, r > 0
         if x > 0:
-            xs.append(x / im.width)
-    if not xs:
+            side[i % 2].append(x / im.width)
+    every = sorted(side[0] + side[1])
+    if not every:
         sys.exit("no column rule found on any page")
-    xs.sort()
-    frac = xs[len(xs) // 2]
-    print(f"  rule sits at {frac:.3f} of the width (median of {len(xs)} pages)", flush=True)
+    overall = every[len(every) // 2]
+    med = {k: (sorted(v)[len(v) // 2] if len(v) >= 3 else overall) for k, v in side.items()}
+    print(f"  rule sits at {med[1]:.3f} on odd pages, {med[0]:.3f} on even "
+          f"({len(side[1])} and {len(side[0])} pages)", flush=True)
 
     chunks, seen_sets, kept, skipped = [], Counter(), 0, 0
     for i, im in imgs.items():
-        own = split_x(im)
-        x = own if own > 0 and abs(own / im.width - frac) < 0.02 else int(frac * im.width)
+        own, frac = own_x[i], med[i % 2]
+        # A printed rule is the page's own truth, and on 2020 it wanders
+        # 0.46-0.57 as the booklet shifted on the glass. Held to 0.02 of its
+        # side, nine good rules were overruled and their left column lost its
+        # line ends -- "Inc" for "India,", "corr" for "correct". A gutter is a
+        # guess and stays held close; a rule is trusted unless it is far enough
+        # off (0.35, 0.64 on the rough-work pages) to be a box or a border.
+        tol = 0.05 if printed[i] else 0.02
+        x = own if own > 0 and abs(own / im.width - frac) < tol else int(frac * im.width)
         parts = ([im.crop((0, 0, x - 6, im.height)), im.crop((x + 6, 0, im.width, im.height))]
                  if x > 0 else [im])
         text = chr(10).join(ocr(p) for p in parts)

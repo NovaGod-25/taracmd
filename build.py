@@ -202,6 +202,13 @@ def check_paper_tags(quiz, keys) -> None:
             fail(f"questions {by_cell[cell]!r} and {qid!r} both claim {cell}")
         by_cell[cell] = qid
 
+        # A key shorter than the paper is check_keys' to report, as a short key.
+        # Indexing past its end here used to crash the whole build with a
+        # traceback before that message was ever printed -- so the one defect a
+        # truncated key most needs to explain was the one it could not.
+        if n > len(letters):
+            fail(f"question {qid!r} cites {cell}, past the end of a {len(letters)}-letter key")
+            continue
         want = letters[n - 1]
         if want == "X":
             fail(f"question {qid!r} sits on {cell}, which the Commission dropped")

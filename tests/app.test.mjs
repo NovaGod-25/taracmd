@@ -587,6 +587,18 @@ describe("today's plan and the focus history", () => {
   });
 });
 
+/* A paper that has the Commission's key but none of its questions typed in.
+   These tests are about the MECHANISM -- a tagged question being asked, an
+   untyped number staying a lettered cell -- so they must not pin a particular
+   year: 2022 had nothing typed when they were written and has 97 now. */
+const untypedPaper = (w) => inPage(w, `
+  (() => {
+    const y = KEYS.years.find(y => y.papers.some(p => p.code === "gs1"
+      && Object.keys(p.keys || {}).length
+      && !QUIZ.questions.some(q => q.paper && q.paper.year === y.year && q.paper.code === "gs1")));
+    return y ? String(y.year) : "";
+  })()`);
+
 describe("typing a past question in", () => {
   /* The scorer used to be a bare answer sheet. A question tagged with its
      paper cell is asked properly; an untyped one stays a lettered cell, and
@@ -594,15 +606,16 @@ describe("typing a past question in", () => {
   test("a tagged question is asked with its options; the rest stay letters", () => {
     const out = JSON.parse(inPage(win, `
       (() => {
-        const paper = KEYS.years.find(y => y.year === 2022).papers.find(p => p.code === "gs1");
+        const YR = ${Number(untypedPaper(win))};
+        const paper = KEYS.years.find(y => y.year === YR).papers.find(p => p.code === "gs1");
         QUIZ.questions.push({ id: "t-1", topic: "polity-basic-structure",
-          paper: {year: 2022, code: "gs1", set: "A", n: 2},
+          paper: {year: YR, code: "gs1", set: "A", n: 2},
           q: "typed question", options: ["a","b","c","d"],
           answer: "ABCD".indexOf(paper.keys.A[1]) });
         // the answer sheet is reached by opening the UPSC paper as a paper;
         // "Score a paper" as a mode of its own is gone
         state.tab = "practice"; state.qmode = "papers";
-        state.qpaperId = "upsc-2022-gs1"; state.qset = "A"; state.qn = 1;
+        state.qpaperId = "upsc-" + YR + "-gs1"; state.qset = "A"; state.qn = 1;
         // the plain grid is still there, behind its own link, for when the
         // paper is open in front of you and you only want to mark letters
         state.qsheet = true;
@@ -623,11 +636,12 @@ describe("typing a past question in", () => {
     // as a number and must not leak into another set's paper
     const leaked = inPage(win, `
       (() => {
+        const YR = ${Number(untypedPaper(win))};
         QUIZ.questions.push({ id: "t-2", topic: "polity-basic-structure",
-          paper: {year: 2022, code: "gs1", set: "A", n: 2},
+          paper: {year: YR, code: "gs1", set: "A", n: 2},
           q: "typed", options: ["a","b","c","d"], answer: 0 });
         // one folder per paper now; the Series is a control inside the sheet
-        state.qpaperId = "upsc-2022-gs1"; state.qset = "B"; state.qsheet = true; render();
+        state.qpaperId = "upsc-" + YR + "-gs1"; state.qset = "B"; state.qsheet = true; render();
         const n = document.querySelectorAll(".cell.wide").length;
         QUIZ.questions.pop(); state.qset = "A"; state.qsheet = false; render();
         return n;
@@ -642,13 +656,14 @@ describe("typing a past question in", () => {
   test("a typed UPSC paper is sat one question at a time", () => {
     const out = JSON.parse(inPage(win, `
       (() => {
-        const paper = KEYS.years.find(y => y.year === 2022).papers.find(p => p.code === "gs1");
+        const YR = ${Number(untypedPaper(win))};
+        const paper = KEYS.years.find(y => y.year === YR).papers.find(p => p.code === "gs1");
         QUIZ.questions.push({ id: "t-3", topic: "polity-basic-structure",
-          paper: {year: 2022, code: "gs1", set: "A", n: 2},
+          paper: {year: YR, code: "gs1", set: "A", n: 2},
           q: "the typed one", options: ["w","x","y","z"],
           answer: "ABCD".indexOf(paper.keys.A[1]) });
         state.tab = "practice"; state.qmode = "papers";
-        state.qpaperId = "upsc-2022-gs1"; state.qset = "A"; state.qsheet = false;
+        state.qpaperId = "upsc-" + YR + "-gs1"; state.qset = "A"; state.qsheet = false;
         state.qn = 2; render();
         const asked = { stem: document.querySelector(".qcard.run .qstem").textContent.trim(),
                         opts: document.querySelectorAll(".qcard.run .opt").length,

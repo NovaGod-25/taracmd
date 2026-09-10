@@ -58,7 +58,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 
-Q_START = re.compile(r"^\s*(\d{1,3})\.\s+(.*)$")
+# The separator after a question number is a full stop on the page, but OCR
+# gives a comma often enough to lose a whole question -- 2022 renders "4."
+# as "4," and it vanished. Statements are numbered the same way; what tells
+# them apart is `started`, never the punctuation.
+Q_START = re.compile(r"^\s*(\d{1,3})[.,]\s+(.*)$")
 OPT_SPLIT = re.compile(r"\(([a-d])\)\s*")
 # Sometimes the opening bracket is lost in the typesetting and an option is
 # printed "b) Only two". Put the bracket back before splitting rather than
@@ -68,6 +72,10 @@ OPT_SPLIT = re.compile(r"\(([a-d])\)\s*")
 # The lookbehind is what keeps "39(b)" and "(a)" out of it.
 LOST_BRACKET = re.compile(r"(?<![A-Za-z0-9(])([a-d])\)(?=\s)")
 SET_HINT = re.compile(r"\bSet\s*[-–]?\s*([A-D])\b", re.IGNORECASE)
+# "VGYH-U-FGT (3-A)" and "VGYH-U-FGT (11-A)" are the same footer and not the
+# same line, so furniture() -- which matches repeats exactly -- never drops
+# them, and one lands inside the last option of a question on every page.
+FOOTER = re.compile(r"\(\s*\d{1,3}\s*[-–—]\s*[A-D]\s*\)")
 NOISE = re.compile(r"^\s*(general studies|upsc civil services|paper[- ]?i+|\d{1,3})\s*$", re.IGNORECASE)
 
 
@@ -109,7 +117,8 @@ def split_options(chunk: str) -> list[str]:
     return [t for _, t in out]
 
 
-def parse(text: str, total: int, pages: int = 1) -> list[dict]:
+def parse(text: str, total: int, pages: int = 1, window: int = 3,
+          trust_sequence: bool = False) -> list[dict]:
     lines = [l.rstrip() for l in text.splitlines()]
     junk = furniture([l.strip() for l in lines], pages)
     out, cur, expect, buf = [], None, 1, []
@@ -127,7 +136,7 @@ def parse(text: str, total: int, pages: int = 1) -> list[dict]:
 
     for raw in lines:
         line = raw.strip()
-        if not line or line in junk or NOISE.match(line):
+        if not line or line in junk or NOISE.match(line) or FOOTER.search(line):
             continue
         m = Q_START.match(raw)
         # Only the number the paper is up to may start a question, AND only
@@ -136,12 +145,33 @@ def parse(text: str, total: int, pages: int = 1) -> list[dict]:
         # "3." inside question 2 is a statement — without this, question 2
         # loses its options and question 3 swallows both.
         started = cur is None or "(a)" in " ".join(buf)
-        if m and started and expect <= int(m.group(1)) <= min(expect + 3, total):
-            flush()
-            cur = {"n": int(m.group(1))}
-            buf = [m.group(2)]
-            expect = int(m.group(1)) + 1
-            continue
+        # `window` is how far ahead a question number may jump and still be
+        # believed. Three is right for exact text. OCR needs more: a page it
+        # cannot read is a hole of four or five questions, and too tight a
+        # window means the paper never resyncs and everything after the hole
+        # is lost. The guard against a statement being read as a question is
+        # `started`, not this number.
+        #
+        # `trust_sequence` is for OCR, and it is the difference between 74 of
+        # 100 and nearly all of them. Tesseract misreads the question NUMBERS
+        # more often than the words -- on 2022 it gave 38 for 33, 84 for 34,
+        # 386 for 36, 80 for 30, 88 for 38. Where a line is a question start
+        # and the number is unreadable, its position in the paper is better
+        # evidence than the glyph, so the number becomes the one the paper is
+        # up to. What keeps a statement from being taken as a question is
+        # `started` -- the question being built must already have reached its
+        # options -- and that does not depend on reading any digit correctly.
+        if m and started:
+            got = int(m.group(1))
+            take = (got if expect <= got <= min(expect + window, total)
+                    else expect if trust_sequence and expect <= total
+                    else None)
+            if take is not None:
+                flush()
+                cur = {"n": take}
+                buf = [m.group(2)]
+                expect = take + 1
+                continue
         if cur is not None:
             buf.append(line)
     flush()

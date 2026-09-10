@@ -182,7 +182,7 @@ turns it green rather than leaving it looking like a failure.
 | `subjects.json` | 8 subjects → 242 topics → 1,723 subtopics; each topic tagged with papers + weight |
 | `pyq-papers.json` | official upsc.gov.in paper links per year — Prelims 22/24, Mains 54/60 |
 | `answer-keys.json` | Prelims answer keys: links, marking scheme, set-wise letters. GS-I complete 2017-2026; CSAT has links but no letters |
-| `quiz.json` | 35 practice questions, each tagged to a topic id |
+| `quiz.json` | 325 questions: 35 written here, 98 from a test series, 95 from UPSC 2023 GS-I, 97 from 2022 GS-I |
 | `toppers.json` | 102 published answer copies across 10 publishers |
 | `daily.json` | daily current-affairs quiz sources: a URL pattern the page expands against the date |
 | `optionals.json` | the Optional tab: Geography, Law and Agriculture, 22/22 papers each 2016–2026, plus curated copies |
@@ -306,6 +306,68 @@ Five of the hundred are not in the bank, and each for a reason worth keeping:
 | 29 | absent from the source itself — Drishti's text runs 28 straight to 30 |
 | 14 | the Commission dropped it, so there is no answer to mark you against |
 | 55, 56, 64 | sports awards, the Chess Olympiad and the Flag Code: **nothing in the 242 topics covers them.** A forced topic is worse than a missing question — it puts a question in front of you while you are revising something else |
+
+### Reading a scanned paper: tools/pyq-scan.py
+
+**UPSC's own 2023 GS-I has a text layer** — 76,720 characters, more than the
+Drishti copy that was thought to be the reason 2023 was possible. Every other
+year, 2016 to 2026, is a photograph: 48 pages, zero characters. So always test
+for text first; then OCR.
+
+An earlier attempt (`tools/pyq-ocr.py`) got 79 questions of 100 with 26 of them
+carrying text bled in from the next column, and that was written up as a limit
+of OCR. It was not. These pages are clean printed English and tesseract reads
+them very nearly perfectly. **2022 GS-I now comes out 100 of 100 with three
+flagged.** What was wrong was everything around the OCR:
+
+| what was wrong | what it cost | what fixed it |
+|---|---|---|
+| columns split at a fixed 0.52 | bleed on every page | the page prints a **rule** between them: find it. 2022's is at 0.486 |
+| the rule found by most ink | three pages split at 0.64 and interleaved | a rule is the longest **unbroken** vertical run; text is many short runs |
+| question numbers believed | 33 read as 38, 34 as 84, 30 as 80 | **position is better evidence than the glyph** — `trust_sequence` |
+| a resync window of 3 | one unreadable page lost every question after it | window of 2 plus sequence trust |
+| `\d+\.` for a question number | "4," was not a question and vanished | accept a comma |
+| option markers read as glyphs | (@), (ec), (co), (ad) merged two options into one | **relabel by position**, a b c d, resetting at each question |
+| the footer | landed inside option (d) on every page | it is not the same string twice, so `furniture()` cannot see it |
+
+**The marker reset is a safety property, not a tidiness one.** Cycling a, b, c,
+d across a whole page looked fine and was much worse than useless: question 59
+lost its (a), the three markers left were relabelled a, b, c, and every question
+after it on the page was shifted too. Options in the wrong order means the
+Commission's letter points at the wrong text — a silently wrong answer, which is
+the one outcome worth more trouble than a missing question. Reset per question
+and a lost marker leaves that question with three options, which is a flag that
+keeps it out of the bank.
+
+**The numbering gate.** Numbers are assigned by position, so they are only
+trustworthy if the paper came out whole — exactly `total` questions, 1 to
+`total`, no gaps. A gap means everything after it may be shifted by one and
+would pull the wrong letter from the key. The tool says so loudly and the paper
+should not be imported on that footing.
+
+Verifying 2022 was not done by trusting any of the above. Six questions were
+checked against knowledge: qubit → Quantum Computing, "not a bird" → Golden
+Mahseer, Senkaku → China and Japan, Yogavasistha → Akbar, CO/NOx/O3/SO2 → 2 and
+4 only, Levant → the eastern Mediterranean. All six right, which a shifted
+sequence could not have produced.
+
+### Topics are still judgement, and the measurement says so
+
+`tools/topic-suggest.py` scores a question against the words the syllabus uses —
+242 topic names and 1,723 subtopics, IDF-weighted so that "Kulah-Daran" decides
+a match rather than "India". Run against the 95 topics assigned by hand for
+2023 it gets **35% exactly right, 51% in its top three, 63% for the subject
+alone**. That is a useful narrowing and nowhere near good enough to file
+questions with, so it suggests and a person decides. `--apply` exists and should
+not be used on a paper nobody has read.
+
+### Ids come from the paper cell
+
+A batch whose questions cite a `paper` gets its ids from that cell —
+`csp22-gs1-a-7`. It used to fall through to `q-7`, which worked exactly once,
+for whichever paper was imported first, and collided with every paper after it.
+The 2023 questions were migrated onto this scheme; the paper-sitting flow keys
+its answers on the question NUMBER rather than the id, so nothing was orphaned.
 
 ### A paper stops being an answer sheet once its questions are in
 

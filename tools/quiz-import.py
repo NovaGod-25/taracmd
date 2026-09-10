@@ -92,7 +92,18 @@ def main() -> int:
     taken, skipped = [], []
     for i, q in enumerate(batch.get("questions", []), 1):
         n = q.get("n", i)
-        qid = q.get("id") or (f"{prefix}-{n}" if prefix else f"q-{n}")
+        # A question that cites a UPSC cell takes its id FROM that cell.
+        # Without this a paper-provenance batch got no prefix at all and every
+        # question became "q-7" -- which worked exactly once, for whichever
+        # paper was imported first, and then collided with every paper after
+        # it. The cell is already unique: year, paper, Series, number.
+        pc = q.get("paper")
+        if q.get("id"):
+            qid = q["id"]
+        elif pc:
+            qid = f"csp{str(pc['year'])[2:]}-{pc['code']}-{str(pc['set']).lower()}-{pc['n']}"
+        else:
+            qid = f"{prefix}-{n}" if prefix else f"q-{n}"
         why = []
 
         if qid in have_ids:

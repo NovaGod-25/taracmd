@@ -21,6 +21,8 @@ android/gradlew.bat
 # Answer-key PDFs cached by tools/answer-keys.py. Not redistributed: they are
 # fetched from upsc.gov.in and stay local.
 tools/.key-pdfs/
+# the question papers themselves, same rule: the app indexes, it does not mirror
+tools/.qp-pdfs/
 
 # Test deps. tests/package-lock.json IS committed, so CI can npm ci.
 tests/node_modules/

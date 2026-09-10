@@ -71,7 +71,11 @@ OPT_SPLIT = re.compile(r"\(([a-d])\)\s*")
 # (options are not always spaced: "(c)The Charter Act") makes that worse.
 # The lookbehind is what keeps "39(b)" and "(a)" out of it.
 LOST_BRACKET = re.compile(r"(?<![A-Za-z0-9(])([a-d])\)(?=\s)")
-SET_HINT = re.compile(r"\bSet\s*[-–]?\s*([A-D])\b", re.IGNORECASE)
+# Two ways a booklet says which Series it is: the word "Series" beside a
+# letter, or the booklet code that closes with one -- "XDTG-F-GST/62A".
+# Reading the wrong one lines every question up against the wrong key.
+SET_HINT = re.compile(r"(?<![A-Za-z])Series\s*[-–]?\s*([A-D])(?![A-Za-z])"
+                      r"|/\s*\d{1,3}\s*([A-D])(?![A-Za-z])", re.IGNORECASE)
 # "VGYH-U-FGT (3-A)" and "VGYH-U-FGT (11-A)" are the same footer and not the
 # same line, so furniture() -- which matches repeats exactly -- never drops
 # them, and one lands inside the last option of a question on every page.
@@ -218,7 +222,7 @@ def main() -> int:
     setname = args.setname
     if not setname:
         hit = SET_HINT.search(text)
-        setname = hit.group(1).upper() if hit else None
+        setname = next((g for g in hit.groups() if g), "").upper() or None if hit else None
     if not setname:
         sys.exit("could not tell which Series this paper is; pass --set")
 

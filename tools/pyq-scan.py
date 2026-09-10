@@ -222,13 +222,19 @@ def repair_option(s: str) -> str:
     return t2
 
 
-# A paren holding one or two characters, at least one of them a lowercase
+# A bracket holding one or two characters, at least one of them a lowercase
 # a/b/c/d or the "@" that tesseract likes to make of an "a". Three characters
 # or more is prose -- "(RBI)", "(NEER)" -- and is left alone.
+#
+# The brackets themselves are not reliably round. 2019's scan gives "(b}",
+# "{c})" and "fc)" -- a curly close, a curly open, an "f" for a "(" -- and
+# with a round-only pattern thirty-nine of its questions came out with three
+# options instead of four. So both ends accept the shapes OCR confuses them
+# with; what still has to be there is a letter that could be an option.
 # Q_START is anchored without MULTILINE because the parser feeds it one line
 # at a time; searching a multi-line chunk with it silently never matches.
 QLINE = re.compile(r"(?m)^\s*\d{1,3}[.,]\s+\S")
-MARKER = re.compile(r"\(\s*[a-z@]{0,1}[abcd@][a-z]{0,1}\s*\)")
+MARKER = re.compile(r"[({\[f|]\s*[a-z@]{0,1}[abcd@][a-z]{0,1}\s*[)}\]|]")
 
 
 def fix_markers(text: str) -> str:

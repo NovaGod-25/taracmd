@@ -7322,6 +7322,1374 @@
         "set": "A",
         "n": 100
       }
+    },
+    {
+      "id": "csp19-gs1-a-1",
+      "topic": "history-mughal-empire",
+      "q": "With reference to Mughal India, what is/are the difference/ differences between Jagirdar and Zamindar? 1. Jagirdars were holders of land assignments in lieu of judicial and police duties, whereas Zamindars were holders of revenue rights without obligation to perform any duty other than revenue collection. , 2. Land assignments to Jagirdars were hereditary and revenue rights . of Zamindars were not hereditary. given below.",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 1
+      }
+    },
+    {
+      "id": "csp19-gs1-a-2",
+      "topic": "economics-land-water-resources",
+      "q": "With reference to land reforms in independent India, which one of the , following statements is correct?",
+      "options": [
+        "The ceiling laws were aimed at family holdings and not individual holdings. .",
+        "The major aim of land reforms was \\ providing agricultural land to all . the landless.",
+        "It resulted in cultivation of cash crops as a predominant form of cultivation.",
+        "Land reforms permitted no exemptions to the ceiling limits."
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 2
+      }
+    },
+    {
+      "id": "csp19-gs1-a-3",
+      "topic": "economics-survey-and-current-trends",
+      "q": "The Global Competitiveness Report is published by the .",
+      "options": [
+        "International Monetary Fund",
+        "United Nations Conference on Trade and Development",
+        "World Economic Forum",
+        "World Bank"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 3
+      }
+    },
+    {
+      "id": "csp19-gs1-a-4",
+      "topic": "history-advent-of-europeans-and-british-rule",
+      "q": "Consider the following statements about ‘the Charter Act of 1813’: — 1. It ended the trade monopoly of the East India Company in India except for trade in tea and trade with China. 2. ‘It asserted the sovereignty of the . British Crown over the Indian territories held by the Company. 3. The revenues of India were now controlled by the British Parliament. : Which of the statements given above are correct?",
+      "options": [
+        "1 and 2 only",
+        "2 and 3 only",
+        "1 and 3 only",
+        "1, 2 and 3 3 [ P.T.0."
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 4
+      }
+    },
+    {
+      "id": "csp19-gs1-a-5",
+      "topic": "history-rise-of-nationalism-1885-1917",
+      "q": "With reference to Swadeshi Movement, consider the following statements : 1. It contributed to the revival of the indigenous artisan crafts and industries. 2. The National Council of Education was established as a part of Swadeshi. Movement. . Which of the statements given above",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 5
+      }
+    },
+    {
+      "id": "csp19-gs1-a-6",
+      "topic": "history-gandhian-mass-movements",
+      "q": "Consider the following pairs : Movement/ Leader Organization 1. All India Anti- : Mahatma Gandhi Untouchability League 2. All India Kisan : Swami Sahajanand Sabha Saraswati 3. Self-Respect : E. V. Ramaswami Movement Naicker Which of the pairs given above is/are correctly matched?",
+      "options": [
+        "1 only",
+        "1 and 2 only a .",
+        "2 and 3 only",
+        "1, 2 and 3"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 6
+      }
+    },
+    {
+      "id": "csp19-gs1-a-7",
+      "topic": "history-prehistory-and-indus-valley",
+      "q": "Which one of the following is not a Harappan site?",
+      "options": [
+        "Chanhudaro",
+        "Kot Diji .",
+        "Sohgaura",
+        "Desalpur BKL~F-GHP/54A"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 7
+      }
+    },
+    {
+      "id": "csp19-gs1-a-8",
+      "topic": "history-mauryan-empire",
+      "q": "In which of the following relief sculpture inscriptions is ‘Ranyo Ashoka’ (King Ashoka) mentioned along with the stone ; portrait of Ashoka?",
+      "options": [
+        "Kanganahalli",
+        "Sanchi",
+        "Shahbazgarhi",
+        "Sohgaura"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 8
+      }
+    },
+    {
+      "id": "csp19-gs1-a-9",
+      "topic": "history-buddhism-jainism-heterodox-sects",
+      "q": "Consider the following : 1. Deification of the Buddha 2. ‘Treading the path of Bodhisattvas 3. Image worship and rituals , Which of the above is/are the feature/ features of Mahayana Buddhism?",
+      "options": [
+        "1 only",
+        "1 and 2 only",
+        "2 and 3 only",
+        "1, 2 and 3"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 9
+      }
+    },
+    {
+      "id": "csp19-gs1-a-10",
+      "topic": "history-gupta-empire",
+      "q": "With reference to forced labour (Vishti} in , India during the Gupta period, which one of the following statements is correct?",
+      "options": [
+        "It was considered a source of income for the State, a sort of tax paid by the people.",
+        "It was totally absent in the Madhya Pradesh and Kathiawar regions of the Gupta Empire.",
+        "The forced labourer was entitled to weekly wages.",
+        "The eldest son of the labourer was sent as the forced labourer. ‘5 ‘aoe, ["
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 10
+      }
+    },
+    {
+      "id": "csp19-gs1-a-11",
+      "topic": "history-vijayanagara-and-bahmani",
+      "q": "Building ‘Kalyaana Mandapas’ was. a notable feature in the temple : construction in the kingdom of ;",
+      "options": [
+        "Chalukya",
+        "Chandela",
+        "Rashtrakuta",
+        "Vijayanagara . 12. Consider the following statements :"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 11
+      }
+    },
+    {
+      "id": "csp19-gs1-a-13",
+      "topic": "history-bhakti-and-sufi-movements",
+      "q": "Consider the following statements : 1. Saint Nimbarka was a contem- porary of Akbar. : 2. Saint Kabir was greatly influenced by Shaikh Ahmad Sirhindi. ' Which of the statements given above",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 13
+      }
+    },
+    {
+      "id": "csp19-gs1-a-14",
+      "topic": "history-gandhian-mass-movements",
+      "q": "With reference to the British colonial rule in India, consider the following statements : 1. Mahatma Gandhi was instrumental in the abolition of the system of indentured labour’. 2. In Lord Chelmsford’s ‘War Conference’, Mahatma Gandhi did not support the resolution on recruiting Indians for World War. 3. Consequent upon the breaking of Salt Law by Indian people, the Indian National Congress was declared illegal by the colonial rulers. Which of the statements given above are correct?",
+      "options": [
+        "1 and 2 only",
+        "1 and 3 only",
+        "2 and 3 only",
+        "1, 2 and 3"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 14
+      }
+    },
+    {
+      "id": "csp19-gs1-a-15",
+      "topic": "history-rise-of-nationalism-1885-1917",
+      "q": "With reference to Indian National Movement, consider the following pairs : Person Position held 1. Sir Tej Bahadur : President, All India Sapru Liberal Federation 2. K. C. Neogy : Member, The Constituent Assembly 3. P. C. Joshi : General Secretary, Communist Party of India Which of the pairs given above is/are correctly matched?",
+      "options": [
+        "1 only",
+        "1 and 2 only",
+        "3 only",
+        "1, 2 and 3"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 15
+      }
+    },
+    {
+      "id": "csp19-gs1-a-17",
+      "topic": "history-sculpture-painting-and-crafts",
+      "q": "Who among the following Mughal Emperors shifted emphasis from illustrated manuscripts to album and . individual portrait? .",
+      "options": [
+        "Humayun",
+        "Akbar :",
+        "Jahangir",
+        "Shah Jahan"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 17
+      }
+    },
+    {
+      "id": "csp19-gs1-a-18",
+      "topic": "environment-protected-areas-india",
+      "q": "Which one of the following National Parks . lies completely in the temperate alpine zone? ‘",
+      "options": [
+        "Manas National Park",
+        "Namdapha National Park -",
+        "Neora Valley National Park",
+        "Valley of Flowers National Park BKL-F-GHP/S4A"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 18
+      }
+    },
+    {
+      "id": "csp19-gs1-a-19",
+      "topic": "scitech-ipr-innovation-ecosystem",
+      "q": "Atal Innovation Mission is set up under the :",
+      "options": [
+        "Department of Science and Technology",
+        "Ministry of Labour and Employment",
+        "NITI Aayog",
+        "Ministry of Skill Development and Entrepreneurship"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 19
+      }
+    },
+    {
+      "id": "csp19-gs1-a-21",
+      "topic": "geography-world-agriculture-and-food-systems",
+      "q": "Which one of the following groups of plants was domesticated in the ‘New World’ and introduced into the ‘Old World?",
+      "options": [
+        "Tobacco, cocoa and rubber",
+        "Tobacco, cotton and rubber",
+        "Cotton, coffee and sugarcane",
+        "Rubber, coffee and wheat"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 21
+      }
+    },
+    {
+      "id": "csp19-gs1-a-22",
+      "topic": "environment-species-in-news-iucn",
+      "q": "Consider the following statements : 1. Asiatic lion is naturally found in , India only. ; 2. Double-humped camel is naturally found in India only. 3. One-horned rhinoceros is naturally found in India only.",
+      "options": [
+        "1 only",
+        "2 only",
+        "1 and 3 only",
+        "1, 2 and 3"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 22
+      }
+    },
+    {
+      "id": "csp19-gs1-a-23",
+      "topic": "geography-indian-drainage-system",
+      "q": "Consider the following pairs : Famous piace River 1. Pandharpur : Chandrabhaga 2. Tiruchirappalli : Cauvery . 3. Hampi : .Malaprabha Which of the pairs given above are ‘ correctly matched?",
+      "options": [
+        "1 and 2 only",
+        "2 and 3 only",
+        "1 and 3 only",
+        "1, 2-and3 BKL-F-GHP/54A i"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 23
+      }
+    },
+    {
+      "id": "csp19-gs1-a-24",
+      "topic": "economics-poverty-and-hunger",
+      "q": "In a given year in India, official poverty lines are higher in some States than in others because ,",
+      "options": [
+        "poverty rates vary from State to State",
+        "price levels vary from State to State",
+        "Gross State Product varies from State to State :",
+        "quality of public distribution varies from State to State"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 24
+      }
+    },
+    {
+      "id": "csp19-gs1-a-25",
+      "topic": "environment-climate-science-ipcc",
+      "q": "In the context-of which of the following do some scientists suggest the use of cirrus cloud thinning technique and_ the injection of sulphate aerosol into stratosphere?",
+      "options": [
+        "Creating the artificial rains in some regions",
+        "Reducing the frequency and : intensity of tropical cyclones",
+        "Reducing the adverse effects of solar wind on the Earth",
+        ". Reducing the global warming"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 25
+      }
+    },
+    {
+      "id": "csp19-gs1-a-26",
+      "topic": "environment-waste-management",
+      "q": "In the context of which one of the following are the terms ‘pyrolysis and plasma gasification’ mentioned?",
+      "options": [
+        "Extraction of rare earth elements",
+        "Natural gas extraction technologies",
+        "Hydrogen fuel-based automobiles",
+        "Waste-to-energy technologies [{ P.T.O."
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 26
+      }
+    },
+    {
+      "id": "csp19-gs1-a-27",
+      "topic": "environment-biosphere-reserves-community-conservation",
+      "q": "Which of the following are in Agasthyamala Biosphere Reserve?",
+      "options": [
+        "Neyyar, Peppara and Shendurney Wildlife Sanctuaries; and Kalakad Mundanthurai. Tiger Reserve",
+        "_Mudumalai, Sathyamangalam and Wayanad Wildlife Sanctuaries; and Silent Valley National Park",
+        "Kaundinya, Gundla Brahme- swaram .and Papikonda Wildlife . Sanctuaries; and Mukurthi National Park",
+        "Kawal and Sri Venkateswara Wildlife Sanctuaries; and Nagarjunasagar-Srisailam Tiger Reserve"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 27
+      }
+    },
+    {
+      "id": "csp19-gs1-a-28",
+      "topic": "environment-species-in-news-iucn",
+      "q": "Consider the following statements : 1. Some species of turtles’ are herbivores. 2. Some species of fish are herbivores. 3. Some species of marine mammals are herbivores. 4. Some species. of snakes are viviparous. . Which of the statements given above are . correct?",
+      "options": [
+        "1 and 3 only",
+        "2, 3 and 4 only",
+        "2 and 4 only",
+        "1, 2, 3 and 4"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 28
+      }
+    },
+    {
+      "id": "csp19-gs1-a-29",
+      "topic": "environment-species-in-news-iucn",
+      "q": "Consider the following pairs : Wildlife Naturally . found in 1. Blue-finned Mahseer : Cauvery River 2. Irrawaddy Dolphin : Chambal River 3. Rusty-spotted Cat : Eastern Ghats Which of the pairs given above are correctly matched?",
+      "options": [
+        "1 and 2 only",
+        "2 and 3 only",
+        "1 and 3 only",
+        "1, 2 and 3"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 29
+      }
+    },
+    {
+      "id": "csp19-gs1-a-30",
+      "topic": "environment-waste-management",
+      "q": "Why is there a great concern about the ‘microbeads’ that are released into environment? i",
+      "options": [
+        "They are considered harmful. to marine ecosystems. ‘",
+        "They are considered to cause skin cancer in children.",
+        "They are small enough to be absorbed by crop plants in irrigated fields.",
+        "They are often found to be used as food adulterants. 13 , [ P.T.O."
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 30
+      }
+    },
+    {
+      "id": "csp19-gs1-a-31",
+      "topic": "environment-biomes-indian-forest-types",
+      "q": "Recently, there was a growing awareness in our country about the importance of Himalayan nettle (Girardinia diversifolia) because it is found to be a sustainable source of",
+      "options": [
+        "anti-malarial drug",
+        "biodiesel",
+        "pulp for paper industry",
+        "textile fibre"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 31
+      }
+    },
+    {
+      "id": "csp19-gs1-a-32",
+      "topic": "geography-remote-sensing-and-cartography",
+      "q": "For the measurement/estimation of which of the following are satellite . images/remote sensing data used? 1. Chlorophyll content in the vegetation of a specific location 2. Greenhouse gas emissions from rice paddies of a specific location 3. Land surface temperatures of a . specific location given below.",
+      "options": [
+        "1 only",
+        "2 and 3 only",
+        "3 only",
+        "1, 2 and 3"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 32
+      }
+    },
+    {
+      "id": "csp19-gs1-a-33",
+      "topic": "geography-india-map-based-study",
+      "q": "Consider the following States : 1. Chhattisgarh 2. Madhya Pradesh 3. Maharashtra 4. Odisha . With reference to the States mentioned above, in terms of percentage of forest cover to the total area of State, which . one of the following is the correct ascending order?",
+      "options": [
+        "2-3-1-4",
+        "2-3-4-1",
+        "3-2-4-1",
+        "3-2-1-4"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 33
+      }
+    },
+    {
+      "id": "csp19-gs1-a-34",
+      "topic": "geography-oceanography",
+      "q": "Which of the following statements are correct about the deposits of ‘methane . hydrate’? ‘ 1, Global warming might trigger the release of methane gas from these deposits. 2. Large deposits of ‘methane hydrate’ are found in Arctic Tundra and under the seafloor. 3. Methane in atmosphere oxidizes to carbon dioxide after a decade or two. : given below.",
+      "options": [
+        "1 and 2 only",
+        "2 and 3 only",
+        "1 and 3 only",
+        "1, 2 and 3"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 34
+      }
+    },
+    {
+      "id": "csp19-gs1-a-35",
+      "topic": "environment-air-pollution",
+      "q": "Consider the following : 1. Carbon monoxide 2. Methane : 3. Ozone . 4. Sulphur dioxide Which of the above are released into atmosphere due to the burning of crop/biomass residue?",
+      "options": [
+        "1 and 2 only",
+        "2, 3 and 4 only",
+        "1 and 4 only",
+        "1, 2,3 and 4 15 fide [ P.T.O."
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 35
+      }
+    },
+    {
+      "id": "csp19-gs1-a-36",
+      "topic": "geography-world-map-based-study",
+      "q": "Consider the following pairs : Sea Bordering country 1. Adriatic Sea : Albania 2. Black Sea : Croatia 3. Caspian Sea : Kazakhstan 4. Mediterranean Sea : Morocco 5. Red Sea : Syria , Which of the pairs given above are correctly matched? .",
+      "options": [
+        "1, 2 and 4 only",
+        "1, 3 and 4 only",
+        "2-and 5 only",
+        "1, 2,3, 4 and 5"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 36
+      }
+    },
+    {
+      "id": "csp19-gs1-a-37",
+      "topic": "geography-world-agriculture-and-food-systems",
+      "q": "Among the following, which one is the largest exporter of rice in the world in the last five years?",
+      "options": [
+        "China ,",
+        "India",
+        "Myanmar",
+        "Vietnam"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 37
+      }
+    },
+    {
+      "id": "csp19-gs1-a-38",
+      "topic": "geography-indian-drainage-system",
+      "q": "Consider the following pairs: Glacier River 1. Bandarpunch : Yamuna 3. Bara Shigri : Chenab ; 3. Milam : Mandakini 4, Siachen : Nubra 5. Zemu : Manas Which of the pairs given above are correctly matched?",
+      "options": [
+        "1, 2 and 4",
+        "1, 3 and 4",
+        "2and 5",
+        "3 and 5"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 38
+      }
+    },
+    {
+      "id": "csp19-gs1-a-39",
+      "topic": "environment-agriculture-linkages",
+      "q": "In India, the use of carbofuran, methyl parathion, phorate and triazophos is viewed with apprehension. These chemicals are used as",
+      "options": [
+        "pesticides in agriculture",
+        "preservatives in processed foods",
+        "fruit-ripening agents",
+        "moisturising agents in cosmetics"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 39
+      }
+    },
+    {
+      "id": "csp19-gs1-a-40",
+      "topic": "environment-ramsar-wetlands",
+      "q": "Consider the following statements : ‘ 1. Under Ramsar Convention, it is mandatory on the part of the Government of India to protect and conserve all the wetlands in the territory of India. 2, The Wetlands (Conservation and Management) Rules, 2010 were framed by the Government of India based on the recommendations of Ramsar Convention. 3. The Wetlands (Conservation and Management) Rules, 2010 also encompass the drainage area oF catchment regions of the wetlands as determined by the authority. is/are correct? .",
+      "options": [
+        "1 and 2 only",
+        "2 and 3 only",
+        "3 only",
+        "1, 2 and 3 17 [ P.T.O."
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 40
+      }
+    },
+    {
+      "id": "csp19-gs1-a-41",
+      "topic": "environment-agriculture-linkages",
+      "q": "Consider the following statements : 1. Agricultural soils release nitrogen . oxides into environment. 2. Cattle release ammonia into environment. 3. Poultry industry releases reactive nitrogen compounds into environment. , Which of the statements given above : is/are correct? ‘",
+      "options": [
+        "1 and 3 only",
+        "2 and 3 only",
+        "2 only",
+        "1, 2 and 3"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 41
+      }
+    },
+    {
+      "id": "csp19-gs1-a-42",
+      "topic": "geography-water-resources-and-irrigation",
+      "q": "What is common to the places known as Aliyar, Isapur and Kangsabati?",
+      "options": [
+        "Recently discovered uranium deposits",
+        "Tropical rain forests",
+        "Underground cave systems",
+        "Water reservoirs :"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 42
+      }
+    },
+    {
+      "id": "csp19-gs1-a-43",
+      "topic": "environment-energy-transition",
+      "q": "In the context of proposals to the use of hydrogen-enriched CNG (H-CNG)} as fuel for buses in public transport, consider the following statements : 1. The main advantage of the use of : H-CNG is the elimination of carbon monoxide emissions. 2. H-CNG as fuel reduces carbon . dioxide \" and hydrocarbon emissions. 3. Hydrogen up to one-fifth by volume can be blended with CNG as fuel for buses. 4. H-CNG makes the fuel less expensive than CNG. Which of the statements given above , _",
+      "options": [
+        "1 only",
+        "2 and 3 only",
+        "4 only",
+        "1, 2, 3 and 4"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 43
+      }
+    },
+    {
+      "id": "csp19-gs1-a-44",
+      "topic": "geography-atmosphere-and-temperature",
+      "q": "Why are dewdrops not formed on a cloudy night? .",
+      "options": [
+        "Clouds absorb the radiation released from the Earth’s surface.",
+        "Clouds reflect back the Earth’s radiation.",
+        "The Earth’s surface would have low temperature on cloudy nights.",
+        "Clouds deflect the blowing wind to ground level. ©"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 44
+      }
+    },
+    {
+      "id": "csp19-gs1-a-45",
+      "topic": "polity-constitutional-amendment",
+      "q": "Consider the following statements : 1. The 44th Amendment to the Constitution of India introduced an Article placing the election of the Prime Minister beyond judicial review. 2. The Supreme Court of India struck down the 99th Amendment to the Constitution of India as being violative of the independence of judiciary. . .",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2 19 [ P.T.O."
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 45
+      }
+    },
+    {
+      "id": "csp19-gs1-a-46",
+      "topic": "polity-judicial-appointments",
+      "q": "Consider the following statements : 1. The motion to impeach a Judge of the Supreme Court of India cannot be rejected by the Speaker of the Lok Sabha as per the Judges (Inquiry) Act, 1968. 2. The Constitution of India defines and gives details of what constitutes ‘incapacity and proved . misbehaviour’ of the Judges of the Supreme Court of India. 3. The details of the process of . impeachment of the Judges of the Supreme Court of India are given in the Judges (Inquiry) Act, 1968. 4. If the motion for the impeachment of a Judge is taken up for voting, the law requires the motion to be backed by each House of the Parliament and supported by a majority of total membership of that House and by not less than two-thirds of total members of that House present and voting.",
+      "options": [
+        "1 and 2",
+        "3 only",
+        "3 and 4 only",
+        "1, 3 and 4"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 46
+      }
+    },
+    {
+      "id": "csp19-gs1-a-47",
+      "topic": "polity-constitutional-amendment",
+      "q": "The Ninth Schedule was introduced in . the Constitution of India during the prime ministership of",
+      "options": [
+        "Jawaharlal Nehru",
+        "Lal Bahadur Shastri",
+        ") Indira Gandhi",
+        "Morarji Desai BKL-F-GHP/54A ,"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 47
+      }
+    },
+    {
+      "id": "csp19-gs1-a-48",
+      "topic": "economics-psu-disinvestment",
+      "q": "Consider the following statements : 1. Coal sector was nationalized by the Government of India under Indira : Gandhi. 2. Now, coal blocks are. allocated on lottery basis. ; 3. Till recently, India imported coal to *- meet the shortages of domestic supply, but now India is self- sufficient in coal production. + is/are correct?",
+      "options": [
+        "1 only",
+        "2 and 3 only",
+        "3 only",
+        "1, 2 and 3"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 48
+      }
+    },
+    {
+      "id": "csp19-gs1-a-49",
+      "topic": "polity-parliament",
+      "q": "Consider the following statements : J. The Parliament (Prevention of , Disqualification) Act, 1959 exempts several posts from disqualification on the grounds of ‘Office of Profit’. 2. The above-mentioned Act was amended five times. 3. The term ‘Office of Profit’ is well- defined in the Constitution of India. Which of the statements givén above",
+      "options": [
+        "1 and 2 only",
+        "3 only",
+        "2 and 3 only",
+        "1, 2 and 3"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 49
+      }
+    },
+    {
+      "id": "csp19-gs1-a-50",
+      "topic": "polity-special-provisions-schedules",
+      "q": "Under which Schedule of the Constitution of India can the transfer of tribal land to private parties for mining be declared null and void?",
+      "options": [
+        "Third Schedule",
+        "Fifth Schedule ;",
+        "Ninth Schedule ,",
+        "Twelfth Schedule 21 , [P.T.0."
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 50
+      }
+    },
+    {
+      "id": "csp19-gs1-a-51",
+      "topic": "polity-welfare-vulnerable-sections",
+      "q": "Consider the following statements about Particularly Vulnerable Tribal Groups (PVTGs) in India : 1. PVTGs reside in 18 States and one Union Territory. 2. A-stagnant or declining population is one of the criteria for determining . PVTG status. 3. There are 95 PVTGs officially ; notified in the country so far. 4. Irular and Konda Reddi tribes are. included in the list of PVTGs. Which of the statements given above are correct? .",
+      "options": [
+        "1,2 and 3 i",
+        "2, 3 and 4",
+        "1, 2 and 4",
+        "1, 3 and 4"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 51
+      }
+    },
+    {
+      "id": "csp19-gs1-a-52",
+      "topic": "polity-fundamental-rights",
+      "q": "With reference to the Constitution of ; India, prohibitions or limitations or provisions contained in ordinary laws cannot act as prohibitions or limitations : on the constitutional powers under Article 142. It could mean which one of the following?",
+      "options": [
+        "The decisions taken by the Election Commission of India while discharging its duties cannot be challenged in any court of law. :",
+        ". The Supreme Court of India is not . .. constrained in the exercise of its _ powers by laws made by the Parliament.",
+        "In the event of grave financial crisis . in the country, the President of ; India can declare Financial ‘Emergency’ without the counsel . from. the Cabinet.",
+        "State Legislatures cannot make . laws on certain matters without the concurrence of Union Legislature."
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 52
+      }
+    },
+    {
+      "id": "csp19-gs1-a-53",
+      "topic": "polity-state-executive-governor",
+      "q": "With reference to the Legislative Assembly of a State in India, consider the following statements : 1. The Governor makes a customary address to Members of the House at the commencement of the first session of the year. . 2. When a State Legislature does not have a rule on a particular matter, it follows the Lok Sabha rule on that matter. . Which of the statements given ‘above : is/are correct?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both { and 2",
+        "- Neither 1 nor 2 23 [ P.T.O. | 54.. Consider the following statements : 1.’ The United Nations Convention } against Corruption (UNCAC) has a Protocol against the Smuggling of Migrants -by Land, Sea and Air’. ! 2. The UNCAC is the ever-first legally binding global anti-corruption t instrument,"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 53
+      }
+    },
+    {
+      "id": "csp19-gs1-a-55",
+      "topic": "environment-forest-laws-fra",
+      "q": "Consider the following statements : 1. As per recent amendment to the Indian Forest Act, 1927, forest dwellers have the right to feil the bamboos grown on forest areas. (\\ | { 2. As per the Scheduled Tribes and Other Traditional Forest Dwellers (Recognition of Forest Rights) Act, 2006, bamboo is a minor forest produce. 3. The Scheduled Tribes and Other Traditional Forest Dwellers (Recognition of Forest Rights) Act, 2006 allows ownership of minor forest produce to forest dwellers.",
+      "options": [
+        "1 and 2 only",
+        "2 and 3 only",
+        "3 only",
+        "1, 2 and 3"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 55
+      }
+    },
+    {
+      "id": "csp19-gs1-a-58",
+      "topic": "environment-epa-eia",
+      "q": "Consider the following statements : The Environment Protection Act, 1986 empowers the Government of India to 1. state the requirement of public participation in the process of environmental protection, and the procedure and manner in which it is sought 2. lay down the standards for emission or discharge of environmental pollutants from . various sources ° is/are correct?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2 BKL-F-GHP/54A :"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 58
+      }
+    },
+    {
+      "id": "csp19-gs1-a-59",
+      "topic": "environment-waste-management",
+      "q": "As per the Solid Waste Management Rules, 2016 in India, which one of the following statements is correct?",
+      "options": [
+        "Waste generator has to segregate waste into five categories.",
+        "The Rules are applicable to notified urban local bodies, notified towns . and all industrial townships only.",
+        "The Rules provide for exact and . elaborate criteria for the identification of sites for landfills ’ and waste processing facilities.",
+        "itis mandatory on the part of waste - generator that the waste generated in one district cannot be moved to . another district. :"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 59
+      }
+    },
+    {
+      "id": "csp19-gs1-a-62",
+      "topic": "geography-indian-minerals-and-energy",
+      "q": "With reference to the management of minor minerals in India, consider the following statements : 1. Sand is a ‘minor mineral’ according to the prevailing law in the country. 2. State Governments have the power to grant mining leases of minor minerals, but the powers regarding the formation of rules related to the grant of minor minerals lie with the I Central Government. 3. State Governments have the power to frame rules to prevent illegal mining of minor minerals. . Which of the statements given above .",
+      "options": [
+        "1 and 3 only",
+        "2 and 3 only",
+        "3 only",
+        "1, 2 and 3 ro"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 62
+      }
+    },
+    {
+      "id": "csp19-gs1-a-63",
+      "topic": "economics-external-sector-bop",
+      "q": "Consider the following statements : 1. Most of India’s external debt is owed by governmental entities. 2. All of India’s external debt is denominated in US dollars.",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 63
+      }
+    },
+    {
+      "id": "csp19-gs1-a-64",
+      "topic": "economics-banking-sector",
+      "q": "Which of the following is not included in the assets of a commercial bank in India?",
+      "options": [
+        ". Advances .",
+        ") Deposits",
+        "Investments",
+        "Money at call and short notice"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 64
+      }
+    },
+    {
+      "id": "csp19-gs1-a-66",
+      "topic": "polity-state-executive-governor",
+      "q": "Which one of the following suggested that the Governor should be an eminent person from outside the State and | should be a detached figure without intense political links or should not have taken part in politics in the recent | past? ;",
+      "options": [
+        "First Administrative Reforms | Commission (1966)",
+        "Rajamannar Committee (1969)",
+        "Sarkaria Commission {1983) i .",
+        "National Commission to Review the : Working of the Constitution (2000)"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 66
+      }
+    },
+    {
+      "id": "csp19-gs1-a-67",
+      "topic": "economics-investment-models-fdi",
+      "q": "Which of the following is issued by registered foreign portfolio investors to overseas investors who want to be part of the Indian stock market without registering themselves directly?",
+      "options": [
+        "Certificate of Deposit",
+        "Commercial Paper",
+        "Promissory Note",
+        "° Participatory Note"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 67
+      }
+    },
+    {
+      "id": "csp19-gs1-a-68",
+      "topic": "environment-forest-laws-fra",
+      "q": "Consider the following statements : 1. As per law, the Compensatory Afforestation Fund Management and Planning Authority exists at | both National and State levels. 2. People’s participation is mandatory in the compensatory afforestation programmes carried out under the Compensatory Afforestation Fund Act, 2016.",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2 I y"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 68
+      }
+    },
+    {
+      "id": "csp19-gs1-a-69",
+      "topic": "polity-statutory-regulatory-bodies",
+      "q": "In India, which of the following review the independent regulators in sectors like telecommunications, insurance, electricity, etc.? 1. Ad Hoc Committees set up by the Parliament 2. Parliamentary Department Related Standing Committees 3. Finance Commission 4. Financial Sector Legislative Reforms Commission : 5. NITI Aayog given below. :",
+      "options": [
+        "1 and 2",
+        "1, 3 and 4",
+        "3,4 and 5",
+        "2 and 5"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 69
+      }
+    },
+    {
+      "id": "csp19-gs1-a-70",
+      "topic": "economics-planning-and-niti-aayog",
+      "q": "With reference to India’s Five-Year Plans, which of the following statements is/are correct? 1. From the Second Five-Year Plan, there was a determined thrust towards substitution of basic and - capital good iridustries. 2. The Fourth Five-Year Plan adopted the objective of correcting the earlier trend of increased concentration of wealth and economic power. 3. In the Fifth Five-Year Plan, for the first time, the financial sector was included as an integral part of the Plan. given below.",
+      "options": [
+        "1 and 2 only",
+        "2 only",
+        "3 only",
+        "1, 2 and 3 . 31 [ P.T.O. ‘ 71. With reference to Asian Infrastructure | Investment Bank (AIIB), consider the following statements :"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 70
+      }
+    },
+    {
+      "id": "csp19-gs1-a-74",
+      "topic": "polity-statutory-regulatory-bodies",
+      "q": "Consider the following statements : 1. Petroleum and Natural Gas Regulatory Board (PNGRB) is the first regulatory .body set up by the Government of India. 2. One of the tasks of PNGRB is to ensure competitive markets for gas. 3. Appeals against the decisions of — PNGRB go before the Appellate . Tribunals for Electricity. Which of the statements given above are correct?",
+      "options": [
+        "1 and 2 only",
+        "2 and 3 only",
+        "1 and 3 only",
+        "1, 2 and 3"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 74
+      }
+    },
+    {
+      "id": "csp19-gs1-a-75",
+      "topic": "scitech-telecom-5g-6g",
+      "q": "With reference to communication technologies, what is/are the difference/differences between LTE (Long-Term Evolution) and VoLTE (Voice over Long-Term Evolution)? 1. LTE is commonly marketed as 3G and VoLTE is commonly marketed as advanced 3G. 2, LIE is data-only technology and VoLTE is voice-only technology. given below.",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2 33 [ P.T.O."
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 75
+      }
+    },
+    {
+      "id": "csp19-gs1-a-78",
+      "topic": "environment-waste-management",
+      "q": "In India, ‘extended producer responsibility’ was introduced as an important feature in which of the following?",
+      "options": [
+        "The Bio-medical Waste (Management and Handling} Rules, 1998",
+        "The Recycled | Plastic (Manufacturing and Usage) Rules, ; 1999 .",
+        "The e-Waste (Management and Handling) Rules, 2011",
+        "The Food Safety and Standard Regulations, 2011"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 78
+      }
+    },
+    {
+      "id": "csp19-gs1-a-79",
+      "topic": "economics-food-security-pds",
+      "q": "The economic cost of food grains to the Food Corporation of India is Minimum Support Price and bonus {if any) paid to the farmers plus",
+      "options": [
+        "transportation cost only",
+        "interest cost only",
+        "_ procurement incidentals and distribution cost",
+        "procurement incidentals and charges for godowns :"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 79
+      }
+    },
+    {
+      "id": "csp19-gs1-a-80",
+      "topic": "economics-growth-and-development",
+      "q": "In the context of any country, which one of the following would be considered as part of its social capital?",
+      "options": [
+        "The proportion of literates in the . population",
+        "The stock of its buildings, other infrastructure and machines ;",
+        "The size of population in the working age group",
+        "The level of mutual trust and : harmony in the society 35 ma [ P.T.O. . 81. With reference to the Constitution of India, consider the following statements : ."
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 80
+      }
+    },
+    {
+      "id": "csp19-gs1-a-82",
+      "topic": "economics-external-sector-bop",
+      "q": "Consider the following statements - : 1. Purchasing Power Parity (PPP) exchange rates are calculated by comparing the prices of the same basket of goods and services in different countries. 2. In terms of PPP dollars, India is the sixth largest economy in the world. ‘ is/are correct? ‘",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 82
+      }
+    },
+    {
+      "id": "csp19-gs1-a-83",
+      "topic": "geography-indian-agriculture",
+      "q": "With reference to the cultivation of Kharif crops in India in the last five years, . consider the following statements : 1. Area under rice cultivation is the highest. : 2. Area under the cultivation of jowar is more than that of oilseeds. 3. Area of cotton cultivgtion is more than that of sugarcane. ~ 4. Area under sugarcane cultivation has steadily decreased. SO Which of the statements given above are correct?",
+      "options": [
+        "1 and 3 only",
+        "2, 3 and 4 only ae °",
+        "2 and 4 only",
+        "1, 2, 3 and 4"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 83
+      }
+    },
+    {
+      "id": "csp19-gs1-a-84",
+      "topic": "economics-agri-marketing-msp",
+      "q": "Among the agricultural commodities imported by India, which one of the following accounts for the highest imports in terms of value in the last five years?",
+      "options": [
+        "Spices",
+        "Fresh fruits",
+        "Pulses ;",
+        "Vegetable oils"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 84
+      }
+    },
+    {
+      "id": "csp19-gs1-a-85",
+      "topic": "polity-fundamental-rights",
+      "q": "In the context of polity, which one of the following would you accept as the most appropriate definition of liberty?",
+      "options": [
+        "Protection against the tyranny of political rulers",
+        "Absence of restraint",
+        "Opportunity to do whatever one likes",
+        "Opportunity to develop oneself fully 37 . [{ P.T.O."
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 85
+      }
+    },
+    {
+      "id": "csp19-gs1-a-90",
+      "topic": "economics-monetary-policy",
+      "q": "The. money multiplier in an economy ..- inereases .with which one of the following? ,",
+      "options": [
+        "Increase in the cash reserve ratio",
+        "Increase in the banking habit of the population .",
+        "Increase in the. statutory liquidity ‘ ratio :",
+        "Increase in the population of the country"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 90
+      }
+    },
+    {
+      "id": "csp19-gs1-a-92",
+      "topic": "history-prehistory-and-indus-valley",
+      "q": "The word ‘Denisovan’ is sometimes mentioned in media in reference to",
+      "options": [
+        "fossils of a kind of dinosaurs",
+        "an early human species",
+        "acave system found in North-East India",
+        "a geological period in the history of , Indian subcontinent"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 92
+      }
+    },
+    {
+      "id": "csp19-gs1-a-94",
+      "topic": "scitech-cybersecurity",
+      "q": "Consider the following statements : ‘ A digital signature is 1. an electronic record that identifies the certifying authority issuing it 2. used to serve as a proof of identity of an individual to access information or server on Internet . 3. an electronic method of signing an electronic document and ensuring that the original content is unchanged",
+      "options": [
+        "1 only",
+        "2 and 3 only",
+        "3 only",
+        "1, 2 and 3"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 94
+      }
+    },
+    {
+      "id": "csp19-gs1-a-95",
+      "topic": "scitech-robotics-automation-manufacturing",
+      "q": "In the context of wearable technology, which of the following tasks is/are accomplished by wearable devices? 1. Location identification of a person 2. Sleep monitoring of a person 3. Assisting the hearing impaired person given below.",
+      "options": [
+        "1 only",
+        "2 and 3 only",
+        "3 only",
+        "1, 2 and 3 [ P.T.O. ; 96. ‘RNA interference (RNAi)’ technology has ~ gained popularity in the last few years. Why?"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 95
+      }
+    },
+    {
+      "id": "csp19-gs1-a-97",
+      "topic": "scitech-astronomy-big-science",
+      "q": "Recently, scientists observed the merger of giant ‘blackholes’ billions of light- ' years away from the Earth. What is the significance of this observation?",
+      "options": [
+        "Higgs boson particles’ were detected.",
+        "‘Gravitational waves’ were detected.",
+        "Possibility of inter-galactic space travel through ‘wormhole’ was confirmed. .",
+        "It enabled the scientists to understand ‘singularity’. . 98. Which of the following are the reasons for . the occurrence of multi-drug resistance in microbial pathogens in India?"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 97
+      }
+    },
+    {
+      "id": "csp19-gs1-a-99",
+      "topic": "scitech-genomics-gene-editing",
+      "q": "What is Cas9 protein that is often mentioned in news?",
+      "options": [
+        "A molecular scissors used in targeted gene editing",
+        "A biosensor used in the accurate detection of pathogens in patients",
+        "A gene that makes plants pest- resistant",
+        "A herbicidal substance synthesized in genetically modified crops"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2019,
+        "code": "gs1",
+        "set": "A",
+        "n": 99
+      }
     }
   ]
 }

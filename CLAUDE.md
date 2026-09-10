@@ -182,7 +182,7 @@ turns it green rather than leaving it looking like a failure.
 | `subjects.json` | 8 subjects → 242 topics → 1,723 subtopics; each topic tagged with papers + weight |
 | `pyq-papers.json` | official upsc.gov.in paper links per year — Prelims 22/24, Mains 54/60 |
 | `answer-keys.json` | Prelims answer keys: links, marking scheme, set-wise letters. GS-I complete 2017-2026; CSAT has links but no letters |
-| `quiz.json` | 325 questions: 35 written here, 98 from a test series, 95 from UPSC 2023 GS-I, 97 from 2022 GS-I |
+| `quiz.json` | 656 questions: 35 written here, 98 from a test series, and six UPSC GS-I papers — 2018, 2019, 2021, 2022, 2023, 2025 |
 | `toppers.json` | 102 published answer copies across 10 publishers |
 | `daily.json` | daily current-affairs quiz sources: a URL pattern the page expands against the date |
 | `optionals.json` | the Optional tab: Geography, Law and Agriculture, 22/22 papers each 2016–2026, plus curated copies |
@@ -350,6 +350,50 @@ checked against knowledge: qubit → Quantum Computing, "not a bird" → Golden
 Mahseer, Senkaku → China and Japan, Yogavasistha → Akbar, CO/NOx/O3/SO2 → 2 and
 4 only, Levant → the eastern Mediterranean. All six right, which a shifted
 sequence could not have produced.
+
+### A paper with gaps can still give up the part it got right
+
+Numbers are assigned by POSITION, so a paper that did not come out whole cannot
+be trusted whole: everything after a gap may be shifted by one, and a shifted
+number pulls the wrong letter from the key.
+
+But each question records whether its printed number was **read off the page**
+and matched the position the parser was at. Those are independent facts, and
+where they agree the question is corroborated on its own regardless of what went
+wrong elsewhere in the paper. That is what lets 2019, 2021 and 2025 be imported
+at all — each is four questions short of whole, and each still yields around
+eighty questions that stand up.
+
+The rule for importing, in order: the number was read; the Commission did not
+drop it; OCR resolved four distinct options; and a topic could be assigned from
+the stem with confidence. Anything failing one of those is left out and counted.
+
+**Option brackets are not reliably round.** 2019's scan gives "(b}", "{c})" and
+"fc)" — a curly close, a curly open, an "f" for a "(". Against a round-only
+pattern thirty-nine of its questions came out with three options instead of
+four, and it went from 46 importable to 81 when the pattern learned the shapes
+OCR confuses brackets with.
+
+### Verification, and what it is not
+
+The answers cannot be wrong in the ordinary sense: they come from the
+Commission's key by number, and `build.py` checks them again. What OCR can get
+wrong is the TEXT and the NUMBERING, and OCR cannot check either for itself.
+
+So each paper is checked against knowledge before import — 2022: qubit is
+Quantum Computing, "not a bird" is the Golden Mahseer, Senkaku is China and
+Japan, Yogavasistha was translated under Akbar. 2019: Sohgaura is not Harappan,
+the sun does not set at the Arctic Circle on 21 June, India is the largest rice
+exporter, Denisovan is an early human species. A shifted sequence cannot produce
+four right answers in a row.
+
+`tools/pyq-crosscheck.py` is the mechanical version and is built but not yet
+run: UPSC publishes one Series and Drishti another, and the answer key's block
+permutation is an exact lookup between the two numberings. That mapping is
+proven rather than assumed — the dropped question maps onto itself in every year
+checked, and every mapped pair carries the same key letter. **Drishti's own PDFs
+turn out to be scans too** for every year but 2023, and their site does not
+publish questions as HTML, so the cross-check has to be scan against scan.
 
 ### Topics are still judgement, and the measurement says so
 

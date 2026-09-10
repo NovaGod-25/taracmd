@@ -8690,6 +8690,2850 @@
         "set": "A",
         "n": 99
       }
+    },
+    {
+      "id": "csp21-gs1-a-1",
+      "topic": "economics-monetary-policy",
+      "q": "Consider the following statements : 1. The Governor of the Reserve Bank of India (RBI) is appointed by the Central Government. 25... Certain provisions in the Constitution of India give the Central Government the right to issue directions to the RBI in public interest. 3. The Governor of the RBI draws his ‘ power from the RBI Act. Which of the above statements are correct? :",
+      "options": [
+        "1 and 2 only",
+        "2 and 3 only",
+        "1 and 3 only",
+        "1, 2 and 3"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 1
+      }
+    },
+    {
+      "id": "csp21-gs1-a-2",
+      "topic": "economics-employment-and-labour",
+      "q": "With reference to casual workers employed in India, consider the following statements : 1. All casual’ workers are entitled for Employees Provident Fund coverage. 2. All casual workers are entitled for regular working hours and overtime payment. 3. The government can by a notification specify that an establishment or industry shall ‘ pay wages only through its bank account. Which of the above statements are correct?",
+      "options": [
+        "1 and 2 only",
+        "2 and 3 only",
+        "1 and 3 only",
+        "1, 2 and 3 | BXC-U-FTHI/68A 3"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 2
+      }
+    },
+    {
+      "id": "csp21-gs1-a-3",
+      "topic": "economics-fiscal-policy-and-budget",
+      "q": "Which among the following steps is most likely to be taken at the time of an economic recession?",
+      "options": [
+        "Cut in tax rates accompanied by increase in interest rate",
+        "Increase in expenditure on public projects",
+        "Increase in tax rates accompanied by reduction of interest rate",
+        "Reduction of expenditure on public projects"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 3
+      }
+    },
+    {
+      "id": "csp21-gs1-a-4",
+      "topic": "economics-national-income-accounting",
+      "q": "Consider the following statements : Other things remaining unchanged, market demand for a good might increase if 1. price of its substitute increases 2. price of its complement increases 3. the good is an inferior good and income of the consumers increases 4. its price falls Which of the above statements are correct?",
+      "options": [
+        "1 and 4 only",
+        "2, 3 and 4",
+        "1, 3 and 4",
+        "1, 2 and 3 i P.F0;"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 4
+      }
+    },
+    {
+      "id": "csp21-gs1-a-5",
+      "topic": "economics-banking-sector",
+      "q": "With reference to ‘Urban Cooperative Banks’ in India, consider the following statements : 1. They are supervised and regulated by local boards set up by the State Governments. 2. They can issue equity shares and preference shares. ‘ 3. They were brought under the purview of the Banking Regulation Act, 1949 through an Amendment : in 1966.",
+      "options": [
+        "1 only",
+        "2 and 3 only",
+        "1 and 3 only",
+        "1, 2 and 3"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 5
+      }
+    },
+    {
+      "id": "csp21-gs1-a-7",
+      "topic": "economics-investment-models-fdi",
+      "q": "Consider the following : 1. Foreign currency convertible bonds 2. Foreign institutional investment with certain conditions 3. Global depository receipts 4. Non-resident external deposits Which of the above can be included in Foreign Direct Investments?",
+      "options": [
+        "1, 2 and 3",
+        "3 only",
+        "2 and 4",
+        "1 and 4"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 7
+      }
+    },
+    {
+      "id": "csp21-gs1-a-8",
+      "topic": "economics-external-sector-bop",
+      "q": "Consider the following statements : The effect of devaluation of a currency is that it necessarily 1. improves the competitiveness of the domestic exports in the foreign markets 2. increases the foreign value of domestic currency 3. improves the trade balance Which of the above statements is/are correct?",
+      "options": [
+        "1 only",
+        "1 and 2",
+        "3 only",
+        "2 and 3 [ P:P.0:"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 8
+      }
+    },
+    {
+      "id": "csp21-gs1-a-9",
+      "topic": "economics-taxation-and-gst",
+      "q": "Which one of the following effects of creation of black money in India has been the main cause of worry to the Government of India?",
+      "options": [
+        "Diversion of resources to the purchase of real estate and investment in luxury housing",
+        "Investment in unproductive ‘ activities and purchase of precious stones, jewellery, gold, etc.",
+        "Large donations to political parties and growth of regionalism",
+        "Loss of revenue to the State Exchequer due to tax evasion"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 9
+      }
+    },
+    {
+      "id": "csp21-gs1-a-10",
+      "topic": "economics-inflation",
+      "q": "Which one of the following is likely to be the most inflationary in its effects?",
+      "options": [
+        "Repayment of public debt",
+        "Borrowing from the public to finance a budget deficit",
+        "Borrowing from the banks to finance a budget deficit",
+        "Creation of new money to finance a budget deficit BXC-U-FTHI/68A 7"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 10
+      }
+    },
+    {
+      "id": "csp21-gs1-a-11",
+      "topic": "economics-monetary-policy",
+      "q": "The money multiplier in an economy increases with which one of the following?",
+      "options": [
+        "Increase in the Cash Reserve Ratio in the banks",
+        "Increase in the Statutory Liquidity Ratio in the banks",
+        "Increase in the banking habit of the people",
+        "Increase in the population of the country"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 11
+      }
+    },
+    {
+      "id": "csp21-gs1-a-12",
+      "topic": "economics-inflation",
+      "q": "With reference to Indian economy, demand-pull inflation can be caused/ increased by which of the following? 1. Expansionary policies 2. Fiscal stimulus 3. Inflation-indexing wages 4. Higher purchasing power 5. Rising interest rates",
+      "options": [
+        "1, 2 and 4 only",
+        "3, 4 and 5 only",
+        "1, 2, 3 and 5 only",
+        "1, 2, 3,4 and 5 [-P:TO."
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 12
+      }
+    },
+    {
+      "id": "csp21-gs1-a-13",
+      "topic": "economics-financial-markets",
+      "q": "With reference to India, consider the following statements : | 1. Retail investors through demat account can invest in ‘Treasury Bills’ and ‘Government of India Debt Bonds’ in primary market. | 2. The ‘Negotiated Dealing System- Order Matching’ is a government securities trading platform of the Reserve Bank of India. ‘ 3. The ‘Central Depository Services Ltd.’ is jointly promoted by the Reserve Bank of India and the ; Bombay Stock Exchange.",
+      "options": [
+        "1 only",
+        "1 and 2",
+        "3 only",
+        "2 and 3"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 13
+      }
+    },
+    {
+      "id": "csp21-gs1-a-14",
+      "topic": "economics-financial-inclusion-fintech",
+      "q": "With reference to ‘WaterCredit’, consider the following statements : 1. It puts microfinance tools to work in the water and sanitation sector. 2. It is a global initiative launched under the aegis of the World Health Organization and the World Bank. 3. It aims to enable the poor people e to meet their water needs without depending on subsidies. ; Which of the statements given above are correct? |",
+      "options": [
+        "1 and 2 only",
+        "2 and 3 only",
+        "1 and 3 only",
+        "1, 2 and 3 | BXC-U-FTHI/68A 9"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 14
+      }
+    },
+    {
+      "id": "csp21-gs1-a-16",
+      "topic": "environment-waste-management",
+      "q": "‘R2 Code of Practices’ constitutes a tool available for promoting the adoption of",
+      "options": [
+        "environmentally responsible prac- tices in electronics recycling industry",
+        "ecological management of ‘Wetlands of International Importance’ under the Ramsar Convention",
+        "sustainable practices in the cultivation of agricultural crops in degraded lands",
+        "Environmental Impact Assessment’ in the exploitation of natural resources [ P.T.0."
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 16
+      }
+    },
+    {
+      "id": "csp21-gs1-a-17",
+      "topic": "environment-air-pollution",
+      "q": "Why is there a concern about copper | smelting plants? Ll; . They may release lethal quantities of carbon monoxide into environment. 2. The copper slag can cause the leaching of some heavy metals into environment. 3. They may release sulphur dioxide ' as a pollutant. . code given below.",
+      "options": [
+        "1 and 2 only",
+        "2 and 3 only",
+        "1 and 3 only",
+        "1, 2 and 3"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 17
+      }
+    },
+    {
+      "id": "csp21-gs1-a-18",
+      "topic": "environment-air-pollution",
+      "q": "With reference to furnace oil, consider | the following statements : | 1. It is a product of oil refineries. 2. Some industries use it to generate power. 3. Its use causes sulphur emissions into environment. are correct?",
+      "options": [
+        "1 and 2 only",
+        "2 and 3 only",
+        "1 and 3 only",
+        "1, 2 and 3 BXC-U-FTHI/68A 11"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 18
+      }
+    },
+    {
+      "id": "csp21-gs1-a-20",
+      "topic": "environment-ecology-fundamentals",
+      "q": "In the nature, which of the following is/are most likely to be found surviving on a surface without soil? 1. Fern 2. Lichen 3. Moss 4. Mushroom",
+      "options": [
+        "1 and 4 only",
+        "2 only",
+        "2 and 3",
+        "1, 3 and 4 PTO."
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 20
+      }
+    },
+    {
+      "id": "csp21-gs1-a-21",
+      "topic": "environment-ecology-fundamentals",
+      "q": "Which one of the following is used in preparing a natural mosquito repellent?",
+      "options": [
+        "Congress grass",
+        "Elephant grass",
+        "Lemongrass",
+        "Nut grass"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 21
+      }
+    },
+    {
+      "id": "csp21-gs1-a-22",
+      "topic": "environment-marine-coastal-ecosystems",
+      "q": "Consider the following kinds of 4 organisms : 1. Copepods : 2. Cyanobacteria 3. Diatoms 4. Foraminifera Which of the above are _ primary producers in the food chains of oceans?",
+      "options": [
+        "1 and 2",
+        "2 and 3",
+        "3 and 4",
+        "1 and 4"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 22
+      }
+    },
+    {
+      "id": "csp21-gs1-a-23",
+      "topic": "environment-species-in-news-iucn",
+      "q": "Consider the following animals : 1. Hedgehog 2. Marmot 3. Pangolin \" To reduce the chance of being captured by predators, which of the above organisms rolls up/roll up and protects/ q protect its/their vulnerable parts?",
+      "options": [
+        "1 and 2",
+        "2 only",
+        "3 only",
+        "1 and 3 BXC-U-FTHI/68A 13"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 23
+      }
+    },
+    {
+      "id": "csp21-gs1-a-24",
+      "topic": "environment-forest-laws-fra",
+      "q": "With reference to the ‘New York Declaration on Forests’, which of the following statements are correct? 1. It was first endorsed at the United Nations Climate Summit in 2014. 2. It endorses a global timeline to end the loss of forests. 3. It is a legally binding international declaration. 4. It is endorsed by governments, big companies and_ indigenous communities. 5. India was one of the signatories at its inception.",
+      "options": [
+        "1, 2 and 4",
+        "1,3 and 5",
+        "3 and 4",
+        "2 and 5"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 24
+      }
+    },
+    {
+      "id": "csp21-gs1-a-25",
+      "topic": "environment-air-pollution",
+      "q": "Magnetite particles, suspected to cause neurodegenerative problems, are generated as environmental pollutants from which of the following? 1. Brakes of motor vehicles 2. Engines of motor vehicles 3. Microwave stoves within homes 4. Power plants 5. Telephone lines",
+      "options": [
+        "1, 2, 3 and 5 only",
+        "1, 2 and 4 only",
+        "3, 4 and 5 only",
+        "-.1, 2, 3,°4and 5 [ P.T.O."
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 25
+      }
+    },
+    {
+      "id": "csp21-gs1-a-29",
+      "topic": "environment-carbon-markets-climate-finance",
+      "q": "The ‘Common Carbon Metric’, supported by UNEP, has been developed for",
+      "options": [
+        "assessing the carbon footprint of building operations around the world",
+        "enabling commercial farming entities around the world to enter carbon emission trading /",
+        "enabling governments to assess the overall carbon footprint caused by their countries",
+        "assessing the overall carbon foot- print caused by the use of fossil - fuels by the world in a unit time"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 29
+      }
+    },
+    {
+      "id": "csp21-gs1-a-30",
+      "topic": "environment-ecology-fundamentals",
+      "q": "Which of the following have species that can establish symbiotic relationship with other organisms? 1. Cnidarians 2. Fungi 3. Protozoa",
+      "options": [
+        "1 and 2 only",
+        "2 and 3 only",
+        "1 and 3 only",
+        "1, 2 and 3 [ P.O;"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 30
+      }
+    },
+    {
+      "id": "csp21-gs1-a-31",
+      "topic": "history-indian-architecture",
+      "q": "With reference to Chausath Yogini Temple situated near Morena, consider the following statements : 1. It is a circular temple built during the reign of Kachchhapaghata Dynasty. 2. It is the only circular temple built in India. : 3. It was meant to promote the Vaishnava cult in the region. 4. Its design has given rise _ to a popular belief that it was the inspiration behind the Indian Parliament building. are correct?",
+      "options": [
+        "1 and 2",
+        "2 and 3 only",
+        "1 and 4",
+        "2, 3 and 4"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 31
+      }
+    },
+    {
+      "id": "csp21-gs1-a-32",
+      "topic": "history-prehistory-and-indus-valley",
+      "q": "Which one of the following ancient towns is well-known for its elaborate system of water harvesting and management . by building a series of dams and channelizing water into connected reservoirs?",
+      "options": [
+        "Dholavira ;",
+        "Kalibangan",
+        "Rakhigarhi",
+        "Ropar BXC-U-FTHI/68A 17"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 32
+      }
+    },
+    {
+      "id": "csp21-gs1-a-33",
+      "topic": "history-advent-of-europeans-and-british-rule",
+      "q": "In the first quarter of seventeenth century, in which of the following was/were the factory/factories of the English East India Company located? 1. Broach 2. Chicacole 3. Trichinopoly’~ -",
+      "options": [
+        "1 only",
+        "1 and 2",
+        "3 only",
+        "2 and 3"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 33
+      }
+    },
+    {
+      "id": "csp21-gs1-a-35",
+      "topic": "history-vijayanagara-and-bahmani",
+      "q": "According to Portuguese writer Nuniz, the women in Vijayanagara Empire were expert in which of the following areas? 1. Wrestling 2. Astrology | 3. Accounting 4. Soothsaying",
+      "options": [
+        "1, 2 and 3 only",
+        "1, 3 and 4 only",
+        "2 and 4 only",
+        "1, 2, 3 and 4"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 35
+      }
+    },
+    {
+      "id": "csp21-gs1-a-36",
+      "topic": "history-rise-of-nationalism-1885-1917",
+      "q": "With reference to Madanapalle of Andhra Pradesh, which one of the following statements is correct?",
+      "options": [
+        "Pingali Venkayya designed the tricolour Indian National Flag here. :",
+        "Pattabhi Sitaramaiah led the Quit India Movement of Andhra region from here.",
+        "Rabindranath Tagore translated the National Anthem from Bengali to English here.",
+        "Madame Blavatsky and Colonel Olcott set up headquarters of Theosophical Society first here. BXC-U-FTHI/68A 19"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 36
+      }
+    },
+    {
+      "id": "csp21-gs1-a-37",
+      "topic": "history-prehistory-and-indus-valley",
+      "q": "Consider the following pairs : ( Historical place ) ( Well-known for ) 1. Burzahom :_ Rock-cut shrines 2. Chandra- ketugarh : Terracotta art 3. Ganeshwar : Copper artefacts . Which of the pairs given above is/are correctly matched?",
+      "options": [
+        "1 only",
+        "1 and 2",
+        "3 only",
+        "2 and 3"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 37
+      }
+    },
+    {
+      "id": "csp21-gs1-a-38",
+      "topic": "history-delhi-sultanate",
+      "q": "Consider the following statements : 1. It was during the reign of Iltutmish that Chengiz Khan reached the Indus in pursuit of the fugitive Khwarezm prince. 2. It was during the reign of Muhammad bin Tughluq that Taimur occupied Multan and crossed the Indus. 3. It was during the reign of Deva Raya II of Vijayanagara Empire that Vasco da Gama reached the coast of Kerala.",
+      "options": [
+        "1 only",
+        "1 and 2",
+        "3 only",
+        "2 and 3 [ P:T-03 | 39. Consider the following statements :"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 38
+      }
+    },
+    {
+      "id": "csp21-gs1-a-40",
+      "topic": "history-philosophy-religion-and-literature",
+      "q": "With reference to the history of ancient India, which of the following statements is/are correct? 1. Mitakshara was the civil law for upper castes and Dayabhaga was the civil law for lower castes. 2. Inthe Mitakshara system, the sons can claim right to the property during the lifetime of the father, whereas in the Dayabhaga system, it is only after the death of the father that the sons can claim right to the property. 3. The Mitakshara system deals with the matters related to the property held by male members only of P a family, whereas the Dayabhaga : system deals with the matters related to the property held by both male and female members of : a family. 3",
+      "options": [
+        "1 and 2",
+        "2 only",
+        "1 and 3",
+        "3 only BXC-U-FTHI/68A 21"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 40
+      }
+    },
+    {
+      "id": "csp21-gs1-a-41",
+      "topic": "history-philosophy-religion-and-literature",
+      "q": "With reference to the history of : ancient India, Bhavabhuti, Hastimalla and Kshemeshvara were famous",
+      "options": [
+        ". Jain monks",
+        "playwrights",
+        "temple architects",
+        "philosophers"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 41
+      }
+    },
+    {
+      "id": "csp21-gs1-a-42",
+      "topic": "polity-constitutional-evolution",
+      "q": "Consider the following statements : 1. The Montagu-Chelmsford Reforms of 1919 recommended granting voting. rights to all the women above the age of 21. 2. The Government of India Act of 1935 gave women reserved seats in legislature.",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 42
+      }
+    },
+    {
+      "id": "csp21-gs1-a-46",
+      "topic": "history-socio-religious-reform-movements",
+      "q": "Who among the following was associated as Secretary with Hindu Female School which later came to be known as } Bethune Female School?",
+      "options": [
+        "Annie Besant",
+        "Debendranath Tagore",
+        "Ishwar Chandra Vidyasagar",
+        "Sarojini Naidu"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 46
+      }
+    },
+    {
+      "id": "csp21-gs1-a-47",
+      "topic": "history-towards-independence-and-partition",
+      "q": "In the context of Colonial India, Shah ee Nawaz Khan, Prem Kumar Sehgal and Gurbaksh Singh Dhillon are remembered as ‘",
+      "options": [
+        "leaders of Swadeshi and Boycott Movement",
+        "members of the Interim Government in 1946",
+        "members of the Drafting Committee in the Constituent Assembly",
+        "officers of the Indian National Army BXC-U-FTHI/68A 23"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 47
+      }
+    },
+    {
+      "id": "csp21-gs1-a-48",
+      "topic": "history-marathas-and-regional-states",
+      "q": "With reference to Indian history, which , of the following statements is/are correct? 1. The Nizamat of Arcot emerged out of Hyderabad State. 2. The Mysore Kingdom emerged out of Vijayanagara Empire. 3. Rohilkhand Kingdom was formed out of the territories occupied by Ahmad Shah Durrani.",
+      "options": [
+        "1 and 2",
+        "2 only",
+        "2 and 3",
+        "3 only"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 48
+      }
+    },
+    {
+      "id": "csp21-gs1-a-50",
+      "topic": "ir-india-bangladesh",
+      "q": "Consider the following statements : 1. 21st February is declared to be the International Mother Language Day by UNICEF. 2. The demand that Bangla has to be one of the national languages was raised in the Constituent Assembly of Pakistan. Which of the above statements is/are correct?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2 LPO. ! 51. How is permaculture farming different from conventional chemical farming?"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 50
+      }
+    },
+    {
+      "id": "csp21-gs1-a-52",
+      "topic": "geography-world-agriculture-and-food-systems",
+      "q": "With reference to ‘palm oil’, consider the following statements : 1. The palm oil tree is native to Southeast Asia. 2. The palm oil is a raw material for “4 some industries producing lipstick and perfumes. 3. The palm oil can be used to ’ produce biodiesel. are correct?",
+      "options": [
+        "1 and 2 only",
+        "2 and 3 only",
+        "1 and 3 only",
+        "1, 2 and 3 BXC-U-FTHI/68A 25"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 52
+      }
+    },
+    {
+      "id": "csp21-gs1-a-53",
+      "topic": "geography-indian-drainage-system",
+      "q": "With reference to the Indus river system, of the following four rivers, three of them pour into one of them which joins the Indus direct. Among the following, which one is such river that joins the Indus direct?",
+      "options": [
+        "Chenab",
+        "Jhelum",
+        "Ravi",
+        "Sutlej"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 53
+      }
+    },
+    {
+      "id": "csp21-gs1-a-54",
+      "topic": "geography-india-map-based-study",
+      "q": "With reference to India, Didwana, Kuchaman, Sargol and Khatu are the names of",
+      "options": [
+        "glaciers",
+        "mangrove areas",
+        "Ramsar sites",
+        "saline lakes"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 54
+      }
+    },
+    {
+      "id": "csp21-gs1-a-55",
+      "topic": "geography-indian-drainage-system",
+      "q": "Consider the following rivers : i: Brahmani : 2. Nagavali 3. Subarnarekha j 4. Vamsadhara Which of the above rise from the Eastern Ghats?",
+      "options": [
+        "1 and 2",
+        "2 and 4",
+        "3 and 4",
+        "1 and 3 { PPO; {"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 55
+      }
+    },
+    {
+      "id": "csp21-gs1-a-56",
+      "topic": "geography-oceanography",
+      "q": "Consider the following statements : 1. The Global Ocean Commission grants’ licences for seabed \\ exploration and mining in international waters. 2. India has received licences for seabed mineral exploration in international waters. 3. ‘Rare earth minerals’ are present on seafloor in international waters. . are correct? .",
+      "options": [
+        "1 and 2 only",
+        "2 and 3 only",
+        "1 and 3 only",
+        "1, 2 and 3"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 56
+      }
+    },
+    {
+      "id": "csp21-gs1-a-57",
+      "topic": "geography-indian-agriculture",
+      "q": "Among the following, which one is the least water-efficient crop? :",
+      "options": [
+        "Sugarcane",
+        "Sunflower",
+        "Pearl millet",
+        "Red gram"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 57
+      }
+    },
+    {
+      "id": "csp21-gs1-a-58",
+      "topic": "geography-oceanography",
+      "q": "Consider the following statements : 1. In the tropical zone, the western sections of the oceans are warmer than the eastern sections owing to the influence of trade winds. x 2. In the temperate zone, westerlies make the eastern sections of oceans warmer than the western re sections.",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2 BXC-U-FTHI/68A 27"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 58
+      }
+    },
+    {
+      "id": "csp21-gs1-a-59",
+      "topic": "environment-agriculture-linkages",
+      "q": "In the context of India’s preparation for Climate-Smart Agriculture, consider the following statements : 1. The ‘Climate-Smart Village’ approach in India is a part of a project led by the Climate Change, Agriculture and Food Security (CCAFS), an international research programme. 2. The project of CCAFS is carried out under Consultative Group on International Agricultural Research (CGIAR) headquartered in France. 3. The International Crops Research Institute for the Semi-Arid Tropics (ICRISAT) in India is one of the CGIAR’s research centres. are correct?",
+      "options": [
+        "1 and 2 only",
+        "2 and 3 only",
+        "1 and 3 only",
+        "1, 2 and 3"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 59
+      }
+    },
+    {
+      "id": "csp21-gs1-a-60",
+      "topic": "geography-world-soils-and-biomes",
+      "q": "“Leaf litter decomposes faster than in any other biome and as a result the soil surface is often almost bare. Apart from trees, the vegetation is largely composed of plant forms that reach up into the canopy vicariously, by climbing the trees or growing as epiphytes, rooted on the upper branches of trees.” This is the most likely description of",
+      "options": [
+        "coniferous forest",
+        "dry deciduous forest",
+        "mangrove forest",
+        "tropical rain forest EP-h20. : 61. The vegetation of savannah consists of grassland with scattered small trees, but extensive areas have no trees. The l forest development in such areas is generally kept in check by one or more or a combination of some conditions. Which of the following are such conditions?"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 60
+      }
+    },
+    {
+      "id": "csp21-gs1-a-62",
+      "topic": "geography-oceanography",
+      "q": "With reference to the water on the planet Earth, consider the following statements : 1. The amount of water in the rivers and lakes is more than the amount of groundwater. 2. The amount of water in polar s ice caps and glaciers is more than the amount of groundwater. A Which of the statements given above",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2 BXC-U-FTHI/68A 29"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 62
+      }
+    },
+    {
+      "id": "csp21-gs1-a-63",
+      "topic": "environment-biomes-indian-forest-types",
+      "q": "Consider the following statements : 1. Moringa (drumstick tree).is a leguminous evergreen tree. 2. Tamarind tree is endemic to South Asia. 3. In India, most of the tamarind is collected as minor forest produce. 4. India exports tamarind and seeds of moringa. 5. Seeds of moringa and tamarind can be used in the production of biofuels. are correct?",
+      "options": [
+        "1, 2,4 and 5",
+        "3,4 and 5",
+        "; --1,°Sand 4",
+        "1, 2,.3and.5"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 63
+      }
+    },
+    {
+      "id": "csp21-gs1-a-64",
+      "topic": "geography-indian-soils-and-vegetation",
+      "q": "The black cotton soil of India has been formed due to the weathering of",
+      "options": [
+        "brown forest soil",
+        "fissure volcanic rock",
+        "granite and schist",
+        "shale and limestone EPO."
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 64
+      }
+    },
+    {
+      "id": "csp21-gs1-a-65",
+      "topic": "scitech-vaccines-immunisation",
+      "q": "With reference to recent developments regarding ‘Recombinant Vector Vaccines’, consider the following statements : 1. Genetic engineering is applied in the development of these vaccines. 2. Bacteria and viruses are used as vectors. f is/are correct?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 65
+      }
+    },
+    {
+      "id": "csp21-gs1-a-66",
+      "topic": "scitech-genomics-gene-editing",
+      "q": "In the context of hereditary diseases, consider the following statements : ' 1. Passing on mitochondrial diseases from parent to child’ can be prevented by mitochondrial replacement therapy either before or after in vitro fertilization of egg. 2. A child inherits mitochondrial diseases entirely from mother and not from father.",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 66
+      }
+    },
+    {
+      "id": "csp21-gs1-a-67",
+      "topic": "scitech-gm-crops-agri-biotech",
+      "q": "Bollgard I and Bollgard II technologies . are mentioned in the context of",
+      "options": [
+        "clonal propagation of crop plants",
+        "developing genetically modified crop plants",
+        "production of plant growth ' substances",
+        "production of biofertilizers BXC-U-FTHI/68A 31"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 67
+      }
+    },
+    {
+      "id": "csp21-gs1-a-69",
+      "topic": "scitech-biotech-medicine-drug-development",
+      "q": "Consider the following : 1. Bacteria 2. Fungi 3. Virus Which of the above can be cultured in artificial/synthetic medium?",
+      "options": [
+        "1 and 2 only",
+        "2 and 3 only",
+        "1 and 3 only",
+        "1, 2 and 3"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 69
+      }
+    },
+    {
+      "id": "csp21-gs1-a-70",
+      "topic": "scitech-genomics-gene-editing",
+      "q": "Consider the following statements : 1. Adenoviruses have single-stranded DNA genomes whereas retroviruses have double-stranded DNA genomes. 2. Common cold is sometime caused by an adenovirus whereas AIDS is caused by a retrovirus.",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2 [:P2:0."
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 70
+      }
+    },
+    {
+      "id": "csp21-gs1-a-74",
+      "topic": "environment-waste-management",
+      "q": "Bisphenol A (BPA), a cause of concern, is a structural/key component in the manufacture of which of the following kinds of plastics?",
+      "options": [
+        "Low-density polyethylene",
+        "Polycarbonate",
+        "Polyethylene terephthalate",
+        "Polyvinyl chloride"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 74
+      }
+    },
+    {
+      "id": "csp21-gs1-a-75",
+      "topic": "environment-waste-management",
+      "q": "‘Triclosan’, considered harmful when exposed to high levels for a long time, is most likely present in which of the following?",
+      "options": [
+        "Food preservatives",
+        "Fruit-ripening substances",
+        ", Reused plastic containers",
+        "Toiletries"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 75
+      }
+    },
+    {
+      "id": "csp21-gs1-a-76",
+      "topic": "scitech-astronomy-big-science",
+      "q": "Which one of. the following is a reason why astronomical distances are measured in light-years?",
+      "options": [
+        "Distances among stellar bodies do not change.",
+        "Gravity of stellar bodies does not change.",
+        "Light always travels in straight line.",
+        "Speed of light is always same. UP.T:@."
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 76
+      }
+    },
+    {
+      "id": "csp21-gs1-a-77",
+      "topic": "polity-preamble-and-nature-of-state",
+      "q": "We adopted parliamentary democracy based on the British model, but how does our model differ from that model? 1. As regards legislation, the British Parliament is supreme or sovereign but in India, the power of the Parliament to legislate is limited. 2. In India, matters related to the constitutionality of the Amendment of an Act of the Parliament are referred to the . Constitution Bench by the Supreme Court. ; Select the correct answer using the",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 77
+      }
+    },
+    {
+      "id": "csp21-gs1-a-78",
+      "topic": "polity-civil-services",
+      "q": "With reference to the Union Government, consider the following statements : Ly aa: Gopalaswamy Iyengar . Committee suggested that a minister and a_ secretary be designated solely for pursuing the subject of administrative reform and promoting it. 25. iy 1970, the Department of Personnel. was_ constituted on the recommendation of | the Administrative Reforms so Commission, 1966, and this was placed under the Prime Minister’s charge. e a Which of the statements given above",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2 BXC-U-FTHI/68A 35"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 78
+      }
+    },
+    {
+      "id": "csp21-gs1-a-79",
+      "topic": "polity-right-to-privacy-and-new-rights",
+      "q": "‘Right to Privacy’ is protected under which Article. of the Constitution of India?",
+      "options": [
+        "Article 15",
+        "Article 19",
+        "Article 21",
+        "Article 29"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 79
+      }
+    },
+    {
+      "id": "csp21-gs1-a-81",
+      "topic": "geography-migration-urbanisation-and-settlements",
+      "q": "Consider the following statements : 1. ‘Right to the City’ is an agreed human right and the UN-Habitat monitors the commitments made by each country in this regard. 2. ‘Right to the City’ gives every occupant of the city the right to reclaim public spaces and public participation in the city. 3. ‘Right to the City’ means that the ¥ State cannot deny any public service or facility to the f unauthorized colonies in the city.",
+      "options": [
+        "1 only",
+        "3 only",
+        "1 and 2",
+        "2 and 3"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 81
+      }
+    },
+    {
+      "id": "csp21-gs1-a-82",
+      "topic": "security-police-reforms",
+      "q": "With reference to India, consider the following statements : 1. Judicial custody means an accused is in the custody of the concerned magistrate and such accused is locked up in police station, not in jail. 2. During judicial custody, the police officer in charge of the case is not ’ allowed to interrogate the suspect without the approval of the court. - Which of the statements given above",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2 BXC-U-FTHI/68A 37"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 82
+      }
+    },
+    {
+      "id": "csp21-gs1-a-83",
+      "topic": "security-police-reforms",
+      "q": "With reference to India, consider the following statements : 1. When a prisoner makes out a sufficient case, parole cannot be denied to such prisoner because it becomes a matter of his/her right. 2. State Governments have their own Prisoners Release on Parole Rules.",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 83
+      }
+    },
+    {
+      "id": "csp21-gs1-a-84",
+      "topic": "polity-welfare-vulnerable-sections",
+      "q": "At the national level, which ministry is the nodal agency to ensure effective implementation of the Scheduled Tribes and Other Traditional Forest Dwellers (Recognition of Forest Rights) Act, 2006?",
+      "options": [
+        "Ministry of Environment, Forest and Climate Change",
+        "Ministry of Panchayati Raj",
+        "Ministry of Rural Development",
+        "Ministry of Tribal Affairs"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 84
+      }
+    },
+    {
+      "id": "csp21-gs1-a-85",
+      "topic": "polity-judicial-review-activism",
+      "q": "A legislation which confers on the executive or administrative authority an unguided and uncontrolled discretionary power in the matter of application of law violates which one of the following Articles of the Constitution of India?",
+      "options": [
+        "Article 14",
+        "Article 28",
+        "Article 32",
+        "Article 44 PP LO:"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 85
+      }
+    },
+    {
+      "id": "csp21-gs1-a-86",
+      "topic": "polity-federalism-centre-state",
+      "q": "Which one of the following in Indian ; polity is an essential feature : that indicates that it is federal in character?",
+      "options": [
+        "The independence of judiciary is safeguarded. .",
+        "The Union Legislature has elected representatives from constituent units. -",
+        "The Union Cabinet can have elected representatives from - regional parties. e",
+        "The Fundamental Rights are enforceable by Courts of Law."
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 86
+      }
+    },
+    {
+      "id": "csp21-gs1-a-87",
+      "topic": "polity-fundamental-rights",
+      "q": "Which one of the following best defines the term ‘State’?",
+      "options": [
+        "A community of persons permanently occupying a definite | territory independent of external 7 control and _ possessing an organized government",
+        "A politically organized people of .a definite territory and possessing an authority to govern them, maintain law and order, protect their natural rights and safeguard their means of sustenance",
+        "A number of persons who have been living in a definite territory x for a very long time with their own culture, tradition and government",
+        "A society permanently living in a definite territory with a central authority, an executive responsible to the central authority and an independent judiciary BXC-U-FTHI/68A 39"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 87
+      }
+    },
+    {
+      "id": "csp21-gs1-a-88",
+      "topic": "polity-judiciary-structure",
+      "q": "With reference to Indian judiciary, consider the following statements : 1. Any retired judge of the Supreme Court of India can be called back to sit and act as a Supreme Court judge by the Chief Justice of India with prior permission of the President of India. 2. A High Court in India has the power to review its own judgement as the Supreme Court does.",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 88
+      }
+    },
+    {
+      "id": "csp21-gs1-a-89",
+      "topic": "polity-citizenship",
+      "q": "With reference to India, consider the following statements : 1. There is only one citizenship and one domicile. 2. A citizen by birth only can become the Head of State. 3. A foreigner once granted the citizenship cannot be deprived of it under any circumstances.",
+      "options": [
+        "1 only",
+        "2 only",
+        "1 and 3",
+        "2 and 3"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 89
+      }
+    },
+    {
+      "id": "csp21-gs1-a-90",
+      "topic": "polity-fundamental-rights",
+      "q": "Which one of the following factors constitutes the best safeguard of liberty in a liberal democracy?",
+      "options": [
+        "A committed judiciary",
+        "Centralization of powers",
+        "Elected government",
+        "Separation of powers PTs;"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 90
+      }
+    },
+    {
+      "id": "csp21-gs1-a-91",
+      "topic": "polity-dpsp-and-fundamental-duties",
+      "q": "Under the Indian Constitution, concentration of wealth violates",
+      "options": [
+        "the Right to Equality",
+        "the Directive Principles of State Policy",
+        "the Right to Freedom",
+        "the Concept of Welfare t"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 91
+      }
+    },
+    {
+      "id": "csp21-gs1-a-92",
+      "topic": "polity-fundamental-rights",
+      "q": "What is the position of the Right to Property in India?",
+      "options": [
+        "Legal right available to citizens only",
+        "Legal right available to any person",
+        "Fundamental Right available to citizens only",
+        "Neither Fundamental Right nor legal right"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 92
+      }
+    },
+    {
+      "id": "csp21-gs1-a-93",
+      "topic": "polity-constitutional-evolution",
+      "q": "What was the exact constitutional status of India on 26th January, 1950?",
+      "options": [
+        "A Democratic Republic",
+        "A Sovereign Democratic Republic",
+        "A Sovereign Secular Democratic Republic",
+        "A Sovereign Socialist Secular Democratic Republic BXC-U-FTHI/68A 41"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 93
+      }
+    },
+    {
+      "id": "csp21-gs1-a-94",
+      "topic": "polity-preamble-and-nature-of-state",
+      "q": "Constitutional government means",
+      "options": [
+        "a_ representative government of a nation with federal structure",
+        "a government whose Head enjoys nominal powers",
+        "a government whose Head enjoys real powers",
+        "a government limited by the terms of the Constitution"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 94
+      }
+    },
+    {
+      "id": "csp21-gs1-a-95",
+      "topic": "polity-welfare-vulnerable-sections",
+      "q": "With reference to India, the terms ‘Halbi, Ho and Kui’ pertain to",
+      "options": [
+        "dance forms of Northwest India",
+        "musical instruments",
+        "pre-historic cave paintings",
+        "tribal languages"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 95
+      }
+    },
+    {
+      "id": "csp21-gs1-a-97",
+      "topic": "ir-un-reform",
+      "q": "Consider the following statements : Statement 1 : The United Nations Capital Development Fund (UNCDF) and the Arbor Day Foundation have recently recognized Hyderabad as 2020 Tree City of the World. Statement 2 : Hyderabad was selected for the recognition for a year following its $ commitment to grow and maintain the urban forests. Which one of the following is correct in : respect of the above statements?",
+      "options": [
+        "Both Statement 1 and Statement 2 are correct and Statement 2 is the correct explanation for Statement 1",
+        "Both Statement 1 and Statement 2 are correct but Statement 2 is not the correct explanation for _ Statement 1",
+        "Statement 1 is correct but Statement 2 is not correct",
+        "Statement 1 is not correct but Statement 2 is correct"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs1",
+        "set": "A",
+        "n": 97
+      }
+    },
+    {
+      "id": "csp25-gs1-a-1",
+      "topic": "economics-financial-markets",
+      "q": "With reference to investments, consider the following : I. Bonds Il. Hedge Funds III. Stocks IV. Venture Capital How many of the above are treated as Alternative Investment Funds?",
+      "options": [
+        "Only one",
+        "Only two",
+        "Only three",
+        "All the four"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 1
+      }
+    },
+    {
+      "id": "csp25-gs1-a-2",
+      "topic": "economics-monetary-policy",
+      "q": "Which of the following are the sources of income for the Reserve Bank of India? I. Buying and selling Government bonds II. Buying and selling foreign currency III. Pension fund management IV. Lending to private companies V. Printing and distributing currency ° notes Select the correct answer using the code given below. F",
+      "options": [
+        "I and II only",
+        "I, Ill and IV",
+        "I, Ill, IV and V",
+        "1, Il and V"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 2
+      }
+    },
+    {
+      "id": "csp25-gs1-a-3",
+      "topic": "polity-statutory-regulatory-bodies",
+      "q": "With reference to the Government of India, consider the following information : Organization| Some of its | It works functions under Directorate of |Enforcement |Internal Enforcement jof the Security Fugitive Division-I, Economic Ministry of Offenders Home Affairs Act, 2018 Directorate of|Enforces the |Department Revenue Provisions of jof Revenue, Intelligence |the Customs |Ministry of Act, 1962 Finance III.| Directorate Carrying out |Department General of big data of Revenue, Systems analytics to |Ministry of ’ and Data assist tax Finance Management |officers for better policy and nabbing tax evaders In how many of the above rows is the information correctly matched?",
+      "options": [
+        "Only one",
+        "Only two",
+        "All the three",
+        "None LVPK-O-PSO/56A 3"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 3
+      }
+    },
+    {
+      "id": "csp25-gs1-a-4",
+      "topic": "economics-financial-markets",
+      "q": "Consider the following statements : I. The Reserve Bank of India mandates all the listed companies in India to submit a Business Responsibility and Sustainability Report (BRSR). Il. In India, a company submitting a BRSR makes disclosures in the report that are largely non-financial in nature.",
+      "options": [
+        "1 only",
+        "II only",
+        "Both I and II",
+        "Neither I nor II"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 4
+      }
+    },
+    {
+      "id": "csp25-gs1-a-5",
+      "topic": "economics-allied-sectors",
+      "q": "Consider the following statements : In India, income from allied agricultural activities like poultry farming and wool rearing in rural areas is exempted from any tax. In India, rural agricultural land is not considered a capital asset under the provisions of the Income-tax Act, 1961.",
+      "options": [
+        "Both Statement I and Statement II are correct and Statement II",
+        "Both Statement I and Statement II are correct but Statement II does not explain Statement I",
+        ": Statement..I is. correct:.. but Statement II is not correct",
+        "Statement I is not correct but Statement II is correct"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 5
+      }
+    },
+    {
+      "id": "csp25-gs1-a-6",
+      "topic": "geography-world-natural-resource-distribution",
+      "q": "Consider the following statements : I. India has joined the Minerals Security Partnership as a member. II. India is a resource-rich country in all the 30 critical minerals that it has identified. Ill. The Parliament in 2023 has amended the Mines and Minerals (Development and Regulation) Act, 1957 empowering the Central Government to exclusively auction mining lease and composite license for certain critical minerals.",
+      "options": [
+        "IT and II only §",
+        "II and III only",
+        "I and III only",
+        "I, II and III [P:T:0:"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 6
+      }
+    },
+    {
+      "id": "csp25-gs1-a-7",
+      "topic": "economics-financial-markets",
+      "q": "Consider the following statements : As regards returns from an investment in a company, generally, bondholders are considered to be relatively at lower risk than stockholders. Bondholders are lenders to a company whereas stockholders are its owners. Statement III : For repayment purpose, bond- holders are prioritized over stockholders by a company. é Which one of the following is correct in",
+      "options": [
+        "Both Statement II and Statement III are correct and both of them : explain Statement I",
+        "Both Statement I and Statement II are correct and Statement I explains Statement II",
+        "Only one of the Statements II and III is correct and that explains Statement I",
+        "Neither Statement II nor Statement III is correct"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 7
+      }
+    },
+    {
+      "id": "csp25-gs1-a-8",
+      "topic": "economics-financial-markets",
+      "q": "Consider the following statements : I. India accounts for a very large portion of all equity option contracts traded globally thus exhibiting a great boom. Il. India’s stock market has grown rapidly in the recent past even overtaking Hong Kong’s at some , point of time. Ill. There is no regulatory body either to warn the small investors about ; the risks of options trading or to act on unregistered financial advisors in this regard.",
+      "options": [
+        "I and II only",
+        "II and II only",
+        "1 and III only",
+        "I, Il and III LVPK-O-PSO/56A 5"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 8
+      }
+    },
+    {
+      "id": "csp25-gs1-a-9",
+      "topic": "environment-waste-management",
+      "q": "Consider the following statements : Circular economy reduces the emissions of greenhouse gases. Circular economy reduces the use of raw materials as inputs. Statement III : Circular economy reduces wastage in the production process.",
+      "options": [
+        "Both Statement II and Statement III are correct and both of them explain Statement I",
+        "Both Statement II and Statement III are correct but only one of them",
+        "Only one of the Statements II and III is correct and that explains Statement I",
+        "Neither Statement II nor Statement III is correct"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 9
+      }
+    },
+    {
+      "id": "csp25-gs1-a-10",
+      "topic": "economics-fiscal-policy-and-budget",
+      "q": "Consider the following statements : I. Capital receipts create a liability or cause a reduction in the assets of the Government. II. Borrowings and disinvestment are capital receipts. III. Interest received on loans creates a liability of the Government.",
+      "options": [
+        "1 and II only",
+        "II and III only",
+        "I and III only",
+        "1, lI and Ill Paral"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 10
+      }
+    },
+    {
+      "id": "csp25-gs1-a-11",
+      "topic": "history-socio-religious-reform-movements",
+      "q": "Consider the following statements about Raja Ram Mohan Roy : I. He possessed great love and respect for the traditional philosophical systems of the East. Il. He desired his countrymen to accept the rational and scientific approach and the principle of human dignity and social equality of all men and women.",
+      "options": [
+        "1 only",
+        "Il only",
+        "Both I and II :",
+        "Neither I nor II"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 11
+      }
+    },
+    {
+      "id": "csp25-gs1-a-12",
+      "topic": "history-gandhian-mass-movements",
+      "q": "Consider the following subjects with regard to Non-Cooperation Programme : I. Boycott of law-courts and foreign cloth Il. Observance of strict non-violence Ill. Retention of titles and honours without using them in public IV. Establishment of Panchayats for settling disputes 1 How many of the above were parts of Non-Cooperation Programme?",
+      "options": [
+        "Only one",
+        "Only two",
+        "Only three",
+        "All the four LVPK-O-PSO/56A 7"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 12
+      }
+    },
+    {
+      "id": "csp25-gs1-a-16",
+      "topic": "history-early-medieval-kingdoms",
+      "q": "Who among the following led a successful military campaign against the kingdom of Srivijaya, the powerful maritime State, which ruled the Malay Peninsula, Sumatra, Java and the neighbouring islands?",
+      "options": [
+        ". Amoghavarsha (Rashtrakuta)",
+        "Prataparudra (Kakatiya)",
+        "Rajendra I (Chola)",
+        "Vishnuvardhana (Hoysala)"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 16
+      }
+    },
+    {
+      "id": "csp25-gs1-a-17",
+      "topic": "history-mahajanapadas-and-magadha",
+      "q": "With reference to ancient India (600-322 BC), consider the following pairs : Territorial River flowing region in the region I. Asmaka : Godavari Il. Kamboja : Vipas Il. Avanti : Mahanadi IV. Kosala : Sarayu How many of the pairs given above are correctly matched?",
+      "options": [
+        "Only one",
+        "Only two",
+        "Only three",
+        "All the four LVPK-O-PSO/56A 9"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 17
+      }
+    },
+    {
+      "id": "csp25-gs1-a-18",
+      "topic": "history-performing-arts",
+      "q": "The first Gandharva Mahavidyalaya, a music training school, was set up in 1901 by Vishnu Digambar Paluskar in",
+      "options": [
+        "Delhi",
+        "Gwalior",
+        "Ujjain",
+        "Lahore"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 18
+      }
+    },
+    {
+      "id": "csp25-gs1-a-19",
+      "topic": "history-mauryan-empire",
+      "q": "Ashokan inscriptions suggest that the ‘Pradeshika’, ‘Rajuka’ and ‘Yukta’ were important officers at the",
+      "options": [
+        "village-level administration",
+        "district-level administration",
+        "provincial administration",
+        "level of the central administration"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 19
+      }
+    },
+    {
+      "id": "csp25-gs1-a-23",
+      "topic": "geography-world-map-based-study",
+      "q": "Consider the following water bodies : I. Lake Tanganyika Il. Lake Tonlé Sap Ill. Patos Lagoon Through how many of them does the equator pass?",
+      "options": [
+        "Only one",
+        "Only two",
+        "All the three",
+        "None"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 23
+      }
+    },
+    {
+      "id": "csp25-gs1-a-24",
+      "topic": "geography-indian-agriculture",
+      "q": "Consider the following statements about ’ turmeric during the year 2022-23 : I. India is the largest producer and exporter of turmeric in the world. II. More than 30 varieties of turmeric are grown in India. Ill. Maharashtra, Telangana, Karnataka and Tamil Nadu are major turmeric producing States in India. LVPK-O-PSO/56A 11",
+      "options": [
+        "1 and II only",
+        "I and III only",
+        "1 and Ill only",
+        "1, Il and Ill"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 24
+      }
+    },
+    {
+      "id": "csp25-gs1-a-25",
+      "topic": "geography-earth-interior-and-plate-tectonics",
+      "q": "Which of the following are the evidences of the phenomenon of continental drift? I. The belt of ancient rocks from Brazil coast matches with those from Western Africa. Il. The gold deposits of Ghana are derived from the Brazil plateau when the two continents lay side by side. Ill. The Gondwana system of sediments from India is known to have its counterparts in six different landmasses of the Southern Hemisphere. Select the correct answer using the code given below.",
+      "options": [
+        "I and III only",
+        "1 and II only",
+        "1, II and Il",
+        "Il and III only"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 25
+      }
+    },
+    {
+      "id": "csp25-gs1-a-26",
+      "topic": "geography-atmosphere-and-temperature",
+      "q": "Consider the following statements : The amount of dust particles in the atmosphere is more in subtropical and temperate areas than in equatorial and polar regions. Subtropical and temperate areas have less dry winds.",
+      "options": [
+        "Both Statement I and Statement II are correct and Statement",
+        "Both Statement I and Statement II are correct but Statement II does not explain Statement I",
+        "Statement ~I is: “correct but Statement II is not correct",
+        "Statement I is not correct but Statement II is correct [-P:tO0."
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 26
+      }
+    },
+    {
+      "id": "csp25-gs1-a-27",
+      "topic": "geography-atmosphere-and-temperature",
+      "q": "Consider the following statements : In January, in the Northern Hemisphere, the isotherms bend equatorward while crossing the landmasses, and poleward while crossing the oceans. In January, the air over the oceans is warmer than that over the landmasses in the Northern Hemisphere.",
+      "options": [
+        "Both Statement I and Statement II : are correct and Statement",
+        "Both Statement I and Statement II 4 are correct but Statement II does not explain Statement I",
+        "Statement I is correct but Statement II is not correct",
+        "Statement I is not correct but Statement II is correct"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 27
+      }
+    },
+    {
+      "id": "csp25-gs1-a-28",
+      "topic": "geography-geomorphic-processes-and-landforms",
+      "q": "Consider the following statements : In the context of effect of water on rocks, chalk is known as a very permeable rock whereas clay is known as quite an impermeable or least permeable rock. Chalk is porous and hence can absorb water. Statement III : Clay is not at all porous. ° Which one of the following is correct in",
+      "options": [
+        "Both Statement II and Statement III are correct and both of them explain Statement I",
+        "Both Statement II and Statement III are correct but only one of them LVPK-O-PSO/56A 13",
+        "Only one of the Statements II and III is correct and that explains Statement I",
+        "Neither Statement II nor State- ment III is correct"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 28
+      }
+    },
+    {
+      "id": "csp25-gs1-a-29",
+      "topic": "geography-atmosphere-and-temperature",
+      "q": "Consider the following statements : I. Without the atmosphere, temperature would be well below freezing point everywhere on the Earth’s surface. II. Heat absorbed and trapped by the atmosphere maintains our planet’s average temperature. III. Atmosphere’s gases, like carbon dioxide, are particularly good at absorbing and trapping radiation.",
+      "options": [
+        "I and III only",
+        "I and II only",
+        "I, II and",
+        "II and III only"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 29
+      }
+    },
+    {
+      "id": "csp25-gs1-a-30",
+      "topic": "economics-allied-sectors",
+      "q": "Consider the following statements about the Rashtriya Gokul Mission : I. It is important for the upliftment of rural poor as majority of low producing indigenous animals are with small and marginal farmers and landless labourers. Il. It was initiated to promote indigenous cattle and _ buffalo rearing and conservation in a scientific and holistic manner.",
+      "options": [
+        "1 only",
+        "II only",
+        "Both I and II",
+        "Neither I nor II [POs"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 30
+      }
+    },
+    {
+      "id": "csp25-gs1-a-31",
+      "topic": "environment-india-climate-action",
+      "q": "Consider the following statements : Studies indicate that carbon dioxide emissions from cement industry account for more than 5% of global carbon emissions. Silica-bearing clay is mixed with limestone while manufacturing cement. Statement III : Limestone is converted into lime during clinker production for cement manufacturing. , Which one of the following is correct in",
+      "options": [
+        "Both Statement II and Statement III - are correct and both of them explain Statement I",
+        "Both Statement II and Statement III are correct but only one of them",
+        "Only one of the Statements II and Ill is correct and that explains Statement I",
+        "Neither Statement II nor Statement III is correct"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 31
+      }
+    },
+    {
+      "id": "csp25-gs1-a-32",
+      "topic": "environment-unfccc-paris-cop",
+      "q": "Consider the following statements : At the 28th United Nations Climate Change Conference (COP28), India refrained from signing the ‘Declara- : tion on Climate and Health’. The COP28 Declaration on Climate : and Health is a binding declaration; and if signed, it becomes manda- tory to decarbonize health sector. Statement III : If India’s health sector is decarbonized, the resilience of its health-care system may be compromised. LVPK-O-PSO/56A 1",
+      "options": [
+        "Both Statement II and Statement III are correct and both of them explain Statement I",
+        "Both Statement II and Statement Ill are correct but only one of them",
+        "Only one of the Statements II and III is correct and that explains Statement I",
+        "Neither Statement II nor Statement III is correct"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 32
+      }
+    },
+    {
+      "id": "csp25-gs1-a-33",
+      "topic": "geography-universe-and-earth",
+      "q": "Consider the following statements : Scientific studies suggest that a shift is taking place in the Earth’s rotation and axis. Solar flares and associated coronal mass ejections bombarded the Earth’s outermost atmosphere with tremendous amount of energy. Statement III : As the Earth’s polar ice melts, the water tends to move towards the equator.",
+      "options": [
+        "Both Statement II and Statement Il are correct and both of them explain Statement I",
+        "Both Statement II and Statement Ill are correct but only one of them",
+        "Only one of the Statements II and Ill is correct and that explains Statement I",
+        "Neither Statement II nor Statement III is correct | TPO:"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 33
+      }
+    },
+    {
+      "id": "csp25-gs1-a-34",
+      "topic": "environment-carbon-markets-climate-finance",
+      "q": "Consider the following statements : Statement I| : Article 6 of the Paris Agreement on climate change is frequently discussed in global discussions on sustainable development and climate change. Article 6 of the Paris Agreement on climate change sets out the principles of carbon markets. Statement III : Article 6 of the Paris Agreement on climate change intends to promote inter-country non-market strategies to reach their climate targets.",
+      "options": [
+        "Both Statement II and Statement III are correct and both of them explain Statement I",
+        "Both Statement II and Statement III are correct but only one of them",
+        "Only one of the Statements II and Ill is correct and that explains Statement I",
+        "Neither Statement II nor Statement III is correct"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 34
+      }
+    },
+    {
+      "id": "csp25-gs1-a-35",
+      "topic": "environment-ecosystem-services-green-accounting",
+      "q": "Which one of the following launched the ‘Nature Solutions Finance Hub for Asia and the Pacific’?",
+      "options": [
+        "The Asian Development Bank (ADB)",
+        "The Asian Infrastructure Invest- ment Bank (AIIB)",
+        "The New Development Bank (NDB)",
+        "The International Bank for Recon- struction and Development (IBRD) LVPK-O-PSO/56A 17"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 35
+      }
+    },
+    {
+      "id": "csp25-gs1-a-36",
+      "topic": "environment-carbon-markets-climate-finance",
+      "q": "With reference to ‘Direct Air Capture’, an emerging technology, which of the following statements is/are correct? I. It can be used as a way of carbon sequestration. Il. It can be a valuable approach for plastic production and in food processing. Ill. In aviation, it can be a source of carbon for combining with hydrogen to create synthetic low-carbon fuel. Select the correct answer using the code given below.",
+      "options": [
+        "I and II only",
+        "Ill only",
+        "1, Il and II",
+        "None of the above statements is correct"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 36
+      }
+    },
+    {
+      "id": "csp25-gs1-a-37",
+      "topic": "environment-species-in-news-iucn",
+      "q": "Regarding Peacock tarantula (Gooty tarantula), consider the following statements : I. It is an omnivorous crustacean. Il. Its natural habitat in India is only limited to some forest areas. Ill. In its natural habitat, it is an arboreal species.",
+      "options": [
+        "1 only",
+        "Tand Il",
+        "Il only",
+        "Il and Ill PeT.O;"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 37
+      }
+    },
+    {
+      "id": "csp25-gs1-a-38",
+      "topic": "environment-india-climate-action",
+      "q": "Consider the following statements : I. Carbon dioxide (CO) emissions in India are less than 0:5 t CO,/ capita. Il. In terms of CO, emissions from fuel combustion, India ranks second in Asia-Pacific region. Ill. Electricity and heat producers are the largest sources of CO, emissions in India.",
+      "options": [
+        "1 and III only",
+        "II only",
+        "Il and III only",
+        "1, Il and Il"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 38
+      }
+    },
+    {
+      "id": "csp25-gs1-a-39",
+      "topic": "environment-biomes-indian-forest-types",
+      "q": "Consider the following pairs : Plant Description I. Cassava : Woody shrub Il. Ginger : Herb with pseudostem Ill. Malabar spinach : Herbaceous climber IV. Mint : Annual shrub V. Papaya : Woody shrub LVPK-O-PSO/56A 19 How many of the above pairs are correctly matched?",
+      "options": [
+        "Only two",
+        "Only three",
+        "Only four",
+        "All the five"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 39
+      }
+    },
+    {
+      "id": "csp25-gs1-a-40",
+      "topic": "environment-ecology-fundamentals",
+      "q": "With reference to the planet Earth, consider the following statements : I. Rain forests produce more oxygen than that produced by oceans. II. Marine phytoplankton and photo- synthetic bacteria produce about 50% of world’s oxygen. Ill. Well-oxygenated surface water contains several folds higher oxygen than that in atmospheric air.",
+      "options": [
+        "I and Il",
+        "II only",
+        "1 and II",
+        "None of the above statements is correct [-P2T:0%"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 40
+      }
+    },
+    {
+      "id": "csp25-gs1-a-41",
+      "topic": "environment-energy-transition",
+      "q": "Consider the following types of vehicles : I. Full battery electric vehicles Il. Hydrogen fuel cell vehicles Ill. Fuel cell-electric hybrid vehicles How many of the above are considered as alternative powertrain vehicles?",
+      "options": [
+        "Only one",
+        "Only two",
+        "All the three",
+        "None"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 41
+      }
+    },
+    {
+      "id": "csp25-gs1-a-42",
+      "topic": "scitech-drones-hypersonics-emerging-defence",
+      "q": "With reference to Unmanned Aerial Vehicles (UAVs), consider the following statements : I. All types of UAVs can do vertical landing. Il. All types of UAVs can do automated hovering. Ill. All types of UAVs can use battery only as a source of power supply. How many of the statements given above are correct?",
+      "options": [
+        "Only one",
+        "Only two",
+        "All the three",
+        "None"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 42
+      }
+    },
+    {
+      "id": "csp25-gs1-a-43",
+      "topic": "scitech-energy-technologies",
+      "q": "In the context of electric vehicle batteries, consider the following elements : I. Cobalt Il. Graphite Ill. Lithium IV. Nickel How many of the above usually make up battery cathodes?",
+      "options": [
+        "Only one",
+        "Only two",
+        "Only three",
+        "All the four LVPK-O-PSO/56A 21"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 43
+      }
+    },
+    {
+      "id": "csp25-gs1-a-44",
+      "topic": "environment-waste-management",
+      "q": "Consider the following : I. Cigarette butts Il. Eyeglass lenses Il]. Car tyres How many of them contain plastic?",
+      "options": [
+        "Only one",
+        "Only two",
+        "All the three",
+        "None"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 44
+      }
+    },
+    {
+      "id": "csp25-gs1-a-45",
+      "topic": "scitech-energy-technologies",
+      "q": "Consider the following substances : I. Ethanol Il. Nitroglycerine Ill. Urea Coal gasification technology can be used in the production of how many of them?",
+      "options": [
+        "Only one",
+        "Only two",
+        "All the three",
+        "None"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 45
+      }
+    },
+    {
+      "id": "csp25-gs1-a-46",
+      "topic": "scitech-defence-indigenisation-drdo",
+      "q": "What is the common characteristic of the — chemical substances generally known as CL-20, HMX and LLM-105, which are sometimes talked about in media?",
+      "options": [
+        "These are alternatives to hydro- fluorocarbon refrigerants",
+        "These are explosives in military weapons",
+        "These are high-energy fuels for cruise missiles",
+        "These are fuels for rocket propulsion PPii@,"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 46
+      }
+    },
+    {
+      "id": "csp25-gs1-a-47",
+      "topic": "scitech-quantum-technologies",
+      "q": "Consider the following statements : I. It is expected that Majorana 1 chip will enable quantum computing. Il. Majorana 1 chip has_ been introduced by Amazon Web Services (AWS). Ill. Deep learning is a subset of machine learning.",
+      "options": [
+        "1 and II only",
+        "Il and III only",
+        "1 and III only",
+        "1, Il and Ill"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 47
+      }
+    },
+    {
+      "id": "csp25-gs1-a-49",
+      "topic": "scitech-infectious-diseases-amr",
+      "q": "Consider the following statements : I. No virus can survive in ocean waters. II. No virus can infect bacteria. Ill. No virus can change the cellular transcriptional activity in host cells. LVPK-O-PSO/56A 23 How many of the statements given above are correct?",
+      "options": [
+        "Only one",
+        "Only two",
+        "All the three",
+        "None"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 49
+      }
+    },
+    {
+      "id": "csp25-gs1-a-50",
+      "topic": "environment-water-pollution-river-rejuvenation",
+      "q": "Consider the following statements : Activated carbon is a good and an attractive tool to remove pollutants from effluent streams and to remediate contaminants from various industries. Activated carbon exhibits a large surface area and a strong potential for adsorbing heavy metals. Statement III : Activated carbon can be easily synthesized from environmental wastes with high carbon content.",
+      "options": [
+        "Both Statement II and Statement III are correct and both of them explain Statement I",
+        "Both Statement II and Statement III are correct but only one of them",
+        "Only one of the Statements II and Ill is correct and that explains Statement I",
+        "Neither Statement II nor Statement III is correct [P1-0."
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 50
+      }
+    },
+    {
+      "id": "csp25-gs1-a-51",
+      "topic": "polity-union-executive",
+      "q": "With reference to the Indian polity, consider the following statements : I. An Ordinance can amend any Central Act. Il. An Ordinance can abridge a Fundamental Right. Ill. An Ordinance can come into effect from a back date.",
+      "options": [
+        "I and II only :",
+        "Il and Ill only",
+        "1 and III only",
+        "1, Il and Ill"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 51
+      }
+    },
+    {
+      "id": "csp25-gs1-a-52",
+      "topic": "geography-india-map-based-study",
+      "q": "Consider the following pairs : State Description I. Arunachal : The capital is named after Pradesh a fort, and the State has two National Parks Il. Nagaland : The State came into exis- tence on the basis of a Constitutional Amendment Act lil. Tripura : Initially a Part ‘C’ State, it became a centrally administered territory with the reorganization of States in 1956 and later attained the status of a full-fledged State How many of the above pairs are correctly matched?",
+      "options": [
+        "Only one",
+        "Only two",
+        "All the three",
+        "None"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 52
+      }
+    },
+    {
+      "id": "csp25-gs1-a-53",
+      "topic": "polity-federalism-centre-state",
+      "q": "With reference to India, consider the following : I. The Inter-State Council II. The National Security Council III. Zonal Councils LVPK-O-PSO/56A 2! How many of the above’ were established as per the provisions of the Constitution of India?",
+      "options": [
+        "Only one",
+        "Only two",
+        "All the three",
+        "None"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 53
+      }
+    },
+    {
+      "id": "csp25-gs1-a-55",
+      "topic": "polity-dpsp-and-fundamental-duties",
+      "q": "Consider the following pairs : Provision in the Stated under Constitution of India I. Separation of Judiciary : The Directive from the Executive in Principles the public services of of the State the State Policy II. Valuing and preserving : The Funda- of the rich heritage of mental Duties our composite culture Ill. Prohibition of employ- : The Funda- ment of children below mental Rights the age of 14 years in factories How many of the above pairs are correctly matched?",
+      "options": [
+        "Only one",
+        "Only two",
+        "All the three",
+        "None (PTO."
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 55
+      }
+    },
+    {
+      "id": "csp25-gs1-a-57",
+      "topic": "polity-statutory-regulatory-bodies",
+      "q": "With reference to India, consider the following pairs : Organization Union Ministry I. The National : Ministry of Automotive Board Commerce and Industry II: The Coir Board : Ministry of Heavy Industries Ill. The National : Ministry of Micro, Centre for Trade Small and Medium Information Enterprises How many of the above pairs are correctly matched?",
+      "options": [
+        "Only one",
+        "Only two",
+        "All the three",
+        "None"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 57
+      }
+    },
+    {
+      "id": "csp25-gs1-a-58",
+      "topic": "polity-federalism-centre-state",
+      "q": "Consider the following subjects under the Constitution of India : I. List I-Union List, in the Seventh Schedule Il. Extent of the executive power of a State Ill. Conditions of the Governor’s office LVPK-O-PSO/56A $ For a constitutional amendment with respect to which of the above, ratification by the Legislatures of not less than one-half of the States is required before presenting the bill to the President of India for assent?",
+      "options": [
+        "1 and II only",
+        "Il and III only",
+        "1 and III only",
+        "1, ll and Ill"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 58
+      }
+    },
+    {
+      "id": "csp25-gs1-a-59",
+      "topic": "polity-state-executive-governor",
+      "q": "With reference to the Indian polity, consider the following statements : I. The Governor of a State is not answerable to any court for the exercise and performance of the powers and duties of his/her office. Il. No criminal proceedings shall be instituted or continued against the Governor during his/her term of office. III. Members of a State Legislature are not liable to any proceedings in any court in respect of anything said within the House.",
+      "options": [
+        "I and II only",
+        "I and III only",
+        "1 and III only",
+        "1, ll and Ill"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 59
+      }
+    },
+    {
+      "id": "csp25-gs1-a-60",
+      "topic": "geography-indian-minerals-and-energy",
+      "q": "Consider the following activities : I. Production of crude oil Il. Refining, storage and distribution of petroleum Ill. Marketing and sale of petroleum products IV. Production of natural gas How many of the above activities are regulated by the Petroleum and Natural Gas Regulatory Board in our country?",
+      "options": [
+        "Only one",
+        "Only two",
+        "Only three",
+        "All the four 7 [PIO."
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 60
+      }
+    },
+    {
+      "id": "csp25-gs1-a-61",
+      "topic": "economics-fiscal-policy-and-budget",
+      "q": "Suppose the revenue expenditure is € 80,000 crores and the revenue receipts of the Government are 60,000 crores. The Government budget also shows borrowings of = 10,000 crores and interest payments of 6,000 crores. Which of the following statements are correct? I. Revenue deficit is € 20,000 crores. Il. Fiscal deficit is € 10,000 crores. Ill. Primary deficit is € 4,000 crores. Select the correct answer using the code given below.",
+      "options": [
+        "1 and II only",
+        "Il and III only",
+        "1 and III only",
+        "1, Il and Il"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 61
+      }
+    },
+    {
+      "id": "csp25-gs1-a-62",
+      "topic": "ir-india-central-asia",
+      "q": "India is one of the founding members of the International North-South Transport Corridor (INSTC), a multimodal transportation corridor, which will connect",
+      "options": [
+        "India to Central Asia to Europe via Iran",
+        "India to Central Asia via China",
+        "India to South-East Asia through Bangladesh and Myanmar",
+        "India to Europe through Azerbaijan"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 62
+      }
+    },
+    {
+      "id": "csp25-gs1-a-63",
+      "topic": "geography-world-agriculture-and-food-systems",
+      "q": "Consider the following statements : Of the two major ethanol producers in the world, i.e., Brazil and the United States of America, the former produces more ethanol than the latter. Unlike in the United States of _ America where corn is the principal feedstock for ethanol production, sugarcane is the principal feedstock for ethanol production in Brazil. LVPK-O-PSO/56A 29",
+      "options": [
+        "Both Statement I and Statement II are correct and Statement II",
+        "Both Statement I and Statement II are correct but Statement II does not explain Statement I",
+        "Statement I is correct but Statement II is not correct",
+        "Statement I is not correct but Statement II is correct"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 63
+      }
+    },
+    {
+      "id": "csp25-gs1-a-64",
+      "topic": "environment-climate-science-ipcc",
+      "q": "The World Bank warned that India could become one of the first places where wet-bulb temperatures routinely exceed 35°C. Which of the following statements best reflect(s) the implication of the above-said report? I. Peninsular India will most likely suffer from flooding, tropical cyclones and droughts. II. The survival of animals including humans will be affected as shedding of their body heat through perspiration becomes difficult. Select the correct answer using the code given below.",
+      "options": [
+        "1 only",
+        "II only",
+        "Both I and II",
+        "Neither I nor II"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 64
+      }
+    },
+    {
+      "id": "csp25-gs1-a-65",
+      "topic": "economics-fiscal-policy-and-budget",
+      "q": "A country’s fiscal deficit stands at €50,000 crores. It is receiving €10,000 crores through non-debt creating capital receipts. The country’s interest liabilities are © 1,500 crores. What is the gross primary deficit?",
+      "options": [
+        "* 48,500 crores",
+        "*51,500 crores",
+        "*58,500 crores",
+        "None of the above [| P:T:0."
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 65
+      }
+    },
+    {
+      "id": "csp25-gs1-a-66",
+      "topic": "economics-fiscal-federalism",
+      "q": "Which of the following statements with regard to recommendations of the 15th Finance Commission of India are I. It has recommended grants of €4,800 crores from the year 2022-23 to the year 2025-26 for incentivizing States to enhance educational outcomes. Il. 45% of the net proceeds of Union taxes are to be shared with States. Ill. *45,000 crores are to be kept as performance-based incentive for all States for carrying out agricultural reforms. IV. It reintroduced tax effort criteria to reward fiscal performance. Select the correct answer using the code given below.",
+      "options": [
+        "1, II and IIl",
+        "1, Il and IV",
+        "I, Ill and IV",
+        "Il, Ill and IV"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 66
+      }
+    },
+    {
+      "id": "csp25-gs1-a-68",
+      "topic": "economics-financial-inclusion-fintech",
+      "q": "Consider the following statements in respect of RTGS and NEFT : I. In RTGS, the settlement time is instantaneous while in case of NEFT, it takes some time to settle payments. LVPK-O-PSO/56A 31 Il. In RTGS, the customer is charged for inward transactions while that is not the case for NEFT. III. Operating hours for RTGS are restricted on certain days while this is not true for NEFT.",
+      "options": [
+        "1 only",
+        "1 and Il",
+        "1 and Ill",
+        "Il only"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 68
+      }
+    },
+    {
+      "id": "csp25-gs1-a-69",
+      "topic": "economics-trade-policy-wto",
+      "q": "Consider the following countries : I. United Arab Emirates II. France Ill. Germany IV. Singapore V. Bangladesh How many countries amongst the above are there other than India where international merchant payments are accepted under UPI?",
+      "options": [
+        "Only two",
+        "Only three",
+        "Only four",
+        "All the five"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 69
+      }
+    },
+    {
+      "id": "csp25-gs1-a-71",
+      "topic": "history-gandhian-mass-movements",
+      "q": "“Sedition has become my religion” was the famous statement given by Gandhiji at the time of",
+      "options": [
+        "the Champaran Satyagraha",
+        "publicly violating Salt Law at Dandi",
+        "attending the Second Round Table Conference in London",
+        "the launch of the Quit India Movement"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 71
+      }
+    },
+    {
+      "id": "csp25-gs1-a-72",
+      "topic": "history-prehistory-and-indus-valley",
+      "q": "The famous female figurine known as . ‘Dancing Girl’, found at Mohenjo-daro, is made of",
+      "options": [
+        "carnelian",
+        "clay",
+        "bronze",
+        "gold"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 72
+      }
+    },
+    {
+      "id": "csp25-gs1-a-73",
+      "topic": "history-gandhian-mass-movements",
+      "q": "Who provided legal defence to the people arrested in the aftermath of Chauri Chaura incident?",
+      "options": [
+        "C. R. Das :",
+        "Madan Mohan Malaviya and Krishna Kant",
+        "Dr. Saifuddin Kitchlew and Khwaja Hasan Nizami",
+        "M. A. Jinnah LVPK-O-PSO/56A"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 73
+      }
+    },
+    {
+      "id": "csp25-gs1-a-74",
+      "topic": "history-gandhian-mass-movements",
+      "q": "Subsequent to which one of the following events, Gandhiji, who consistently opposed untouchability and appealed for its eradication from all spheres, decided to include the upliftment of ‘arijans’ in his political and social programme?",
+      "options": [
+        "The Poona Pact",
+        "The Gandhi-Irwin Agreement (Delhi Pact)",
+        "Arrest of Congress leadership at the time of the Quit India Movement",
+        "Promulgation of the Government of India Act, 1935"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 74
+      }
+    },
+    {
+      "id": "csp25-gs1-a-75",
+      "topic": "history-advent-of-europeans-and-british-rule",
+      "q": "Consider the following fruits : I. Papaya II. Pineapple Ill. Guava How many of the above were introduced in India by the Portuguese in the sixteenth and seventeenth centuries?",
+      "options": [
+        "Only one",
+        "Only two",
+        "All the three",
+        "None"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 75
+      }
+    },
+    {
+      "id": "csp25-gs1-a-76",
+      "topic": "geography-world-map-based-study",
+      "q": "Consider the following countries : I. United Kingdom Il. Denmark Ill. New Zealand IV. Australia V. Brazil How many of the above countries have more than four time zones?",
+      "options": [
+        "All the five",
+        "Only four",
+        "Only three",
+        "Only two 33 [-P:E0."
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 76
+      }
+    },
+    {
+      "id": "csp25-gs1-a-78",
+      "topic": "history-socio-religious-reform-movements",
+      "q": "Who among the following was _ the founder of the ‘Self-Respect Movement’?",
+      "options": [
+        "‘Periyar’ E. V. Ramaswamy Naicker",
+        "Dr. B. R. Ambedkar",
+        "Bhaskarrao Jadhav",
+        "Dinkarrao Javalkar LVPK-O-PSO/56A 3!"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 78
+      }
+    },
+    {
+      "id": "csp25-gs1-a-79",
+      "topic": "geography-world-natural-resource-distribution",
+      "q": "Consider the following pairs : Country Resource-rich in 18 Botswana : Diamond He; (Chile : Lithium Ill. Indonesia : Nickel In how many of the above rows is the given information correctly matched?",
+      "options": [
+        "Only one",
+        "Only two",
+        "All the three",
+        "None"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 79
+      }
+    },
+    {
+      "id": "csp25-gs1-a-80",
+      "topic": "geography-world-map-based-study",
+      "q": "Consider the following pairs : Region Country i Mallorca : Italy Il. Normandy : Spain Ill. Sardinia : France In how many of the above rows is the given information correctly matched?",
+      "options": [
+        "Only one",
+        "Only two",
+        "All the three",
+        "None ) EP EO:"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 80
+      }
+    },
+    {
+      "id": "csp25-gs1-a-81",
+      "topic": "geography-world-natural-resource-distribution",
+      "q": "Consider the following statements : Some rare earth elements are used in the manufacture of flat television screens and computer monitors. Some rare earth elements have phosphorescent properties.",
+      "options": [
+        "Both Statement I and Statement II are correct and Statement",
+        "Both Statement I and Statement II are correct but Statement II does not explain Statement I >",
+        "Statement I is correct but Statement II is not correct",
+        "Statement I is not correct but . Statement II is correct"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 81
+      }
+    },
+    {
+      "id": "csp25-gs1-a-82",
+      "topic": "economics-infrastructure",
+      "q": "Consider the following statements : I. Indian Railways have prepared a National Rail Plan (NRP) to create a future ready’ railway system by 2028. Il. ‘Kavach’ is an Automatic Train Protection system developed in collaboration with Germany. Ill. ‘Kavach’ system consists of RFID tags fitted on track in station section. not correct?",
+      "options": [
+        "1 and II only",
+        "I and III only",
+        "I and III only »",
+        "1, ll and Ill"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 82
+      }
+    },
+    {
+      "id": "csp25-gs1-a-83",
+      "topic": "scitech-isro-missions",
+      "q": "Consider the following space missions : 4 I. Axiom-4 Il. SpaDeX Ill. Gaganyaan How many of the space missions given above encourage and support micro- gravity research?",
+      "options": [
+        "Only one",
+        "Only two",
+        "All the three",
+        "None LVPK-O-PSO/56A 37"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 83
+      }
+    },
+    {
+      "id": "csp25-gs1-a-84",
+      "topic": "scitech-defence-indigenisation-drdo",
+      "q": "With reference to India’s defence, consider the following pairs : Aircraft type Description I. Dornier-228 : Maritime patrol aircraft II. IL-76 : Supersonic combat. _ aircraft Ill. C-17 Globe- : Military transport master III aircraft How many of the pairs given above are correctly matched?",
+      "options": [
+        "Only one",
+        "Only two",
+        "All the three",
+        "None"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 84
+      }
+    },
+    {
+      "id": "csp25-gs1-a-85",
+      "topic": "environment-air-pollution",
+      "q": "Artificial way of causing rainfall to reduce air pollution makes use of",
+      "options": [
+        "silver iodide and potassium iodide",
+        "silver nitrate and potassium iodide",
+        "silver iodide and potassium nitrate",
+        "silver nitrate and potassium chloride"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 85
+      }
+    },
+    {
+      "id": "csp25-gs1-a-86",
+      "topic": "polity-union-executive",
+      "q": "Consider the following statements with regard to pardoning power of the President of India : I. The exercise of this power by the President can be subjected to limited judicial review. Il. The President can exercise this power without the advice of the Central Government.",
+      "options": [
+        "1 only",
+        "II only",
+        "Both I and II",
+        "Neither I nor II [ P.T.0."
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 86
+      }
+    },
+    {
+      "id": "csp25-gs1-a-87",
+      "topic": "polity-parliament",
+      "q": "Consider the following statements : I. On the dissolution of the House of the People, the Speaker shall not vacate his/her office until immediately before the first meeting of the House of the People after the dissolution. Il. According to the provisions of the Constitution of India, a Member of the House of the People on being elected as Speaker shall resign from his/her _ political party immediately. Ill. The Speaker of the House of the People may be removed from his/her office by a resolution of the - House of the People passed by a majority of all the then Members of the House, provided that no resolution shall be moved unless at % least fourteen days’ notice has been given of the intention to move the resolution.",
+      "options": [
+        "1 and II only",
+        "II and III only",
+        "1 and III only",
+        "1, Il and Il"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 87
+      }
+    },
+    {
+      "id": "csp25-gs1-a-88",
+      "topic": "polity-anti-defection",
+      "q": "Consider the following statements : I. Ifany question arises as to whether a Member of the House of the People has become subject to disqualification under the 10th Schedule, the President’s decision in accordance with the opinion of » the Council of Union Ministers shall be final. Il. There is no mention of the word : ‘political party’ in the Constitution of India.",
+      "options": [
+        "1 only",
+        "II only",
+        "Both I and II",
+        "Neither I nor II LVPK-O-PSO/56A 3"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 88
+      }
+    },
+    {
+      "id": "csp25-gs1-a-89",
+      "topic": "polity-federalism-centre-state",
+      "q": "Consider the following statements : In India, State Governments have no power for making rules for grant of concessions in respect of extraction of minor minerals even though such minerals are located in their territories. In India, the Central Government has the power to notify minor minerals under the relevant law.",
+      "options": [
+        "Both Statement I and Statement II are correct and Statement II",
+        "Both Statement I and Statement II are correct but Statement II does not explain Statement I",
+        "Statement I is correct but Statement II is not correct",
+        "Statement I is not correct but Statement II is correct"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 89
+      }
+    },
+    {
+      "id": "csp25-gs1-a-90",
+      "topic": "ir-india-eu-uk",
+      "q": "Which organization has enacted the Nature Restoration Law (NRL) to tackle climate change and biodiversity loss?",
+      "options": [
+        "The European Union",
+        "The World Bank",
+        "The Organization for Economic Cooperation and Development",
+        "The Food and Agriculture Organization ) [ P.T.O."
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 90
+      }
+    },
+    {
+      "id": "csp25-gs1-a-94",
+      "topic": "scitech-satellites-navigation-remote-sensing",
+      "q": "GPS-Aided Geo Augmented Navigation (GAGAN) uses a system of ground stations to provide necessary augmentation. Which of the following statements is/are correct in respect of GAGAN? I. It is designed to provide additional accuracy and integrity. II. It will allow more uniform and high quality air traffic management. Ill. It will provide benefits only in aviation but not in other modes of transportation. Select the correct answer using the code given below.",
+      "options": [
+        "1, Il and Ill",
+        "Il and III only",
+        "1 only",
+        "1 and II only"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 94
+      }
+    },
+    {
+      "id": "csp25-gs1-a-95",
+      "topic": "scitech-ai-governance-ethics",
+      "q": "Consider the following statements regarding AI Action Summit held in Grand Palais, Paris in February 2025 : I. Co-chaired with India, the event builds on the advances made at the Bletchley Park Summit held in 2023 and the Seoul Summit held in 2024. Il. Along with other countries, US and UK also signed the declaration on inclusive and sustainable Al.",
+      "options": [
+        "1 only",
+        "Il only",
+        "Both I and II",
+        "Neither I nor Il"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 95
+      }
+    },
+    {
+      "id": "csp25-gs1-a-96",
+      "topic": "environment-sustainable-development-sdgs",
+      "q": "Consider the following pairs : I. International Year of the : 2026 Woman Farmer Il. International Year of te 2027 Sustainable and Resilient Tourism Ill. International Year of Peace 2025 and Trust IV. International Year of Asteroid : 2029 Awareness and Planetary Defence How many of the pairs given above are correctly matched?",
+      "options": [
+        "Only one",
+        "Only two",
+        "Only three",
+        "All the four 41 [ P.T.O."
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2025,
+        "code": "gs1",
+        "set": "A",
+        "n": 96
+      }
     }
   ]
 }

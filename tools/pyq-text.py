@@ -144,7 +144,16 @@ def parse(text: str, total: int, pages: int = 1, window: int = 3,
         # come before the options and the next question comes after them, so
         # "3." inside question 2 is a statement — without this, question 2
         # loses its options and question 3 swallows both.
-        started = cur is None or "(a)" in " ".join(buf)
+        # A question that never shows its options would otherwise swallow the
+        # whole rest of the paper: `started` stays false, no later line can
+        # begin a question, and everything after it is lost. 2024 stopped dead
+        # at question 90 for exactly this reason and lost the last ten.
+        #
+        # So the gate has a bound. A UPSC question runs eight to twenty lines;
+        # forty is far past any of them, and past it a numbered line is allowed
+        # to start a question even though the options never appeared. The
+        # damage is then one bad question rather than the tail of the paper.
+        started = cur is None or "(a)" in " ".join(buf) or len(buf) > 40
         # `window` is how far ahead a question number may jump and still be
         # believed. Three is right for exact text. OCR needs more: a page it
         # cannot read is a hole of four or five questions, and too tight a
@@ -168,7 +177,14 @@ def parse(text: str, total: int, pages: int = 1, window: int = 3,
                     else None)
             if take is not None:
                 flush()
-                cur = {"n": take}
+                # Whether the number was READ off the page or inferred from
+                # position. A question whose printed number was read, and read
+                # as the number the paper was up to, is corroborated by the
+                # page itself; one that was inferred rests on nothing having
+                # gone wrong earlier. That distinction is what lets a paper
+                # that did not come out whole still give up the questions it
+                # got right.
+                cur = {"n": take, "read": got == take}
                 buf = [m.group(2)]
                 expect = take + 1
                 continue

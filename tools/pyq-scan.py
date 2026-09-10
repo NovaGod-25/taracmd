@@ -66,7 +66,12 @@ _spec = importlib.util.spec_from_file_location("pyq_text", Path(__file__).with_n
 pyq_text = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(pyq_text)
 
-FOOTER_SET = re.compile(r"\(\s*\d+\s*[-–—]\s*([A-D])\s*\)")
+# Two footer formats. 2022 prints "( 3 - A )". 2019, 2021 and 2025 print a
+# booklet code instead -- "BXC-U-FTHI/68A", "LVPK-O-PSO/56A" -- where the
+# Series is the letter closing it. Reading the wrong one would line every
+# question up against the wrong answer key, so both are looked for.
+FOOTER_SET = re.compile(r"\(\s*\d+\s*[-–—]\s*([A-D])\s*\)"
+                        r"|/\s*\d{1,3}\s*([A-D])")
 # a page of English says these constantly; Hindi read as English says them never
 ENGLISH = re.compile(r"\b(the|following|which|statements|consider|reference|correct|above)\b",
                      re.IGNORECASE)
@@ -104,6 +109,69 @@ def rule_x(gray) -> int:
         if run > best:
             best, best_x = run, x
     return best_x if best > 0.06 * h else -1
+
+
+def page_image(pg, Image):
+    """The page as one image.
+
+    2016, 2017 and 2018 do not store a page as a picture: they store it as four
+    or five horizontal STRIPS of identical width, stacked. Taking the largest
+    image -- which is what this did -- reads a fifth of the page and throws the
+    rest away, and those three years produced nothing at all. Stitch them back
+    in the order the content stream lists them, which for a scan is top to
+    bottom."""
+    ims = [x.image for x in pg.images]
+    if not ims:
+        return None
+    if len(ims) == 1:
+        return ims[0].convert("L")
+    w = max(i.width for i in ims)
+    # strips of one page share a width; anything else is a logo or a stamp
+    strips = [i for i in ims if abs(i.width - w) <= 2]
+    if len(strips) < 2:
+        return max(ims, key=lambda z: z.width * z.height).convert("L")
+    out = Image.new("L", (w, sum(i.height for i in strips)), 255)
+    y = 0
+    for i in strips:
+        out.paste(i.convert("L"), (0, y))
+        y += i.height
+    return out
+
+
+def gutter_x(gray) -> int:
+    """Where the columns part when nothing is printed between them.
+
+    2021 and 2025 separate their columns with white space and no rule at all,
+    so rule_x correctly finds nothing and the page would be read as one block
+    with both columns interleaved into nonsense. The gutter is the answer: the
+    widest run of nearly empty columns in the middle third, and its centre is
+    the split. It is less sharp than a printed rule -- a rule is exact -- so it
+    is the fallback, never the first choice."""
+    import numpy as np
+    a = np.asarray(gray) < 160
+    h, w = a.shape
+    ink = a.sum(axis=0)
+    lo, hi = int(0.32 * w), int(0.68 * w)
+    quiet = ink[lo:hi] <= max(2, 0.004 * h)
+    best = run = start = best_start = 0
+    for i, q in enumerate(quiet):
+        if q:
+            if run == 0:
+                start = i
+            run += 1
+            if run > best:
+                best, best_start = run, start
+        else:
+            run = 0
+    if best < 0.01 * w:
+        return -1
+    return lo + best_start + best // 2
+
+
+def split_x(gray) -> int:
+    """The printed rule if there is one, the white gutter if there is not."""
+    x = rule_x(gray)
+    return x if x > 0 else gutter_x(gray)
 
 
 # what a statement-reference option can say, and nothing else
@@ -226,12 +294,11 @@ def main() -> int:
     for i, pg in enumerate(pages, 1):
         if not (lo <= i <= hi):
             continue
-        ims = list(pg.images)
-        if not ims:
+        im = page_image(pg, Image)
+        if im is None:
             continue
-        im = max((x.image for x in ims), key=lambda z: z.width * z.height).convert("L")
         imgs[i] = im
-        x = rule_x(im)
+        x = split_x(im)
         if x > 0:
             xs.append(x / im.width)
     if not xs:
@@ -242,7 +309,7 @@ def main() -> int:
 
     chunks, seen_sets, kept, skipped = [], Counter(), 0, 0
     for i, im in imgs.items():
-        own = rule_x(im)
+        own = split_x(im)
         x = own if own > 0 and abs(own / im.width - frac) < 0.02 else int(frac * im.width)
         parts = ([im.crop((0, 0, x - 6, im.height)), im.crop((x + 6, 0, im.width, im.height))]
                  if x > 0 else [im])
@@ -264,7 +331,10 @@ def main() -> int:
             skipped += 1
             continue
         kept += 1
-        for s in FOOTER_SET.findall(text + foot):
+        for g in FOOTER_SET.findall(text + foot):
+            s = next((x for x in g if x), None) if isinstance(g, tuple) else g
+            if not s:
+                continue
             seen_sets[s] += 1
         chunks.append(fix_markers(text))
         print(f"  page {i:3}: {len(text):5} chars, {hits:3} english words"
@@ -297,7 +367,10 @@ def main() -> int:
             why.append("an option came out empty")
         if len(set(opts)) != len(opts):
             why.append("two options came out identical")
+        if not q.get("read"):
+            why.append("number inferred from position, not read off the page")
         item = {"n": q["n"], "topic": "", "q": q["q"], "options": opts,
+                "read": bool(q.get("read")),
                 "paper": {"year": args.year, "code": args.code, "set": setname, "n": q["n"]}}
         if letters:
             L = letters[q["n"] - 1]
@@ -333,6 +406,8 @@ def main() -> int:
     print(f"\nSeries {setname} (from the footer on {sum(seen_sets.values())} pages)")
     print(f"  {kept} English pages read, {skipped} skipped as Hindi or blank")
     print(f"  {len(dedup)} of {total} questions parsed")
+    read_ok = sum(1 for q in dedup if q.get("read"))
+    print(f"  {read_ok} of {len(dedup)} had their printed number actually read")
     print(f"  {len(flagged)} flagged: {flagged[:24]}{' …' if len(flagged) > 24 else ''}")
     print(f"  {len(missing)} missing: {missing[:24]}{' …' if len(missing) > 24 else ''}")
     print(f"  answers: {'from the verified key' if letters else 'NONE — no key for this Series'}")

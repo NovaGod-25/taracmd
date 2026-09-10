@@ -131,6 +131,18 @@ Play-restricted permission wildly out of proportion to a shelf. Pointing at the 
 folder again after a reinstall costs one tap and brings the whole shelf back, and the
 page says exactly that rather than implying the app is holding anything.
 
+**Progress goes on the shelf too.** Everything else the app knows lives in `localStorage`,
+which an update keeps and an uninstall or "Clear data" does not. So the page writes the
+whole store to `TaraCmd progress.json` in the shelf folder three seconds after any change,
+and at once when the app is left, through `docsBackupWrite` (opened `"wt"`: a plain `"w"`
+leaves the tail of a longer old file behind on some Android versions). After a reinstall,
+picking the folder again fires `taracmdDocs("picked")`, and a backup that holds more than
+the app does is offered back — merged, never swapped in, by the same `mergeStore` as a
+pasted backup. The file is kept off the shelf's own list. The folder picker opens on the
+phone's Documents, or on the folder already in use, so that one tap lands where the shelf
+was. **Updates need none of this:** the debug keystore is committed and never regenerated,
+so a new APK installs over the old one and keeps the grant, the prefs and the data.
+
 Things that will bite:
 
 - **The remembered URI string is not a permission.** After an uninstall, or if the user
@@ -536,9 +548,14 @@ which means a store written by an older build still opens.
 | `writing` | Mains and Optional answer log, `year-code -> [{q,mins,words,score,of,note,on}]` |
 | `daily` | daily quiz log, `YYYY-MM-DD -> {score,of,src}` — what the streak counts |
 | `seen` | which questions have been looked at, keyed like `attempts` — what makes "not answered" a state distinct from "not visited" |
+| `sit` | the exam clock and the submit, `paper id -> {start, mins, sub}` — a start time, never a counter |
+| `past` | earlier attempts of a paper, `paper id -> [{on,right,wrong,left,of,marks,secs,how}]` |
+| `focus` | the last sixty focus runs, `[{on,mins,ran,kind}]` |
+| `focusGoal` | minutes a day to aim for; 0 is no goal |
+| `focusDays` | each day's focus totals for good, `YYYY-MM-DD -> {mins,runs,voided}` |
 
-There is no export bridge function: backup is a copyable blob in a sheet, plus a file
-download on web only. That is deliberate — see the bridge contract below.
+Backup is a copyable blob in a sheet (plus a file download on the web), and in the
+Android app the whole store is also written to the shelf folder — see The shelf.
 
 **The Android page is served over `https://appassets.androidplatform.net/`** via
 `WebViewAssetLoader`, not `file:///android_asset/`. A `file://` page has an opaque
@@ -580,6 +597,28 @@ browser behaviour when it is absent.
 | page → native | `AndroidHost.docsOpen(id)` | hand one to whatever the phone reads it with |
 | page → native | `AndroidHost.docsRemove(id)` | delete it — the file, not a listing of it |
 | native → page | `window.taracmdDocs()` | the shelf changed (folder picked, files added); re-render |
+
+### Sitting a paper: the clock, the submit, the retake
+
+A paper can be sat against the exam's two hours. The clock is started by hand, never
+imposed, and it is a start time in `sit` rather than a counter — so leaving the app, a
+sleeping phone or a killed process loses nothing, and a paper whose time ran out while the
+app was shut opens already submitted (`paperSubmitted()` settles it on the next look).
+Before the submit nothing is marked, because a paper that tells you as you go is a
+flashcard deck. After it the answers lock, the palette turns right / wrong / not
+answered, every question shows its answer and the institute's `why`, and the marks come
+from `answer-keys.json`'s marking scheme (+2 / −0.66 on GS-I, used for the test series
+too). A reattempt pushes the attempt's score into `past`, then either clears the sheet or
+keeps only the right answers, so "redo my mistakes" spends the second pass only where the
+first went wrong.
+
+### Focus by the day
+
+The run log keeps sixty runs; `focusDays` keeps each day's minutes for good, so a day is
+still measurable after its runs have scrolled off, and `focusDay()` takes the larger of
+the two. A daily goal (`focusGoal`) turns the top of the Focus tab into today against the
+goal, with a streak of days that met it — today counts once it is met and does not break
+the streak while it is still in progress. Each bar of the fortnight opens that day's runs.
 
 ### Focus does not control the phone
 

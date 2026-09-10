@@ -31,5 +31,6 @@ export const inPage = (win, expr) => win.eval(expr);
 
 /** Replace the app's store wholesale, then return what the page sees. */
 export function setStore(win, patch) {
-  win.eval(`store = Object.assign({}, BLANK, ${JSON.stringify(patch)});`);
+  // a copy of the defaults: sharing BLANK's objects leaks one test's answers into the next
+  win.eval(`store = Object.assign(JSON.parse(JSON.stringify(BLANK)), ${JSON.stringify(patch)});`);
 }

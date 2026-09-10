@@ -902,3 +902,129 @@ describe("the Series chips", () => {
   });
 });
 
+
+/* Sitting a paper like the exam: two hours of wall clock, a submit that locks
+   the answers and marks them on the Commission's scheme, and retakes that keep
+   what each earlier attempt scored. */
+describe("sitting a paper against the clock", () => {
+  const OPEN = `const p = paperList().find(x => x.id === "upsc-2023-gs1"); p.set = "B"; p.letters = p.keys.B; const id = paperId(p);`;
+
+  test("two hours, and the paper submits itself when they are up", () => {
+    const out = JSON.parse(inPage(win, `(() => { ${OPEN}
+      delete store.sit[id]; paperStartClock(p);
+      const r = { mins: paperSit(p).mins, sub: paperSit(p).sub, left: Math.round(sitLeft(paperSit(p)) / 60000) };
+      store.sit[id].start = Date.now() - 121 * 60000;
+      r.after = paperSubmitted(p);
+      r.at = store.sit[id].sub - store.sit[id].start;
+      delete store.sit[id];
+      return JSON.stringify(r); })()`));
+    assert.equal(out.mins, 120);
+    assert.equal(out.sub, null, "a running clock has not submitted anything");
+    assert.equal(out.left, 120);
+    assert.equal(out.after, true, "time up is submitted, whether or not the app was open");
+    assert.equal(out.at, 120 * 60000, "and at the two-hour mark, not whenever it was noticed");
+  });
+
+  test("a submitted paper locks, shows right and wrong, and scores +2 / -0.66", () => {
+    const out = JSON.parse(inPage(win, `(() => { ${OPEN}
+      const right = LET.indexOf(p.letters[0]);
+      store.attempts[id] = {1: right, 2: (LET.indexOf(p.letters[1]) + 1) % 4};
+      delete store.sit[id]; paperSubmit(p);
+      state.tab = "practice"; state.qmode = "papers"; state.qpaperId = "upsc-2023-gs1";
+      state.qset = "B"; state.qsheet = false; state.qn = 1; render();
+      const cls = n => document.querySelector('.pq[data-goq="' + n + '"]').className;
+      const r = { locked: document.querySelectorAll(".qcard.run .opt[disabled]").length,
+                  one: cls(1), two: cls(2), three: cls(3),
+                  marks: document.querySelector(".score .big").textContent.trim() };
+      document.querySelectorAll(".qcard.run .opt")[(right + 1) % 4].click();
+      r.kept = store.attempts[id][1] === right;
+      delete store.attempts[id]; delete store.sit[id]; delete store.seen[id]; state.qpaperId = null;
+      return JSON.stringify(r); })()`));
+    assert.equal(out.locked, 4, "every option is locked after the submit");
+    assert.match(out.one, /\bok\b/, "a right answer is green");
+    assert.match(out.two, /\bno\b/, "a wrong one is red");
+    assert.match(out.three, /\bskip\b/, "one never answered says so");
+    assert.equal(out.marks, "1.34", "one right and one wrong is 2 - 0.66");
+    assert.equal(out.kept, true, "a tap on a submitted paper changes nothing");
+  });
+
+  test("a reattempt keeps the score; redoing mistakes keeps only the right answers", () => {
+    const out = JSON.parse(inPage(win, `(() => { ${OPEN}
+      delete store.past[id];
+      const right = n => LET.indexOf(p.letters[n - 1]);
+      store.attempts[id] = {1: right(1), 2: (right(2) + 1) % 4, 3: right(3)};
+      paperSubmit(p); paperRetake(p, "mistakes");
+      const r = { past: store.past[id].length, marks: store.past[id][0].marks,
+                  kept: Object.keys(store.attempts[id]).sort().join(","),
+                  clock: store.sit[id] === undefined };
+      paperRetake(p, "all");
+      r.pastAfter = store.past[id].length;
+      r.sheetAfter = Object.keys(store.attempts[id]).length;
+      delete store.past[id]; delete store.attempts[id]; delete store.seen[id];
+      return JSON.stringify(r); })()`));
+    assert.equal(out.past, 1, "the attempt it replaces is kept");
+    assert.equal(out.marks, 3.34, "two right and one wrong");
+    assert.equal(out.kept, "1,3", "only the right answers survive a redo of the mistakes");
+    assert.equal(out.clock, true, "and the clock starts again from nothing");
+    assert.equal(out.pastAfter, 2);
+    assert.equal(out.sheetAfter, 0, "from scratch is from scratch");
+  });
+});
+
+/* Focus measured by the day: a total that outlives the sixty-run log, a goal
+   and its streak, and each day openable to the runs that made it. */
+describe("focus, day by day", () => {
+  test("a finished run is added to its day, and the day outlives the run log", () => {
+    setStore(win, {});
+    inPage(win, `focusStart(1); store.focusRun.start = Date.now() - 2 * 60000; focusEnd("done"); store.focus = [];`);
+    const today = JSON.parse(inPage(win, "JSON.stringify(focusHistory().at(-1))"));
+    assert.equal(today.mins, 2, "the run log is gone but the day still knows its minutes");
+  });
+
+  test("the goal streak counts the days that met it, and today does not break it early", () => {
+    setStore(win, { focusGoal: 60 });
+    const n = inPage(win, `(() => {
+      const k = d => fdayKey(Date.now() - d * 86400000);
+      store.focusDays = { [k(0)]: {mins: 10, runs: 1, voided: 0}, [k(1)]: {mins: 65, runs: 2, voided: 0},
+                          [k(2)]: {mins: 70, runs: 2, voided: 0}, [k(3)]: {mins: 5, runs: 1, voided: 0} };
+      const unfinished = focusGoalStreak();
+      store.focusDays[k(0)].mins = 61;
+      return JSON.stringify([unfinished, focusGoalStreak()]); })()`);
+    assert.deepEqual(JSON.parse(n), [2, 3]);
+  });
+
+  test("tapping a day lists that day's runs", () => {
+    setStore(win, { focus: [
+      { on: Date.now() - 60000, mins: 25, ran: 1500, kind: "done" },
+      { on: Date.now(),         mins: 40, ran: 300,  kind: "void" }] });
+    const out = JSON.parse(inPage(win, `(() => {
+      state.tab = "focus"; state.fday = null; render();
+      document.querySelector('.fbar[data-fday="' + fdayKey(Date.now()) + '"]').click();
+      return JSON.stringify({ runs: document.querySelectorAll(".frun").length,
+                              walked: document.querySelectorAll(".frun.void").length }); })()`));
+    assert.equal(out.runs, 2);
+    assert.equal(out.walked, 1, "the one walked out of is shown as such");
+  });
+});
+
+/* The progress backup in the shelf folder is what survives an uninstall, so
+   both directions are pinned: a change is written out, and a backup found in
+   a freshly picked folder comes back in. */
+describe("the progress backup on the shelf", () => {
+  test("changes reach the shelf folder, and a backup found there comes back", () => {
+    let written = null;
+    const kept = JSON.stringify({ done: { "t-kept": [0] }, backedUp: 1 });
+    const w = loadApp({
+      docsList: () => "[]", docsFolder: () => "Documents",
+      docsBackupWrite: (s) => { written = s; return true; }, docsBackupRead: () => kept,
+      focusAwake() {}, appVersion: () => "", savedPath: () => null,
+    });
+    w.confirm = () => true;
+    const n = Number(inPage(w, "offerShelfRestore()"));
+    assert.ok(n >= 1, "the backup is merged in");
+    assert.deepEqual(JSON.parse(inPage(w, 'JSON.stringify(store.done["t-kept"])')), [0]);
+    inPage(w, 'store.done["t-new"] = [2]; save(); shelfBackupNow();');
+    assert.ok(written && JSON.parse(written).done["t-new"], "and a change is written back out");
+    w.close();
+  });
+});

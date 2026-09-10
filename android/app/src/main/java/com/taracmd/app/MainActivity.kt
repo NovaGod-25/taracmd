@@ -67,6 +67,13 @@ class MainActivity : AppCompatActivity() {
         /** Where the shelf folder is remembered. The folder itself is not ours. */
         private const val PREFS = "taracmd"
         private const val SHELF_URI = "shelfUri"
+
+        /**
+         * The page's progress, written into the shelf folder so an uninstall
+         * cannot take it. Kept off the shelf's own list: it is the app's file,
+         * not one of the owner's documents.
+         */
+        private const val BACKUP_NAME = "TaraCmd progress.json"
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -87,7 +94,9 @@ class MainActivity : AppCompatActivity() {
                     prefs().edit().putString(SHELF_URI, uri.toString()).apply()
                 }
             }
-            notifyShelf()
+            // "picked" tells the page to look for a backup in the folder --
+            // after a reinstall, this is the moment the old progress is found
+            notifyShelf("picked")
         }
         pickDocs = registerForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) { uris ->
             uris.forEach { copyToShelf(it) }
@@ -278,11 +287,25 @@ class MainActivity : AppCompatActivity() {
             .getOrNull()?.takeIf { it.isDirectory }
     }
 
-    private fun notifyShelf() {
+    private fun notifyShelf(why: String = "") {
         runOnUiThread {
-            web.evaluateJavascript("window.taracmdDocs && window.taracmdDocs()", null)
+            web.evaluateJavascript("window.taracmdDocs && window.taracmdDocs('$why')", null)
         }
     }
+
+    /**
+     * Where the folder picker opens: the folder already in use if there is
+     * one, otherwise the phone's own Documents -- which is where the shelf
+     * belongs, and where a reinstalled app finds the one it had before.
+     */
+    private fun pickerStart(): Uri? = runCatching {
+        prefs().getString(SHELF_URI, null)?.let { raw ->
+            val tree = Uri.parse(raw)
+            DocumentsContract.buildDocumentUriUsingTree(tree, DocumentsContract.getTreeDocumentId(tree))
+        } ?: DocumentsContract.buildDocumentUri(
+            "com.android.externalstorage.documents", "primary:Documents"
+        )
+    }.getOrNull()
 
     private fun displayName(uri: Uri): String? =
         runCatching {
@@ -395,7 +418,7 @@ class MainActivity : AppCompatActivity() {
         /** Choose (or change) the folder the shelf lives in. */
         @JavascriptInterface
         fun docsPick() {
-            runOnUiThread { runCatching { pickShelf.launch(null) } }
+            runOnUiThread { runCatching { pickShelf.launch(pickerStart()) } }
         }
 
         /** Add documents to it. Any type — this is the owner's own shelf. */
@@ -411,7 +434,7 @@ class MainActivity : AppCompatActivity() {
             val out = JSONArray()
             runCatching {
                 dir.listFiles()
-                    .filter { it.isFile }
+                    .filter { it.isFile && it.name != BACKUP_NAME }
                     .sortedByDescending { it.lastModified() }
                     .forEach { f ->
                         out.put(JSONObject().apply {
@@ -449,6 +472,34 @@ class MainActivity : AppCompatActivity() {
             val uri = runCatching { Uri.parse(id) }.getOrNull() ?: return false
             return runCatching { DocumentsContract.deleteDocument(contentResolver, uri) }
                 .getOrDefault(false)
+        }
+
+        /**
+         * Write the page's progress into the shelf folder, replacing the last
+         * copy. "wt" truncates: a plain "w" leaves the tail of a longer old
+         * file behind on some Android versions, and that is a corrupt backup.
+         */
+        @JavascriptInterface
+        fun docsBackupWrite(json: String): Boolean {
+            val dir = shelf() ?: return false
+            return runCatching {
+                val f = dir.findFile(BACKUP_NAME)
+                    ?: dir.createFile("application/octet-stream", BACKUP_NAME)
+                    ?: return false
+                contentResolver.openOutputStream(f.uri, "wt")?.use {
+                    it.write(json.toByteArray(Charsets.UTF_8))
+                } ?: return false
+                true
+            }.getOrDefault(false)
+        }
+
+        /** The backup in the shelf folder, or null if there is none. */
+        @JavascriptInterface
+        fun docsBackupRead(): String? {
+            val f = shelf()?.findFile(BACKUP_NAME) ?: return null
+            return runCatching {
+                contentResolver.openInputStream(f.uri)?.use { it.readBytes().toString(Charsets.UTF_8) }
+            }.getOrNull()
         }
     }
 }

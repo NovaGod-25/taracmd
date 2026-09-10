@@ -689,6 +689,42 @@ mark{background:var(--amber-soft);color:inherit;border-radius:3px;padding:0 1px}
 .qcard.run{margin-top:2px}
 .runacts{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
 .runacts .fchip[disabled]{opacity:.4;cursor:default}
+/* the exam clock, and the paper after its submit */
+.ptools{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:-4px 0 12px}
+.pclock{display:inline-flex;align-items:center;gap:6px;font-family:"IBM Plex Mono",monospace;font-size:13px;
+  font-weight:600;padding:5px 11px;border-radius:99px;border:1px solid var(--rule);background:var(--card);color:var(--ink)}
+.pclock.low{border-color:var(--mark);color:var(--mark)}
+.pclock.over{border-color:var(--rule-2);color:var(--ink-3);font-weight:500}
+.pq.ok{background:var(--go-soft);border-color:var(--go);color:var(--go)}
+.pq.no{background:var(--mark-soft);border-color:var(--mark);color:var(--mark)}
+.pq.skip{border-style:dashed}
+.plegend i.ok{background:var(--go-soft);border-color:var(--go)}
+.plegend i.no{background:var(--mark-soft);border-color:var(--mark)}
+.plegend i.skip{border-style:dashed}
+.opt.key{border-color:var(--go);background:var(--go-soft)}
+.opt[disabled]{cursor:default;color:inherit}
+.phist{display:flex;flex-direction:column;gap:6px;margin:4px 0 10px}
+.phrow{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-2);
+  padding:8px 11px;border:1px solid var(--rule);border-radius:10px;background:var(--card)}
+.phrow b{font-family:"IBM Plex Mono",monospace;color:var(--ink)}
+/* focus, by the day */
+.fday{width:100%;max-width:440px;background:var(--card);border:1px solid var(--rule);border-radius:14px;
+  padding:13px 14px;margin:16px 0 6px;box-shadow:var(--shadow)}
+.fdayh{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.fdayh b{font-family:"IBM Plex Mono",monospace;font-size:20px}
+.fgoalof{font-size:13px;font-weight:500}
+.fdaybar{height:8px;border-radius:99px;background:var(--sunk);margin:10px 0 8px;overflow:hidden}
+.fdaybar i{display:block;height:100%;background:var(--accent);border-radius:99px}
+.fdaybar i.met{background:var(--go)}
+.fgoals{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:10px}
+.fgoals .mut{font-size:12px;margin-right:2px}
+button.fbar{background:none;border:0;padding:0;color:inherit;font:inherit;cursor:pointer}
+.fbar.on .fbv{box-shadow:inset 0 0 0 1.5px var(--accent)}
+.fbv > b{position:absolute;left:0;right:0;border-top:1px dashed var(--ink-3);opacity:.7}
+.fruns{width:100%;display:flex;flex-direction:column;gap:5px;margin-top:12px}
+.frun{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;color:var(--ink-2);padding:7px 10px;
+  border:1px solid var(--rule);border-radius:9px;background:var(--card)}
+.frun.void{color:var(--ink-3);border-style:dashed}
 </style>
 </head>
 <body>
@@ -787,12 +823,19 @@ const BLANK = {
   daily:    {},   // "YYYY-MM-DD" -> {score,of,src}           daily quiz log
   focus:    [],   // [{on,mins,ran,kind,left}]                focus sessions
   focusRun: null, // the session in flight, so a reload cannot lose the clock
-  seen:     {}    // "year-paper-set" -> {question: 1}       questions looked at
+  seen:     {},   // "year-paper-set" -> {question: 1}       questions looked at
+  sit:      {},   // paper id -> {start, mins, sub}          the exam clock, and the submit
+  past:     {},   // paper id -> [{on,right,wrong,left,of,marks,secs,how}]  earlier attempts
+  focusGoal: 0,   // minutes a day to aim for; 0 is no goal
+  focusDays: {}   // "YYYY-MM-DD" -> {mins, runs, voided}    day totals, kept past the run log
 };
-let store = Object.assign({}, BLANK);
+/* Copies, never BLANK itself: the defaults are objects, and a store that
+   shared them would quietly write every answer into the defaults too. */
+const blankOf = k => JSON.parse(JSON.stringify(BLANK[k]));
+let store = JSON.parse(JSON.stringify(BLANK));
 try{ const r = localStorage.getItem(KEY); if(r) store = Object.assign(store, JSON.parse(r)); }catch(e){}
-for(const k in BLANK){ if(store[k] === undefined || store[k] === null) store[k] = BLANK[k]; }
-function save(){ try{ localStorage.setItem(KEY, JSON.stringify(store)); }catch(e){} }
+for(const k in BLANK){ if(store[k] === undefined || store[k] === null) store[k] = blankOf(k); }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(store)); }catch(e){} shelfBackupSoon(); }
 
 /* Native bridge — present only inside the Android shell. Lets a single copy
    be saved to the app's own folder and reopened offline. Absent on the web,
@@ -909,6 +952,7 @@ let state = {
   openTopics: new Set(),  // topics expanded in place
   shape: false,           // the size-and-progress bars, folded away by default
   read: false,            // the flat, printable read-it-all view
+  fday: null,             // the focus day opened to its runs
 };
 
 /* ---------------- renderers ---------------- */
@@ -1452,9 +1496,15 @@ function focusStart(mins){
 function focusEnd(kind){
   const r = focusRun();
   if(!r) return;
-  store.focus = (store.focus || []).concat([{
-    on: r.start, mins: r.mins, ran: Math.round((Date.now() - r.start) / 1000), kind,
-  }]).slice(-60);
+  const ran = Math.round((Date.now() - r.start) / 1000);
+  store.focus = (store.focus || []).concat([{on: r.start, mins: r.mins, ran, kind}]).slice(-60);
+  /* The run log keeps sixty runs, which is a fortnight of a working student and
+     nowhere near a year. Each day's total is kept apart from it, small and for
+     good, so a day stays measurable after its runs have scrolled off. */
+  const dk = fdayKey(r.start);
+  const d = Object.assign({mins: 0, runs: 0, voided: 0}, (store.focusDays || {})[dk]);
+  if(kind === "done"){ d.mins = Math.round((d.mins + ran / 60) * 10) / 10; d.runs++; } else d.voided++;
+  store.focusDays = Object.assign({}, store.focusDays, {[dk]: d});
   store.focusStreak = kind === "done" ? focusStreak() + 1 : 0;
   store.focusRun = null;
   focusAwake(false);
@@ -1470,11 +1520,11 @@ function focusInterrupt(){
   if(!focusRun()) return;
   focusEnd("void");
 }
-window.taracmdInterrupted = focusInterrupt;
+window.taracmdInterrupted = () => { focusInterrupt(); shelfBackupFlush(); };
 document.addEventListener("visibilitychange", () => {
-  if(document.visibilityState === "hidden") focusInterrupt();
+  if(document.visibilityState === "hidden"){ focusInterrupt(); shelfBackupFlush(); }
 });
-addEventListener("pagehide", focusInterrupt);
+addEventListener("pagehide", () => { focusInterrupt(); shelfBackupFlush(); });
 
 /* ---- the dial ----
    Sixty minutes round the face, one per tick, so the angle IS the number of
@@ -1543,38 +1593,109 @@ function focusClock(){
    breaking it costs something visible — a chart that quietly forgot the runs
    you walked out of would be flattering rather than useful. */
 const FOCUS_DAYS = 14;
+const fdayKey = ms => { const d = new Date(ms);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
+const fmtMins = m => { m = Math.max(0, Math.round(m));
+  return m >= 60 ? `${Math.floor(m / 60)}h${m % 60 ? " " + (m % 60) + "m" : ""}` : `${m}m`; };
+
+/* One day's focused minutes and walked-out runs. The run log and the day
+   totals are two records of the same thing, and the larger wins: the log is
+   complete for recent days, the totals for everything the log has dropped. */
+function focusDay(ms){
+  const k = fdayKey(ms);
+  const runs = (store.focus || []).filter(x => fdayKey(x.on) === k);
+  const logMins = runs.filter(x => x.kind === "done").reduce((a, x) => a + x.ran / 60, 0);
+  const logVoid = runs.filter(x => x.kind !== "done").length;
+  const agg = (store.focusDays || {})[k];
+  return {key: k, runs,
+          mins: Math.round(Math.max(logMins, agg ? agg.mins : 0)),
+          voided: Math.max(logVoid, agg ? agg.voided : 0)};
+}
+
 function focusHistory(){
-  const day = ms => new Date(ms).toDateString();
   const out = [];
   for(let i = FOCUS_DAYS - 1; i >= 0; i--){
-    const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - i);
-    const key = d.toDateString();
-    const runs = (store.focus || []).filter(x => day(x.on) === key);
-    out.push({
-      date: d,
-      mins: Math.round(runs.filter(x => x.kind === "done").reduce((a, x) => a + x.ran / 60, 0)),
-      voided: runs.filter(x => x.kind !== "done").length,
-    });
+    // noon, so a daylight-saving night can never land two bars on one date
+    const d = new Date(); d.setHours(12, 0, 0, 0); d.setDate(d.getDate() - i);
+    const f = focusDay(d.getTime());
+    out.push({date: d, key: f.key, mins: f.mins, voided: f.voided});
   }
   return out;
 }
 
+/* Days in a row that met the goal. Today counts once it is met, and does not
+   break the run while it is still being worked on. */
+function focusGoalStreak(){
+  const goal = store.focusGoal || 0;
+  if(!goal) return 0;
+  let n = 0;
+  const d = new Date(); d.setHours(12, 0, 0, 0);
+  if(focusDay(d.getTime()).mins < goal) d.setDate(d.getDate() - 1);
+  for(let i = 0; i < 400; i++){
+    if(focusDay(d.getTime()).mins < goal) break;
+    n++; d.setDate(d.getDate() - 1);
+  }
+  return n;
+}
+
+/* Today, against a goal you set — the answer to "have I done enough today",
+   which a count of runs never gave. */
+function focusDayHtml(){
+  const goal = store.focusGoal || 0;
+  const today = focusDay(Date.now()).mins;
+  const met = goal && today >= goal;
+  const streak = focusGoalStreak();
+  return `<div class="fday">
+    <div class="fdayh"><span class="mut">Today</span>
+      <b>${fmtMins(today)}${goal ? `<span class="mut fgoalof"> of ${fmtMins(goal)}</span>` : ""}</b></div>
+    ${goal ? `<div class="fdaybar"><i class="${met ? "met" : ""}" style="width:${Math.min(100, today / goal * 100).toFixed(1)}%"></i></div>
+      <span class="mut" style="font-size:12px">${met ? "Goal met for today." : `${fmtMins(goal - today)} to go.`}${
+        streak ? ` Goal met ${streak} day${streak === 1 ? "" : "s"} in a row.` : ""}</span>`
+      : `<p class="note" style="margin:6px 0 0">Set a daily goal and every day is measured against it.</p>`}
+    <div class="fgoals"><span class="mut">Daily goal</span>
+      ${[0, 120, 240, 360, 480, 600].map(g => `<button class="fchip ${g === goal ? "on" : ""}" data-goal="${g}">${g ? g / 60 + "h" : "None"}</button>`).join("")}
+    </div>
+  </div>`;
+}
+
 function focusHistoryHtml(){
   const days = focusHistory();
-  const best = Math.max(30, ...days.map(d => d.mins));
+  const goal = store.focusGoal || 0;
+  const best = Math.max(30, goal, ...days.map(d => d.mins));
   const total = days.reduce((a, d) => a + d.mins, 0);
   const kept = days.filter(d => d.mins > 0).length;
-  return `<div class="head"><h2>Last two weeks</h2><span class="n">${total}m over ${kept} day${kept === 1 ? "" : "s"}</span></div>
+  const met = goal ? days.filter(d => d.mins >= goal).length : 0;
+  const pick = days.find(d => d.key === state.fday);
+  return `<div class="head"><h2>Last two weeks</h2><span class="n">${fmtMins(total)} over ${kept} day${kept === 1 ? "" : "s"}${
+      goal ? ` · goal met ${met}` : ""}</span></div>
     <div class="fhist">
-      ${days.map(d => `<div class="fbar" title="${d.date.toDateString()}">
+      ${days.map(d => `<button class="fbar${d.key === state.fday ? " on" : ""}" data-fday="${d.key}" title="${d.date.toDateString()}">
         <span class="fbv">${d.mins ? `<i style="height:${Math.max(3, d.mins / best * 100)}%"></i>` : ""}${
+          goal ? `<b style="bottom:${(goal / best * 100).toFixed(1)}%"></b>` : ""}${
           d.voided ? `<u>${d.voided > 1 ? d.voided : ""}</u>` : ""}</span>
         <span class="fbm mono">${d.mins || ""}</span>
         <span class="fbd">${["S","M","T","W","T","F","S"][d.date.getDay()]}</span>
-      </div>`).join("")}
+      </button>`).join("")}
     </div>
-    <p class="note">Height is minutes focused that day; a hollow mark is a run you walked out of.
-      Only runs seen out count.</p>`;
+    ${pick ? focusDayRunsHtml(pick) : ""}
+    <p class="note">Height is minutes focused that day${goal ? ", the dashed line your goal" : ""}; a hollow
+      mark is a run you walked out of. Only runs seen out count. Tap a day to see its runs.</p>`;
+}
+
+/* One day, run by run. */
+function focusDayRunsHtml(day){
+  const f = focusDay(day.date.getTime());
+  const runs = f.runs.slice().sort((a, b) => a.on - b.on);
+  const at = ms => new Date(ms).toLocaleTimeString([], {hour: "2-digit", minute: "2-digit"});
+  return `<div class="fruns">
+    <div class="fdayh"><span class="mut">${day.date.toDateString()}</span><b style="font-size:14px">${fmtMins(f.mins)}</b></div>
+    ${runs.length ? runs.map(x => `<div class="frun${x.kind === "done" ? "" : " void"}">
+        <span class="mono">${at(x.on)}</span>
+        <span>${x.kind === "done" ? `${Math.round(x.ran / 60)} min, seen out`
+          : `walked out after ${Math.round(x.ran / 60)} of ${x.mins} min`}</span>
+      </div>`).join("")
+      : `<div class="frun"><span>${f.mins ? "Only the day's total is kept this far back." : "Nothing that day."}</span></div>`}
+  </div>`;
 }
 
 function renderFocus(){
@@ -1599,6 +1720,8 @@ function renderFocus(){
         <p class="note" style="text-align:center;max-width:32ch;margin:16px auto 0">
           Leave the app and this run is void — the clock resets to zero and the streak
           with it. Reading the syllabus in here is not leaving.</p>
+        ${store.focusGoal ? `<p class="note" style="text-align:center;margin:8px auto 0">Today so far
+          ${fmtMins(focusDay(Date.now()).mins)} of ${fmtMins(store.focusGoal)}.</p>` : ""}
       </div>`;
     document.getElementById("fstop").onclick = () => {
       if(confirm("Give up on this run? It counts as broken and the streak resets.")) focusEnd("void");
@@ -1631,7 +1754,8 @@ function renderFocus(){
       </div>
       <p class="note">Drag the dial, ${FOCUS_MIN} to ${FOCUS_MAX} minutes. Nothing here locks the
         phone — leaving the app simply voids the run and puts the streak back to zero.</p>
-      ${log.length ? focusHistoryHtml() : ""}
+      ${focusDayHtml()}
+      ${log.length || Object.keys(store.focusDays || {}).length ? focusHistoryHtml() : ""}
     </div>`;
 
   /* Dragging has to be cheap, and the first version was not.
@@ -1698,6 +1822,12 @@ function renderFocus(){
 
   view.querySelectorAll("[data-step]").forEach(b => b.onclick = () => set(pick + +b.dataset.step, true));
   document.getElementById("fgo").onclick = () => focusStart(pick);
+  view.querySelectorAll("[data-goal]").forEach(b => b.onclick = () => {
+    store.focusGoal = +b.dataset.goal; save(); renderFocus();
+  });
+  view.querySelectorAll("[data-fday]").forEach(b => b.onclick = () => {
+    state.fday = state.fday === b.dataset.fday ? null : b.dataset.fday; renderFocus();
+  });
 }
 
 /* ---------------- topic sheet ---------------- */
@@ -1927,11 +2057,28 @@ function mergeStore(incoming){
     store.revised[tid] = uniqSort(store.revised[tid], incoming.revised[tid]).slice(-12);
   }
   // Maps of answers: what is already here wins, the backup only fills gaps.
-  for(const k of ["attempts", "picks", "writing"]){
+  for(const k of ["attempts", "picks", "writing", "seen", "sit", "daily"]){
+    if(!store[k]) store[k] = {};
     for(const id in incoming[k] || {}){
       if(store[k][id] === undefined){ store[k][id] = incoming[k][id]; touched++; }
     }
   }
+  // Dated lists are unioned on their date, so a run or an attempt is neither
+  // lost nor counted twice.
+  const byOn = (mine, theirs) => {
+    const have = new Set((mine || []).map(x => x.on));
+    const add = (theirs || []).filter(x => x && !have.has(x.on));
+    return [(mine || []).concat(add).sort((a, b) => a.on - b.on), add.length];
+  };
+  { const [f, n] = byOn(store.focus, incoming.focus); store.focus = f.slice(-60); touched += n; }
+  for(const id in incoming.past || {}){
+    const [f, n] = byOn(store.past[id], incoming.past[id]); store.past[id] = f; touched += n;
+  }
+  for(const d in incoming.focusDays || {}){
+    const a = store.focusDays[d], b = incoming.focusDays[d];
+    if(b && (!a || b.mins > a.mins)){ store.focusDays[d] = b; touched++; }
+  }
+  if(!store.focusGoal && incoming.focusGoal) store.focusGoal = incoming.focusGoal;
   save();
   return touched;
 }
@@ -1945,7 +2092,9 @@ function openData(){
       <div><div class="eyebrow">This device only</div><h3>Back up or restore</h3></div>
       <button class="xbtn" id="sheetX" aria-label="Close">${XI}</button>
     </div>
-    <p class="note" style="margin-top:2px">Nothing here leaves the device by itself. Clear site data, reinstall the app or move phone and the text below is the only copy of your progress.</p>
+    <p class="note" style="margin-top:2px">${NATIVE && NATIVE.docsBackupWrite
+      ? `In the app your progress is also written to your shelf folder, as <span class="mono">${BACKUP_NAME}</span>, a few seconds after every change — and an uninstall cannot touch it there. The text below is a second copy you can keep anywhere.`
+      : "Nothing here leaves the device by itself. Clear site data, reinstall the app or move phone and the text below is the only copy of your progress."}</p>
     <div class="sgrid" style="margin:14px 0 16px">
       <span>topics started <b class="mono">${n(store.done)}</b></span>
       <span>subtopics ticked <b class="mono">${Object.values(store.done).reduce((a, v) => a + v.length, 0)}</b></span>
@@ -2330,6 +2479,106 @@ function paperScore(p){
   return {right, wrong, left: of - right - wrong, of};
 }
 
+/* ---------------- sitting a paper: the clock, the submit, the retake ----------------
+   UPSC gives two hours for a hundred questions, and a paper practised without
+   the clock is practised without the thing that makes it hard. So a paper can
+   be sat against two hours — started by you, never imposed. Leaving the app
+   does not stop it, exactly as putting your pen down in the hall does not: the
+   clock is a start time rather than a counter, so a phone that sleeps or kills
+   the app loses nothing.
+
+   When the time is up the paper is submitted. The answers lock, the marks are
+   worked out on the Commission's own scheme — +2 and −0.66 on GS Paper I — and
+   every question turns into its answer and, where the institute gave one, its
+   explanation. Before the submit nothing is marked, because a paper that tells
+   you as you go is a flashcard deck.
+
+   A retake keeps the score of the attempt it replaces. "From scratch" clears
+   the sheet; "only my mistakes" keeps what you got right, so a second pass is
+   spent only where the first one went wrong. */
+const EXAM_MINS = 120;
+const paperSit = p => store.sit[paperId(p)] || null;
+const sitLeft = s => s && s.mins ? Math.max(0, s.start + s.mins * 60000 - Date.now()) : null;
+const markingOf = p => KEYS.marking[p.kind === "key" ? p.code : "gs1"] || {correct: 2, wrong: -0.66};
+const fmtMarks = x => String(Math.round(x * 100) / 100);
+function hms(secs){
+  secs = Math.max(0, Math.round(secs));
+  const h = Math.floor(secs / 3600), m = Math.floor(secs % 3600 / 60), sc = secs % 60;
+  const two = v => String(v).padStart(2, "0");
+  return h ? `${h}:${two(m)}:${two(sc)}` : `${m}:${two(sc)}`;
+}
+function paperMarks(p, sc){
+  const m = markingOf(p);
+  return Math.round((sc.right * m.correct + sc.wrong * m.wrong) * 100) / 100;
+}
+function paperRightAt(p, n){
+  const a = paperSheet(p)[n];
+  if(a === undefined || a === null) return false;
+  return p.kind === "key" ? LET[a] === p.letters[n - 1] : a === p.questions[n - 1].answer;
+}
+/* Time up is submitted whenever anything next looks at the paper — the app
+   does not have to have been open at the two-hour mark. */
+function paperSubmitted(p){
+  const s = paperSit(p);
+  if(!s) return false;
+  if(!s.sub && s.mins && sitLeft(s) === 0){ s.sub = s.start + s.mins * 60000; save(); }
+  return !!s.sub;
+}
+function paperStartClock(p){
+  store.sit[paperId(p)] = {start: Date.now(), mins: EXAM_MINS, sub: null};
+  save();
+}
+function paperSubmit(p){
+  const id = paperId(p), s = store.sit[id];
+  store.sit[id] = s && s.mins
+    ? Object.assign({}, s, {sub: Math.min(Date.now(), s.start + s.mins * 60000)})
+    : {start: null, mins: 0, sub: Date.now()};
+  save();
+}
+function paperRetake(p, how){
+  const id = paperId(p), sc = paperScore(p), s = paperSit(p);
+  if(sc.right + sc.wrong){
+    store.past[id] = (store.past[id] || []).concat([{
+      on: Date.now(), right: sc.right, wrong: sc.wrong, left: sc.left, of: sc.of,
+      marks: paperMarks(p, sc),
+      secs: s && s.start ? Math.round(((s.sub || Date.now()) - s.start) / 1000) : null,
+      how: s && s.mins ? "timed" : "untimed"}]);
+  }
+  const keep = {};
+  if(how === "mistakes"){
+    const sheet = paperSheet(p);
+    for(const k in sheet) if(paperRightAt(p, +k)) keep[k] = sheet[k];
+  }
+  store.attempts[id] = keep;
+  store.seen[id] = Object.fromEntries(Object.keys(keep).map(k => [k, 1]));
+  delete store.sit[id];
+  save();
+}
+/* What a paper's folder card says about where you are with it. */
+function paperStatus(p){
+  const s = paperSit(p), done = paperSubmitted(p), n = (store.past[paperId(p)] || []).length;
+  const bits = [];
+  if(s && s.mins && !done) bits.push(`⏱ ${hms(sitLeft(s) / 1000)} left`);
+  if(done) bits.push(`submitted, ${fmtMarks(paperMarks(p, paperScore(p)))} marks`);
+  if(n) bits.push(`${n} earlier attempt${n === 1 ? "" : "s"}`);
+  return bits.map(b => ` · ${b}`).join("");
+}
+/* One tick a second while a timed paper is on screen, and none once it is not. */
+let paperTick = null;
+function paperClockRun(p){
+  clearInterval(paperTick);
+  const s = paperSit(p);
+  if(!s || s.sub || !s.mins) return;
+  paperTick = setInterval(() => {
+    const el = document.getElementById("pclock");
+    if(!el){ clearInterval(paperTick); return; }
+    const left = sitLeft(s);
+    if(left === 0){ clearInterval(paperTick); renderQuiz(); return; }
+    el.textContent = "⏱ " + hms(Math.ceil(left / 1000));
+    el.classList.toggle("low", left < 600000);
+  }, 1000);
+}
+
 function renderPaperFolders(root){
   const papers = paperList();
   if(!papers.length){
@@ -2357,7 +2606,7 @@ function renderPaperFolders(root){
           <span class="pc-b">
             <span class="pc-t">${esc(p.name)}${p.test ? ` · ${esc(p.test)}` : ""}</span>
             <span class="pc-s">${tot} question${tot === 1 ? "" : "s"} · ${how}${
-              done ? ` · ${done} answered` : ""}</span>
+              done ? ` · ${done} answered` : ""}${paperStatus(p)}</span>
             <span class="pc-bar"><i style="width:${(done / tot * 100).toFixed(1)}%"></i></span>
           </span>
           <span class="pgo">›</span>
@@ -2365,7 +2614,8 @@ function renderPaperFolders(root){
       }).join("")}
     </div>
     <p class="note">A paper opens one question at a time. Skip what you cannot do and the
-      palette will bring you back to it.</p>`;
+      palette will bring you back to it. Start the clock inside a paper to sit it in the
+      exam's two hours; submit it to see the marks, the answers and the explanations.</p>`;
 
   root.querySelectorAll("[data-paper]").forEach(b => b.onclick = () => {
     state.qpaperId = b.dataset.paper; state.qn = 1; state.qsheet = false; renderQuiz();
@@ -2428,16 +2678,41 @@ function renderPaperRun(root, p){
     return null;
   })();
 
+  /* Submitted is settled before anything is drawn, so a paper whose two hours
+     ran out while the app was shut opens already marked. */
+  const sub = paperSubmitted(p);
+  const sit = paperSit(p);
+  const past = store.past[paperId(p)] || [];
+  const keyIdx = dropped ? -1 : q ? q.answer : key ? LET.indexOf(key[n - 1]) : -1;
+  const optCls = i => sub ? (i === keyIdx ? "key" : picked === i ? "wrong" : "")
+                          : (picked === i ? "pick" : "");
+  const lock = sub ? "disabled" : "";
+
   /* Four blank lettered cells, for a number whose question nobody has typed
      in yet. The alternative is to hide the number, and then the palette stops
      being the paper — you would sit 95 questions and score out of 100. */
-  const blanks = LET.map((L, i) => `<button class="opt lonly ${picked === i ? "pick" : ""}"
-      data-pick="${i}"><span class="ol">${L}</span></button>`).join("");
+  const blanks = LET.map((L, i) => `<button class="opt lonly ${optCls(i)}"
+      data-pick="${i}" ${lock}><span class="ol">${L}</span></button>`).join("");
+
+  const left = sitLeft(sit);
+  const took = sit && sit.start ? Math.round(((sit.sub || Date.now()) - sit.start) / 1000) : null;
+  const mk = markingOf(p);
+  const answeredHere = picked !== undefined && picked !== null;
+  const verdict = !sub || dropped ? "" : `<p class="note" style="margin:10px 0 0">${
+    !answeredHere ? `Not answered. The key says <b>${LET[keyIdx] || "?"}</b>.`
+    : picked === keyIdx ? `Right — <b>${LET[keyIdx]}</b>.`
+    : `You marked <b>${LET[picked]}</b>; the key says <b>${LET[keyIdx]}</b>.`}</p>`;
 
   root.innerHTML = `
     <div class="prun-top">
       <button class="fchip ghost" id="pback">← All papers</button>
       <span class="prun-n mono">${n} / ${total}</span>
+    </div>
+    <div class="ptools">
+      ${sub ? `<span class="pclock over">Submitted${took !== null ? ` · took ${hms(took)}` : ""}</span>`
+        : sit && sit.mins ? `<span class="pclock${left < 600000 ? " low" : ""}" id="pclock">⏱ ${hms(Math.ceil(left / 1000))}</span>`
+        : `<button class="fchip" id="pclockgo">⏱ Start the 2-hour clock</button>`}
+      ${!sub && (sit || sc.right + sc.wrong) ? `<button class="fchip" id="psubmit">Submit paper</button>` : ""}
     </div>
     ${key && runSets.length > 1 ? `<div class="filters" style="margin:2px 0 8px">
       <span class="mut" style="align-self:center;font-size:12px">Series</span>
@@ -2452,16 +2727,22 @@ function renderPaperRun(root, p){
         const drop = key && key[i] === "X";
         const answered = a !== undefined && a !== null;
         /* Three states, and the order matters: answered wins over seen, so a
-           question you came back to and answered goes green and stays green. */
-        const cls = [drop ? "drop" : answered ? "done" : seen[k] ? "left" : "",
+           question you came back to and answered goes green and stays green.
+           After the submit the same squares say how it went instead: right,
+           wrong, never answered. */
+        const cls = [drop ? "drop"
+                     : sub ? (answered ? (paperRightAt(p, k) ? "ok" : "no") : "skip")
+                     : answered ? "done" : seen[k] ? "left" : "",
                      k === n ? "here" : ""].filter(Boolean).join(" ");
         return `<button class="pq ${cls}" data-goq="${k}">${k}</button>`;
       }).join("")}
     </div>
     <div class="plegend">
-      <span><i class="done"></i>answered</span>
+      ${sub ? `<span><i class="ok"></i>right</span>
+      <span><i class="no"></i>wrong</span>
+      <span><i class="skip"></i>not answered</span>` : `<span><i class="done"></i>answered</span>
       <span><i class="left"></i>not answered</span>
-      <span><i></i>not visited</span>${key ? `
+      <span><i></i>not visited</span>`}${key ? `
       <span><i></i><s>dropped</s></span>` : ""}
     </div>
     <div class="qcard run">
@@ -2473,31 +2754,46 @@ function renderPaperRun(root, p){
         : q
           ? `<div class="qstem">${esc(q.q)}</div>
              <div class="opts">
-               ${q.options.map((o, i) => `<button class="opt ${picked === i ? "pick" : ""}" data-pick="${i}">
+               ${q.options.map((o, i) => `<button class="opt ${optCls(i)}" data-pick="${i}" ${lock}>
                  <span class="ol">${LET[i]}</span><span>${esc(o)}</span></button>`).join("")}
-             </div>`
+             </div>${verdict}${sub && q.why ? `<div class="why2"><b>Why.</b> ${esc(q.why)}</div>` : ""}`
           : `<div class="qstem mut">This one has not been typed in yet — the Commission publishes its papers as photographs. Mark what you chose and it still scores against the official key.</div>
-             <div class="opts row4">${blanks}</div>`}
+             <div class="opts row4">${blanks}</div>${verdict}`}
       <div class="runacts">
         <button class="fchip" id="pprev" ${n === 1 ? "disabled" : ""}>← Previous</button>
-        ${picked !== undefined && picked !== null
-          ? `<button class="fchip" id="pclear">Clear</button>` : ""}
-        <button class="fchip" id="pnext" ${n === total ? "disabled" : ""}>Skip →</button>
+        ${!sub && answeredHere ? `<button class="fchip" id="pclear">Clear</button>` : ""}
+        <button class="fchip" id="pnext" ${n === total ? "disabled" : ""}>${sub ? "Next" : "Skip"} →</button>
       </div>
     </div>
-    <div class="sgrid" style="margin:16px 0 6px">
+    ${sub ? `<div class="score"><span class="big">${fmtMarks(paperMarks(p, sc))}</span>
+        <span class="lil">marks of ${fmtMarks(sc.of * mk.correct)} — ${fmtMarks(mk.correct)} for a right answer, ${fmtMarks(mk.wrong)} for a wrong one</span>
+        <div class="sgrid"><span>right <b>${sc.right}</b></span><span>wrong <b>${sc.wrong}</b></span>
+          <span>left <b>${sc.left}</b></span>
+          <span>accuracy <b>${sc.right + sc.wrong ? Math.round(sc.right / (sc.right + sc.wrong) * 100) : 0}%</b></span>
+          ${took !== null ? `<span>time <b>${hms(took)}</b></span>` : ""}
+          <span>attempt <b>${past.length + 1}</b></span></div>
+        <div class="act"><button class="prim" id="pretake">Reattempt from scratch</button>
+          ${sc.wrong + sc.left ? `<button id="pretry">Redo only my mistakes</button>` : ""}</div></div>
+      <p class="note">Every question now shows its answer${p.kind === "typed" ? " and the explanation" : ""} —
+        tap a number in the palette to go through them. A reattempt keeps this score in the list below.</p>`
+    : `<div class="sgrid" style="margin:16px 0 6px">
       <span>answered <b class="mono">${sc.right + sc.wrong}</b></span>
       <span>left <b class="mono">${sc.left}</b></span>
       ${firstUnanswered ? `<span><button class="linky" id="pnextun">back to the first unanswered → ${firstUnanswered}</button></span>` : ""}
     </div>
     ${sc.left === 0
-      ? `<div class="score"><span class="big">${sc.right}</span><span class="lil">right of ${sc.of}</span>
-           <div class="sgrid"><span>right <b>${sc.right}</b></span><span>wrong <b>${sc.wrong}</b></span>
-             <span>accuracy <b>${Math.round(sc.right / sc.of * 100)}%</b></span></div>
-           <div class="act"><button class="prim" id="pclearall">Clear the sheet</button></div></div>
-         <p class="note">Every question answered. The palette above is still there if you want to change one.</p>`
-      : `<p class="note">Nothing is marked right or wrong until the paper is finished — this is a
-           paper, not a flashcard. Skipped questions stay hollow in the palette.</p>`}
+      ? `<div class="score"><span class="big">${sc.right + sc.wrong}</span><span class="lil">answered — every question has a mark</span>
+           <div class="act"><button class="prim" id="psubmit2">Submit and see the marks</button>
+             <button id="pclearall">Clear the sheet</button></div></div>
+         <p class="note">Nothing is marked until you submit. The palette above is still there if you want to change one.</p>`
+      : `<p class="note">Nothing is marked right or wrong until you submit — this is a
+           paper, not a flashcard. Skipped questions stay hollow in the palette.${
+           sit ? "" : " Start the clock to sit it in the exam's two hours, or answer at your own pace."}</p>`}`}
+    ${past.length ? `<div class="head"><h2>Earlier attempts</h2><span class="n">${past.length}</span></div>
+      <div class="phist">${past.map((a, i) => ({a, i})).reverse().map(({a, i}) => `<div class="phrow">
+        <span>Attempt ${i + 1} · ${new Date(a.on).toLocaleDateString()}${a.how === "timed" ? " · timed" : ""}</span>
+        <span><b>${fmtMarks(a.marks)}</b> · ${a.right} right, ${a.wrong} wrong${a.secs ? " · " + hms(a.secs) : ""}</span>
+      </div>`).join("")}</div>` : ""}
     ${key ? `<p class="note"><button class="linky" id="psheet">Mark it as a plain answer sheet
        instead</button> — the whole hundred on one grid, for when the paper is open in
        front of you.</p>` : ""}`;
@@ -2510,6 +2806,7 @@ function renderPaperRun(root, p){
     state.qset = b.dataset.set; renderQuiz();
   });
   root.querySelectorAll("[data-pick]").forEach(b => b.onclick = () => {
+    if(paperSubmitted(p)) return;           // a submitted paper is marked, not reopened
     store.attempts[paperId(p)] = Object.assign({}, sheet, {[n]: +b.dataset.pick});
     // answering moves you on, because stopping to admire an answer is not what
     // sitting a paper feels like
@@ -2533,8 +2830,42 @@ function renderPaperRun(root, p){
   if(sh) sh.onclick = () => { state.qsheet = true; renderQuiz(); };
   const ca = document.getElementById("pclearall");
   if(ca) ca.onclick = () => {
-    if(confirm(`Clear every answer on ${p.name}?`)){ delete store.attempts[paperId(p)]; state.qn = 1; rerender(); }
+    if(confirm(`Clear every answer on ${p.name}?`)){
+      delete store.attempts[paperId(p)]; delete store.sit[paperId(p)]; state.qn = 1; rerender();
+    }
   };
+  const go = document.getElementById("pclockgo");
+  if(go) go.onclick = () => {
+    if(!confirm(`Start the clock? ${EXAM_MINS / 60} hours, as in the exam. It keeps running if you leave the app, and when it runs out the paper is submitted.`)) return;
+    paperStartClock(p); renderQuiz();
+  };
+  ["psubmit", "psubmit2"].forEach(bid => {
+    const b = document.getElementById(bid);
+    if(b) b.onclick = () => {
+      const s2 = paperScore(p);
+      if(!confirm(s2.left
+        ? `Submit with ${s2.left} question${s2.left === 1 ? "" : "s"} not answered? The answers lock and the marks are shown.`
+        : "Submit the paper? The answers lock and the marks are shown.")) return;
+      paperSubmit(p); state.qn = 1; renderQuiz();
+    };
+  });
+  const rt = document.getElementById("pretake");
+  if(rt) rt.onclick = () => {
+    if(!confirm("Sit this paper again from nothing? This attempt's score is kept in the list.")) return;
+    paperRetake(p, "all"); state.qn = 1; renderQuiz();
+  };
+  const rm = document.getElementById("pretry");
+  if(rm) rm.onclick = () => {
+    paperRetake(p, "mistakes");
+    const s3 = paperSheet(p);
+    let first = 1;
+    for(let c = 1; c <= total; c++){
+      if(key && key[c - 1] === "X") continue;
+      if(s3[c] === undefined || s3[c] === null){ first = c; break; }
+    }
+    state.qn = first; renderQuiz();
+  };
+  paperClockRun(p);
 }
 
 /* ---------------- the shelf ----------------
@@ -2603,6 +2934,9 @@ function renderDocs(){
         <p class="note">If you reinstall the app, point it at the same folder again and the
           whole shelf comes back. Android gives the permission to the app, and taking the app
           away takes the permission with it — never the files.</p>
+        <p class="note">Your progress goes there too — ticks, answer sheets, attempts, the focus
+          log — as <span class="mono">${BACKUP_NAME}</span>, rewritten after every change. So the
+          same one tap after a reinstall brings back your progress as well as your documents.</p>
         <div class="act" style="margin-top:12px"><button class="prim" id="dpick">Choose the folder</button></div>
       </div>`;
     document.getElementById("dpick").onclick = () => { try{ NATIVE.docsPick(); }catch(e){} };
@@ -2631,9 +2965,14 @@ function renderDocs(){
     </div>` : `<div class="empty">Nothing on the shelf yet. <b>Add documents</b> copies them into
       <span class="mono">${esc(folder)}</span>, where they stay whatever happens to the app.</div>`}
     <p class="note">These are your files, kept outside the app on purpose. Removing one here
-      deletes it from that folder too — the shelf is the folder, not a copy of it.</p>`;
+      deletes it from that folder too — the shelf is the folder, not a copy of it.</p>
+    ${docsBackupHtml()}`;
 
   document.getElementById("dfold").onclick = () => { try{ NATIVE.docsPick(); }catch(e){} };
+  const bn = document.getElementById("dbaknow");
+  if(bn) bn.onclick = () => { shelfBackupNow(); renderDocs(); };
+  const bi = document.getElementById("dbakin");
+  if(bi) bi.onclick = () => offerShelfRestore(true);
   document.getElementById("dadd").onclick = () => { try{ NATIVE.docsAdd(); }catch(e){} };
   view.querySelectorAll("[data-doc]").forEach(b => b.onclick = () => {
     try{ NATIVE.docsOpen(b.dataset.doc); }catch(e){}
@@ -2647,8 +2986,72 @@ function renderDocs(){
   });
 }
 
-// native → page: the shelf changed under us (a folder picked, files added)
-window.taracmdDocs = function(){ if(state.tab === "docs") renderDocs(); };
+/* ---------------- the progress backup on the shelf ----------------
+   Everything you have done lives in localStorage, which is inside the app: an
+   update keeps it, an uninstall or "clear data" does not. The shelf folder is
+   outside the app and survives both. So every change is also written, a few
+   seconds later, to one file in that folder, and a reinstalled app pointed at
+   the same folder offers it straight back. The file is kept off the shelf's own
+   list — it is the app's, not one of your documents. */
+const BACKUP_NAME = "TaraCmd progress.json";
+var backupTimer = null;     // var, not let: save() can run before this line has
+function shelfBackupSoon(){
+  if(!NATIVE || !NATIVE.docsBackupWrite) return;
+  clearTimeout(backupTimer);
+  backupTimer = setTimeout(shelfBackupNow, 3000);
+}
+function shelfBackupNow(){
+  clearTimeout(backupTimer); backupTimer = null;
+  if(!NATIVE || !NATIVE.docsBackupWrite) return false;
+  try{
+    if(!NATIVE.docsFolder()) return false;
+    return !!NATIVE.docsBackupWrite(JSON.stringify(Object.assign({}, store, {backedUp: Date.now()})));
+  }catch(e){ return false; }
+}
+/* Leaving the app must not strand the last change inside those three seconds. */
+function shelfBackupFlush(){ if(backupTimer) shelfBackupNow(); }
+function shelfBackupRead(){
+  if(!NATIVE || !NATIVE.docsBackupRead) return null;
+  try{ const t = NATIVE.docsBackupRead(); return t ? JSON.parse(t) : null; }catch(e){ return null; }
+}
+function docsBackupHtml(){
+  if(!NATIVE || !NATIVE.docsBackupWrite) return "";
+  const b = shelfBackupRead();
+  const when = b && b.backedUp ? new Date(b.backedUp).toLocaleString() : null;
+  return `<div class="head"><h2>Progress backup</h2></div>
+    <div class="qcard">
+      <p class="note" style="margin:0">${when
+        ? `Saved ${esc(when)} as <span class="mono">${BACKUP_NAME}</span> in this folder, and rewritten
+           a few seconds after every change. Uninstalling or clearing the app cannot touch it: point a
+           reinstalled app at this folder and it offers everything back.`
+        : `Your ticks, answer sheets, attempts and focus log are written here as
+           <span class="mono">${BACKUP_NAME}</span> a few seconds after your next change.`}</p>
+      <div class="act"><button id="dbaknow">Back up now</button>${b ? `<button id="dbakin">Restore from it</button>` : ""}</div>
+    </div>`;
+}
+const progressWeight = x => Object.keys(x.done || {}).length + Object.keys(x.attempts || {}).length
+  + Object.keys(x.picks || {}).length + (x.focus || []).length + Object.keys(x.past || {}).length;
+/* Offered, never forced, and only when the backup holds more than the app
+   does — re-picking your own folder should not ask you anything. */
+function offerShelfRestore(force){
+  const b = shelfBackupRead();
+  if(!b || (!force && progressWeight(b) <= progressWeight(store))) return 0;
+  const when = b.backedUp ? new Date(b.backedUp).toLocaleString() : "earlier";
+  if(!confirm(`This folder holds your TaraCmd progress, saved ${when}.\n\nBring it back into the app? Nothing already here is overwritten.`)) return 0;
+  const n = mergeStore(b);
+  render();
+  return n;
+}
+
+// native → page: the shelf changed under us. "picked" is a folder chosen, which
+// after a reinstall is the moment an old backup is found again.
+window.taracmdDocs = function(why){
+  if(why === "picked") offerShelfRestore();
+  if(state.tab === "docs") renderDocs();
+};
+/* An app opened with nothing in it, on a phone whose folder grant survived —
+   data cleared rather than the app removed — offers the backup at once. */
+setTimeout(() => { if(docsOk()) offerShelfRestore(); }, 800);
 
 /* ---------------- toppers ---------------- */
 function renderToppers(){

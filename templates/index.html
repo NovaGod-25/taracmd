@@ -746,6 +746,9 @@ button.fbar{background:none;border:0;padding:0;color:inherit;font:inherit;cursor
 .mrow[open] .mt{display:none}
 .mrow .qstem{margin:4px 0 10px}
 .mrow .why2{margin-top:10px}
+/* a CSAT passage, above each question that is asked on it */
+.qpass{font-size:13.5px;line-height:1.6;color:var(--ink-2);background:var(--card-2);border:1px solid var(--rule);
+  border-radius:10px;padding:10px 12px;margin:6px 0 10px;white-space:pre-line}
 </style>
 </head>
 <body>
@@ -2597,6 +2600,15 @@ function paperClockRun(p){
   }, 1000);
 }
 
+/* A CSAT passage is printed once above the items that share it, and stored
+   once: each of those questions carries the passage's id. It is drawn above
+   every one of them, because a question is asked on its own here and the
+   passage is half of it. */
+function passageHtml(q){
+  const t = q && q.passage && (QUIZ.passages || {})[q.passage];
+  return t ? `<div class="qpass">${esc(t)}</div>` : "";
+}
+
 function renderPaperFolders(root){
   const papers = paperList();
   if(!papers.length){
@@ -2770,7 +2782,7 @@ function renderPaperRun(root, p){
       ${dropped
         ? `<div class="qstem mut">The Commission dropped this question, so it is not asked and not scored. It is still in the paper because the numbering is.</div>`
         : q
-          ? `<div class="qstem">${esc(q.q)}</div>
+          ? `${passageHtml(q)}<div class="qstem">${esc(q.q)}</div>
              <div class="opts">
                ${q.options.map((o, i) => `<button class="opt ${optCls(i)}" data-pick="${i}" ${lock}>
                  <span class="ol">${LET[i]}</span><span>${esc(o)}</span></button>`).join("")}
@@ -3249,7 +3261,7 @@ function renderMistakes(root){
       ${g.rows.map(({id, m, q}) => `<details class="mrow">
         <summary><span class="mt">${esc(q.q.length > 140 ? q.q.slice(0, 140) + "…" : q.q)}</span>
           <span class="ms">${esc(sourceLabel(q))} · wrong ${m.wrong}× · <b>${whenDue(m.due)}</b></span></summary>
-        <div class="qstem">${esc(q.q)}</div>
+        ${passageHtml(q)}<div class="qstem">${esc(q.q)}</div>
         <div class="opts">${q.options.map((o, i) => `<div class="opt ${i === q.answer ? "key" : ""}">
           <span class="ol">${LET[i]}</span><span>${esc(o)}</span></div>`).join("")}</div>
         ${q.why ? `<div class="why2"><b>Why.</b> ${esc(q.why)}</div>` : ""}
@@ -3288,7 +3300,7 @@ function renderRetry(root, due){
     </div>
     <div class="qcard run">
       <div class="eyebrow">${esc(sourceLabel(q))}</div>
-      <div class="qstem">${esc(q.q)}</div>
+      ${passageHtml(q)}<div class="qstem">${esc(q.q)}</div>
       <div class="opts">${q.options.map((o, i) => `<button class="opt ${res ? (i === q.answer ? "key" : i === res.pick ? "wrong" : "") : ""}"
           data-mpick="${i}" ${res ? "disabled" : ""}><span class="ol">${LET[i]}</span><span>${esc(o)}</span></button>`).join("")}</div>
       ${res ? `<p class="note" style="margin:10px 0 0">${res.pick === q.answer
@@ -3539,17 +3551,17 @@ function renderScorer(root){
            a lettered cell, because a blank row of A B C D is at least honest
            about being an answer sheet. The two live in the same grid so the
            paper fills in as it is typed rather than switching mode. */
-        if(w && !out) return `<div class="cell wide">
-          <span class="cq"><b class="mono">${q}</b> ${esc(w.q)}</span>
+        /* After the submit the grid marks itself: green where you were
+           right, red where you were not, and the key under anything missed. */
+        const mk = sub && !out && a ? (keyTakes(k, a) ? " ok" : " no") : "";
+        if(w && !out) return `<div class="cell wide${mk}">
+          ${passageHtml(w)}<span class="cq"><b class="mono">${q}</b> ${esc(w.q)}</span>
           <span class="copts">${w.options.map((o, oi) => `
             <button class="copt ${a === LET[oi] ? "on" : ""}" data-q="${q}" data-a="${LET[oi]}" ${sub ? "disabled" : ""}>
               <i>${LET[oi]}</i>${esc(o)}</button>`).join("")}</span>
           ${a && !(sit && sit.mins && !sub) ? `<span class="cwhy ${keyTakes(k, a) ? "ok" : "no"}">${keyTakes(k, a) ? "Right" : `Wrong — the key says ${k.split("").join(" or ")}`}${
             w.why ? ` · ${esc(w.why)}` : ""}</span>` : ""}
         </div>`;
-        /* After the submit the grid marks itself: green where you were
-           right, red where you were not, and the key under anything missed. */
-        const mk = sub && !out && a ? (keyTakes(k, a) ? " ok" : " no") : "";
         return `<div class="cell${mk}" ${out?'style="opacity:.4"':""}>
           <span class="cn">${q}${out?" ×":""}</span>
           <span class="cb">${LET.map(L=>`<button class="${a===L?"on":""}" data-q="${q}" data-a="${L}" ${sub ? "disabled" : ""}>${L}</button>`).join("")}</span>

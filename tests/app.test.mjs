@@ -279,16 +279,16 @@ describe("scoring a Prelims paper against the official key", () => {
 });
 
 describe("the syllabus tab", () => {
-  test("by subject: eight groups, and the counts add up to the whole syllabus", () => {
+  test("by subject: nine groups, and the counts add up to the whole syllabus", () => {
     const g = JSON.parse(inPage(win, `
       (() => { state.lens = "subject";
         return JSON.stringify(groups().map(x => ({id: x.id, n: x.topics.length}))); })()`));
-    assert.equal(g.length, 8);
-    assert.equal(g.reduce((a, x) => a + x.n, 0), 242);
+    assert.equal(g.length, 9);
+    assert.equal(g.reduce((a, x) => a + x.n, 0), 249);
   });
 
   /* The lens is the point of the tab: the Commission sets the syllabus per
-     paper, and 240 of 242 topics carry more than one paper tag, so this is a
+     paper, and 240 of 249 topics carry more than one paper tag, so this is a
      genuinely different shape of the same material rather than the same list
      grouped twice. */
   test("by paper: six papers, each holding exactly the topics tagged for it", () => {
@@ -302,7 +302,7 @@ describe("the syllabus tab", () => {
     assert.deepEqual(g.map(x => x.id),
       ["prelims", "mains-gs1", "mains-gs2", "mains-gs3", "mains-gs4", "essay"]);
     for (const x of g) assert.equal(x.n, x.tagged, `${x.id} lost topics in the regroup`);
-    assert.equal(g.find(x => x.id === "prelims").n, 235);
+    assert.equal(g.find(x => x.id === "prelims").n, 242);
   });
 
   test("most topics serve more than one paper, so the lenses really do differ", () => {
@@ -313,8 +313,8 @@ describe("the syllabus tab", () => {
   test("progress counts topics and subtopics separately", () => {
     setStore(win, { done: {} });
     const t = JSON.parse(inPage(win, "JSON.stringify(tally(ALL_TOPICS.map(x => x.tp)))"));
-    assert.equal(t.tTot, 242);
-    assert.equal(t.sTot, 1723);
+    assert.equal(t.tTot, 249);
+    assert.equal(t.sTot, 1760);
     assert.equal(t.tDone, 0);
     // finishing one topic moves the topic count by one and the subtopic count
     // by that topic's length — one percentage could not say both
@@ -330,9 +330,9 @@ describe("the syllabus tab", () => {
   test("read-it-all renders every subtopic, not a teaser", () => {
     const html = inPage(win, "readHtml()");
     const items = (html.match(/<li>/g) || []).length;
-    assert.equal(items, 1723, "the whole syllabus has to be in the read view");
-    assert.equal((html.match(/<h2>/g) || []).length, 8);
-    assert.equal((html.match(/<h3>/g) || []).length, 242);
+    assert.equal(items, 1760, "the whole syllabus has to be in the read view");
+    assert.equal((html.match(/<h2>/g) || []).length, 9);
+    assert.equal((html.match(/<h3>/g) || []).length, 249);
   });
 
   test("a topic opened in place shows all of its subtopics and what it counts for", () => {
@@ -802,9 +802,9 @@ describe("the syllabus map", () => {
           unique: new Set(ids).size
         });
       })()`));
-    assert.equal(out.tiles, out.topics, "one square per topic, all 242 of them");
+    assert.equal(out.tiles, out.topics, "one square per topic, all 249 of them");
     assert.equal(out.unique, out.topics, "and no topic drawn twice");
-    assert.equal(out.subjects, 8);
+    assert.equal(out.subjects, 9);
     assert.ok(out.allReal, "every square resolves to a real topic");
   });
 
@@ -1089,7 +1089,8 @@ describe("CSAT on the answer grid", () => {
       const id = "2024-gs2-A", L = KEYS.years.find(y => y.year === 2024).papers.find(p => p.code === "gs2").keys.A;
       delete store.attempts[id]; delete store.sit[id]; delete store.past[id];
       state.tab = "practice"; state.qmode = "papers"; state.qpaperId = "upsc-2024-gs2";
-      state.qset = "A"; state.qsheet = false; render();
+      // the sheet itself, not the question-by-question view its typed questions open on
+      state.qset = "A"; state.qsheet = true; render();
       const r = { go: !!document.getElementById("pclockgo") };
       const wrongL = LET[(LET.indexOf(L[1]) + 1) % 4];
       document.querySelector('.omr [data-q="1"][data-a="' + L[0] + '"]').click();
@@ -1111,7 +1112,7 @@ describe("CSAT on the answer grid", () => {
       r.past = store.past[id].length;
       r.hist = !!document.querySelector(".phist");
       delete store.attempts[id]; delete store.sit[id]; delete store.past[id]; delete store.seen[id];
-      state.qpaperId = null;
+      state.qpaperId = null; state.qsheet = false;
       return JSON.stringify(r); })()`));
     assert.equal(out.go, true, "a CSAT paper offers the clock");
     assert.equal(out.clock, true);

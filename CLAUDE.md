@@ -39,7 +39,7 @@ actual syllabus — could only be seen eight at a time, one topic at a time, 242
 deep. Now it is one page: groups open in place, topics open in place, and every subtopic
 is its own tick target.
 
-**Three lenses, and Map is the one it opens on.** Map draws all 242 topics as one square
+**Three lenses, and Map is the one it opens on.** Map draws all 249 topics as one square
 each, grouped by subject — the whole of what the Commission examines on a screen and a
 half, which a scrolling outline can never be. Colour there is progress, never weight:
 where you have and have not been is a fact, and weight is an editorial claim that at the
@@ -47,8 +47,8 @@ moment barely discriminates. Tap a square for the topic, a subject's name to dro
 the outline at that subject.
 
 `By subject` and `By paper` are the other two, and they are the point of the tab rather
-than a gimmick: **240 of the 242 carry more than one paper tag**, so how the material is
-taught and how the Commission sets it (Prelims 235, GS-I 69, GS-II 82, GS-III 147, GS-IV
+than a gimmick: **240 of the 249 carry more than one paper tag**, so how the material is
+taught and how the Commission sets it (Prelims 242, GS-I 69, GS-II 82, GS-III 147, GS-IV
 5, Essay 28) really are different shapes of one syllabus. Anything that regroups topics
 must keep every topic: `tests/` checks the paper lens holds exactly the topics tagged for
 each paper, and that the map draws every topic exactly once.
@@ -191,10 +191,10 @@ turns it green rather than leaving it looking like a failure.
 
 | File | Holds |
 |---|---|
-| `subjects.json` | 8 subjects → 242 topics → 1,723 subtopics; each topic tagged with papers + weight |
+| `subjects.json` | 9 subjects → 249 topics → 1,760 subtopics; each topic tagged with papers + weight. The ninth is CSAT, seven topics from the Commission's own CSAT syllabus |
 | `pyq-papers.json` | official upsc.gov.in paper links per year — Prelims 22/24, Mains 54/60 |
 | `answer-keys.json` | Prelims answer keys: links, marking scheme, set-wise letters. GS-I and CSAT both complete 2017-2026, all four Series |
-| `quiz.json` | 2,356 questions: 35 written here, 846 from UPSC GS-I — every year 2017–2026 — and 1,475 from fifteen 2027 test series papers (Vision IAS 1, 3–6; ForumIAS 1–4 and Level 2 1–3; Vajiram PowerUp 2–4), with the institute's explanation as `why` |
+| `quiz.json` | 2,595 questions: 35 written here, 846 from UPSC GS-I — every year 2017–2026 — 239 from UPSC CSAT (2020, 2021, 2024), and 1,475 from fifteen 2027 test series papers (Vision IAS 1, 3–6; ForumIAS 1–4 and Level 2 1–3; Vajiram PowerUp 2–4), with the institute's explanation as `why`. CSAT passages are stored once, in `passages` |
 | `toppers.json` | 102 published answer copies across 10 publishers |
 | `daily.json` | daily current-affairs quiz sources: a URL pattern the page expands against the date |
 | `optionals.json` | the Optional tab: Geography, Law and Agriculture, 22/22 papers each 2016–2026, plus curated copies |
@@ -271,7 +271,7 @@ bilingual booklet, strips page furniture, and caps `why` at 1,200 characters. Th
 `tools/topic-suggest.py --apply` prefills topics — scoring the explanation's first lines
 and the institute's own subject label, and choosing only among that subject's topics — and
 a person reads every one before import. On the first fifteen papers about a third needed
-a different topic. CSAT papers are not imported: none of the 242 topics is theirs.
+a different topic. Test-series CSAT papers are not imported; UPSC's own CSAT is, by its own route — see below.
 
 **What cannot be carried:** anything that is not text. Map questions, diagrams, and
 image-based match-the-following have nowhere to live in this format — the app is one HTML
@@ -520,6 +520,44 @@ A dropped question is struck through in the palette rather than removed, so the 
 still counts to a hundred and question 62 is still at 62; it is not asked, not scorable,
 and excluded from the total, which is what the Commission's own "taken for Scoring 99"
 means.
+
+### CSAT asked in full: passages, and tools/csat-stage.py
+
+CSAT is asked question by question like GS-I for 2020, 2021 and 2024 (239 questions); the
+other years still open on the answer grid. Three things differ from GS-I, and
+`tools/csat-stage.py` handles them between `pyq-scan.py` and `quiz-import.py`:
+
+- **A passage is stored once.** It is printed above the items that share it, under
+  "Directions for the following N (n) items", and lands in the OCR as spill-over at the end
+  of the question before (or as preamble before question 1). The tool cuts it out, stores it
+  in `quiz.json` → `passages` keyed like `csp24-gs2-a-p11`, and each of the N items points
+  at the passage printed most recently above it. `build.py` fails on a question pointing at
+  a missing passage and on a passage nothing uses, and its duplicate check compares a
+  passage question **with its passage** — "the most logical inference from the passage" is
+  asked of passage after passage. The page draws the passage above the stem wherever a
+  question is shown (`passageHtml`).
+- **The repeated-line sweep is off.** `pyq-text.parse` drops short lines that repeat on over
+  half the pages, to lose running heads. CSAT repeats real text that often — "Which of the
+  assumptions given above", half of every data-sufficiency option — so the tool re-parses
+  the raw OCR (`intake/scan-<year>-gs2.txt`, which `pyq-scan.py` now writes with page
+  numbers) with `drop_repeats=False` and removes booklet codes and P.T.O. by pattern. **The
+  same sweep damaged five 2021 GS-I stems** (csp21-gs1-a-18, 31, 52, 59, 63 end in a bare
+  "are correct?") — still to be read against the page and fixed.
+- **Arithmetic is read against the page and worked.** OCR cannot read an exponent (3²⁰¹⁹
+  came back "37019"), the raised decimal point (48·75% → "48°75%") or ₹ (?, %, #, ¥, or a 1
+  stuck to the number). A garbled numeracy question keeps the Commission's right answer and
+  becomes unanswerable, so every question is checked against the page image
+  (`csat-stage.py <year> page <n>`) and every calculation worked against the key before its
+  decision goes into `intake/csat-<year>-review.json`; a number with no entry is not staged.
+  Statement options snap onto a generated vocabulary ("lonly" → "1 only", "2 and 8 only" →
+  "2 and 3 only" where the list has fewer than eight statements); a bare number never snaps.
+  Small tables and matrices are typed as text rows — `.qstem` is `pre-line`.
+
+The CSAT topics are the ninth subject, taken from the Commission's own CSAT syllabus and
+tagged for Prelims: every question needs a topic, and the mistakes notebook groups by them.
+2021 Q39, where the Commission accepted C or D, is left as a lettered cell rather than
+asked. 2018 prints its question numbers white on black boxes, which tesseract cannot read,
+so its scan comes back numbered by position only and cannot be staged as it is.
 
 ## Decisions that should not be quietly reversed
 
@@ -896,6 +934,8 @@ python3 tools/pyq-papers.py optionals       # rebuild the Optional tab paper lis
 python3 tools/answer-keys.py discover       # find answer-key PDFs still missing
 python3 tools/answer-keys.py extract --dry-run   # read Set A/B/C/D letters, print only
 python3 tools/keycheck.py intake/key-2017-gs1.json --write   # verify a hand-read key, then store it
+python3 tools/csat-stage.py 2024 draft      # a scanned CSAT paper, passages attached, for reading
+python3 tools/csat-stage.py 2024 stage      # stage what intake/csat-2024-review.json accepts
 perl tools/make-icons.pl                    # regenerate the API 24–25 launcher rasters
 cd android && ./gradlew assembleDebug       # local APK, needs Android SDK + wrapper
 ```

@@ -79,7 +79,19 @@ def main() -> int:
     topics = {t["id"] for s in subjects for t in s["topics"]}
     existing = quiz.setdefault("questions", [])
     have_ids = {q.get("id") for q in existing}
-    have_stems = {stem_of(q.get("q")): q.get("id") for q in existing}
+    # CSAT passages: stored once, pointed at by id from every question on them.
+    # The same id with other text would silently rewrite questions already in
+    # the bank, so it is refused rather than overwritten.
+    have_pass, new_pass = quiz.get("passages") or {}, batch.get("passages") or {}
+    for pid, text in new_pass.items():
+        if pid in have_pass and have_pass[pid] != text:
+            sys.exit(f"passage {pid!r} is already in the bank with different text")
+    allp = {**have_pass, **new_pass}
+    # "The most logical inference from the passage" is asked of passage after
+    # passage, so a passage question is identified by its passage as well.
+    ident = lambda q: stem_of(q.get("q")) + (
+        " | " + stem_of(allp.get(q["passage"])) if q.get("passage") else "")
+    have_stems = {ident(q): q.get("id") for q in existing}
 
     src = batch.get("source") or {}
     if not (src.get("name") or "").strip() and not any(q.get("paper") for q in batch.get("questions", [])):
@@ -122,7 +134,9 @@ def main() -> int:
             why.append(f"answer {a!r} is outside the options")
         if not (q.get("q") or "").strip():
             why.append("no question text")
-        st = stem_of(q.get("q"))
+        if q.get("passage") and not (allp.get(q["passage"]) or "").strip():
+            why.append(f"passage {q['passage']!r} is not in the batch or the bank")
+        st = ident(q)
         if st and st in have_stems:
             why.append(f"already asked, as {have_stems[st]!r}")
         if q.get("paper") and src.get("name"):
@@ -132,8 +146,10 @@ def main() -> int:
             skipped.append((qid, why))
             continue
 
-        out = {"id": qid, "topic": q["topic"], "q": q["q"].strip(),
-               "options": [str(o).strip() for o in opts], "answer": a}
+        out = {"id": qid, "topic": q["topic"]}
+        if q.get("passage"):
+            out["passage"] = q["passage"]
+        out.update({"q": q["q"].strip(), "options": [str(o).strip() for o in opts], "answer": a})
         if (q.get("why") or "").strip():
             out["why"] = q["why"].strip()
         if q.get("paper"):
@@ -158,6 +174,10 @@ def main() -> int:
         return 0
 
     existing.extend(taken)
+    # only the passages a taken question uses: an orphan fails the build
+    used = {q["passage"] for q in taken if q.get("passage")}
+    if used - set(have_pass):
+        quiz.setdefault("passages", {}).update({p: new_pass[p] for p in sorted(used - set(have_pass))})
     with QUIZ.open("w", encoding="utf-8", newline="\n") as fh:
         json.dump(quiz, fh, ensure_ascii=False, indent=2)
         fh.write("\n")

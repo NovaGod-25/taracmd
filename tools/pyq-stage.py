@@ -27,6 +27,7 @@ spec.loader.exec_module(tidy)
 def main() -> int:
     year = int(sys.argv[1])
     topics = {int(k): v for k, v in json.loads(pathlib.Path(sys.argv[2]).read_text(encoding="utf-8")).items()}
+    code = sys.argv[3] if len(sys.argv) > 3 else "gs1"   # gs2 for CSAT
     subs = json.loads((ROOT / "content" / "subjects.json").read_text(encoding="utf-8"))
     subs = subs["subjects"] if isinstance(subs, dict) else subs
     valid = {t["id"] for s in subs for t in s["topics"]}
@@ -34,10 +35,10 @@ def main() -> int:
     if bad:
         sys.exit(f"topic ids that do not exist: {bad}")
 
-    src = json.loads((ROOT / "intake" / f"scan-{year}-gs1.json").read_text(encoding="utf-8"))
+    src = json.loads((ROOT / "intake" / f"scan-{year}-{code}.json").read_text(encoding="utf-8"))
     have = json.loads((ROOT / "content" / "quiz.json").read_text(encoding="utf-8"))["questions"]
     already = {q["paper"]["n"] for q in have
-               if q.get("paper", {}).get("year") == year and q["paper"].get("code") == "gs1"}
+               if q.get("paper", {}).get("year") == year and q["paper"].get("code") == code}
 
     out, left, refused = [], Counter(), []
     for q in src["questions"]:
@@ -61,9 +62,10 @@ def main() -> int:
         out.append({"n": n, "topic": topics[n], "q": stem,
                     "options": opts, "answer": q["answer"], "paper": q["paper"]})
 
-    dest = ROOT / "intake" / f"upsc-{year}-gs1-set{src['paperSet'].lower()}-add.json"
+    dest = ROOT / "intake" / f"upsc-{year}-{code}-set{src['paperSet'].lower()}-add.json"
+    label = {"gs1": "GS Paper I", "gs2": "CSAT Paper II"}.get(code, code)
     dest.write_text(json.dumps({
-        "note": f"UPSC Civil Services Prelims {year}, GS Paper I, Series {src['paperSet']}. OCR "
+        "note": f"UPSC Civil Services Prelims {year}, {label}, Series {src['paperSet']}. OCR "
                 "of the Commission's own scan; only questions whose printed number was READ off "
                 "the page. Answers are the Commission's own key.",
         "questions": out}, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")

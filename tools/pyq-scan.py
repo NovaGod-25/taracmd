@@ -376,7 +376,7 @@ def main() -> int:
     print(f"  rule sits at {med[1]:.3f} on odd pages, {med[0]:.3f} on even "
           f"({len(side[1])} and {len(side[0])} pages)", flush=True)
 
-    chunks, seen_sets, kept, skipped = [], Counter(), 0, 0
+    chunks, chunk_pages, seen_sets, kept, skipped = [], [], Counter(), 0, 0
     for i, im in imgs.items():
         own, frac = own_x[i], med[i % 2]
         # A printed rule is the page's own truth, and on 2020 it wanders
@@ -413,11 +413,22 @@ def main() -> int:
                 continue
             seen_sets[s] += 1
         chunks.append(fix_markers(text))
+        chunk_pages.append(i)
         print(f"  page {i:3}: {len(text):5} chars, {hits:3} english words"
               f"{'' if x > 0 else '  (no rule found — read whole)'}", flush=True)
 
     if not chunks:
         sys.exit("no English pages found — is this the right booklet?")
+
+    # The page text as read, before the parser cuts it into questions. CSAT
+    # prints each passage ABOVE the questions it serves, in text the parser
+    # treats as spill-over from the question before -- and the first passage
+    # sits above question 1, in what it treats as preamble. Kept here, so a
+    # passage can always be recovered without scanning the booklet again.
+    raw = (args.out or (ROOT / "intake" / f"scan-{args.year}-{args.code}.json")).with_suffix(".txt")
+    raw.parent.mkdir(exist_ok=True)
+    raw.write_text("".join(f"\n\n=== page {i} ===\n\n{c}" for i, c in zip(chunk_pages, chunks)).lstrip(),
+                   encoding="utf-8")
 
     setname = args.setname or (seen_sets.most_common(1)[0][0] if seen_sets else None)
     if not setname:

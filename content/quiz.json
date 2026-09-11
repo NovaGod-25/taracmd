@@ -42108,6 +42108,4453 @@
         "test": "PowerUp Prelims Test Series 2027, GS Test 04 - Geography (V8804)",
         "year": 2027
       }
+    },
+    {
+      "id": "csp24-gs2-a-1",
+      "topic": "csat-comprehension",
+      "passage": "csp24-gs2-a-p1",
+      "q": "Which of the following statements best reflect the most logical and rational inferences that can be made from the passage? 1. The current methods of food distribution are solely responsible for the loss and wastage of food. 2. Land productivity is adversely affected by the prevailing trend of food loss and wastage. 3. Reduction in the loss and wastage of food results in lesser carbon footprint. 4. Post-harvest technologies to prevent or reduce the loss and wastage of food are not available. Select the correct answer using the code given below.",
+      "options": [
+        "1, 2 and 3",
+        "2 and 3 only",
+        "1, 3 and 4",
+        "1, 2 and 4"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 1
+      }
+    },
+    {
+      "id": "csp24-gs2-a-2",
+      "topic": "csat-comprehension",
+      "passage": "csp24-gs2-a-p1",
+      "q": "Based on the above passage, the following assumptions have been made : 1. The food distribution mechanism needs to be reimagined and made effective to reduce the loss and wastage of food. 2. Ensuring the reduction of wastage and loss of food is a social and moral responsibility of all citizens. Which of the assumptions given above is/are valid?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 2
+      }
+    },
+    {
+      "id": "csp24-gs2-a-3",
+      "topic": "csat-comprehension",
+      "passage": "csp24-gs2-a-p3",
+      "q": "Which of the following statements best reflects/reflect the most logical and rational inference/inferences that can be made from the passage? 1. Central banks cannot bring down inflation without budgetary backing. 2. The effects of monetary policy depend on the fiscal policies pursued by the government. Select the correct answer using the code given below.",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 3
+      }
+    },
+    {
+      "id": "csp24-gs2-a-4",
+      "topic": "csat-comprehension",
+      "passage": "csp24-gs2-a-p3",
+      "q": "Based on the above passage, the following assumptions have been made : 1. Fiscal policies of governments are solely responsible for higher prices. 2. Higher prices do not affect the long-term government bonds. Which of the assumptions given above is/are valid?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 4
+      }
+    },
+    {
+      "id": "csp24-gs2-a-5",
+      "topic": "csat-mental-ability",
+      "q": "What is the least possible number of cuts required to cut a cube into 64 identical pieces?",
+      "options": [
+        "8",
+        "9",
+        "12",
+        "16"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 5
+      }
+    },
+    {
+      "id": "csp24-gs2-a-6",
+      "topic": "csat-numeracy",
+      "q": "In the expression 5 ∗ 4 ∗ 3 ∗ 2 ∗ 1, ∗ is chosen from +, −, × each at most two times. What is the smallest non-negative value of the expression?",
+      "options": [
+        "3",
+        "2",
+        "1",
+        "0"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 6
+      }
+    },
+    {
+      "id": "csp24-gs2-a-7",
+      "topic": "csat-numeracy",
+      "q": "A certain number of men can complete a piece of work in 6k days, where k is a natural number. By what percent should the number of men be increased so that the work can be completed in 5k days?",
+      "options": [
+        "10%",
+        "(50/3)%",
+        "20%",
+        "25%"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 7
+      }
+    },
+    {
+      "id": "csp24-gs2-a-8",
+      "topic": "csat-numeracy",
+      "q": "X, Y and Z can complete a piece of work individually in 6 hours, 8 hours and 8 hours respectively. However, only one person at a time can work in each hour and nobody can work for two consecutive hours. All are engaged to finish the work. What is the minimum amount of time that they will take to finish the work?",
+      "options": [
+        "6 hours 15 minutes",
+        "6 hours 30 minutes",
+        "6 hours 45 minutes",
+        "7 hours"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 8
+      }
+    },
+    {
+      "id": "csp24-gs2-a-9",
+      "topic": "csat-numeracy",
+      "q": "How many consecutive zeros are there at the end of the integer obtained in the product 1² × 2⁴ × 3⁶ × 4⁸ × ⋯ × 25⁵⁰?",
+      "options": [
+        "50",
+        "55",
+        "100",
+        "200"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 9
+      }
+    },
+    {
+      "id": "csp24-gs2-a-10",
+      "topic": "csat-numeracy",
+      "q": "On January 1st, 2023, a person saved ₹ 1. On January 2nd, 2023, he saved ₹ 2 more than that on the previous day. On January 3rd, 2023, he saved ₹ 2 more than that on the previous day and so on. At the end of which date was his total savings a perfect square as well a perfect cube?",
+      "options": [
+        "7th January, 2023",
+        "8th January, 2023",
+        "9th January, 2023",
+        "Not possible"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 10
+      }
+    },
+    {
+      "id": "csp24-gs2-a-11",
+      "topic": "csat-comprehension",
+      "passage": "csp24-gs2-a-p11",
+      "q": "Which one of the following statements best reflects the most logical and rational inference that can be made from the above passage?",
+      "options": [
+        "Curriculum for urban planning courses should have diverse and interdisciplinary approach.",
+        "In India, city administration is under bureaucracy which lacks formal training in urban planning and management.",
+        "In India, the management of urban areas is a local affair with a chronic problem of insufficient funds.",
+        "With high density of population and widespread poverty in our urban areas, planned development in them is very difficult."
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 11
+      }
+    },
+    {
+      "id": "csp24-gs2-a-12",
+      "topic": "csat-comprehension",
+      "passage": "csp24-gs2-a-p11",
+      "q": "Based on the above passage, the following assumptions have been made : 1. India needs a new generation of urban professionals with knowledge relevant to modern urban practice. 2. Indian universities at present have no capacity or potential to impart training in systems approach. Which of the assumptions given above is/are correct?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 12
+      }
+    },
+    {
+      "id": "csp24-gs2-a-13",
+      "topic": "csat-comprehension",
+      "passage": "csp24-gs2-a-p13",
+      "q": "Which one of the following statements best reflects the central idea of the above passage?",
+      "options": [
+        "Constructed as a marketplace of views, social media ensures instant access to information.",
+        "Social media are not ideal or moral institutions but the products built by companies to make profits.",
+        "Social media have been created to strengthen democracies.",
+        "In today’s world, social media are inevitable for well-informed social life."
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 13
+      }
+    },
+    {
+      "id": "csp24-gs2-a-14",
+      "topic": "csat-comprehension",
+      "passage": "csp24-gs2-a-p13",
+      "q": "Based on the above passage, the following assumptions have been made : 1. Internet is not inclusive enough. 2. Internet can adversely affect the quality of politics in a country. Which of the assumptions given above is/are valid?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 14
+      }
+    },
+    {
+      "id": "csp24-gs2-a-15",
+      "topic": "csat-numeracy",
+      "q": "222³³³ + 333²²² is divisible by which of the following numbers?",
+      "options": [
+        "2 and 3 but not 37",
+        "3 and 37 but not 2",
+        "2 and 37 but not 3",
+        "2, 3 and 37"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 15
+      }
+    },
+    {
+      "id": "csp24-gs2-a-16",
+      "topic": "csat-numeracy",
+      "q": "What percent of water must be mixed with honey so as to gain 20% by selling the mixture at the cost price of honey?",
+      "options": [
+        "20%",
+        "10%",
+        "5%",
+        "4%"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 16
+      }
+    },
+    {
+      "id": "csp24-gs2-a-17",
+      "topic": "csat-numeracy",
+      "q": "What is the rightmost digit preceding the zeros in the value of 30³⁰?",
+      "options": [
+        "1",
+        "3",
+        "7",
+        "9"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 17
+      }
+    },
+    {
+      "id": "csp24-gs2-a-18",
+      "topic": "csat-numeracy",
+      "q": "421 and 427, when divided by the same number, leave the same remainder 1. How many numbers can be used as the divisor in order to get the same remainder 1?",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 18
+      }
+    },
+    {
+      "id": "csp24-gs2-a-19",
+      "topic": "csat-numeracy",
+      "q": "A can X contains 399 litres of petrol and a can Y contains 532 litres of diesel. They are to be bottled in bottles of equal size so that whole of petrol and diesel would be separately bottled. The bottle capacity in terms of litres is an integer. How many different bottle sizes are possible?",
+      "options": [
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 19
+      }
+    },
+    {
+      "id": "csp24-gs2-a-20",
+      "topic": "csat-numeracy",
+      "q": "Consider the following statements in respect of the sum S = x + y + z, where x, y and z are distinct prime numbers each less than 10 : 1. The unit digit of S can be 0. 2. The unit digit of S can be 9. 3. The unit digit of S can be 5. Which of the statements given above are correct?",
+      "options": [
+        "1 and 2 only",
+        "2 and 3 only",
+        "1 and 3 only",
+        "1, 2 and 3"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 20
+      }
+    },
+    {
+      "id": "csp24-gs2-a-21",
+      "topic": "csat-comprehension",
+      "passage": "csp24-gs2-a-p21",
+      "q": "Based on the above passage, the following assumptions have been made : 1. For effective school education, parents have greater role than the governments. 2. School curriculum that conforms to today’s requirements and is uniform for the entire country may address the issues brought out. Which of the assumptions given above is/are valid?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 21
+      }
+    },
+    {
+      "id": "csp24-gs2-a-22",
+      "topic": "csat-comprehension",
+      "passage": "csp24-gs2-a-p21",
+      "q": "Which one of the following statements best reflects the central idea conveyed by the passage?",
+      "options": [
+        "Total eradication of poverty in the country will resolve the issue of under-performance of our school-children.",
+        "Monetary incentives to parents and teachers is a strategy to improve the children’s academic performance.",
+        "Public policy should ensure that competencies and achievements of young people are aligned with their expectations.",
+        "India is not going to take advantage of the demographic dividend unless some school pass-outs go back to agriculture."
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 22
+      }
+    },
+    {
+      "id": "csp24-gs2-a-23",
+      "topic": "csat-comprehension",
+      "passage": "csp24-gs2-a-p23",
+      "q": "Which one of the following statements best reflects the thinking of the author about the science?",
+      "options": [
+        "Science must value the commitment of the scientists.",
+        "Science is a product of civilized society and must be used for the promotion of scientific awareness in people.",
+        "Industrial revolution was made possible by the advancements in science.",
+        "Science must pursue truth but be responsible for social welfare."
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 23
+      }
+    },
+    {
+      "id": "csp24-gs2-a-24",
+      "topic": "csat-mental-ability",
+      "q": "Consider the sequence A _ BCD _ BBCDABC _ DABC _ D that follows a certain pattern. Which one of the following completes the sequence?",
+      "options": [
+        "B, A, D, C",
+        "B, A, C, D",
+        "A, A, C, D",
+        "A, A, D, C"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 24
+      }
+    },
+    {
+      "id": "csp24-gs2-a-25",
+      "topic": "csat-numeracy",
+      "q": "Two persons P and Q enter into a business. P puts ₹ 14,000 more than Q, but P has invested for 8 months and Q has invested for 10 months. If P’s share is ₹ 400 more than Q’s share out of the total profit of ₹ 2,000, what is the capital contributed by P?",
+      "options": [
+        "₹ 30,000",
+        "₹ 26,000",
+        "₹ 24,000",
+        "₹ 20,000"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 25
+      }
+    },
+    {
+      "id": "csp24-gs2-a-26",
+      "topic": "csat-numeracy",
+      "q": "P’s salary is 20% lower than Q’s salary which is 20% lower than R’s salary. By how much percent is R’s salary more than P’s salary?",
+      "options": [
+        "48.75%",
+        "56.25%",
+        "60.50%",
+        "62.25%"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 26
+      }
+    },
+    {
+      "id": "csp24-gs2-a-27",
+      "topic": "csat-numeracy",
+      "q": "A number is mistakenly divided by 4 instead of multiplying by 4. What is the percentage change in the result due to this mistake?",
+      "options": [
+        "25%",
+        "50%",
+        "72.75%",
+        "93.75%"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 27
+      }
+    },
+    {
+      "id": "csp24-gs2-a-28",
+      "topic": "csat-numeracy",
+      "q": "In an examination, 80% of students passed in English, 70% of students passed in Hindi and 15% failed in both the subjects. What is the percentage of students who failed in only one subject?",
+      "options": [
+        "15%",
+        "20%",
+        "25%",
+        "35%"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 28
+      }
+    },
+    {
+      "id": "csp24-gs2-a-29",
+      "topic": "csat-numeracy",
+      "q": "A father said to his son, “n years back I was as old as you are now. My present age is four times your age n years back”. If the sum of the present ages of the father and the son is 130 years, what is the difference of their ages?",
+      "options": [
+        "30 years",
+        "32 years",
+        "34 years",
+        "36 years"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 29
+      }
+    },
+    {
+      "id": "csp24-gs2-a-30",
+      "topic": "csat-numeracy",
+      "q": "Consider the following : 1. 1000 litres = 1 m³ 2. 1 metric ton = 1000 kg 3. 1 hectare = 10000 m² Which of the above are correct?",
+      "options": [
+        "1 and 2 only",
+        "2 and 3 only",
+        "1 and 3 only",
+        "1, 2 and 3"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 30
+      }
+    },
+    {
+      "id": "csp24-gs2-a-31",
+      "topic": "csat-comprehension",
+      "passage": "csp24-gs2-a-p31",
+      "q": "Which of the following is/are emphatically conveyed by the author of the passage? 1. Without science, mankind could not have continued to exist till today. 2. It is the science that will ultimately determine the destiny of mankind. Select the correct answer using the code given below.",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 31
+      }
+    },
+    {
+      "id": "csp24-gs2-a-32",
+      "topic": "csat-comprehension",
+      "passage": "csp24-gs2-a-p31",
+      "q": "Based on the above passage, the following assumptions have been made : 1. The horrors of modern life are the inevitable result of the progress of science. 2. The aspect of truth likely to be overlooked is that science is what man has made it. Which of the assumptions given above is/are correct?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 32
+      }
+    },
+    {
+      "id": "csp24-gs2-a-33",
+      "topic": "csat-comprehension",
+      "passage": "csp24-gs2-a-p33",
+      "q": "When we meet other people while we travel, we learn to differentiate between",
+      "options": [
+        "imagination and understanding",
+        "communities and nationalities",
+        "local values and universal values",
+        "friends and foes"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 33
+      }
+    },
+    {
+      "id": "csp24-gs2-a-34",
+      "topic": "csat-comprehension",
+      "passage": "csp24-gs2-a-p33",
+      "q": "With reference to the above passage, the following assumptions have been made : 1. Travel leads to an understanding of humans. 2. Travel helps those who wish to learn fundamental common values. 3. A person with long experience in travel can resolve differences amongst people. Which of the assumptions given above are valid?",
+      "options": [
+        "1 and 2 only",
+        "2 and 3 only",
+        "1 and 3 only",
+        "1, 2 and 3"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 34
+      }
+    },
+    {
+      "id": "csp24-gs2-a-35",
+      "topic": "csat-numeracy",
+      "q": "Let X be a two-digit number and Y be another two-digit number formed by interchanging the digits of X. If (X+Y) is the greatest two-digit number, then what is the number of possible values of X?",
+      "options": [
+        "2",
+        "4",
+        "6",
+        "8"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 35
+      }
+    },
+    {
+      "id": "csp24-gs2-a-36",
+      "topic": "csat-numeracy",
+      "q": "Consider the following : Weight of 6 boys = Weight of 7 girls = Weight of 3 men = Weight of 4 women If the average weight of the women is 63 kg, then what is the average weight of the boys?",
+      "options": [
+        "40 kg",
+        "42 kg",
+        "45 kg",
+        "63 kg"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 36
+      }
+    },
+    {
+      "id": "csp24-gs2-a-37",
+      "topic": "csat-mental-ability",
+      "q": "How many times the hour hand and the minute hand coincide in a clock between 10:00 a.m. and 2:00 p.m. (same day)?",
+      "options": [
+        "3 times",
+        "4 times",
+        "5 times",
+        "6 times"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 37
+      }
+    },
+    {
+      "id": "csp24-gs2-a-38",
+      "topic": "csat-mental-ability",
+      "q": "The calendar for the year 2025 is same for",
+      "options": [
+        "2029",
+        "2030",
+        "2031",
+        "2033"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 38
+      }
+    },
+    {
+      "id": "csp24-gs2-a-39",
+      "topic": "csat-numeracy",
+      "q": "Let p, q, r and s be distinct positive integers. Let p, q be odd and r, s be even. Consider the following statements : 1. (p − r)²(qs) is even. 2. (q − s)q²s is even. 3. (q + r)²(p + s) is odd. Which of the statements given above are correct?",
+      "options": [
+        "1 and 2 only",
+        "2 and 3 only",
+        "1 and 3 only",
+        "1, 2 and 3"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 39
+      }
+    },
+    {
+      "id": "csp24-gs2-a-40",
+      "topic": "csat-mental-ability",
+      "q": "What is the angle between the minute hand and hour hand when the clock shows 4:25 hours?",
+      "options": [
+        "12.5°",
+        "15°",
+        "17.5°",
+        "20°"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 40
+      }
+    },
+    {
+      "id": "csp24-gs2-a-41",
+      "topic": "csat-comprehension",
+      "passage": "csp24-gs2-a-p41",
+      "q": "Which of the following statements best reflects/reflect the most logical and rational inference/inferences that can be made from the passage? 1. In conventional classroom learning, the central goal is duration of learning rather than attainment of competency. 2. Conventional classrooms encourage one-size-fits-all approach and stamp out all differentiation. Select the correct answer using the code given below.",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 41
+      }
+    },
+    {
+      "id": "csp24-gs2-a-42",
+      "topic": "csat-comprehension",
+      "passage": "csp24-gs2-a-p41",
+      "q": "Based on the above passage, the following assumptions have been made : 1. As a large number of workers in our country are employed in unorganized sector, India does not need to change its present conventional classroom system of education. 2. Even with its present conventional classroom system of education, India produces sufficient number of skilled workers to fully realize the benefits of demographic dividend. Which of the assumptions given above is/are valid?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 42
+      }
+    },
+    {
+      "id": "csp24-gs2-a-43",
+      "topic": "csat-comprehension",
+      "passage": "csp24-gs2-a-p43",
+      "q": "Based on the above passage, the following assumptions have been made : 1. The adolescent does not feel comfortable with his parents because they tend to be dominating and assertive. 2. The adolescent of modern times does not have much respect for parents. Which of the assumptions given above is/are valid?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 43
+      }
+    },
+    {
+      "id": "csp24-gs2-a-44",
+      "topic": "csat-comprehension",
+      "passage": "csp24-gs2-a-p43",
+      "q": "Which one of the following statements best reflects the central idea of the above passage?",
+      "options": [
+        "Parents in general may not be of much help when children are on their way to becoming adults.",
+        "When children reach adolescence, involvement of parents in their lives is unnecessary.",
+        "Modern-day nuclear families are not capable of bringing up children properly.",
+        "In modern societies, adolescents tend to be stubborn, disobedient and careless."
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 44
+      }
+    },
+    {
+      "id": "csp24-gs2-a-45",
+      "topic": "csat-numeracy",
+      "q": "What is the number of fives used in numbering a 260-page book?",
+      "options": [
+        "55",
+        "56",
+        "57",
+        "60"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 45
+      }
+    },
+    {
+      "id": "csp24-gs2-a-46",
+      "topic": "csat-mental-ability",
+      "q": "What is the sum of the first 28 terms in the following sequence? 1, 1, 2, 1, 3, 2, 1, 4, 3, 2, 1, 5, 4, 3, 2, ⋯",
+      "options": [
+        "83",
+        "84",
+        "85",
+        "86"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 46
+      }
+    },
+    {
+      "id": "csp24-gs2-a-47",
+      "topic": "csat-numeracy",
+      "q": "A person buys three articles P, Q and R for ₹ 3,330. If P costs 25% more than R and R costs 20% more than Q, then what is the cost of P?",
+      "options": [
+        "₹ 1,000",
+        "₹ 1,200",
+        "₹ 1,250",
+        "₹ 1,350"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 47
+      }
+    },
+    {
+      "id": "csp24-gs2-a-48",
+      "topic": "csat-numeracy",
+      "q": "If the sum of the two-digit numbers AB and CD is the three-digit number 1CE, where the letters A, B, C, D, E denote distinct digits, then what is the value of A?",
+      "options": [
+        "9",
+        "8",
+        "7",
+        "Cannot be determined due to insufficient data"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 48
+      }
+    },
+    {
+      "id": "csp24-gs2-a-49",
+      "topic": "csat-numeracy",
+      "q": "Three numbers x, y, z are selected from the set of the first seven natural numbers such that x > 2y > 3z. How many such distinct triplets (x, y, z) are possible?",
+      "options": [
+        "One triplet",
+        "Two triplets",
+        "Three triplets",
+        "Four triplets"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 49
+      }
+    },
+    {
+      "id": "csp24-gs2-a-50",
+      "topic": "csat-numeracy",
+      "q": "The total cost of 4 oranges, 6 mangoes and 8 apples is equal to twice the total cost of 1 orange, 2 mangoes and 5 apples. Consider the following statements : 1. The total cost of 3 oranges, 5 mangoes and 9 apples is equal to the total cost of 4 oranges, 6 mangoes and 8 apples. 2. The total cost of one orange and one mango is equal to the cost of one apple. Which of the statements given above is/are correct?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 50
+      }
+    },
+    {
+      "id": "csp24-gs2-a-51",
+      "topic": "csat-comprehension",
+      "passage": "csp24-gs2-a-p51",
+      "q": "Which one of the following statements best reflects the most logical, rational and practical suggestion implied by the passage?",
+      "options": [
+        "It is a cheap and practical method to produce limestone at commercial level for building purposes.",
+        "This can be used as one of the methods of carbon sequestration.",
+        "Basalt rock can be made a good source of calcium and magnesium minerals by this method.",
+        "Good rock-dissolving acid can be produced by mixing carbon dioxide and water."
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 51
+      }
+    },
+    {
+      "id": "csp24-gs2-a-52",
+      "topic": "csat-comprehension",
+      "passage": "csp24-gs2-a-p52",
+      "q": "Based on the above passage, the following assumptions have been made : 1. Giant icebergs have a bearing on primary productivity and food chains of the Southern Ocean. 2. Melting of giant icebergs can produce climate change effects and impact world fisheries. Which of the assumptions given above is/are valid?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 52
+      }
+    },
+    {
+      "id": "csp24-gs2-a-53",
+      "topic": "csat-comprehension",
+      "passage": "csp24-gs2-a-p53",
+      "q": "Which one of the following statements best reflects the most logical, rational and practical message conveyed by the passage?",
+      "options": [
+        "Farmers can use caterpillars to feed on weeds in their crop fields/plantations.",
+        "This finding can help in the development of clinically useful antimicrobial compounds.",
+        "This finding can help in the development of organic, ecologically sustainable pesticides.",
+        "Caterpillars can be genetically modified to be predators of the other plant pests."
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 53
+      }
+    },
+    {
+      "id": "csp24-gs2-a-54",
+      "topic": "csat-numeracy",
+      "q": "32⁵ + 2²⁷ is divisible by",
+      "options": [
+        "3",
+        "7",
+        "10",
+        "11"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 54
+      }
+    },
+    {
+      "id": "csp24-gs2-a-55",
+      "topic": "csat-numeracy",
+      "q": "Let p and q be positive integers satisfying p < q and p + q = k. What is the smallest value of k that does not determine p and q uniquely?",
+      "options": [
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 55
+      }
+    },
+    {
+      "id": "csp24-gs2-a-56",
+      "topic": "csat-logical-reasoning",
+      "q": "A person walks 100 m straight from his house, turns left and walks 100 m, again turns left and walks 300 m, then turns right and walks 100 m to reach his office. In which direction does he walk initially from his house if his office is exactly in the North-East direction?",
+      "options": [
+        "North-West",
+        "West",
+        "South",
+        "South-West"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 56
+      }
+    },
+    {
+      "id": "csp24-gs2-a-57",
+      "topic": "csat-logical-reasoning",
+      "q": "A person walks 100 m Westward, then turns left and walks 100 m. He then takes 225° turn clockwise. In which direction is he walking now?",
+      "options": [
+        "South-West",
+        "South-East",
+        "North-West",
+        "North-East"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 57
+      }
+    },
+    {
+      "id": "csp24-gs2-a-58",
+      "topic": "csat-logical-reasoning",
+      "q": "A Statement is given followed by two Conclusions numbered I and II. Consider the Statement and the Conclusions. Statement : India is the world’s largest producer of milk. Conclusion-I : India is the world’s largest exporter of milk. Conclusion-II : India does not import milk. Which one of the following is correct?",
+      "options": [
+        "Only Conclusion-I follows",
+        "Only Conclusion-II follows",
+        "Both Conclusion-I and Conclusion-II follow",
+        "Neither Conclusion-I nor Conclusion-II follows"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 58
+      }
+    },
+    {
+      "id": "csp24-gs2-a-59",
+      "topic": "csat-data-interpretation",
+      "q": "A Question is given followed by two Statements I and II. Consider the Question and the Statements. Question : What are the values of m and n, where m and n are natural numbers? Statement-I : m + n > mn and m > n. Statement-II : The product of m and n is 24. Which one of the following is correct in respect of the above Question and the Statements?",
+      "options": [
+        "The Question can be answered by using one of the Statements alone, but cannot be answered using the other Statement alone",
+        "The Question can be answered by using either Statement alone",
+        "The Question can be answered by using both the Statements together, but cannot be answered using either Statement alone",
+        "The Question cannot be answered even by using both the Statements together"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 59
+      }
+    },
+    {
+      "id": "csp24-gs2-a-60",
+      "topic": "csat-data-interpretation",
+      "q": "A Question is given followed by two Statements I and II. Consider the Question and the Statements. Question : What is the time required to download the software? Statement-I : The size of the software is 12 megabytes. Statement-II : The transfer rate is 2.4 kilobytes per second. Which one of the following is correct in respect of the above Question and the Statements?",
+      "options": [
+        "The Question can be answered by using one of the Statements alone, but cannot be answered using the other Statement alone",
+        "The Question can be answered by using either Statement alone",
+        "The Question can be answered by using both the Statements together, but cannot be answered using either Statement alone",
+        "The Question cannot be answered even by using both the Statements together"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 60
+      }
+    },
+    {
+      "id": "csp24-gs2-a-61",
+      "topic": "csat-comprehension",
+      "passage": "csp24-gs2-a-p61",
+      "q": "Which one of the following statements best reflects the crux of the above passage?",
+      "options": [
+        "Responsible media should not distort the real in an ideal democracy.",
+        "Fake news seems inherent in the life of an ideal democracy.",
+        "There should not be any kind of restrictions on the freedom of expression in an ideal democracy.",
+        "Irresponsible media and political leaders cannot be effectively controlled in an ideal democracy."
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 61
+      }
+    },
+    {
+      "id": "csp24-gs2-a-62",
+      "topic": "csat-comprehension",
+      "passage": "csp24-gs2-a-p62",
+      "q": "Which one of the following statements best reflects the most logical, rational and practical message implied by the passage?",
+      "options": [
+        "Knowledge of consumer behaviour leads to more capital expenditure in manufacturing sector.",
+        "Knowledge of consumer behaviour stimulates the growth of commerce and trade and thus helps in the overall economic development of the country.",
+        "Interconnected devices give a lot of comfort to home users and improve the overall quality of life.",
+        "Interconnected devices can be at security risk and home users may have privacy risk."
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 62
+      }
+    },
+    {
+      "id": "csp24-gs2-a-63",
+      "topic": "csat-comprehension",
+      "passage": "csp24-gs2-a-p63",
+      "q": "Which one of the following statements best reflects the crux of the above passage?",
+      "options": [
+        "Environmental sustainability is inimical to our objective of achieving a high rate of GDP growth.",
+        "Poverty eradication is not possible without a rapid economic growth and the consequent environmental degradation.",
+        "Maintaining high environmental standards is now a prerequisite for achieving a steady, sufficient and inclusive growth.",
+        "With large populations, rampant poverty and limited resources of today’s world, environmental degradation cannot be prevented and inequalities are inevitable."
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 63
+      }
+    },
+    {
+      "id": "csp24-gs2-a-64",
+      "topic": "csat-data-interpretation",
+      "q": "A Question is given followed by two Statements I and II. Consider the Question and the Statements. Question : What are the unique values of x and y, where x, y are distinct natural numbers? Statement-I : x/y is odd. Statement-II : xy = 12 Which one of the following is correct in respect of the above Question and the Statements?",
+      "options": [
+        "The Question can be answered by using one of the Statements alone, but cannot be answered using the other Statement alone",
+        "The Question can be answered by using either Statement alone",
+        "The Question can be answered by using both the Statements together, but cannot be answered using either Statement alone",
+        "The Question cannot be answered even by using both the Statements together"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 64
+      }
+    },
+    {
+      "id": "csp24-gs2-a-65",
+      "topic": "csat-data-interpretation",
+      "q": "A Question is given followed by two Statements I and II. Consider the Question and the Statements. A certain amount was distributed among X, Y and Z. Question : Who received the least amount? Statement-I : X received 4/5 of what Y and Z together received. Statement-II : Y received 2/7 of what X and Z together received. Which one of the following is correct in respect of the above Question and the Statements?",
+      "options": [
+        "The Question can be answered by using one of the Statements alone, but cannot be answered using the other Statement alone",
+        "The Question can be answered by using either Statement alone",
+        "The Question can be answered by using both the Statements together, but cannot be answered using either Statement alone",
+        "The Question cannot be answered even by using both the Statements together"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 65
+      }
+    },
+    {
+      "id": "csp24-gs2-a-66",
+      "topic": "csat-data-interpretation",
+      "q": "A Question is given followed by two Statements I and II. Consider the Question and the Statements. Question : If the average marks in a class are 60, then what is the number of students in the class? Statement-I : The highest marks in the class are 70 and the lowest marks are 50. Statement-II : Exclusion of highest and lowest marks from the class does not change the average. Which one of the following is correct in respect of the above Question and the Statements?",
+      "options": [
+        "The Question can be answered by using one of the Statements alone, but cannot be answered using the other Statement alone",
+        "The Question can be answered by using either Statement alone",
+        "The Question can be answered by using both the Statements together, but cannot be answered using either Statement alone",
+        "The Question cannot be answered even by using both the Statements together"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 66
+      }
+    },
+    {
+      "id": "csp24-gs2-a-67",
+      "topic": "csat-data-interpretation",
+      "q": "A Question is given followed by two Statements I and II. Consider the Question and the Statements. There are three distinct prime numbers whose sum is a prime number. Question : What are those three numbers? Statement-I : Their sum is less than 23. Statement-II : One of the numbers is 5. Which one of the following is correct in respect of the above Question and the Statements?",
+      "options": [
+        "The Question can be answered by using one of the Statements alone, but cannot be answered using the other Statement alone",
+        "The Question can be answered by using either Statement alone",
+        "The Question can be answered by using both the Statements together, but cannot be answered using either Statement alone",
+        "The Question cannot be answered even by using both the Statements together"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 67
+      }
+    },
+    {
+      "id": "csp24-gs2-a-68",
+      "topic": "csat-data-interpretation",
+      "q": "A Question is given followed by two Statements I and II. Consider the Question and the Statements. Question : Is (x + y) an integer? Statement-I : (2x + y) is an integer. Statement-II : (x+2y) is an integer. Which one of the following is correct in respect of the above Question and the Statements?",
+      "options": [
+        "The Question can be answered by using one of the Statements alone, but cannot be answered using the other Statement alone",
+        "The Question can be answered by using either Statement alone",
+        "The Question can be answered by using both the Statements together, but cannot be answered using either Statement alone",
+        "The Question cannot be answered even by using both the Statements together"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 68
+      }
+    },
+    {
+      "id": "csp24-gs2-a-69",
+      "topic": "csat-data-interpretation",
+      "q": "A Question is given followed by two Statements I and II. Consider the Question and the Statements. A person buys three articles p, q and r for ₹ 50. The price of the article q is ₹ 16 which is the least. Question : What is the price of the article p? Statement-I : The cost of p is not more than that of r. Statement-II : The cost of r is not more than that of p. Which one of the following is correct in respect of the above Question and the Statements?",
+      "options": [
+        "The Question can be answered by using one of the Statements alone, but cannot be answered using the other Statement alone",
+        "The Question can be answered by using either Statement alone",
+        "The Question can be answered by using both the Statements together, but cannot be answered using either Statement alone",
+        "The Question cannot be answered even by using both the Statements together"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 69
+      }
+    },
+    {
+      "id": "csp24-gs2-a-70",
+      "topic": "csat-data-interpretation",
+      "q": "A Question is given followed by two Statements I and II. Consider the Question and the Statements. P, Q, R and S appeared in a test. Question : Has P scored more marks than Q? Statement-I : The sum of the marks scored by P and Q is equal to the sum of the marks scored by R and S. Statement-II : The sum of the marks scored by P and S is more than the sum of the marks scored by Q and R. Which one of the following is correct in respect of the above Question and the Statements?",
+      "options": [
+        "The Question can be answered by using one of the Statements alone, but cannot be answered using the other Statement alone",
+        "The Question can be answered by using either Statement alone",
+        "The Question can be answered by using both the Statements together, but cannot be answered using either Statement alone",
+        "The Question cannot be answered even by using both the Statements together"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 70
+      }
+    },
+    {
+      "id": "csp24-gs2-a-71",
+      "topic": "csat-comprehension",
+      "passage": "csp24-gs2-a-p71",
+      "q": "Which one of the following statements best reflects the most logical and rational message conveyed by the above passage?",
+      "options": [
+        "It is the poetry, not science or religion, which recognizes and accepts imperfections in humans.",
+        "Truth is revealed through science or religion and poetry is anathema to truth.",
+        "Poetry is romantic, imaginary and is about feeling whereas science and religion are about truth.",
+        "In a world of violence, tyranny and bigotry, poetry is a form of dynamic resistance."
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 71
+      }
+    },
+    {
+      "id": "csp24-gs2-a-72",
+      "topic": "csat-comprehension",
+      "passage": "csp24-gs2-a-p72",
+      "q": "Based on the above passage, the following assumptions have been made : 1. The author of the passage believes that flowers are creations of Nature’s luxury. 2. The author of the passage does not believe in the usefulness of flowers except as things of beauty. Which of the assumptions given above is/are valid?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 72
+      }
+    },
+    {
+      "id": "csp24-gs2-a-73",
+      "topic": "csat-data-interpretation",
+      "q": "A Question is given followed by two Statements I and II. Consider the Question and the Statements. Age of each of P and Q is less than 100 years but more than 10 years. If you interchange the digits of the age of P, the number represents the age of Q. Question : What is the difference of their ages? Statement-I : The age of P is greater than the age of Q. Statement-II : The sum of their ages is 11/6 times their difference. Which one of the following is correct in respect of the above Question and the Statements?",
+      "options": [
+        "The Question can be answered by using one of the Statements alone, but cannot be answered using the other Statement alone",
+        "The Question can be answered by using either Statement alone",
+        "The Question can be answered by using both the Statements together, but cannot be answered using either Statement alone",
+        "The Question cannot be answered even by using both the Statements together"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 73
+      }
+    },
+    {
+      "id": "csp24-gs2-a-74",
+      "topic": "csat-logical-reasoning",
+      "q": "A Main Statement is followed by four Statements labelled P, Q, R and S. Choose the ordered pair of the Statements where the first Statement implies the second, and the two Statements are logically consistent with the Main Statement. Main Statement : Pradeep becomes either a Director or a Producer. Statement P : Pradeep is a Director. Statement Q: Pradeep is a Producer. Statement R : Pradeep is not a Director. Statement S : Pradeep is not a Producer. Select the correct answer.",
+      "options": [
+        "SP only",
+        "RQ only",
+        "Both SP and RQ",
+        "Neither SP nor RQ"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 74
+      }
+    },
+    {
+      "id": "csp24-gs2-a-75",
+      "topic": "csat-logical-reasoning",
+      "q": "If a + b means a − b; a − b means a × b; a × b means a ÷ b; a ÷ b means a + b, then what is the value of 10 + 30 − 100 × 50 ÷ 25? (Operations are to be replaced simultaneously)",
+      "options": [
+        "15",
+        "0",
+        "−15",
+        "−25"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 75
+      }
+    },
+    {
+      "id": "csp24-gs2-a-76",
+      "topic": "csat-logical-reasoning",
+      "q": "If P means ‘greater than (>)’; Q means ‘less than (<)’; R means ‘not greater than (≯)’; S means ‘not less than (≮)’ and T means ‘equal to (=)’, then consider the following statements : 1. If 2x(S)3y and 3x(T)4z, then 9y(P)8z. 2. If x(Q)2y and y(R)z, then x(R)z. Which of the statements given above is/are correct?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 76
+      }
+    },
+    {
+      "id": "csp24-gs2-a-77",
+      "topic": "csat-logical-reasoning",
+      "q": "If in a certain code, ‘ABCD’ is written as 24 and ‘EFGH’ is written as 1680, then how is ‘IJKL’ written in that code?",
+      "options": [
+        "11880",
+        "11240",
+        "7920",
+        "5940"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 77
+      }
+    },
+    {
+      "id": "csp24-gs2-a-78",
+      "topic": "csat-logical-reasoning",
+      "q": "If in a certain code, ‘POT’ is written as ATOP and ‘TRAP’ is written as APART, then how is ‘ARENA’ written in that code?",
+      "options": [
+        "AARENA",
+        "AANREA",
+        "AANEAR",
+        "AANERA"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 78
+      }
+    },
+    {
+      "id": "csp24-gs2-a-79",
+      "topic": "csat-mental-ability",
+      "q": "What will come in place of * in the sequence 3, 14, 39, 84, *, 258?",
+      "options": [
+        "150",
+        "155",
+        "160",
+        "176"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 79
+      }
+    },
+    {
+      "id": "csp24-gs2-a-80",
+      "topic": "csat-logical-reasoning",
+      "q": "In some code, letters P, Q, R, S, T represent numbers 4, 5, 10, 12, 15. It is not known which letter represents which number. If Q − S = 2S and T = R + S + 3, then what is the value of P + R − T?",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "Cannot be determined due to insufficient data"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2024,
+        "code": "gs2",
+        "set": "A",
+        "n": 80
+      }
+    },
+    {
+      "id": "csp21-gs2-a-1",
+      "topic": "csat-comprehension",
+      "passage": "csp21-gs2-a-p1",
+      "q": "Which one of the following statements best reflects the most critical inference that can be made from the passage given above?",
+      "options": [
+        "Low intensity light has more adverse effect on the plants as compared to high intensity light.",
+        "Light pollution can have a permanent adverse impact on an ecosystem.",
+        "White light is better for the flowering of plants as compared to the light of other colours.",
+        "Proper intensity of light in an ecosystem is important not only for plants but for animals too."
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 1
+      }
+    },
+    {
+      "id": "csp21-gs2-a-2",
+      "topic": "csat-comprehension",
+      "passage": "csp21-gs2-a-p2",
+      "q": "On the basis of the passage given above, the following assumptions have been made : 1. Sustainable production of India’s cereal food grains is impossible without the diversity of pollinating animals. 2. Monoculture of horticultural crops hampers the survival of insects. 3. Pollinators become scarce in cultivated areas devoid of natural vegetation. 4. Diversity in insects induces diversity of plants. Which of the above assumptions is/are valid?",
+      "options": [
+        "1 only",
+        "2, 3 and 4 only",
+        "1 and 2 only",
+        "3 and 4 only"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 2
+      }
+    },
+    {
+      "id": "csp21-gs2-a-3",
+      "topic": "csat-comprehension",
+      "passage": "csp21-gs2-a-p3",
+      "q": "Which one of the following statements best reflects the crux of the passage given above ?",
+      "options": [
+        "Development of regional climate models helps in choosing climate-smart agricultural practices.",
+        "Heavy dependence on groundwater resources can be reduced by adopting dry-land cropping systems.",
+        "Climate changes increase the criticality of water resources while simultaneously threatening it.",
+        "Climate changes cause the farmers to adopt unsustainable livelihoods and risky coping strategies."
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 3
+      }
+    },
+    {
+      "id": "csp21-gs2-a-4",
+      "topic": "csat-comprehension",
+      "passage": "csp21-gs2-a-p4",
+      "q": "On the basis of the passage given above, the following assumptions have been made : 1. BPA may alter embryonic development in vivo. 2. Biochemical and cell-based assays are useful in finding out treatments for pollution-induced diseases. 3. Embryonic stem cells could serve as a model to evaluate the physiological effects of environmental pollutants. Which of the above assumptions are valid?",
+      "options": [
+        "1 and 2 only",
+        "2 and 3 only",
+        "1 and 3 only",
+        "1, 2 and 3"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 4
+      }
+    },
+    {
+      "id": "csp21-gs2-a-5",
+      "topic": "csat-numeracy",
+      "q": "If 3²⁰¹⁹ is divided by 10, then what is the remainder?",
+      "options": [
+        "1",
+        "3",
+        "7",
+        "9"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 5
+      }
+    },
+    {
+      "id": "csp21-gs2-a-6",
+      "topic": "csat-numeracy",
+      "q": "The number 3798125P369 is divisible by 7. What is the value of the digit P?",
+      "options": [
+        "1",
+        "6",
+        "7",
+        "9"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 6
+      }
+    },
+    {
+      "id": "csp21-gs2-a-7",
+      "topic": "csat-numeracy",
+      "q": "From January 1, 2021, the price of petrol (in Rupees per litre) on mᵗʰ day of the year is 80 + 0.1m, where m = 1, 2, 3, ..., 100 and thereafter remains constant. On the other hand, the price of diesel (in Rupees per litre) on nᵗʰ day of 2021 is 69 + 0.15n for any n. On which date in the year 2021 are the prices of these two fuels equal?",
+      "options": [
+        "21st May",
+        "20th May",
+        "19th May",
+        "18th May"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 7
+      }
+    },
+    {
+      "id": "csp21-gs2-a-8",
+      "topic": "csat-numeracy",
+      "q": "A biology class at high school predicted that a local population of animals will double in size every 12 years. The population at the beginning of the year 2021 was estimated to be 50 animals. If P represents the population after n years, then which one of the following equations represents the model of the class for the population?",
+      "options": [
+        "P = 12 + 50n",
+        "P = 50 + 12n",
+        "P = 50 (2)^(12n)",
+        "P = 50 (2)^(n/12)"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 8
+      }
+    },
+    {
+      "id": "csp21-gs2-a-9",
+      "topic": "csat-numeracy",
+      "q": "In a class, 60% of students are from India and 50% of the students are girls. If 30% of the Indian students are girls, then what percentage of foreign students are boys ?",
+      "options": [
+        "45%",
+        "40%",
+        "30%",
+        "20%"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 9
+      }
+    },
+    {
+      "id": "csp21-gs2-a-10",
+      "topic": "csat-logical-reasoning",
+      "q": "A Statement followed by Conclusion-I and Conclusion-II is given below. You have to take the Statement to be true even if it seems to be at variance from the commonly known facts. Read all Conclusions and then decide which of the given Conclusion(s) logically follows/follow from the Statement, disregarding the commonly known facts. Statement : Some radios are mobiles. All mobiles are computers. Some computers are watches. Conclusion-I : Certainly some radios are watches. Conclusion-II : Certainly some mobiles are watches. Which one of the following is correct?",
+      "options": [
+        "Only Conclusion-I",
+        "Only Conclusion-II",
+        "Both Conclusion-I and Conclusion-II",
+        "Neither Conclusion-I nor Conclusion-II"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 10
+      }
+    },
+    {
+      "id": "csp21-gs2-a-11",
+      "topic": "csat-comprehension",
+      "passage": "csp21-gs2-a-p11",
+      "q": "On the basis of the passage given above, the following assumptions have been made : 1. Fig trees can often be keystone species in natural forests. 2. Fig trees can grow where other large woody species cannot grow. 3. Sacred trees can have a role in biodiversity conservation. 4. Fig trees have a role in the seed dispersal of other tree species. Which of the above assumptions is/are valid?",
+      "options": [
+        "1 and 2 only",
+        "3 only",
+        "2 and 4 only",
+        "1, 3 and 4 only"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 11
+      }
+    },
+    {
+      "id": "csp21-gs2-a-12",
+      "topic": "csat-comprehension",
+      "passage": "csp21-gs2-a-p12",
+      "q": "Consider the following : 1. Cover crops 2. Fertigation 3. Hydroponics 4. Mixed farming 5. Polyculture 6. Vertical farming Which of the above farming practices can be compatible with agroecology, as implied by the passage?",
+      "options": [
+        "1, 4 and 5 only",
+        "2, 3, 4 and 5 only",
+        "1, 2, 3 and 6 only",
+        "4 and 6 only"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 12
+      }
+    },
+    {
+      "id": "csp21-gs2-a-13",
+      "topic": "csat-comprehension",
+      "passage": "csp21-gs2-a-p13",
+      "q": "Which one of the following statements best reflects the most critical inference that can be made from the passage given above ?",
+      "options": [
+        "Computers are not completely safe.",
+        "Companies producing the software do not take cyber security seriously.",
+        "Stringent data security laws are needed.",
+        "The present trend of communication technologies will affect our lives in future."
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 13
+      }
+    },
+    {
+      "id": "csp21-gs2-a-14",
+      "topic": "csat-comprehension",
+      "passage": "csp21-gs2-a-p14",
+      "q": "On the basis of the passage given above, the following assumptions have been made : 1. People who are obsessed with personal hygiene tend to ignore the community hygiene. 2. Emergence of multi-drug resistant germs can be prevented by personal cleanliness. 3. Entry of the market in the domain of hygiene increases the risk of infectious diseases. 4. Scientific and micro-level interventions are not sufficient to bring down the burden of infectious diseases. 5. It is community hygiene implemented through public health measures that is really effective in the battle against infectious diseases. Which of the above assumptions are valid ?",
+      "options": [
+        "1 and 2 only",
+        "3 and 4 only",
+        "4 and 5 only",
+        "1, 2 and 4 only"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 14
+      }
+    },
+    {
+      "id": "csp21-gs2-a-15",
+      "topic": "csat-logical-reasoning",
+      "q": "A Statement followed by Conclusion-I and Conclusion-II is given below. You have to take the Statement to be true even if it seems to be at variance from the commonly known facts. Read all Conclusions and then decide which of the given Conclusion(s) logically follows/follow from the Statement, disregarding the commonly known facts. Statement : Some cats are almirahs. Some almirahs are chairs. All chairs are tables. Conclusion-I : Certainly some almirahs are tables. Conclusion-II : Some cats may not be chairs. Which one of the following is correct?",
+      "options": [
+        "Only Conclusion-I",
+        "Only Conclusion-II",
+        "Both Conclusion-I and Conclusion-II",
+        "Neither Conclusion-I nor Conclusion-II"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 15
+      }
+    },
+    {
+      "id": "csp21-gs2-a-16",
+      "topic": "csat-numeracy",
+      "q": "A boy plays with a ball and he drops it from a height of 1.5 m. Every time the ball hits the ground, it bounces back to attain a height 4/5th of the previous height. The ball does not bounce further if the previous height is less than 50 cm. What is the number of times the ball hits the ground before the ball stops bouncing?",
+      "options": [
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 16
+      }
+    },
+    {
+      "id": "csp21-gs2-a-17",
+      "topic": "csat-mental-ability",
+      "q": "Images of consonants of the English alphabet (Capitals) are observed in a mirror. What is the number of images of these which do not look like their original shapes?",
+      "options": [
+        "13",
+        "14",
+        "15",
+        "16"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 17
+      }
+    },
+    {
+      "id": "csp21-gs2-a-18",
+      "topic": "csat-logical-reasoning",
+      "q": "A bank employee drives 10 km towards South from her house and turns to her left and drives another 20 km. She again turns left and drives 40 km, then she turns to her right and drives for another 5 km. She again turns to her right and drives another 30 km to reach her bank where she works. What is the shortest distance between her bank and her house ?",
+      "options": [
+        "20 km",
+        "25 km",
+        "30 km",
+        "35 km"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 18
+      }
+    },
+    {
+      "id": "csp21-gs2-a-19",
+      "topic": "csat-numeracy",
+      "q": "Integers are listed from 700 to 1000. In how many integers is the sum of the digits 10 ?",
+      "options": [
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 19
+      }
+    },
+    {
+      "id": "csp21-gs2-a-20",
+      "topic": "csat-logical-reasoning",
+      "q": "A woman runs 12 km towards her North, then 6 km towards her South and then 8 km towards her East. In which direction is she from her starting point ?",
+      "options": [
+        "An angle less than 45° South of East",
+        "An angle less than 45° North of East",
+        "An angle more than 45° South of East",
+        "An angle more than 45° North of East"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 20
+      }
+    },
+    {
+      "id": "csp21-gs2-a-21",
+      "topic": "csat-comprehension",
+      "passage": "csp21-gs2-a-p21",
+      "q": "Which one of the following statements best reflects the critical message conveyed by the passage given above ?",
+      "options": [
+        "India’s energy decision-making process is ever more complex and interconnected.",
+        "India’s energy and climate policy is heavily tuned to sustainable development goals.",
+        "India’s energy and climate actions are not compatible with its broader social, economic and environmental goals.",
+        "India’s energy decision-making process is straightforward supply-oriented and ignores the demand side."
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 21
+      }
+    },
+    {
+      "id": "csp21-gs2-a-22",
+      "topic": "csat-comprehension",
+      "passage": "csp21-gs2-a-p22",
+      "q": "Which one of the following statements best reflects the critical message conveyed by the passage given above ?",
+      "options": [
+        "People should avoid consuming the products of animal farming.",
+        "Foods of animal origin should be replaced with foods of plant origin.",
+        "Using antibiotics on animals should be banned.",
+        "Antibiotics should only be used to treat diseases."
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 22
+      }
+    },
+    {
+      "id": "csp21-gs2-a-23",
+      "topic": "csat-comprehension",
+      "passage": "csp21-gs2-a-p23",
+      "q": "With reference to the above passage, the following assumptions have been made : 1. Oil producing countries are one of the reasons for high food prices. 2. If there is a food crisis in the world in the near future, it will be in the emerging economies. Which of the above assumptions is/are valid?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 23
+      }
+    },
+    {
+      "id": "csp21-gs2-a-24",
+      "topic": "csat-comprehension",
+      "passage": "csp21-gs2-a-p24",
+      "q": "With reference to the above passage, the following assumptions have been made : 1. Rising GDP is essential for a country to be a developed country. 2. Rising GDP guarantees a reasonable distribution of income to all households. Which of the above assumptions is/are valid?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 24
+      }
+    },
+    {
+      "id": "csp21-gs2-a-25",
+      "topic": "csat-logical-reasoning",
+      "q": "Seven books P, Q, R, S, T, U and V are placed side by side. R, Q and T have blue covers and other books have red covers. Only S and U are new books and the rest are old. P, R and S are law reports; the rest are Gazetteers. Books of old Gazetteers with blue covers are",
+      "options": [
+        "Q and R",
+        "Q and U",
+        "Q and T",
+        "T and U"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 25
+      }
+    },
+    {
+      "id": "csp21-gs2-a-26",
+      "topic": "csat-mental-ability",
+      "q": "Replace the incorrect term by the correct term in the given sequence 3, 2, 7, 4, 13, 10, 21, 18, 31, 28, 43, 40 where odd terms and even terms follow the same pattern.",
+      "options": [
+        "0",
+        "1",
+        "3",
+        "6"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 26
+      }
+    },
+    {
+      "id": "csp21-gs2-a-27",
+      "topic": "csat-mental-ability",
+      "q": "Following is a matrix of certain entries. The entries follow a certain trend row-wise. Choose the missing entry (?) accordingly.\nRow 1 : 7B | 10A | 3C\nRow 2 : 3C | 9B | 6A\nRow 3 : 10A | 13C | ?",
+      "options": [
+        "9B",
+        "3A",
+        "3B",
+        "3C"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 27
+      }
+    },
+    {
+      "id": "csp21-gs2-a-28",
+      "topic": "csat-mental-ability",
+      "q": "You are given two identical sequences in two rows :\nSequence-I : 8, 4, 6, 15, 52.5, 236.25\nSequence-II : 5, A, B, C, D, E\nWhat is the entry in the place of C for the Sequence-II?",
+      "options": [
+        "2.5",
+        "5",
+        "9.375",
+        "32.8125"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 28
+      }
+    },
+    {
+      "id": "csp21-gs2-a-29",
+      "topic": "csat-numeracy",
+      "q": "A person X from a place A and another person Y from a place B set out at the same time to walk towards each other. The places are separated by a distance of 15 km. X walks with a uniform speed of 1.5 km/hr and Y walks with a uniform speed of 1 km/hr in the first hour, with a uniform speed of 1.25 km/hr in the second hour and with a uniform speed of 1.5 km/hr in the third hour and so on. Which of the following is/are correct? 1. They take 5 hours to meet. 2. They meet midway between A and B. Select the correct answer using the code given below :",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 29
+      }
+    },
+    {
+      "id": "csp21-gs2-a-30",
+      "topic": "csat-numeracy",
+      "q": "A student appeared in 6 papers. The maximum marks are the same for each paper. His marks in these papers are in the proportion of 5 : 6 : 7 : 8 : 9 : 10. Overall he scored 60%. In how many number of papers did he score less than 60% of the maximum marks?",
+      "options": [
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 30
+      }
+    },
+    {
+      "id": "csp21-gs2-a-31",
+      "topic": "csat-comprehension",
+      "passage": "csp21-gs2-a-p31",
+      "q": "What is the most logical assumption that can be made from the passage given above ?",
+      "options": [
+        "No man can live without adhering to some religious denomination.",
+        "It is the duty of everyone to propagate one’s religious denomination.",
+        "Religious denominations tend to ignore the unity of man.",
+        "Men do not understand their own religious denomination."
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 31
+      }
+    },
+    {
+      "id": "csp21-gs2-a-32",
+      "topic": "csat-comprehension",
+      "passage": "csp21-gs2-a-p32",
+      "q": "Which among the following is the most logical and rational inference that can be made from the passage given above ?",
+      "options": [
+        "Seditions, wars and breach of the laws are inevitable in every dominion.",
+        "It is not the people, but the sovereign who is responsible for all the problems of any dominion.",
+        "That dominion is the best which pursues the aim of unity and has laws for good citizenship.",
+        "It is impossible for men to establish a good dominion."
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 32
+      }
+    },
+    {
+      "id": "csp21-gs2-a-33",
+      "topic": "csat-comprehension",
+      "passage": "csp21-gs2-a-p33",
+      "q": "With reference to the above passage, the following assumptions have been made : 1. Equality is a prerequisite for people to participate in the multiple transactions of society from a position of confidence. 2. Occurrence of inequality is detrimental to the survival of democracy. 3. Equal standing of all citizens is an idea that cannot actually be realised even in a democracy. 4. Right to equality should be incorporated into our values and day-to-day political vocabulary. Which of the above assumptions are valid?",
+      "options": [
+        "1 and 2 only",
+        "2 and 3 only",
+        "1 and 4 only",
+        "3 and 4 only"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 33
+      }
+    },
+    {
+      "id": "csp21-gs2-a-34",
+      "topic": "csat-comprehension",
+      "passage": "csp21-gs2-a-p34",
+      "q": "Which one of the following statements best reflects the crux of the passage given above ?",
+      "options": [
+        "Human societies experiment with different forms of governments.",
+        "Any form of government tends to deteriorate by excess of its basic principle.",
+        "Education of all citizens ensures a perfect, functional and sustainable democracy.",
+        "Having a government is a necessary evil because tyranny is inherent in any form of government."
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 34
+      }
+    },
+    {
+      "id": "csp21-gs2-a-35",
+      "topic": "csat-numeracy",
+      "q": "In a group of 120 persons, 80 are Indians and rest are foreigners. Further, 70 persons in the group can speak English. The number of Indians who can speak English is",
+      "options": [
+        "20",
+        "30",
+        "30 or less",
+        "30 or more"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 35
+      }
+    },
+    {
+      "id": "csp21-gs2-a-36",
+      "topic": "csat-numeracy",
+      "q": "Consider all 3-digit numbers (without repetition of digits) obtained using three non-zero digits which are multiples of 3. Let S be their sum. Which of the following is/are correct? 1. S is always divisible by 74. 2. S is always divisible by 9. Select the correct answer using the code given below :",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 36
+      }
+    },
+    {
+      "id": "csp21-gs2-a-37",
+      "topic": "csat-numeracy",
+      "q": "There are two Classes A and B having 25 and 30 students respectively. In Class-A the highest score is 21 and lowest score is 17. In Class-B the highest score is 30 and lowest score is 22. Four students are shifted from Class-A to Class-B. Consider the following statements : 1. The average score of Class-B will definitely decrease. 2. The average score of Class-A will definitely increase. Which of the above statements is/are correct?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 37
+      }
+    },
+    {
+      "id": "csp21-gs2-a-38",
+      "topic": "csat-data-interpretation",
+      "q": "Consider two Statements and a Question : Statement-1 : Priya is 4 ranks below Seema and is 31st from the bottom. Statement-2 : Ena is 2 ranks above Seema and is 37th from the bottom. Question : What is Seema’s rank from the top in the class of 40 students? Which one of the following is correct in respect of the Statements and the Question?",
+      "options": [
+        "Statement-1 alone is not sufficient to answer the Question",
+        "Statement-2 alone is not sufficient to answer the Question",
+        "Either Statement-1 alone or Statement-2 alone is sufficient to answer the Question",
+        "Both Statement-1 and Statement-2 are required to answer the Question"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 38
+      }
+    },
+    {
+      "id": "csp21-gs2-a-40",
+      "topic": "csat-mental-ability",
+      "q": "In the English alphabet, the first 4 letters are written in opposite order; and the next 4 letters are written in opposite order and so on; and at the end Y and Z are interchanged. Which will be the fourth letter to the right of the 13th letter?",
+      "options": [
+        "N",
+        "T",
+        "H",
+        "I"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 40
+      }
+    },
+    {
+      "id": "csp21-gs2-a-41",
+      "topic": "csat-comprehension",
+      "passage": "csp21-gs2-a-p41",
+      "q": "Which one of the following statements best reflects the central idea of the passage given above ?",
+      "options": [
+        "The conceptions of what is right or wrong exist due to the formation of a state.",
+        "Unless a ruling authority decides as to what is right or wrong, no man would be morally right.",
+        "Man is inherently immoral and selfish in a natural state.",
+        "The idea of what is right or wrong is necessary for the survival of human species."
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 41
+      }
+    },
+    {
+      "id": "csp21-gs2-a-42",
+      "topic": "csat-comprehension",
+      "passage": "csp21-gs2-a-p42",
+      "q": "Which of the following statements best reflect the rational, plausible and practical implications that can be derived from the passage given above? 1. Too much globalization is not in the best interests of any country. 2. Modern technologies are increasingly blurring the economic borders. 3. Innovation and capital have impinged on the domain of the State. 4. Public policy of every country should focus on developing its own supply chains. 5. Geopolitics will have to reconcile to many ambiguities and uncertainties. Select the correct answer using the code given below :",
+      "options": [
+        "1, 4 and 5 only",
+        "1, 2, 3 and 4 only",
+        "2, 3 and 5 only",
+        "1, 2, 3, 4 and 5"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 42
+      }
+    },
+    {
+      "id": "csp21-gs2-a-43",
+      "topic": "csat-comprehension",
+      "passage": "csp21-gs2-a-p43",
+      "q": "Which one of the following statements best reflects the most logical, rational and practical suggestion implied by the passage given above ?",
+      "options": [
+        "Lending by the banks should be closely monitored and regulated by the Central Government.",
+        "Interest rates should be kept low so as to induce banks to lend more, promote credit growth and thereby boost economic activity.",
+        "Merger of many banks into a few large banks alone is the long-term solution to make them viable and prevent their bad performance.",
+        "Indian banking system requires structural reforms as a long-term solution for bad loans problem."
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 43
+      }
+    },
+    {
+      "id": "csp21-gs2-a-44",
+      "topic": "csat-comprehension",
+      "passage": "csp21-gs2-a-p44",
+      "q": "Which one of the following statements best reflects the corollary to the passage given above ?",
+      "options": [
+        "The central bank cannot work independently of the Government.",
+        "Government should regulate financial markets and institutions closely.",
+        "Market economy is not compatible with the socialist policies of the Government.",
+        "Financial sector reforms are required for enhancing the economic welfare of the people."
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 44
+      }
+    },
+    {
+      "id": "csp21-gs2-a-45",
+      "topic": "csat-data-interpretation",
+      "q": "Consider the following Table :\nPlayer | Runs scored in the First Innings | Balls faced in the First Innings | Runs scored in the Second Innings | Balls faced in the Second Innings\nA | 61 | 99 | 14 | 76\nB | 05 | 12 | 50 | 85\nC | 15 | 75 | 20 | 50\nD | 13 | 55 | 12 | 50\nWho is the fastest run scorer in the Test Match?",
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 45
+      }
+    },
+    {
+      "id": "csp21-gs2-a-46",
+      "topic": "csat-logical-reasoning",
+      "q": "Half of the villagers of a certain village have their own houses. One-fifth of the villagers cultivate paddy. One-third of the villagers are literate. Four-fifth of the villagers are under 25 years of age. Which one of the following statements is certainly correct?",
+      "options": [
+        "All the villagers who have their own houses are literate.",
+        "Some villagers under 25 years of age are literate.",
+        "Only half of the villagers who cultivate paddy are literate.",
+        "No villager under 25 years of age has his own house."
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 46
+      }
+    },
+    {
+      "id": "csp21-gs2-a-47",
+      "topic": "csat-data-interpretation",
+      "q": "Consider two Statements and a Question : Statement-1 : The last day of the month is a Wednesday. Statement-2 : The third Saturday of the month was the seventeenth day. Question : What day is the fourteenth of the given month? Which one of the following is correct in respect of the Statements and the Question?",
+      "options": [
+        "Statement-1 alone is sufficient to answer the Question",
+        "Statement-2 alone is sufficient to answer the Question",
+        "Both Statement-1 and Statement-2 are required to answer the Question",
+        "Neither Statement-1 alone nor Statement-2 alone is sufficient to answer the Question"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 47
+      }
+    },
+    {
+      "id": "csp21-gs2-a-48",
+      "topic": "csat-mental-ability",
+      "q": "Which day is 10th October, 2027?",
+      "options": [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Saturday"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 48
+      }
+    },
+    {
+      "id": "csp21-gs2-a-49",
+      "topic": "csat-logical-reasoning",
+      "q": "Consider two Statements and four Conclusions given below. You have to take the Statements to be true even if they seem to be at variance from the commonly known facts. Read all Conclusions and then decide which of the given Conclusion(s) logically follows/follow from the Statements, disregarding the commonly known facts. Statement-1 : Some greens are blues. Statement-2 : Some blues are blacks. Conclusion-1 : Some greens are blacks. Conclusion-2 : No green is black. Conclusion-3 : All greens are blacks. Conclusion-4 : All blacks are greens. Which one of the following is correct?",
+      "options": [
+        "Conclusion-1 and Conclusion-2 only",
+        "Conclusion-2 and Conclusion-3 only",
+        "Conclusion-3 and Conclusion-4 only",
+        "Neither Conclusion 1 nor 2 nor 3 nor 4"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 49
+      }
+    },
+    {
+      "id": "csp21-gs2-a-50",
+      "topic": "csat-mental-ability",
+      "q": "What is the value of ‘X’ in the sequence 2, 7, 22, 67, 202, X, 1822?",
+      "options": [
+        "603",
+        "605",
+        "607",
+        "608"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 50
+      }
+    },
+    {
+      "id": "csp21-gs2-a-51",
+      "topic": "csat-comprehension",
+      "passage": "csp21-gs2-a-p51",
+      "q": "Which one of the following statements best reflects the central idea of the passage given above ?",
+      "options": [
+        "Efficacy of universities would be better in online mode of conducting classroom tuition as compared to conventional method.",
+        "Availability of higher education can be made easier and cheaper without diluting the content.",
+        "We need not invest much in infrastructure related to higher education and yet develop better human and social capital.",
+        "Private sector institutions in higher education as well as coaching institutes can take advantage of this opportunity and thrive well."
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 51
+      }
+    },
+    {
+      "id": "csp21-gs2-a-52",
+      "topic": "csat-comprehension",
+      "passage": "csp21-gs2-a-p52",
+      "q": "Which among the following is the most logical and rational inference that can be made from the passage given above ?",
+      "options": [
+        "Our cities need to have well-defined administrative set-up with sufficient autonomy.",
+        "Ever increasing population densities is a hindrance in our efforts to achieve sustainable development.",
+        "To maintain and develop our cities we need to adopt sustainability related interventions.",
+        "Public-Private Partnership mode of development is the viable long-term solution for the infrastructure and sustainability problems of India."
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 52
+      }
+    },
+    {
+      "id": "csp21-gs2-a-53",
+      "topic": "csat-numeracy",
+      "q": "Jay and Vijay spent an equal amount of money to buy some pens and special pencils of the same quality from the same store. If Jay bought 3 pens and 5 pencils, and Vijay bought 2 pens and 7 pencils, then which one of the following is correct ?",
+      "options": [
+        "A pencil costs more than a pen",
+        "The price of a pencil is equal to that of a pen",
+        "The price of a pen is two times the price of a pencil",
+        "The price of a pen is three times the price of a pencil"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 53
+      }
+    },
+    {
+      "id": "csp21-gs2-a-54",
+      "topic": "csat-numeracy",
+      "q": "P scored 40 marks more than Q in an examination. If Q scored 10% less marks than P, then how much did Q score ?",
+      "options": [
+        "360",
+        "380",
+        "400",
+        "420"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 54
+      }
+    },
+    {
+      "id": "csp21-gs2-a-55",
+      "topic": "csat-numeracy",
+      "q": "A person P asks one of his three friends X as to how much money he had. X replied, “If Y gives me ₹ 40, then Y will have half of as much as Z, but if Z gives me ₹ 40, then three of us will have equal amount.” What is the total amount of money that X, Y and Z have?",
+      "options": [
+        "₹ 420",
+        "₹ 360",
+        "₹ 300",
+        "₹ 270"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 55
+      }
+    },
+    {
+      "id": "csp21-gs2-a-56",
+      "topic": "csat-logical-reasoning",
+      "q": "In a code language ‘MATHEMATICS’ is written as ‘LBSIDNZUHDR’. How is ‘CHEMISTRY’ written in that code language ?",
+      "options": [
+        "DIDLHRSSX",
+        "BIDNHTSSX",
+        "BIDLHTSSX",
+        "DGFLIRUQZ"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 56
+      }
+    },
+    {
+      "id": "csp21-gs2-a-57",
+      "topic": "csat-mental-ability",
+      "q": "At which one of the following times, do the hour hand and the minute hand of the clock make an angle of 180° with each other ?",
+      "options": [
+        "At 7:00 hours",
+        "Between 7:00 hours and 7:05 hours",
+        "At 7:05 hours",
+        "Between 7:05 hours and 7:10 hours"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 57
+      }
+    },
+    {
+      "id": "csp21-gs2-a-58",
+      "topic": "csat-numeracy",
+      "q": "In an objective type test of 90 questions, 5 marks are allotted for every correct answer and 2 marks are deducted for every wrong answer. After attempting all the 90 questions, a student got a total of 387 marks. What is the number of incorrect responses ?",
+      "options": [
+        "9",
+        "13",
+        "27",
+        "43"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 58
+      }
+    },
+    {
+      "id": "csp21-gs2-a-59",
+      "topic": "csat-numeracy",
+      "q": "Consider the following addition problem : 3P + 4P + PP + PP = RQ2; where P, Q and R are different digits. What is the arithmetic mean of all such possible sums?",
+      "options": [
+        "102",
+        "120",
+        "202",
+        "220"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 59
+      }
+    },
+    {
+      "id": "csp21-gs2-a-60",
+      "topic": "csat-numeracy",
+      "q": "Consider the following multiplication problem : (PQ) × 3 = RQQ, where P, Q and R are different digits and R ≠ 0. What is the value of (P + R) ÷ Q?",
+      "options": [
+        "1",
+        "2",
+        "5",
+        "Cannot be determined due to insufficient data"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 60
+      }
+    },
+    {
+      "id": "csp21-gs2-a-61",
+      "topic": "csat-comprehension",
+      "passage": "csp21-gs2-a-p61",
+      "q": "With reference to the above passage, the following assumptions have been made : 1. Modern democracies rely on the market forces to enable them to be welfare states. 2. Markets ensure sufficient economic growth necessary for democracies to be effective. 3. Government programmes are needed for those left behind in economic growth. Which of the above assumptions is/are valid?",
+      "options": [
+        "1 and 3 only",
+        "3 only",
+        "2 and 3 only",
+        "1, 2 and 3"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 61
+      }
+    },
+    {
+      "id": "csp21-gs2-a-62",
+      "topic": "csat-comprehension",
+      "passage": "csp21-gs2-a-p62",
+      "q": "Which one of the following statements best reflects the central idea of the passage given above?",
+      "options": [
+        "School curriculum is not compatible with the expectations of children and parents.",
+        "Emphasis on academic achievements does give time for development of personality and skills.",
+        "Preparing the children to be better citizens should be the responsibility of the education system.",
+        "To be a better citizen, the present world order demands societal and life-coping skills in addition to academic content."
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 62
+      }
+    },
+    {
+      "id": "csp21-gs2-a-63",
+      "topic": "csat-numeracy",
+      "q": "There are three points P, Q and R on a straight line such that PQ : QR = 3 : 5. If n is the number of possible values of PQ : PR, then what is n equal to?",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 63
+      }
+    },
+    {
+      "id": "csp21-gs2-a-64",
+      "topic": "csat-mental-ability",
+      "q": "On a chess board, in how many different ways can 6 consecutive squares be chosen on the diagonals along a straight path?",
+      "options": [
+        "4",
+        "6",
+        "8",
+        "12"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 64
+      }
+    },
+    {
+      "id": "csp21-gs2-a-65",
+      "topic": "csat-mental-ability",
+      "q": "In the series _b_a_ba_b_abab_aab; fill in the six blanks ( _ ) using one of the following given four choices such that the series follows a specific order.",
+      "options": [
+        "bababa",
+        "baabba",
+        "bbaabb",
+        "ababab"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 65
+      }
+    },
+    {
+      "id": "csp21-gs2-a-66",
+      "topic": "csat-numeracy",
+      "q": "Using 2, 2, 3, 3, 3 as digits, how many distinct numbers greater than 30000 can be formed ?",
+      "options": [
+        "3",
+        "6",
+        "9",
+        "12"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 66
+      }
+    },
+    {
+      "id": "csp21-gs2-a-67",
+      "topic": "csat-numeracy",
+      "q": "Consider the following statements : 1. The sum of 5 consecutive integers can be 100. 2. The product of three consecutive natural numbers can be equal to their sum. Which of the above statements is/are correct?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 67
+      }
+    },
+    {
+      "id": "csp21-gs2-a-68",
+      "topic": "csat-numeracy",
+      "q": "A cubical vessel of side 1 m is filled completely with water. How many millilitres of water is contained in it (neglect thickness of the vessel)?",
+      "options": [
+        "1000",
+        "10000",
+        "100000",
+        "1000000"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 68
+      }
+    },
+    {
+      "id": "csp21-gs2-a-69",
+      "topic": "csat-numeracy",
+      "q": "There are 6 persons arranged in a row. Another person has to shake hands with 3 of them so that he should not shake hands with two consecutive persons. In how many distinct possible combinations can the handshakes take place ?",
+      "options": [
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 69
+      }
+    },
+    {
+      "id": "csp21-gs2-a-70",
+      "topic": "csat-numeracy",
+      "q": "An amount of money was distributed among A, B and C in the ratio p : q : r. Consider the following statements : 1. A gets the maximum share if p is greater than (q + r). 2. C gets the minimum share if r is less than (p + q). Which of the above statements is/are correct?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 70
+      }
+    },
+    {
+      "id": "csp21-gs2-a-71",
+      "topic": "csat-comprehension",
+      "passage": "csp21-gs2-a-p71",
+      "q": "Which one of the following statements best sums up the passage given above ?",
+      "options": [
+        "Wealth generation is the primary motive for any human endeavour.",
+        "Space, whether space in solar system or interstellar space, will govern our future economy.",
+        "Human beings are motivated to explore new frontiers principally by economic considerations.",
+        "Wealth generation is based on the risk-taking behaviour of some men."
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 71
+      }
+    },
+    {
+      "id": "csp21-gs2-a-72",
+      "topic": "csat-comprehension",
+      "passage": "csp21-gs2-a-p72",
+      "q": "The idea which the first part of the passage mentions is",
+      "options": [
+        "agreement about telling lies.",
+        "disagreement about telling lies.",
+        "disagreement about telling the truth.",
+        "disagreement about the harm in telling the truth."
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 72
+      }
+    },
+    {
+      "id": "csp21-gs2-a-73",
+      "topic": "csat-comprehension",
+      "passage": "csp21-gs2-a-p72",
+      "q": "Which one of the following habits is found more often in good people ?",
+      "options": [
+        "Mixing up the true and false",
+        "Intentional mixing up of truth with the false",
+        "Falsification of facts",
+        "Complete concealment of truth"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 73
+      }
+    },
+    {
+      "id": "csp21-gs2-a-74",
+      "topic": "csat-data-interpretation",
+      "q": "A pie diagram shows the percentage distribution of proteins, water and other dry elements in the human body. Given that proteins correspond to 16% and water corresponds to 70%. If both proteins and the other dry elements correspond to p%, then what is the central angle of the sector representing p on the pie diagram?",
+      "options": [
+        "54°",
+        "96°",
+        "108°",
+        "120°"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 74
+      }
+    },
+    {
+      "id": "csp21-gs2-a-75",
+      "topic": "csat-numeracy",
+      "q": "Joseph visits the club on every 5th day, Harsh visits on every 24th day, while Sumit visits on every 9th day. If all three of them met at the club on a Sunday, then on which day will all three of them meet again?",
+      "options": [
+        "Monday",
+        "Wednesday",
+        "Thursday",
+        "Sunday"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 75
+      }
+    },
+    {
+      "id": "csp21-gs2-a-76",
+      "topic": "csat-numeracy",
+      "q": "The difference between a 2-digit number and the number obtained by interchanging the positions of the digits is 54. Consider the following statements : 1. The sum of the two digits of the number can be determined only if the product of the two digits is known. 2. The difference between the two digits of the number can be determined. Which of the above statements is/are correct?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 76
+      }
+    },
+    {
+      "id": "csp21-gs2-a-77",
+      "topic": "csat-numeracy",
+      "q": "X said to Y, “At the time of your birth I was twice as old as you are at present.” If the present age of X is 42 years, then consider the following statements : 1. 8 years ago, the age of X was five times the age of Y. 2. After 14 years, the age of X would be two times the age of Y. Which of the above statements is/are correct?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 77
+      }
+    },
+    {
+      "id": "csp21-gs2-a-78",
+      "topic": "csat-numeracy",
+      "q": "If the price of an article is decreased by 20% and then the new price is increased by 25%, then what is the net change in the price ?",
+      "options": [
+        "0%",
+        "5% increase",
+        "5% decrease",
+        "Cannot be determined due to insufficient data"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 78
+      }
+    },
+    {
+      "id": "csp21-gs2-a-79",
+      "topic": "csat-numeracy",
+      "q": "When a certain number is multiplied by 7, the product entirely comprises ones only (1111...). What is the smallest such number ?",
+      "options": [
+        "15713",
+        "15723",
+        "15783",
+        "15873"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 79
+      }
+    },
+    {
+      "id": "csp21-gs2-a-80",
+      "topic": "csat-numeracy",
+      "q": "A man completes 7/8 of a job in 21 days. How many more days will it take him to finish the job if quantum of work is further increased by 50% ?",
+      "options": [
+        "24",
+        "21",
+        "18",
+        "15"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2021,
+        "code": "gs2",
+        "set": "A",
+        "n": 80
+      }
+    },
+    {
+      "id": "csp20-gs2-a-1",
+      "topic": "csat-comprehension",
+      "passage": "csp20-gs2-a-p1",
+      "q": "Which one of the following is best implied in the passage?",
+      "options": [
+        "Strong measures need to be taken to reduce the rural to urban migration of labour.",
+        "The working condition in construction and unregistered manufacturing needs to be improved.",
+        "Service sector has been reducing the problem of unemployment.",
+        "Increased social sector spending is imperative for large-scale job creation."
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 1
+      }
+    },
+    {
+      "id": "csp20-gs2-a-2",
+      "topic": "csat-comprehension",
+      "passage": "csp20-gs2-a-p2",
+      "q": "On the basis of the above passage, the following assumptions have been made : 1. State should have some institutions to ensure its appropriate role in a digital society. 2. State should ensure that private parties do not violate the citizens’ right to privacy. 3. Digital economy is not compatible with the idea of not violating the citizens’ privacy. Which of the above assumptions is/are valid?",
+      "options": [
+        "1 and 2",
+        "3 only",
+        "1 and 3",
+        "2 only"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 2
+      }
+    },
+    {
+      "id": "csp20-gs2-a-3",
+      "topic": "csat-comprehension",
+      "passage": "csp20-gs2-a-p3",
+      "q": "Which one of the following is the most logical and rational inference that can be made from the above passage?",
+      "options": [
+        "Rivers and other wetlands should be protected under Ramsar Convention.",
+        "Engineering water systems should be modernized and further augmented.",
+        "Wetlands need to be reinforced as more than just open sources of water.",
+        "Water supply should not be free of cost so as to prevent its misuse or overuse."
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 3
+      }
+    },
+    {
+      "id": "csp20-gs2-a-4",
+      "topic": "csat-comprehension",
+      "passage": "csp20-gs2-a-p4",
+      "q": "Which one of the following statements best implies the suggestion given by the author of the passage?",
+      "options": [
+        "Distribute your wealth across different kinds of assets so that your risks would be minimized.",
+        "Risk-taking behaviour should be a necessary component of your personality if you want to generate wealth.",
+        "While making investments, find a trustworthy asset management organization which would manage your wealth for you.",
+        "You should know that investing your money is a risky business."
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 4
+      }
+    },
+    {
+      "id": "csp20-gs2-a-5",
+      "topic": "csat-comprehension",
+      "passage": "csp20-gs2-a-p5",
+      "q": "With reference to the above passage, the following assumptions have been made : 1. Biotechnology regulation is an evolving process. 2. Participation of people is needed in policy decisions regarding biotechnology regulation. 3. Biotechnology regulation should take into account socio-economic aspects in decision-making. 4. Wider involvement of political executive in biotechnology regulation improves its effectiveness in dealing with the country’s trade policies and international obligations. Which of the above assumptions are valid?",
+      "options": [
+        "1, 2 and 4 only",
+        "1 and 3 only",
+        "2, 3 and 4 only",
+        "1, 2, 3 and 4"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 5
+      }
+    },
+    {
+      "id": "csp20-gs2-a-6",
+      "topic": "csat-comprehension",
+      "passage": "csp20-gs2-a-p5",
+      "q": "Which one of the following statements best implies the crux of the passage?",
+      "options": [
+        "Precautionary principle is not given importance in current debate on developing GM crops.",
+        "Biotechnology is not currently used in climate change mitigation and adaptation mechanisms.",
+        "Biotechnology’s role is not confined to the current priorities of developing GM crops.",
+        "The negative impacts of biotechnology are not properly understood."
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 6
+      }
+    },
+    {
+      "id": "csp20-gs2-a-7",
+      "topic": "csat-numeracy",
+      "q": "How many zeroes are there at the end of the following product? 1 × 5 × 10 × 15 × 20 × 25 × 30 × 35 × 40 × 45 × 50 × 55 × 60",
+      "options": [
+        "10",
+        "12",
+        "14",
+        "15"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 7
+      }
+    },
+    {
+      "id": "csp20-gs2-a-8",
+      "topic": "csat-numeracy",
+      "q": "Let XYZ be a three-digit number, where (X + Y + Z) is not a multiple of 3. Then (XYZ + YZX + ZXY) is not divisible by",
+      "options": [
+        "3",
+        "9",
+        "37",
+        "(X + Y + Z)"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 8
+      }
+    },
+    {
+      "id": "csp20-gs2-a-9",
+      "topic": "csat-numeracy",
+      "q": "Let p, q, r and s be natural numbers such that p − 2016 = q + 2017 = r − 2018 = s + 2019. Which one of the following is the largest natural number?",
+      "options": [
+        "p",
+        "q",
+        "r",
+        "s"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 9
+      }
+    },
+    {
+      "id": "csp20-gs2-a-10",
+      "topic": "csat-numeracy",
+      "q": "How many five-digit prime numbers can be obtained by using all the digits 1, 2, 3, 4 and 5 without repetition of digits?",
+      "options": [
+        "Zero",
+        "One",
+        "Nine",
+        "Ten"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 10
+      }
+    },
+    {
+      "id": "csp20-gs2-a-11",
+      "topic": "csat-numeracy",
+      "q": "In the sum ⊗ + 1⊗ + 5⊗ + ⊗⊗ + ⊗1 = 1⊗⊗ for which digit does the symbol ⊗ stand?",
+      "options": [
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 11
+      }
+    },
+    {
+      "id": "csp20-gs2-a-12",
+      "topic": "csat-numeracy",
+      "q": "If you have two straight sticks of length 7.5 feet and 3.25 feet, what is the minimum length can you measure?",
+      "options": [
+        "0.05 foot",
+        "0.25 foot",
+        "1 foot",
+        "3.25 feet"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 12
+      }
+    },
+    {
+      "id": "csp20-gs2-a-13",
+      "topic": "csat-mental-ability",
+      "q": "A simple mathematical operation in each number of the sequence 14, 18, 20, 24, 30, 32, ... results in a sequence with respect to prime numbers. Which one of the following is the next number in the sequence?",
+      "options": [
+        "34",
+        "36",
+        "38",
+        "40"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 13
+      }
+    },
+    {
+      "id": "csp20-gs2-a-14",
+      "topic": "csat-numeracy",
+      "q": "One page is torn from a booklet whose pages are numbered in the usual manner starting from the first page as 1. The sum of the numbers on the remaining pages is 195. The torn page contains which of the following numbers?",
+      "options": [
+        "5, 6",
+        "7, 8",
+        "9, 10",
+        "11, 12"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 14
+      }
+    },
+    {
+      "id": "csp20-gs2-a-15",
+      "topic": "csat-mental-ability",
+      "q": "Consider the following arrangement that has some missing letters : abab_b_bcb_dcdcded_d The missing letters which complete the arrangement are",
+      "options": [
+        "a, b, c, d",
+        "a, b, d, e",
+        "a, c, c, e",
+        "b, c, d, e"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 15
+      }
+    },
+    {
+      "id": "csp20-gs2-a-16",
+      "topic": "csat-numeracy",
+      "q": "Let A3BC and DE2F be four-digit numbers where each letter represents a different digit greater than 3. If the sum of the numbers is 15902, then what is the difference between the values of A and D?",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 16
+      }
+    },
+    {
+      "id": "csp20-gs2-a-17",
+      "topic": "csat-data-interpretation",
+      "q": "Two Statements S1 and S2 are given below followed by a Question : S1 : There are not more than two figures on any page of a 51-page book. S2 : There is at least one figure on every page. Question : Are there more than 100 figures in that book? Which one of the following is correct in respect of the above Statements and the Question?",
+      "options": [
+        "Both S1 and S2 are sufficient to answer the Question, but neither S1 alone nor S2 alone is sufficient to answer the Question.",
+        "S1 alone is sufficient to answer the Question.",
+        "S1 and S2 together are not sufficient to answer the Question.",
+        "S2 alone is sufficient to answer the Question."
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 17
+      }
+    },
+    {
+      "id": "csp20-gs2-a-18",
+      "topic": "csat-data-interpretation",
+      "q": "Consider the following data :\n | Average marks in English | Average marks in Hindi\nGirls | 9 | 8\nBoys | 8 | 7\nOverall average marks | 8.8 | x\nWhat is the value of x in the above table?",
+      "options": [
+        "7.8",
+        "7.6",
+        "7.4",
+        "7.2"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 18
+      }
+    },
+    {
+      "id": "csp20-gs2-a-19",
+      "topic": "csat-logical-reasoning",
+      "q": "A family of two generations consisting of six members P, Q, R, S, T and U has three males and three females. There are two married couples and two unmarried siblings. U is P’s daughter and Q is R’s mother-in-law. T is an unmarried male and S is a male. Which one of the following is correct?",
+      "options": [
+        "R is U’s husband.",
+        "R is S’s wife.",
+        "S is unmarried.",
+        "None of the above"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 19
+      }
+    },
+    {
+      "id": "csp20-gs2-a-20",
+      "topic": "csat-mental-ability",
+      "q": "If in a particular year 12th January is a Sunday, then which one of the following is correct?",
+      "options": [
+        "15th July is a Sunday if the year is a leap year.",
+        "15th July is a Sunday if the year is not a leap year.",
+        "12th July is a Sunday if the year is a leap year.",
+        "12th July is not a Sunday if the year is a leap year."
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 20
+      }
+    },
+    {
+      "id": "csp20-gs2-a-21",
+      "topic": "csat-comprehension",
+      "passage": "csp20-gs2-a-p21",
+      "q": "With reference to the above passage, the following assumptions have been made : 1. Relying on foreign investment in the long run is not an economically sound policy. 2. Policies must be undertaken to reduce volatility in foreign private investment. 3. Policies must be undertaken to strengthen domestic private investment. 4. Public investment should be given priority over private investment. 5. Substantial public investment in education and health should be undertaken. Which of the above assumptions is/are valid?",
+      "options": [
+        "1, 2 and 4",
+        "1, 3 and 5",
+        "2, 4 and 5",
+        "3 only"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 21
+      }
+    },
+    {
+      "id": "csp20-gs2-a-22",
+      "topic": "csat-comprehension",
+      "passage": "csp20-gs2-a-p22",
+      "q": "With reference to the above passage, which of the following could be the most rational and practical implications for India? 1. Inter-linking of rivers should be undertaken. 2. A network of dams and canals should be built across the country for proper distribution of water. 3. Farmers should be provided easy loans for digging borewells. 4. Usage of water for agriculture should be regulated by law. 5. Distribution of river water among regions should be regulated by the Union Government. Select the correct answer using the code given below.",
+      "options": [
+        "1 and 2",
+        "2, 4 and 5",
+        "1, 3 and 4",
+        "2, 3 and 5"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 22
+      }
+    },
+    {
+      "id": "csp20-gs2-a-23",
+      "topic": "csat-comprehension",
+      "passage": "csp20-gs2-a-p23",
+      "q": "With reference to the above passage, the following assumptions have been made : 1. Lower tax rates in a country invariably translate into greater investments in higher education. 2. Investment in the education of children ensures their economic freedom. 3. Economic freedom has a positive impact on building up human capital. Which of the above assumptions is/are valid?",
+      "options": [
+        "1 only",
+        "2 only",
+        "3 only",
+        "1, 2 and 3"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 23
+      }
+    },
+    {
+      "id": "csp20-gs2-a-24",
+      "topic": "csat-comprehension",
+      "passage": "csp20-gs2-a-p24",
+      "q": "What is the most logical and crucial message conveyed by the passage?",
+      "options": [
+        "Urban local bodies must recover costs through user charges.",
+        "Urban local bodies are not efficient enough to meet the water requirements of our cities.",
+        "Water shortage in our cities is a perennial problem that cannot be solved.",
+        "In view of the water crisis in our cities, there is an urgent need to limit the population of cities by adopting an upper limit of population size."
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 24
+      }
+    },
+    {
+      "id": "csp20-gs2-a-25",
+      "topic": "csat-comprehension",
+      "passage": "csp20-gs2-a-p24",
+      "q": "With reference to the above passage, the following assumptions have been made : 1. Rich cities only can ensure sustainable delivery of water. 2. Sustainable delivery of water in cities means much more than supplying water to households. Which of the above assumptions is/are valid?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 25
+      }
+    },
+    {
+      "id": "csp20-gs2-a-26",
+      "topic": "csat-comprehension",
+      "passage": "csp20-gs2-a-p26",
+      "q": "With reference to the above passage, the following assumptions have been made : 1. Structural and rural transformation is impossible when farms are mainly small and marginal. 2. A good price incentive can trigger investments in agriculture. 3. India needs to build value chains for high-value agri-products like livestock and horticulture. 4. Higher global prices of agricultural commodities are essential for India’s poverty reduction. Which of the above assumptions are valid?",
+      "options": [
+        "1 and 3",
+        "2 and 4",
+        "2 and 3",
+        "3 and 4"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 26
+      }
+    },
+    {
+      "id": "csp20-gs2-a-27",
+      "topic": "csat-comprehension",
+      "passage": "csp20-gs2-a-p26",
+      "q": "Which one of the following statements best reflects the critical message of the passage?",
+      "options": [
+        "India should create large-scale off-farm rural employment to reduce poverty in the near future.",
+        "India should create a large number of farmer producer companies.",
+        "Private investment in agriculture should be given priority over public investment.",
+        "Inclusive agricultural growth is key to reduce poverty in the near future."
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 27
+      }
+    },
+    {
+      "id": "csp20-gs2-a-28",
+      "topic": "csat-data-interpretation",
+      "q": "Two Statements S1 and S2 are given below with regard to four numbers P, Q, R and S followed by a Question : S1 : R is greater than P as well as Q. S2 : S is not the largest one. Question : Among four numbers P, Q, R and S, which one is the largest? Which one of the following is correct in respect of the above Statements and the Question?",
+      "options": [
+        "S1 alone is sufficient to answer the Question.",
+        "S2 alone is sufficient to answer the Question.",
+        "S1 and S2 together are sufficient to answer the Question, but neither S1 alone nor S2 alone is sufficient to answer the Question.",
+        "S1 and S2 together are not sufficient to answer the Question."
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 28
+      }
+    },
+    {
+      "id": "csp20-gs2-a-29",
+      "topic": "csat-data-interpretation",
+      "q": "Two Statements S1 and S2 are given below followed by a Question : S1 : n is a prime number. S2 : n leaves a remainder of 1 when divided by 4. Question : If n is a unique natural number between 10 and 20, then what is n? Which one of the following is correct in respect of the above Statements and the Question?",
+      "options": [
+        "S1 alone is sufficient to answer the Question.",
+        "S2 alone is sufficient to answer the Question.",
+        "S1 and S2 together are sufficient to answer the Question, but neither S1 alone nor S2 alone is sufficient to answer the Question.",
+        "S1 and S2 together are not sufficient to answer the Question."
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 29
+      }
+    },
+    {
+      "id": "csp20-gs2-a-30",
+      "topic": "csat-data-interpretation",
+      "q": "Two Statements S1 and S2 are given below with regard to two numbers followed by a Question : S1 : Their product is 21. S2 : Their sum is 10. Question : What are the two numbers? Which one of the following is correct in respect of the above Statements and the Question?",
+      "options": [
+        "S1 alone is sufficient to answer the Question.",
+        "S2 alone is sufficient to answer the Question.",
+        "S1 and S2 together are sufficient to answer the Question, but neither S1 alone nor S2 alone is sufficient to answer the Question.",
+        "S1 and S2 together are not sufficient to answer the Question."
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 30
+      }
+    },
+    {
+      "id": "csp20-gs2-a-31",
+      "topic": "csat-logical-reasoning",
+      "q": "A man walks down the backside of his house straight 25 metres, then turns to the right and walks 50 metres again; then he turns towards left and again walks 25 metres. If his house faces to the East, what is his direction from the starting point?",
+      "options": [
+        "South-East",
+        "South-West",
+        "North-East",
+        "North-West"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 31
+      }
+    },
+    {
+      "id": "csp20-gs2-a-32",
+      "topic": "csat-logical-reasoning",
+      "q": "Two Statements are given followed by two Conclusions : Statements : All numbers are divisible by 2. All numbers are divisible by 3. Conclusion-I : All numbers are divisible by 6. Conclusion-II : All numbers are divisible by 4. Which of the above Conclusions logically follows/follow from the two given Statements?",
+      "options": [
+        "Only Conclusion-I",
+        "Only Conclusion-II",
+        "Neither Conclusion-I nor Conclusion-II",
+        "Both Conclusion-I and Conclusion-II"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 32
+      }
+    },
+    {
+      "id": "csp20-gs2-a-33",
+      "topic": "csat-logical-reasoning",
+      "q": "Two Statements are given followed by two Conclusions : Statements : All cats are dogs. All cats are black. Conclusion-I : All dogs are black. Conclusion-II : Some dogs are not black. Which of the above Conclusions logically follows/follow from the two given Statements, disregarding commonly known facts?",
+      "options": [
+        "Only Conclusion-I",
+        "Only Conclusion-II",
+        "Neither Conclusion-I nor Conclusion-II",
+        "Both Conclusion-I and Conclusion-II"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 33
+      }
+    },
+    {
+      "id": "csp20-gs2-a-34",
+      "topic": "csat-mental-ability",
+      "q": "Consider the following sequence of numbers : 5 1 4 7 3 9 8 5 7 2 6 3 1 5 8 6 3 8 5 2 2 4 3 4 9 6 How many odd numbers are followed by the odd number in the above sequence?",
+      "options": [
+        "5",
+        "6",
+        "7",
+        "8"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 34
+      }
+    },
+    {
+      "id": "csp20-gs2-a-35",
+      "topic": "csat-logical-reasoning",
+      "q": "A is 16th from the left end in a row of boys and V is 18th from the right end. G is 11th from A towards the right and 3rd from V towards the right end. How many boys are there in the row?",
+      "options": [
+        "40",
+        "41",
+        "42",
+        "Cannot be determined due to insufficient data"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 35
+      }
+    },
+    {
+      "id": "csp20-gs2-a-36",
+      "topic": "csat-data-interpretation",
+      "q": "Three Statements S1, S2 and S3 are given below followed by a Question : S1 : C is younger than D, but older than A and B. S2 : D is the oldest. S3 : A is older than B. Question : Who among A, B, C and D is the youngest? Which one of the following is correct in respect of the above Statements and the Question?",
+      "options": [
+        "S1 alone is sufficient to answer the Question.",
+        "S1 and S2 together are sufficient to answer the Question.",
+        "S2 and S3 together are sufficient to answer the Question.",
+        "S1 and S3 together are sufficient to answer the Question."
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 36
+      }
+    },
+    {
+      "id": "csp20-gs2-a-37",
+      "topic": "csat-numeracy",
+      "q": "How many integers are there between 1 and 100 which have 4 as a digit but are not divisible by 4?",
+      "options": [
+        "5",
+        "11",
+        "12",
+        "13"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 37
+      }
+    },
+    {
+      "id": "csp20-gs2-a-38",
+      "topic": "csat-numeracy",
+      "q": "Let x, y be the volumes; m, n be the masses of two metallic cubes P and Q respectively. Each side of Q is two times that of P and mass of Q is two times that of P. Let u = m/x and v = n/y. Which one of the following is correct?",
+      "options": [
+        "u = 4v",
+        "u = 2v",
+        "v = u",
+        "v = 4u"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 38
+      }
+    },
+    {
+      "id": "csp20-gs2-a-39",
+      "topic": "csat-numeracy",
+      "q": "The average age of a teacher and three students is 20 years. If all the three students are of same age and the difference between the age of the teacher and each student is 20 years, then what is the age of the teacher?",
+      "options": [
+        "25 years",
+        "30 years",
+        "35 years",
+        "45 years"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 39
+      }
+    },
+    {
+      "id": "csp20-gs2-a-40",
+      "topic": "csat-numeracy",
+      "q": "A person bought a car and sold it for ₹ 3,00,000. If he incurred a loss of 20%, then how much did he spend to buy the car?",
+      "options": [
+        "₹ 3,60,000",
+        "₹ 3,65,000",
+        "₹ 3,70,000",
+        "₹ 3,75,000"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 40
+      }
+    },
+    {
+      "id": "csp20-gs2-a-41",
+      "topic": "csat-comprehension",
+      "passage": "csp20-gs2-a-p41",
+      "q": "Which one of the following statements best reflects the critical message of the passage?",
+      "options": [
+        "For introducing any foreign plant into a country, the soil and climate conditions of that country should be suitable.",
+        "As a staple food of a country, tuber crops like potato cannot replace cereal crops.",
+        "Some of the fungal infections of plants cannot be prevented or stopped from spreading across large areas.",
+        "Relying on a homogeneous food source is not desirable."
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 41
+      }
+    },
+    {
+      "id": "csp20-gs2-a-42",
+      "topic": "csat-comprehension",
+      "passage": "csp20-gs2-a-p42",
+      "q": "With reference to the above passage, which of the following is/are the most rational and practical implication/implications? 1. India’s Public Distribution System should be monitored by the Union Government. 2. Girls should be encouraged to delay marriage and first pregnancy. 3. Mothers should be encouraged to breastfeed their children immediately after birth. 4. The supply of safe drinking water and proper sanitation facilities to all should be ensured. 5. Authorities should ensure the vaccination as prescribed. Select the correct answer using the code given below.",
+      "options": [
+        "1, 2, 3 and 4",
+        "2, 3, 4 and 5",
+        "1 only",
+        "3 and 5 only"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 42
+      }
+    },
+    {
+      "id": "csp20-gs2-a-43",
+      "topic": "csat-comprehension",
+      "passage": "csp20-gs2-a-p43",
+      "q": "Which of the following are the most rational inferences that can be made from the passage? 1. Farmers’ income will be higher with pulse cultivation than with paddy cultivation. 2. Pulse cultivation causes less pollution as compared to paddy cultivation. 3. Pulse straw can be used to improve soil quality. 4. In the context of northern Indian agriculture, paddy straw has no usefulness. 5. Mechanized agriculture is the main cause for stubble burning. Select the correct answer using the code given below.",
+      "options": [
+        "2, 3 and 5",
+        "1, 4 and 5",
+        "2 and 3 only",
+        "1 and 4 only"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 43
+      }
+    },
+    {
+      "id": "csp20-gs2-a-44",
+      "topic": "csat-comprehension",
+      "passage": "csp20-gs2-a-p44",
+      "q": "With reference to the above passage, the following assumptions have been made : 1. High risks involved in holding maximum water in reservoirs are due to our over-dependence on hydropower projects. 2. Storage capacity of dams should not be fully used before or during monsoon season. 3. Role of dams in flood control is underestimated in India. Which of the above assumptions is/are valid?",
+      "options": [
+        "1 and 2 only",
+        "2 only",
+        "3 only",
+        "1, 2 and 3"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 44
+      }
+    },
+    {
+      "id": "csp20-gs2-a-45",
+      "topic": "csat-comprehension",
+      "passage": "csp20-gs2-a-p45",
+      "q": "Which of the following is/are the most rational and logical inference/inferences that can be made from the passage? 1. It is essential to rethink and redefine the economic role of the State in the quest for development. 2. India has not made effective implementation of its policies in social sectors nor made sufficient investments in them. Select the correct answer using the code given below.",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 45
+      }
+    },
+    {
+      "id": "csp20-gs2-a-46",
+      "topic": "csat-comprehension",
+      "passage": "csp20-gs2-a-p45",
+      "q": "With reference to the above passage, the following assumptions have been made : 1. India’s economy needs to be greatly integrated with global economy so as to create large number of jobs and to sustain its growth momentum. 2. Economic liberalization would cause large economic growth which would reduce poverty and create sufficient employment in the long run. Which of the above assumptions is/are valid?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 46
+      }
+    },
+    {
+      "id": "csp20-gs2-a-47",
+      "topic": "csat-numeracy",
+      "q": "A shop owner offers the following discount options on an article to a customer : 1. Successive discounts of 10% and 20%, and then pay a service tax of 10% 2. Successive discounts of 20% and 10%, and then pay a service tax of 10% 3. Pay a service tax of 10% first, then successive discounts of 20% and 10% Which one of the following is correct?",
+      "options": [
+        "1 only is the best option for the customer.",
+        "2 only is the best option for the customer.",
+        "3 only is the best option for the customer.",
+        "All the options are equally good for the customer."
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 47
+      }
+    },
+    {
+      "id": "csp20-gs2-a-48",
+      "topic": "csat-logical-reasoning",
+      "q": "The letters from A to Z are numbered from 1 to 26 respectively. If GHI = 1578 and DEF = 912, then what is ABC equal to?",
+      "options": [
+        "492",
+        "468",
+        "262",
+        "246"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 48
+      }
+    },
+    {
+      "id": "csp20-gs2-a-49",
+      "topic": "csat-mental-ability",
+      "q": "What is the missing term @ in the following? ACPQ : BESU :: MNGI : @",
+      "options": [
+        "NPJL",
+        "NOJM",
+        "NPIL",
+        "NPJM"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 49
+      }
+    },
+    {
+      "id": "csp20-gs2-a-50",
+      "topic": "csat-numeracy",
+      "q": "What is the largest number among the following?",
+      "options": [
+        "(1/2)⁻⁶",
+        "(1/4)⁻³",
+        "(1/3)⁻⁴",
+        "(1/6)⁻²"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 50
+      }
+    },
+    {
+      "id": "csp20-gs2-a-51",
+      "topic": "csat-numeracy",
+      "q": "What is the greatest length x such that 3½ m and 8¾ m are integral multiples of x?",
+      "options": [
+        "1½ m",
+        "1⅓ m",
+        "1¼ m",
+        "1¾ m"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 51
+      }
+    },
+    {
+      "id": "csp20-gs2-a-52",
+      "topic": "csat-data-interpretation",
+      "q": "Consider the following data :\nYear | Birthrate | Death rate\n1911–1921 | 48.1 | 35.5\n1921–1931 | 46.4 | 36.3\n1931–1941 | 45.2 | 31.2\n1941–1951 | 39.9 | 27.4\n1951–1961 | 41.7 | 22.8\n1961–1971 | 41.1 | 18.9\n1971–1981 | 37.1 | 14.8\nFor which period was the natural growth rate maximum?",
+      "options": [
+        "1911–1921",
+        "1941–1951",
+        "1961–1971",
+        "1971–1981"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 52
+      }
+    },
+    {
+      "id": "csp20-gs2-a-53",
+      "topic": "csat-numeracy",
+      "q": "The recurring decimal representation 1.272727... is equivalent to",
+      "options": [
+        "13/11",
+        "14/11",
+        "127/99",
+        "137/99"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 53
+      }
+    },
+    {
+      "id": "csp20-gs2-a-54",
+      "topic": "csat-numeracy",
+      "q": "What is the least four-digit number when divided by 3, 4, 5 and 6 leaves a remainder 2 in each case?",
+      "options": [
+        "1012",
+        "1022",
+        "1122",
+        "1222"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 54
+      }
+    },
+    {
+      "id": "csp20-gs2-a-55",
+      "topic": "csat-numeracy",
+      "q": "In adult population of a city, 40% men and 30% women are married. What is the percentage of married adult population if no man marries more than one woman and no woman marries more than one man; and there are no widows and widowers?",
+      "options": [
+        "33 1/7%",
+        "34%",
+        "34 2/7%",
+        "35%"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 55
+      }
+    },
+    {
+      "id": "csp20-gs2-a-56",
+      "topic": "csat-numeracy",
+      "q": "What is the remainder when 51 × 27 × 35 × 62 × 75 is divided by 100?",
+      "options": [
+        "50",
+        "25",
+        "5",
+        "1"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 56
+      }
+    },
+    {
+      "id": "csp20-gs2-a-57",
+      "topic": "csat-numeracy",
+      "q": "A sum of ₹ 2,500 is distributed among X, Y and Z in the ratio 1/2 : 3/4 : 5/6. What is the difference between the maximum share and the minimum share?",
+      "options": [
+        "₹ 300",
+        "₹ 350",
+        "₹ 400",
+        "₹ 450"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 57
+      }
+    },
+    {
+      "id": "csp20-gs2-a-58",
+      "topic": "csat-numeracy",
+      "q": "For what value of n, the sum of digits in the number (10ⁿ + 1) is 2?",
+      "options": [
+        "For n = 0 only",
+        "For any whole number n",
+        "For any positive integer n only",
+        "For any real number n"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 58
+      }
+    },
+    {
+      "id": "csp20-gs2-a-59",
+      "topic": "csat-numeracy",
+      "q": "In a class, there are three groups A, B and C. If one student from group A and two students from group B are shifted to group C, then what happens to the average weight of the students of the class?",
+      "options": [
+        "It increases.",
+        "It decreases.",
+        "It remains the same.",
+        "No conclusion can be drawn due to insufficient data."
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 59
+      }
+    },
+    {
+      "id": "csp20-gs2-a-60",
+      "topic": "csat-numeracy",
+      "q": "How many different sums can be formed with the denominations ₹ 50, ₹ 100, ₹ 200, ₹ 500 and ₹ 2,000 taking at least three denominations at a time?",
+      "options": [
+        "16",
+        "15",
+        "14",
+        "10"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 60
+      }
+    },
+    {
+      "id": "csp20-gs2-a-61",
+      "topic": "csat-comprehension",
+      "passage": "csp20-gs2-a-p61",
+      "q": "Which one of the following is the most logical and rational inference that can be made from the above passage?",
+      "options": [
+        "Indian banking system is not able to help the country in its economic growth.",
+        "Economic reforms that started in 1991 have not helped in improving the economy to expected levels.",
+        "India lacks the institutional mechanism to deal with the failure of banks.",
+        "Encouraging the foreign investments in our industrial sector is a good alternative to this sector’s dependence on banks for credit."
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 61
+      }
+    },
+    {
+      "id": "csp20-gs2-a-62",
+      "topic": "csat-comprehension",
+      "passage": "csp20-gs2-a-p62",
+      "q": "Which one of the following is the most logical and rational inference that can be made from the above passage?",
+      "options": [
+        "India’s commitment to reduce emissions by 33% is unlikely to be achieved.",
+        "India should import gas rather than invest in renewable resources.",
+        "Getting renewable resources to market too soon may be costly.",
+        "India should put in more efforts in the exploration of natural gas."
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 62
+      }
+    },
+    {
+      "id": "csp20-gs2-a-63",
+      "topic": "csat-comprehension",
+      "passage": "csp20-gs2-a-p62",
+      "q": "With reference to the above passage, the following assumptions have been made : 1. Governments often provide inefficient and costly subsidies for technologies that may not be ready in the near future. 2. India’s commitment of reducing emissions by 33% by 2030 shall be on the basis of gas-based economy. Which of the above assumptions is/are valid?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 63
+      }
+    },
+    {
+      "id": "csp20-gs2-a-64",
+      "topic": "csat-comprehension",
+      "passage": "csp20-gs2-a-p64",
+      "q": "With reference to the above passage, the following assumptions have been made : 1. Genome editing does not require the transfer of genes from one plant to another. 2. Through genome editing, the chosen genes can be altered precisely in a manner akin to the natural process that helps plants to adapt to the environmental factors. Which of the above assumptions is/are valid?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 64
+      }
+    },
+    {
+      "id": "csp20-gs2-a-65",
+      "topic": "csat-comprehension",
+      "passage": "csp20-gs2-a-p65",
+      "q": "In the context of India, which one of the following statements best reflects the critical message of the passage?",
+      "options": [
+        "In India, the drainage networks are not separate for sewerage and storm water.",
+        "Urban local bodies do not have enough resources and legislative authority to deal with the problems of waste management.",
+        "Solid waste management should be integrated with the maintenance of drainage and sewerage networks.",
+        "Bad management of solid waste and sewerage systems by our municipalities is the reason for drinking water shortages in our cities."
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 65
+      }
+    },
+    {
+      "id": "csp20-gs2-a-66",
+      "topic": "csat-comprehension",
+      "passage": "csp20-gs2-a-p66",
+      "q": "What is the most logical inference from the above passage?",
+      "options": [
+        "State shall not interfere with the religious affairs of the citizens.",
+        "Religious freedom under the Constitution is open to State intervention.",
+        "Religious freedom of the citizens is not covered under fundamental rights.",
+        "Religious practices of any community are immune to State laws."
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 66
+      }
+    },
+    {
+      "id": "csp20-gs2-a-67",
+      "topic": "csat-numeracy",
+      "q": "How many different 5-letter words (with or without meaning) can be constructed using all the letters of the word ‘DELHI’ so that each word has to start with D and end with I?",
+      "options": [
+        "24",
+        "18",
+        "12",
+        "6"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 67
+      }
+    },
+    {
+      "id": "csp20-gs2-a-68",
+      "topic": "csat-numeracy",
+      "q": "A bottle contains 20 litres of liquid A. 4 litres of liquid A is taken out of it and replaced by same quantity of liquid B. Again 4 litres of the mixture is taken out and replaced by same quantity of liquid B. What is the ratio of quantity of liquid A to that of liquid B in the final mixture?",
+      "options": [
+        "4 : 1",
+        "5 : 1",
+        "16 : 9",
+        "17 : 8"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 68
+      }
+    },
+    {
+      "id": "csp20-gs2-a-69",
+      "topic": "csat-numeracy",
+      "q": "The average score of a batsman after his 50th innings was 46.4. After 60th innings, his average score increases by 2.6. What was his average score in the last ten innings?",
+      "options": [
+        "122",
+        "91",
+        "62",
+        "49"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 69
+      }
+    },
+    {
+      "id": "csp20-gs2-a-70",
+      "topic": "csat-numeracy",
+      "q": "As a result of 25% hike in the price of rice per kg, a person is able to purchase 6 kg less rice for ₹ 1,200. What was the original price of rice per kg?",
+      "options": [
+        "₹ 30",
+        "₹ 40",
+        "₹ 50",
+        "₹ 60"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 70
+      }
+    },
+    {
+      "id": "csp20-gs2-a-71",
+      "topic": "csat-numeracy",
+      "q": "A person X can complete 20% of work in 8 days and another person Y can complete 25% of the same work in 6 days. If they work together, in how many days will 40% of the work be completed?",
+      "options": [
+        "6",
+        "8",
+        "10",
+        "12"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 71
+      }
+    },
+    {
+      "id": "csp20-gs2-a-72",
+      "topic": "csat-numeracy",
+      "q": "A car travels from a place X to place Y at an average speed of v km/hr, from Y to X at an average speed of 2v km/hr, again from X to Y at an average speed of 3v km/hr and again from Y to X at an average speed of 4v km/hr. Then the average speed of the car for the entire journey",
+      "options": [
+        "is less than v km/hr",
+        "lies between v and 2v km/hr",
+        "lies between 2v and 3v km/hr",
+        "lies between 3v and 4v km/hr"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 72
+      }
+    },
+    {
+      "id": "csp20-gs2-a-73",
+      "topic": "csat-numeracy",
+      "q": "Consider the following statements : 1. The minimum number of points of intersection of a square and a circle is 2. 2. The maximum number of points of intersection of a square and a circle is 8. Which of the above statements is/are correct?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 73
+      }
+    },
+    {
+      "id": "csp20-gs2-a-74",
+      "topic": "csat-numeracy",
+      "q": "A man takes half time in rowing a certain distance downstream than upstream. What is the ratio of the speed in still water to the speed of current?",
+      "options": [
+        "1 : 2",
+        "2 : 1",
+        "1 : 3",
+        "3 : 1"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 74
+      }
+    },
+    {
+      "id": "csp20-gs2-a-75",
+      "topic": "csat-numeracy",
+      "q": "How many pairs of natural numbers are there such that the difference of whose squares is 63?",
+      "options": [
+        "3",
+        "4",
+        "5",
+        "2"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 75
+      }
+    },
+    {
+      "id": "csp20-gs2-a-76",
+      "topic": "csat-numeracy",
+      "q": "Which one of the following will have minimum change in its value if 5 is added to both numerator and the denominator of the fractions 2/3, 3/4, 4/5 and 5/6?",
+      "options": [
+        "2/3",
+        "3/4",
+        "4/5",
+        "5/6"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 76
+      }
+    },
+    {
+      "id": "csp20-gs2-a-77",
+      "topic": "csat-numeracy",
+      "q": "A digit n > 3 is divisible by 3 but not divisible by 6. Which one of the following is divisible by 4?",
+      "options": [
+        "2n",
+        "3n",
+        "2n + 4",
+        "3n + 1"
+      ],
+      "answer": 3,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 77
+      }
+    },
+    {
+      "id": "csp20-gs2-a-78",
+      "topic": "csat-numeracy",
+      "q": "If 1 litre of water weighs 1 kg, then how many cubic millimetres of water will weigh 0.1 gm?",
+      "options": [
+        "1",
+        "10",
+        "100",
+        "1000"
+      ],
+      "answer": 2,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 78
+      }
+    },
+    {
+      "id": "csp20-gs2-a-79",
+      "topic": "csat-numeracy",
+      "q": "A vessel full of water weighs 40 kg. If it is one-third filled, its weight becomes 20 kg. What is the weight of the empty vessel?",
+      "options": [
+        "10 kg",
+        "15 kg",
+        "20 kg",
+        "25 kg"
+      ],
+      "answer": 0,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 79
+      }
+    },
+    {
+      "id": "csp20-gs2-a-80",
+      "topic": "csat-numeracy",
+      "q": "A frog tries to come out of a dried well 4.5 m deep with slippery walls. Every time the frog jumps 30 cm, slides down 15 cm. What is the number of jumps required for the frog to come out of the well?",
+      "options": [
+        "28",
+        "29",
+        "30",
+        "31"
+      ],
+      "answer": 1,
+      "paper": {
+        "year": 2020,
+        "code": "gs2",
+        "set": "A",
+        "n": 80
+      }
     }
-  ]
+  ],
+  "passages": {
+    "csp24-gs2-a-p1": "According to the Food and Agriculture Organization, one-third of food produced for human consumption is lost or wasted globally. Food is lost or wasted throughout the supply chain, from initial agricultural production to final household consumption. The increasing wastage also results in land degradation by about 45%, mainly due to deforestation, unsustainable agricultural practices, and excessive groundwater extraction. The energy spent over wasted food results in about 3.5 billion tonnes of carbon dioxide production every year. Decay also leads to harmful emissions of other gases in the atmosphere. Addressing the loss and wastage of food in all forms is critical to complete the cycle of food sufficiency and food sustainability.",
+    "csp24-gs2-a-p11": "Today, if we consider cities such as New York, London and Paris as some of the most iconic cities in the world, it is because plans carrying a heavy systems approach were imposed on their precincts. The backbone of the systems theory is the process of translating social, spatial and cultural desirables into mathematical models using computing, statistics, optimization and an algorithmic way of formulating and solving problems. The early universities of the West which began to train professionals in planning, spawned some of the most ingenious planners, who were experts in these domains. This was because these very subjects were absorbed into the planning curriculum that had its roots in the social sciences, geography and architecture. Planning in India, and its education differ from the West.",
+    "csp24-gs2-a-p13": "Not every voice on the internet commands the same kind of audience. When anonymous private entities with high capital can pay for more space for their opinions, they are effectively buying a louder voice. If political discourse in the digital sphere is a matter of outshining one’s opponent till the election is won, then the quality of politics suffers. The focus of social media is restricted to the promotion of content that generates more user engagement, regardless of how inflammatory the content may be.",
+    "csp24-gs2-a-p21": "By the time children reach class 8, the bulk of them tend to be in the age range of 13 years to 15 years. But in our country, about a quarter of all children in class 8 struggle with reading simple texts and more than half are still unable to do basic arithmetic operations like division. Every year about 25 million young boys and girls from elementary school move into the life that lies for them beyond compulsory schooling. They cannot enter the workforce at least in the organized sector till they are 18. For many families, these children are the first from their families ever to get this far in school. Parents and children expect that such ‘graduates’ from school will go on to high school and college. Hardly anyone wants to go back to agriculture. On the other hand, abilities in terms of academic competencies are far lower than they should be even based on curricular expectations of class 8.",
+    "csp24-gs2-a-p23": "We take it for granted now that science has a social responsibility. The idea would not have occurred to Newton or Galileo. They thought of science as an account of the world as it is, and the only responsibility that they acknowledged was to tell the truth. The idea that science is a social enterprise is modern, and it begins at the industrial revolution. We are surprised that we cannot trace a social sense further back, because we nurse the illusion that the industrial revolution ended a golden age.",
+    "csp24-gs2-a-p3": "As inflation rises, even governments previously committed to budget discipline are spending freely to help households. Higher interest rates announced by central banks are supposed to help produce modest fiscal austerity, because to maintain stable debts while paying more to borrow, governments must cut spending or raise taxes. Without the fiscal backup, monetary policy eventually loses traction. Higher interest rates become inflationary, not disinflationary, because they simply lead governments to borrow more to pay rising debt-service costs. The risk of monetary unmooring is greater when public debt rises, because interest rates become more important to budget deficits.",
+    "csp24-gs2-a-p31": "“The history of science is the real history of mankind.” In this striking epigram, a nineteenth-century writer links science with its background. Like most epigrams, its power lies in emphasizing by contrast an aspect of truth which may be easily overlooked. In this case, it is easy to overlook the relations between science and mankind, and to treat the former as some abstract third party, which can sometimes be praised for its beneficial influences, but frequently and conveniently blamed for the horrors of war. Science and mankind cannot be divorced from time to time at men’s convenience. Yet we have seen that, in spite of countless opportunities of improvement, the opening years of the present period of civilization have been dominated by international conflict. Is this the inevitable result of the progress of science or does the fault lie elsewhere?",
+    "csp24-gs2-a-p33": "Only with long experience and opening of his wares on many a beach where his language is not spoken, will the merchant come to know the worth of what he carries, and what is parochial and what is universal in his choice. Such delicate goods as justice, love and honour, courtesy, and indeed all the things we care for, are valid everywhere but they are variously moulded and often differently handled, and sometimes nearly unrecognizable if you meet them in a foreign land, and the art of learning fundamental common values is perhaps the greatest gain of travel to those who wish to live at ease among their fellows.",
+    "csp24-gs2-a-p41": "Conventional classrooms, by emphasizing fixed duration over learning effectiveness, resign themselves to variable outcomes. The tyranny of the classroom is that every learner is subjected to the same set of lectures in the same way for the same duration. In the end, a few learners shine, some survive, and the rest are left behind. After the fixed duration, the classroom model moves on, with not a thought spared for those left behind. This is how we end up with 10 percent employability in our graduates after a decade and half of formal education. Repeating the same ineffectual script in the realm of skill education will not produce different results.",
+    "csp24-gs2-a-p43": "When a child reaches adolescence, there is apt to be a conflict between the parents and the child, since the latter considers himself to be by now quite capable of managing his own affairs, while the former are filled with parental solicitude, which is often a disguise for love of power. Parents consider, usually, that the various moral problems which arise in adolescence are peculiarly their province. The options they express, however, are so dogmatic that the young seldom confide in them, and usually go their own way in secret.",
+    "csp24-gs2-a-p51": "When an international team of scientists pumped a carbon dioxide and water mix into underground basalt rocks, basic chemistry took over. The acidic mixture dissolved rocks’ calcium and magnesium and formed limestone. Basically carbon dioxide is converted into stone, exclaimed the scientists.",
+    "csp24-gs2-a-p52": "Geographers analyzed 175 satellite images of ocean colour, which is an indicator of phytoplankton productivity at the ocean’s surface, and found that giant icebergs are responsible for storing up to 20 percent of carbon in the Southern Ocean. The researchers discovered that melting water from giant icebergs which contains iron and other nutrients, supports hitherto unexpectedly high levels of phytoplankton growth.",
+    "csp24-gs2-a-p53": "Evolution has endowed caterpillars that feed on corn with a unique ability, they can induce the plant to turn off its defence against insect predators. This helps caterpillars to eat more and grow faster. The agent that causes this effect is the caterpillar’s faeces or frass. The find could throw new light on compounds associated with plant response to pathogens like fungi or bacteria.",
+    "csp24-gs2-a-p61": "In a robust democracy, reality, howsoever inconvenient it may be, finds its expression both in the speech of political leaders and the other social forms of assertion. The existence of the real has to be transparent, both through its circulation in and by the media as well as its argumentative articulation in deliberative democracy. A normatively responsible media through its communication effect has the responsibility to circulate the content of reality without distortion.",
+    "csp24-gs2-a-p62": "Now-a-days there is a growing trend to use interconnected home devices. As consumers increasingly network their homes, the connected home device manufacturers and service providers will seek to overcome “thin profit margins by gathering more of our personal data—with or without our agreement— turning the home into a corporate storefront”. Corporate marketers will have powerful incentives to observe consumer behaviour to understand the buying needs and preferences of the device owners.",
+    "csp24-gs2-a-p63": "Green growth involves rethinking growth strategies with regard to the impacts on environmental sustainability and the environmental resources available to poor and vulnerable groups. In rethinking growth, we need to focus on the current reality of a resource-constrained world. Resource intensive and, in particular energy intensive processes will need to make way for more efficient and resource frugal development strategies if we are to avoid an economic dead end or a world in which only a small elite is able to enjoy affluence in the midst of a sea of poverty.",
+    "csp24-gs2-a-p71": "Unlike religion and science, poetry does not posit or expect any belief in absolute truths. Those forces or individuals who claim to have absolute truths in their grasp tend to turn dictatorial and tyrannical. Truth usually does not admit any contradictions or imperfections. It is unitarian. It is, therefore, not of much use for poetry. Poetry abides by the plurality of life and existence. Perhaps poetry follows reality which is plural, anachronistic, full of contradictions. Against the tyranny of truth, poetry remains a partisan of democratic reality. Against the arrogance of power, wealth and hierarchy, poetry proposes both humility and defiance.",
+    "csp24-gs2-a-p72": "The flower was not invented to please us. It flaunted its petals and spread its perfume to attract an insect. The insect carries the pollen from flower to flower so that pollen is not carried away by wind and thus not wasted. What we call a flower’s beauty is merely a by-product and a human invention. The perfume is not there to please us, it pleases us because it is there and we have been conditioned to it.",
+    "csp21-gs2-a-p1": "Researchers simulated street lighting on artificial grassland plots containing pea-aphids, sap-sucking insects, at night. These were exposed to two different types of light — a white light similar to newer commercial LED lights and an amber light similar to sodium street lamps. The low intensity amber light was shown to inhibit, rather than induce, flowering in a wild plant of the pea family which is a source of food for the pea-aphids in grasslands. The number of aphids was also significantly suppressed under the light treatment due to the limited amount of food available.",
+    "csp21-gs2-a-p11": "Fig trees (genus Ficus) are considered sacred in India, East Asia and Africa and are common in agricultural and urban landscapes where other large trees are absent. In natural forests, fig trees provide food for wildlife when other resources are scarce and support a high density and diversity of frugivores (fruit-eating animals). If frugivorous birds and bats continue to visit fig trees located in sites with high human disturbance, sacred fig trees may promote frugivore abundance. Under favourable microclimate, plenty of seedlings of other tree species would grow around fig trees.",
+    "csp21-gs2-a-p12": "At the heart of agroecology is the idea that agroecosystems should mimic the biodiversity levels and functioning of natural ecosystems. Such agricultural mimics, like their natural models, can be productive, pest-resistant, nutrient conserving, and resilient to shocks and stresses. In ecosystems there is no ‘waste’, nutrients are recycled indefinitely. Agroecology aims at closing nutrient loops, i.e., returning all nutrients that come out of the soil back to the soil such as through application of farmyard manure. It also harnesses natural processes to control pests and build soil fertility, i.e., through intercropping. Agroecological practices include integrating trees with livestock and crops.",
+    "csp21-gs2-a-p13": "Computers increasingly deal not just with abstract data like credit card details and databases, but also with the real world of physical objects and vulnerable human bodies. A modern car is a computer on wheels; an aeroplane is a computer on wings. The arrival of the “Internet of Things” will see computers baked into everything from road signs and MRI scanners to prosthetics and insulin pumps. There is little evidence that these gadgets will be any more trustworthy than their desktop counterparts. Hackers have already proved that they can take remote control of internet connected cars and pacemakers.",
+    "csp21-gs2-a-p14": "A social and physical environment riddled with poverty, inequities, unhygienic and insanitary conditions generates the risk of infectious diseases. Hygiene has different levels : personal, domestic and community hygiene. There is no doubt that personal cleanliness brings down the rate of infectious diseases. But the entry of the market into this domain has created a false sense of security that gets conditioned and reinforced by the onslaught of advertisements. Experience in Western Europe shows that along with personal hygiene, general improvements in environmental conditions and components like clean water, sanitation and food security have brought down infant/child death/infection rates considerably. The obsession with hand hygiene also brings in the persisting influence of the market on personal health, overriding or marginalising the negative impact on ecology and the emergence of resistant germs.",
+    "csp21-gs2-a-p2": "Approximately 80 percent of all flowering plant species are pollinated by animals, including birds and mammals, but the main pollinators are insects. Pollination is responsible for providing us with a wide variety of food, as well as many plant-derived medicines. At least one-third of the world’s agricultural crops depend upon pollination. Bees are the most dominant taxa when it comes to pollination and they are crucial to more than four hundred crops. Pollination is an essential service that is the result of intricate relationships between plants and animals, and the reduction or loss of either affects the survival of both. Effective pollination requires resources, such as refuges of pristine natural vegetation.",
+    "csp21-gs2-a-p21": "India faces a challenging immediate future in energy and climate policy-making. The problems are multiple : sputtering fossil fuel production capabilities; limited access to electricity and modern cooking fuel for the poorest; rising fuel imports in an unstable global energy context; continued electricity pricing and governance challenges leading to its costly deficits or surplus supply; and not least, growing environmental contestation around land, water and air. But all is not bleak: growing energy efficiency programmes; integrated urbanisation and transport policy discussions; inroads to enhancing energy access and security; and bold renewable energy initiatives, even if not fully conceptualised, suggest the promise of transformation.",
+    "csp21-gs2-a-p22": "There are reports that some of the antibiotics sold in the market are fed to poultry and other livestock as growth promoters. Overusing these substances can create superbugs, pathogens that are resistant to multiple drugs and could be passed along humans. Mindful of that, some farming companies have stopped using the drugs to make chickens gain weight faster. Since Denmark banned antibiotic growth promoters in the 1990s, the major pork exporter says it is producing more pigs — and the animals get fewer diseases.",
+    "csp21-gs2-a-p23": "Policy makers and media have placed the blame for skyrocketing food prices on a variety of factors, including high fuel prices, bad weather in key food producing countries, and the diversion of land to non-food production. Increased emphasis, however, has been placed on a surge in demand for food from the most populous emerging economies. It seems highly probable that mass consumption in these countries could be well poised to create a food crisis.",
+    "csp21-gs2-a-p24": "A central message of modern development economics is the importance of income growth, by which is meant growth in Gross Domestic Product (GDP). In theory, rising GDP creates employment and investment opportunities. As incomes grow in a country where the level of GDP was once low, households, communities, and governments are increasingly able to set aside some funds for the production of things that make for a good life. Today GDP has assumed such a significant place in the development lexicon, that if someone mentions “economic growth”, we know they mean growth in GDP.",
+    "csp21-gs2-a-p3": "A study conducted on the impacts of climate change over the Cauvery basin of Tamil Nadu using regional climate models showed an increasing trend for maximum and minimum temperatures, and a decrease in the number of rainy days. These climatic shifts will have an impact on the hydrological cycles in the region, lead to more run-off and less recharge, and affect the groundwater tables. Further, there has been an increase in the frequency of droughts in the State. This has driven farmers to increase dependency on groundwater resources to secure their crops.",
+    "csp21-gs2-a-p31": "With respect to what are called denominations of religion, if everyone is left to be a judge of his own religion, there is no such thing as religion that is wrong; but if they are to be a judge of each other’s religion, there is no such thing as a religion that is right, and therefore all the world is right or all the world is wrong in the matter of religion.",
+    "csp21-gs2-a-p32": "It is certain, that seditions, wars, and contempt or breach of the laws are not so much to be imputed to the wickedness of the subjects, as to the bad state of a dominion. For men are not born fit for citizenship, but must be made so. Besides, men’s natural passions are everywhere the same; and if wickedness more prevails, and more offences are committed in one commonwealth than in another, it is certain that the former has neither enough pursued the end of unity, nor framed its laws with sufficient forethought; and that, therefore, it has failed in making quite good its right as a commonwealth.",
+    "csp21-gs2-a-p33": "Inequality violates a basic democratic norm : the equal standing of citizens. Equality is a relation that obtains between persons in respect of some fundamental characteristic that they share in common. Equality is, morally speaking, a default principle. Therefore, persons should not be discriminated on grounds such as race, caste, gender, ethnicity, disability, or class. These features of human condition are morally irrelevant. The idea that one should treat persons with respect not only because some of these persons possess some special features or talent, for example skilled cricketers, gifted musicians, or literary giants, but because persons are human beings, is by now part of commonsense morality.",
+    "csp21-gs2-a-p34": "Aristocratic government ruins itself by limiting too narrowly the circle within which power is confined; oligarchic government ruins itself by the incautious scramble for immediate wealth. But even democracy ruins itself by excess of democracy. Its basic principle is the equal right of all to hold office and determine public policy. This is, at first glance, a delightful arrangement; it becomes disastrous because the people are not properly equipped by education to select the best rulers and the wisest courses. The people have no understanding and only repeat what their rulers are pleased to tell them. Such a democracy is tyranny or autocracy. — Plato",
+    "csp21-gs2-a-p4": "Researchers were able to use stem cells to gauge the neurotoxic effects of the environmental pollutant Bisphenol A (BPA). They used a combination of biochemical and cell-based assays to examine the gene expression profile during the differentiation of mouse embryonic stem cells upon treatment with BPA, a compound known to cause heart diseases, diabetes, and developmental abnormalities in humans. They were able to detect and measure BPA toxicity towards the proper specification of primary germ layers, such as endoderm and ectoderm, and the establishment of neural progenitor cells.",
+    "csp21-gs2-a-p41": "Nothing can exist in a natural state which can be called good or bad by common assent, since every man who is in a natural state consults only his own advantage, and determines what is good or bad according to his own fancy and insofar as he has regard for his own advantage alone, and holds himself responsible to no one save himself by any law; and therefore sin cannot be conceived in a natural state, but only in a civil state, which is decreed by common consent what is good or bad, and each one holds himself responsible to the state.",
+    "csp21-gs2-a-p42": "In the immediate future, we will see the increasing commodification of many new technologies — artificial intelligence and robotics, 3D manufacturing, custom made biological and pharmaceutical products, lethal autonomous weapons and driverless cars. This will pose conundrums. The moral question of how a driverless car will decide between hitting a jaywalker and swerving and damaging the car has often been debated. The answer is both simple — save the human life — and complex. At which angle should the car swerve — just enough to save the jaywalker or more than enough ? If the driverless car is in Dublin, who would take the decision ? The Irish Government, or the car’s original code writer in California, or a software programmer in Hyderabad to whom maintenance is outsourced ? If different national jurisdictions have different fine print on prioritising a human life, how will it affect insurance and investment decisions, including transnational ones ?",
+    "csp21-gs2-a-p43": "The resolution of bankruptcy cases of Indian banks under the Insolvency and Bankruptcy Code should help bring non-performing assets (NPA) situation under some control. Despite the slow pace of resolutions by the National Company Law Tribunal, the Code can be helpful in cleaning up bank books in future credit cycles. The recapitalisation of public sector banks too can help increase the capital cushion of banks and induce them to lend more and boost economic activity. But bad debt resolution and recapitalisation are only a part of the solution as they, by themselves, can do very little to rein in reckless lending that has pushed the Indian banking system to its current sorry state. Unless there are systemic reforms that address the problem of unsustainable lending, future credit cycles will continue to stress the banking system.",
+    "csp21-gs2-a-p44": "In India, the objective of macroeconomic policy is to enhance the economic welfare of the people, and any one wing of such macro policy, monetary or fiscal, cannot independently work without active support of another.",
+    "csp21-gs2-a-p51": "The best universities like Harvard and MIT, despite having the luxury of having some truly excellent teachers on their payroll, are increasingly embracing the “flipped classroom” format, where students listen to video lectures at home, and spend class time applying their knowledge, solving problems, discussing examples, etc. Professors guide that discussion and fill in wherever necessary, explaining those bits that seem to be eluding the students and throwing in advanced ideas that happen to be topical. These universities have made their video lectures available free for anyone in the world. They are also encouraging colleges and universities all over the world to integrate these online courses into their own pedagogy, picking the pieces that are appropriate for their needs and building a package around them.",
+    "csp21-gs2-a-p52": "Our cities are extremely vulnerable to climate change because of large concentrations of populations and poor infrastructure. Moreover, population densities are increasing in them but we have not yet developed the systems to address climate change impacts. Our cities contribute to 65 per cent of the GDP, but there are not enough facilities to cater to the needs of the people. It is important to address the issues of air quality, transport, etc., that are vital to identifying sustainable solutions. We need to involve citizens in city planning and create an ecosystem that meets the needs of the people.",
+    "csp21-gs2-a-p61": "Can a democracy avoid being a welfare state for long ? Why cannot mass welfare be left entirely to the markets ? There is a built-in tension between markets and democracy. Markets do not work on a one-person-one-vote principle as democracies do. What one gets out of the market place depends on one’s endowments, skills, purchasing power and the forces of demand and supply. Markets reward individual initiative and skill, and may also lift many from the bottom rungs of society, but some people never get the opportunity to develop skills that markets demand; they are simply too poor and too handicapped; or skill formation takes too long. By creating jobs, markets may be able to help even unskilled people, but capitalism has always witnessed bursts of unemployment.",
+    "csp21-gs2-a-p62": "In our schools, we teach our children all that is there to know about physics, maths and history and what-have-you. But do we teach them about the bitter caste divide that plagues the country, about the spectre of famine that stalks large parts of our land, about gender sensitivity, about the possibility of atheism as a choice, etc. ? Equally important, do we teach them to ask questions, or do we teach them only to passively receive our wisdom ? From the cocooned world of school, suddenly, the adolescent finds himself/herself in the unfettered world of university. Here he/she is swept up in a turmoil of ideas, influences and ideologies. For someone who has been discouraged from asking questions and forming an opinion, this transition can be painful.",
+    "csp21-gs2-a-p71": "Medieval merchants risked the hazards of the Silk Road to reach the markets of China; Portuguese caravels in the 15th century sailed beyond the bounds of the known world, searching less for knowledge than for gold and spices. Historically, the driver for opening frontiers has always been the search for resources. Science and curiosity are weaker drivers. The only way to open up space, whether the space of solar system or interstellar space is to create an economic engine and that engine is resource extraction.",
+    "csp21-gs2-a-p72": "“...... most people would agree that telling deliberate lies is wrong, except perhaps in certain special situations where more harm will be done by telling the truth. Even the most truthful people probably tell a good many more lies that might be regarded as semantic lies; their use of words contains some measure of falsehood, more or less deliberate.”",
+    "csp20-gs2-a-p1": "In India, over the last decade or so, labour has been departing agriculture, but is only going to construction and unregistered manufacturing which are not markedly better jobs. Services, where labour tends to be most productive, are not generating the additional jobs the country needs. India will need 24 million or so jobs over the next decade. The new sector, e-commerce, can at best close only half the jobs gap. Only those sectors that drive domestic demand such as health and education can comfortably fill the other half.",
+    "csp20-gs2-a-p2": "In India, the current focus on the right to privacy is based on some new realities of the digital age. A right is a substantive right only if it works in all situations, and for everyone. A right to free expression for an individual about her exploitation, for instance, is meaningless without actual availability of security that guarantees that private force cannot be used to thwart this right. The role of the State, therefore, is not just to abstain from preventing rightful free expression, but also to actively ensure that private parties are not able to block it.",
+    "csp20-gs2-a-p21": "Private investment in general is volatile. Foreign private investment is more volatile because the available investment avenues are significantly greater (i.e., the entire world). Therefore, the responsibility of providing employment cannot be left to Foreign Direct Investment (FDI). The current FDI inflows are volatile over time and, across sectors and regions, which is a necessary consequence of their search for the highest returns. The adverse consequences are unstable employment and an accentuation of income and regional inequalities. A probable positive consequence of foreign investment is the inflow of new technology and its subsequent diffusion. However, the technology diffusion is not at all certain because the existing state of physical and human capital in India may prove inadequate for the diffusion.",
+    "csp20-gs2-a-p22": "Many opportunities to harness the highly skewed, seasonal and spatial distribution of monsoon flows, which occur in a four-month period from June to September annually, have been lost. Since these few months account for most of the rainfall and consequent freshwater availability, the need for holding rainwater in reservoirs, for subsequently releasing it for use over the year, is a necessity nobody can afford to overlook. Climate change will continue to affect weather conditions and create water shortages and excesses. While millions suffer from droughts and floods, waters in the country’s many rivers flow unutilized, and are discharged into the sea every year.",
+    "csp20-gs2-a-p23": "People will invest in education whenever they are granted the economic freedom to fully enjoy its benefits. Again, this is for the obvious reason that the return on education increases as the level of economic freedom rises. When people, thanks to lower tax rates, are allowed to retain most of the higher income that they gain from each incremental level of education, it makes eminent sense to invest in education. On the other hand, when the government decides to tax the higher income of educated individuals at even higher rates, it makes very little sense to invest in educating oneself further. The same incentives apply to parents who decide on whether to invest in their children’s education.",
+    "csp20-gs2-a-p24": "Our urban bodies cannot possibly ensure sustainable delivery of water in our cities unless financing mechanisms are put in place. Water delivery requires heavy investment in collecting it from a natural source, treating it to make it potable, and laying a distribution network of pipes for delivery to the users. It also requires investments in sewerage infrastructure and sewage treatment plants so that the sewers can carry the wastewater to these plants to ensure that no untreated sewage is discharged back into natural water bodies. If our cities were rich enough to meet the entire cost, water could be delivered free. They are not.",
+    "csp20-gs2-a-p26": "In India, agriculture still engages about half of its workforce, and about 85 per cent of its farms are small and marginal. Compared to China and Vietnam, which have experienced fast structural and rural transformation, India’s story is of slow transformation. As a result, poverty reduction in India was at a much slower pace during 1988–2014, compared to China and Vietnam. India’s poverty reduction was slow during 1988–2005, but during 2005–2012, it accelerated dramatically—almost three times faster than during the earlier period. What did India do during this period? Research reveals that the relative price scenario changed significantly (by more than 50%) in favour of agriculture in the wake of rising global prices. This boosted private investments in agriculture by more than 50%. As a result, agri-GDP growth touched 4.1% during 2007–2012 as against 2.4% during 2002–2007. The net surplus of agri-trade touched $25 billion in 2013–2014; real farm wages rose by 7% per annum. All this led to unprecedented fall in poverty.",
+    "csp20-gs2-a-p3": "One of the biggest ironies around water is that it comes from rivers and other wetlands. Yet it is seen as divorced from them. While water is used as a resource, public policy does not always grasp that it is a part of the natural ecosystem. Efforts at engineering water systems are thus efforts at augmenting water supply rather than strengthening the capacities of ecological systems.",
+    "csp20-gs2-a-p4": "Asset allocation is the most important investment decision we will ever make, and sadly, most of us do not give that decision the importance it deserves. We are adamant about seeking predictability with our future. We tend to think of investing in risky assets as extremely volatile and value eroding. We also dislike fluctuating returns and the loss of control of investment. We think our money is best left idle, unproductive but safe. There is no asset that is risk-free. We could lose our jobs, our homes can lose value, our banks can go bankrupt, our bonds can default, the government can collapse and companies we chose fondly may cease to exist. But we cannot live life assuming that all these extreme events are waiting to happen, and all at the same time. All these extreme forms of risks we know will not manifest at the same time.",
+    "csp20-gs2-a-p41": "Spanish ships in the late 16th century first brought the potato tuber from South America to Europe whereby in the early 19th century, it had become a reliable backup to cereal crops, particularly in the cold, rain-soaked soils of Ireland. The Irish were soon almost wholly dependent on the potato as their staple food. And they were planting primarily one prodigious variety, the ‘Lumper’ potato, whose genetic frailty would be cruelly exposed by the fungus ‘Phytophthora infestans’. In 1845, spores of the deadly fungus began spreading across the country, destroying nearly all the Lumpers in its path. The resulting famine killed or displaced millions.",
+    "csp20-gs2-a-p42": "India is at once among the fastest growing global economies and home to the largest number of malnourished children in the world. There are regions where malnutrition is not the exception but the norm. And across the country, malnutrition is the cause of death for roughly half the 1.3 million children who die before their fifth birthday each year. Even those children who survive suffer permanently from the damage that has already been done to their bodies and minds from not getting enough of the right foods and nutrients. Around 44 million children under 5 are stunted. That makes it harder for them to learn in school and subsequently earn a living as adults. Their lifetime earnings potential is almost a quarter less than that of their healthy peers.",
+    "csp20-gs2-a-p43": "The pulse variety ‘Pusa Arhar 16’ has the potential to be grown in the paddy-growing regions of Punjab, Haryana and Uttar Pradesh and eventually in all of India. Its yield (about 2000 kg/hectare) will be significantly greater than those of the existing varieties and because its size will be uniform, it will be amenable to mechanical harvesting, an attractive feature for farmers in northern India who currently use this technology for paddy. Most important, Arhar straw, unlike paddy straw, is green and can be ploughed back into the soil. In paddy straw, the problem is the high silica content, which does not allow for easy decomposition. In the case of Arhar, the farmer, even after combine harvesting, just needs to run a rotovator to cut the leftover straw into pieces, which can be ploughed back and will decompose very fast. All this is difficult with leftover paddy stalks that cannot be easily salvaged or ploughed back. Farmers, therefore, choose the easiest option of simply burning it.",
+    "csp20-gs2-a-p44": "In India, authorities always look to store the maximum amount of water in reservoirs during the monsoon season, which is then used for irrigation and generation of electricity during the summer months. It is an internationally accepted practice that the water level of a reservoir should be kept below a certain level before the onset of monsoon season. This is so that when monsoon rains come, there is space to store the excess rainwater and also so that water can be released in a regulated manner. But the authorities store the maximum amount of water in reservoirs even before the close of the monsoon, only to ensure greater electricity generation and irrigation.",
+    "csp20-gs2-a-p45": "Economic liberalization in India was shaped largely by the economic problems of the government than by the economic priorities of the people or by the long-term development objectives. Thus, there were limitations in conception and design which have been subsequently validated by experience. Jobless growth, persistent poverty and rising inequality have mounted as problems since economic liberalization began. And all these years later, four quiet crises confront the economy; agriculture, infrastructure, industrialization and education as constraints on the country’s future prospects. These problems must be resolved if economic growth has to be sustained and transformed into meaningful development.",
+    "csp20-gs2-a-p5": "Although most of the Genetically Modified (GM) crops cultivated now are genetically engineered for a single trait, in future, crops genetically engineered for more than one trait will be the norm. Thus, biotechnology’s role in agriculture and the regulation of the same cannot be understood solely in the context of the current generation of GM crops. Instead, there is a need to take a comprehensive look, taking into account various aspects, including socio-economic impacts, so that the potential of the technology can be harnessed while minimizing negative impacts. Given the importance of biotechnology in developing varieties that can help in climate change mitigation and adaptation, not using biotechnology as a part of the climate change action plan cannot be an option. Domestic regulation of biotechnology cannot be viewed in isolation of trade policy and obligations under various international treaties and conventions.",
+    "csp20-gs2-a-p61": "Bank credit to the industrial sector has started shrinking. Its decline has been a serious concern as credit growth is essential to revive investment. The problem’s origins lie in the incomplete reforms of the last 25 years. An institutional change that should have followed the 1991 reforms should have been setting up of a resolution corporation for banks. In a market economy with booms and busts, banks should be allowed to be set up and to fail. Today, we cannot shut down banks because there is no proper system to shut them down. Weak loss-making banks continue to need more capital.",
+    "csp20-gs2-a-p62": "India has tremendous potential for solar energy. We all realize that we have to stop burning fossil fuels to meet our energy needs. But certain renewable resources are still going through their cost curves and learning curves to get the required amount of output. The Indian Government has strongly committed to its targets of reducing emissions by 33 per cent by 2030, and towards this it has initiated a strong push towards a gas-based economy and has also invested heavily in renewable energy. However, business houses are wary of investing too heavily in renewable energy at a time when the technology is not yet ready.",
+    "csp20-gs2-a-p64": "Genome editing is different from genome modification. Genome editing typically involves finding the part of a plant genome that could be changed to render it less vulnerable to disease, or resistant to certain herbicides, or to increase yields. Researchers use ‘molecular scissors’ to dissect the genome and repair it, which is a process that occurs naturally when plants are under attack from diseases and can throw up new mutations that enable the plant to survive future attacks. This evolutionary process can effectively be speeded up now that it is possible to examine plant genomes in detail in laboratories, and create mechanisms through which the relevant genes can be altered very precisely.",
+    "csp20-gs2-a-p65": "Many people understand the connection between solid waste management and health in terms of the consequences of unattended heaps of dry garbage which become home for flies and other vermin. However, there is another aspect that is not well-understood, that is, what happens when unscientific solid waste management combines with poor drainage and dumping of untreated sewage into drains which are meant to carry storm water during rains. The result is choked drains which are full of stagnant water breeding mosquitoes, resulting in the spread of water-borne diseases.",
+    "csp20-gs2-a-p66": "In Part III of the Constitution, which assures people certain fundamental rights, Article 25 proclaims that “all persons are equally entitled to freedom of conscience and the right freely to profess, practise and propagate religion”. What people fail to notice is that this proclamation is prefixed with the words “subject to public order, morality, health and to the other provisions of this Part”, which set conditions precedent for the legal protection of religious practices of any community. The closing words of this prefatory rider in Article 25 virtually constitute a subordination clause placing other fundamental rights mentioned in Part III over and above the right to religious freedom. Among those other fundamental rights is the right to equality before law and equal protection of laws—assured at the outset and elaborated in later articles to mean, inter alia, that the State shall not deny equal protection of laws to any person or group of persons on the basis of religion alone."
+  }
 }

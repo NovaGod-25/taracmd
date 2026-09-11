@@ -4529,5 +4529,120 @@
     ],
     "icon": "📈",
     "short": "Economics"
+  },
+  {
+    "id": "csat",
+    "name": "CSAT (Prelims Paper II)",
+    "topics": [
+      {
+        "id": "csat-comprehension",
+        "name": "Reading comprehension",
+        "subtopics": [
+          "The main idea and central theme of a passage",
+          "Inferences and logical corollaries",
+          "Assumptions a passage rests on",
+          "The author's view, tone and purpose",
+          "The most crucial, rational or logical message",
+          "Meaning of words and phrases in context"
+        ],
+        "papers": [
+          "prelims"
+        ],
+        "weight": "high"
+      },
+      {
+        "id": "csat-interpersonal",
+        "name": "Interpersonal skills including communication skills",
+        "subtopics": [
+          "Communicating clearly at work",
+          "Handling disagreement and negotiation",
+          "Working in and leading a team"
+        ],
+        "papers": [
+          "prelims"
+        ],
+        "weight": "low"
+      },
+      {
+        "id": "csat-logical-reasoning",
+        "name": "Logical reasoning and analytical ability",
+        "subtopics": [
+          "Syllogisms and statement-conclusion",
+          "Statements, assumptions and arguments",
+          "Coding and decoding",
+          "Blood relations",
+          "Direction sense",
+          "Seating and ordering arrangements",
+          "Puzzles, grouping and selection",
+          "Venn diagrams and classification"
+        ],
+        "papers": [
+          "prelims"
+        ],
+        "weight": "high"
+      },
+      {
+        "id": "csat-decision-making",
+        "name": "Decision making and problem solving",
+        "subtopics": [
+          "Situational judgement",
+          "Choosing among courses of action",
+          "Problem solving under constraints"
+        ],
+        "papers": [
+          "prelims"
+        ],
+        "weight": "low"
+      },
+      {
+        "id": "csat-mental-ability",
+        "name": "General mental ability",
+        "subtopics": [
+          "Number and letter series",
+          "Analogies and odd one out",
+          "Clocks and calendars",
+          "Cubes, dice and counting figures",
+          "Patterns and sequences"
+        ],
+        "papers": [
+          "prelims"
+        ],
+        "weight": "medium"
+      },
+      {
+        "id": "csat-numeracy",
+        "name": "Basic numeracy (Class X level)",
+        "subtopics": [
+          "Number system, divisibility and remainders",
+          "HCF, LCM, fractions and decimals",
+          "Percentages, ratio and proportion",
+          "Averages, mixtures and alligation",
+          "Profit and loss, simple and compound interest",
+          "Time and work; time, speed and distance",
+          "Permutations, combinations and probability",
+          "Geometry and mensuration",
+          "Numbers and their relations, orders of magnitude"
+        ],
+        "papers": [
+          "prelims"
+        ],
+        "weight": "high"
+      },
+      {
+        "id": "csat-data-interpretation",
+        "name": "Data interpretation and data sufficiency (Class X level)",
+        "subtopics": [
+          "Tables",
+          "Bar, line and pie charts",
+          "Data sufficiency"
+        ],
+        "papers": [
+          "prelims"
+        ],
+        "weight": "medium"
+      }
+    ],
+    "icon": "🧮",
+    "short": "CSAT"
   }
 ]

@@ -91,6 +91,21 @@ def _(root):
     edit(root, "quiz.json", m)
 
 
+@case("quiz points at a missing passage", "not in the file")
+def _(root):
+    # A CSAT question without its passage cannot be answered at all.
+    def m(d):
+        d["questions"][0]["passage"] = "no-such-passage"
+    edit(root, "quiz.json", m)
+
+
+@case("a passage no question uses", "not used by any question")
+def _(root):
+    def m(d):
+        d["passages"] = {"orphan": "A passage nobody is asked about."}
+    edit(root, "quiz.json", m)
+
+
 @case("answer-key array too short", "letters for a")
 def _(root):
     # A short key means the scorer marks the tail of the paper blank.

@@ -122,9 +122,12 @@ def split_options(chunk: str) -> list[str]:
 
 
 def parse(text: str, total: int, pages: int = 1, window: int = 3,
-          trust_sequence: bool = False) -> list[dict]:
+          trust_sequence: bool = False, drop_repeats: bool = True) -> list[dict]:
     lines = [l.rstrip() for l in text.splitlines()]
-    junk = furniture([l.strip() for l in lines], pages)
+    # CSAT repeats real text on most pages -- "Which of the assumptions given
+    # above", half of every data-sufficiency option -- so its caller turns the
+    # repeated-line sweep off and removes the booklet code by pattern instead.
+    junk = furniture([l.strip() for l in lines], pages) if drop_repeats else set()
     out, cur, expect, buf = [], None, 1, []
 
     def flush():

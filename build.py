@@ -110,11 +110,22 @@ def check_quiz(quiz, topics: dict[str, str]) -> None:
     """Every question hangs off a real topic — the Revise link and the subject
     filter both resolve through it."""
     seen: set[str] = set()
+    # A CSAT passage is printed once above the items that share it, and stored
+    # once: each of those questions carries the passage's id.
+    passages = quiz.get("passages") or {}
+    if not isinstance(passages, dict):
+        fail("quiz `passages` must be a table of passage id -> text")
+    used: set[str] = set()
     for q in quiz.get("questions", []):
         qid = q.get("id", "?")
         if qid in seen:
             fail(f"duplicate quiz question id {qid!r}")
         seen.add(qid)
+        pid = q.get("passage")
+        if pid is not None:
+            if not isinstance(passages.get(pid), str) or not passages[pid].strip():
+                fail(f"quiz question {qid!r} points at passage {pid!r}, which is not in the file")
+            used.add(pid)
 
         if q.get("topic") not in topics:
             fail(f"quiz question {qid!r} points at unknown topic {q.get('topic')!r}")
@@ -146,6 +157,10 @@ def check_quiz(quiz, topics: dict[str, str]) -> None:
                 if not (src.get(field) or "").strip():
                     fail(f"quiz question {qid!r} has a source with no {field!r}")
 
+    for pid in passages:
+        if pid not in used:
+            fail(f"passage {pid!r} is not used by any question")
+
     # Institutes recycle questions, and the same question twice is a question
     # you have already answered wearing a different id.
     stems: dict[str, str] = {}
@@ -153,6 +168,10 @@ def check_quiz(quiz, topics: dict[str, str]) -> None:
         stem = " ".join((q.get("q") or "").lower().split())
         if len(stem) < 25:
             continue
+        # CSAT asks "the most logical inference from the passage" of passage
+        # after passage; the same words over another passage are another question.
+        if q.get("passage"):
+            stem += " | " + " ".join((passages.get(q["passage"]) or "").lower().split())
         if stem in stems:
             fail(f"quiz questions {stems[stem]!r} and {q.get('id', '?')!r} ask the same thing")
         stems[stem] = q.get("id", "?")
@@ -214,7 +233,9 @@ def check_paper_tags(quiz, keys) -> None:
             fail(f"question {qid!r} sits on {cell}, which the Commission dropped")
             continue
         got = "ABCD"[q["answer"]] if isinstance(q.get("answer"), int) and 0 <= q["answer"] < 4 else "?"
-        if got != want:
+        # 2021's CSAT accepted either of two letters for one question ("CD"),
+        # and a question answering either one agrees with the Commission.
+        if got not in want:
             fail(f"question {qid!r} answers {got} but the official key says {want} "
                  f"for {tag['year']} {tag['code']} set {tag['set']} q{n}")
 

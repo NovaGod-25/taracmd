@@ -5,6 +5,7 @@ import android.app.DownloadManager
 import android.content.ActivityNotFoundException
 import android.content.BroadcastReceiver
 import android.content.Context
+import android.os.Build
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.SharedPreferences
@@ -127,13 +128,30 @@ class MainActivity : AppCompatActivity() {
          * so the strip behind the status bar matches the page rather than
          * flashing white.
          */
-        ViewCompat.setOnApplyWindowInsetsListener(web) { v, insets ->
-            val bars = insets.getInsets(
-                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
-            )
-            v.setPadding(bars.left, bars.top, bars.right, bars.bottom)
+        /*
+         * The listener on its own was not enough, and the page still came up
+         * under the clock: AppCompat's decor consumes the top inset before it
+         * reaches a child in some configurations, so the WebView is handed a
+         * zero. From Android 15 the window is edge to edge whatever the app
+         * asks for, so a zero top inset there is always wrong -- read the
+         * window's own insets instead. Below 15 a zero is taken at its word,
+         * because there the decor really may have fitted the content already
+         * and padding again would leave a gap under the status bar.
+         */
+        fun padToInsets(dispatched: WindowInsetsCompat?) {
+            val want = WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
+            var bars = dispatched?.getInsets(want)
+            if ((bars == null || bars.top == 0) && Build.VERSION.SDK_INT >= 35) {
+                bars = ViewCompat.getRootWindowInsets(web)?.getInsets(want)
+            }
+            bars?.let { web.setPadding(it.left, it.top, it.right, it.bottom) }
+        }
+        ViewCompat.setOnApplyWindowInsetsListener(web) { _, insets ->
+            padToInsets(insets)
             insets
         }
+        // and once after the first layout, for the case where no dispatch arrives
+        web.post { padToInsets(null) }
 
         web.settings.apply {
             javaScriptEnabled = true

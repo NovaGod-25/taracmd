@@ -1191,6 +1191,7 @@ describe("the mistakes notebook", () => {
       r.mode = state.qmode;
       r.badge = (document.querySelector(".modes .mbadge") || {}).textContent;
       r.rows = document.querySelectorAll(".mrow").length;
+      r.squares = document.querySelectorAll(".mrow .mt").length;
       r.upscLabel = [...document.querySelectorAll(".mrow .ms")].some(e => /^UPSC \\d{4}/.test(e.textContent));
       document.getElementById("mgo").click();
       r.asked = document.querySelector(".qcard.run .qstem").textContent === q.q;
@@ -1208,6 +1209,7 @@ describe("the mistakes notebook", () => {
     assert.equal(out.mode, "mistakes", "and it opens the notebook");
     assert.equal(out.badge, "1");
     assert.equal(out.rows, 2, "the notebook holds every open mistake, due or not");
+    assert.equal(out.squares, 0, "and none of its text wears the map square's class");
     assert.equal(out.upscLabel, true, "a UPSC question says which paper it came from");
     assert.equal(out.asked, true);
     assert.equal(out.step, 1, "a right answer moves it on");
@@ -1215,5 +1217,23 @@ describe("the mistakes notebook", () => {
     assert.equal(out.after, false, "nothing is due once it has been answered");
     assert.equal(out.cleared, true, "I know it now clears a mistake");
     assert.equal(out.left, 1);
+  });
+});
+
+/* `.mt` is the syllabus map's 16px square. Two other places used that class
+   name for a line of text, and the text was drawn inside a 16px box, spilling
+   over the name above it. Class names are global; these two must not collide. */
+describe("the toppers list", () => {
+  test("a row's meta line does not borrow the map square's class", () => {
+    const out = JSON.parse(inPage(win, `(() => {
+      state.tab = "toppers"; renderToppers();
+      const r = { rows: document.querySelectorAll(".tcard").length,
+                  meta: document.querySelectorAll(".tcard .tmeta").length,
+                  squares: document.querySelectorAll(".tcard .mt").length };
+      state.tab = "syllabus"; render();
+      return JSON.stringify(r); })()`));
+    assert.ok(out.rows > 0, "the toppers tab draws rows");
+    assert.equal(out.meta, out.rows, "every row carries its own meta class");
+    assert.equal(out.squares, 0, "and none of them is styled as a map square");
   });
 });

@@ -187,7 +187,9 @@ a{color:var(--accent-ink);text-decoration:none}
   font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:13px;color:var(--ink-2);font-variant-numeric:tabular-nums}
 .rank.top{background:var(--accent-soft);color:var(--accent-ink)}
 .tcard .nm{font-weight:500;font-size:14.5px;display:block}
-.tcard .mt{font-size:12px;color:var(--ink-3);margin-top:2px;display:block}
+/* NOT .mt: that is the syllabus map's 16px square, and a meta line wearing it
+   was squeezed into a 16px box with the text spilling over the name. */
+.tcard .tmeta{font-size:12px;color:var(--ink-3);margin-top:2px;display:block}
 .ext{flex:none;color:var(--ink-3)}
 .ext svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 
@@ -740,10 +742,10 @@ button.fbar{background:none;border:0;padding:0;color:inherit;font:inherit;cursor
 .mrow{border:1px solid var(--rule);border-radius:12px;background:var(--card);margin-bottom:7px;padding:10px 12px}
 .mrow summary{cursor:pointer;list-style:none;display:flex;flex-direction:column;gap:3px}
 .mrow summary::-webkit-details-marker{display:none}
-.mrow .mt{font-size:13.5px;line-height:1.4}
+.mrow .mqt{font-size:13.5px;line-height:1.4}
 .mrow .ms{font-size:11.5px;color:var(--ink-3)}
 .mrow .ms b{color:var(--mark);font-weight:600}
-.mrow[open] .mt{display:none}
+.mrow[open] .mqt{display:none}
 .mrow .qstem{margin:4px 0 10px}
 .mrow .why2{margin-top:10px}
 /* a CSAT passage, above each question that is asked on it */
@@ -2332,7 +2334,7 @@ function renderOptional(){
           <span class="rank ${c.rank===1?"top":""}">${c.rank ? "#"+c.rank : "—"}</span>
           <a style="flex:1;min-width:0;color:inherit" href="${esc(local || c.url || "#")}" target="_blank" rel="noopener">
             <span class="nm">${esc(c.name)}</span>
-            <span class="mt">${c.year} · ${esc(c.publisher)}${c.note ? " · " + esc(c.note) : ""}${local ? " · saved" : ""}</span>
+            <span class="tmeta">${c.year} · ${esc(c.publisher)}${c.note ? " · " + esc(c.note) : ""}${local ? " · saved" : ""}</span>
           </a>
           ${local ? `<span class="saved" title="Saved on this device">${DOWNI}</span>`
                   : (NATIVE && isPdf ? `<button class="savebtn" data-save="${esc(c.url)}">Save</button>` : `<span class="ext">${LINKI}</span>`)}
@@ -2345,7 +2347,7 @@ function renderOptional(){
     <div class="head"><h2>Where to look</h2></div>
     <div class="list">
       ${(OPTIONALS.publishers||[]).map(p=>`<a class="tcard" href="${esc(p.url)}" target="_blank" rel="noopener">
-        <span style="flex:1"><span class="nm">${esc(p.name)}</span><span class="mt">${esc(p.note || "toppers' copies section")}</span></span>
+        <span style="flex:1"><span class="nm">${esc(p.name)}</span><span class="tmeta">${esc(p.note || "toppers' copies section")}</span></span>
         <span class="ext">${LINKI}</span></a>`).join("")}
     </div>
     <p class="note">These are the publishers' own pages, not a mirror. An optional booklet is usually inside a topper's full set rather than listed separately, so it is worth reading the testimonial as well as the scan — the choice of optional is often explained there.</p>`;
@@ -3103,7 +3105,7 @@ function renderToppers(){
         <span class="rank ${c.rank===1?"top":""}">${c.rank ? "#"+c.rank : "—"}</span>
         <a style="flex:1;min-width:0;color:inherit" href="${esc(local || c.url || "#")}" target="_blank" rel="noopener">
           <span class="nm">${esc(c.name)}</span>
-          <span class="mt">${c.year} · ${esc(c.publisher)}${c.papers && c.papers.length ? " · " + esc(c.papers.join(", ")) : ""}${c.direct ? "" : " · section page"}${local ? " · saved" : ""}</span>
+          <span class="tmeta">${c.year} · ${esc(c.publisher)}${c.papers && c.papers.length ? " · " + esc(c.papers.join(", ")) : ""}${c.direct ? "" : " · section page"}${local ? " · saved" : ""}</span>
         </a>
         ${local ? `<span class="saved" title="Saved on this device">${DOWNI}</span>`
                 : (NATIVE && isPdf ? `<button class="savebtn" data-save="${esc(c.url)}">Save</button>` : `<span class="ext">${LINKI}</span>`)}
@@ -3112,7 +3114,7 @@ function renderToppers(){
     <div class="head"><h2>Where they're published</h2></div>
     <div class="list">
       ${TOPPERS.publishers.map(p=>`<a class="tcard" href="${esc(p.url)}" target="_blank" rel="noopener">
-        <span style="flex:1"><span class="nm">${esc(p.name)}</span><span class="mt">toppers' copies section</span></span>
+        <span style="flex:1"><span class="nm">${esc(p.name)}</span><span class="tmeta">toppers' copies section</span></span>
         <span class="ext">${LINKI}</span></a>`).join("")}
     </div>
     <p class="note">These booklets belong to the institutes that scanned and published them, so this is an index, not a mirror — every row opens the publisher's own page. Where a row is a direct PDF you can tap <b>Save</b> to keep that one copy in the app's own folder for offline reading; nothing is fetched unless you ask for it. Read them for structure: introduction shape, diagram use, how a 10-marker is bounded against a 15-marker.</p>`;
@@ -3259,7 +3261,7 @@ function renderMistakes(root){
     ${[...groups.entries()].map(([name, g]) => `<div class="mgroup">
       <div class="mgh">${esc(name)}<span>${esc(g.sn)} · ${g.rows.length}</span></div>
       ${g.rows.map(({id, m, q}) => `<details class="mrow">
-        <summary><span class="mt">${esc(q.q.length > 140 ? q.q.slice(0, 140) + "…" : q.q)}</span>
+        <summary><span class="mqt">${esc(q.q.length > 140 ? q.q.slice(0, 140) + "…" : q.q)}</span>
           <span class="ms">${esc(sourceLabel(q))} · wrong ${m.wrong}× · <b>${whenDue(m.due)}</b></span></summary>
         ${passageHtml(q)}<div class="qstem">${esc(q.q)}</div>
         <div class="opts">${q.options.map((o, i) => `<div class="opt ${i === q.answer ? "key" : ""}">

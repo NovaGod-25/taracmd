@@ -1237,3 +1237,20 @@ describe("the toppers list", () => {
     assert.equal(out.squares, 0, "and none of them is styled as a map square");
   });
 });
+
+/* A CSAT paper is a folder only once its questions are typed in: a card that
+   can only show a blank grid of letters is not a paper you can sit. */
+describe("which CSAT papers get a folder", () => {
+  test("the seven years that are asked in full, and not the three that are not", () => {
+    const out = JSON.parse(inPage(win, `JSON.stringify({
+      csat: paperList().filter(p => p.code === "gs2").map(p => p.year).sort(),
+      gs1: paperList().filter(p => p.code === "gs1").map(p => p.year).sort(),
+      keys: KEYS.years.filter(y => (y.papers.find(p => p.code === "gs2") || {}).keys).map(y => y.year).sort()
+    })`));
+    assert.deepEqual(out.csat, [2020, 2021, 2022, 2023, 2024, 2025, 2026]);
+    assert.ok(!out.csat.includes(2017) && !out.csat.includes(2018) && !out.csat.includes(2019),
+      "2017-2019 have no typed questions, so they get no folder");
+    assert.equal(out.keys.length, 10, "all ten CSAT keys are still on file");
+    assert.equal(out.gs1.length, 10, "and GS-I still offers every year");
+  });
+});

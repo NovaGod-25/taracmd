@@ -2428,6 +2428,12 @@ function paperList(){
          is the habit, but opening a paper on the one Series that cannot ask you
          anything makes a paper full of questions look like an empty grid. */
       const withQs = sets.filter(s => t[s] && t[s].size);
+      /* A CSAT paper earns a folder once its questions are typed in. Until
+         then the card can only offer a blank grid of letters, which is not a
+         paper you can sit -- 2017, 2018 and 2019 are still in that state. The
+         keys stay where they are: the Prelims tab still links the Commission's
+         own PDF, and the sheet still scores if you mark one against it. */
+      if(pp.code === "gs2" && !withQs.length) continue;
       const set = withQs[0] || (sets.includes("A") ? "A" : sets[0]);
       out.push({id: `upsc-${y.year}-${pp.code}`, kind: "key", year: y.year,
                 name: `UPSC ${y.year}`, test: (KEYS.marking[pp.code] || {}).name || pp.code,

@@ -322,6 +322,10 @@ def check_copy(copy, where: str) -> None:
     for field in ("name", "year", "publisher", "url"):
         if field not in copy:
             fail(f"{where} {name!r} has no {field!r}")
+    # English only, asked for on 15 Sep 2026: a Hindi-medium booklet is not
+    # read, so one here is a row that should not have been added.
+    if copy.get("medium") not in (None, "English") or re.search("[ऀ-ॿ]", str(copy.get("name", ""))):
+        fail(f"{where} {name!r} is not an English-medium copy")
     urls = [copy.get("url")]
     for f in copy.get("files") or []:
         if not f.get("paper") or not f.get("url"):

@@ -195,8 +195,8 @@ turns it green rather than leaving it looking like a failure.
 | `pyq-papers.json` | official upsc.gov.in paper links per year — Prelims 22/24, Mains 54/60 |
 | `answer-keys.json` | Prelims answer keys: links, marking scheme, set-wise letters. GS-I and CSAT both complete 2017-2026, all four Series |
 | `quiz.json` | 2,595 questions: 35 written here, 846 from UPSC GS-I — every year 2017–2026 — 239 from UPSC CSAT (2020, 2021, 2024), and 1,475 from fifteen 2027 test series papers (Vision IAS 1, 3–6; ForumIAS 1–4 and Level 2 1–3; Vajiram PowerUp 2–4), with the institute's explanation as `why`. CSAT passages are stored once, in `passages` |
-| `toppers.json` | 311 toppers across 10 publishers, one row per topper per year: GS and Essay only. `files` is a topper's booklets, one per paper (717 in all), each drawn as its own chip. 245 rows are CSE 2025, the copies published in 2026 |
-| `optional-copies.json` | the Optional copies tab: 33 toppers' copies in Geography (18), Law (11) and Agriculture (4), 85 booklets, from De Facto Law, Drishti IAS (Hindi), Evolve IAS, Kaveri IAS, ForumIAS and ConvertIAS. `subject` must be one of the optionals in `optionals.json`; `login` marks a row that needs a sign-in to open |
+| `toppers.json` | 310 toppers across 10 publishers, one row per topper per year: GS and Essay only, English medium only. `files` is a topper's booklets, one per paper, each drawn as its own chip. 245 rows are CSE 2025, the copies published in 2026 |
+| `optional-copies.json` | the Optional copies tab, English medium only: 59 toppers in Geography (37), Law (18) and Agriculture (4), 77 booklets that open directly, from De Facto Law, Lawxpertsmv, NEXT IAS, Vision IAS, Evolve IAS, ForumIAS and Kaveri IAS, plus 28 sign-in rows from ConvertIAS and GS SCORE. `subject` must be one of the optionals in `optionals.json`; `login` marks a row that needs a sign-in to open |
 | `daily.json` | daily current-affairs quiz sources: a URL pattern the page expands against the date |
 | `optionals.json` | the Optional tab: Geography, Law and Agriculture, 22/22 papers each 2016–2026. Its copies section points at the Optional copies tab |
 
@@ -637,14 +637,29 @@ not drift back in:
 - **De Facto Law** — a Wix page whose source order does not follow its layout, so each PDF
   was matched to the card heading drawn around it in a real browser, and years to the
   section it sits under. A file linked from two toppers' cards was left out.
-- **Drishti IAS (Hindi)** — Geography; a page per topper, names as published, in Devanagari.
+- **Lawxpertsmv** (Law) — each post's booklet sits behind a Wix download button whose
+  link carries a short-lived token; the same file id opens without one at
+  `lawxpertsmv.com/_files/ugd/<id>.pdf`, which is what is stored. A question paper
+  uploaded beside one topper's copy was left out.
+- **NEXT IAS** (Geography test series) and **Vision IAS** (Geography, 2017) — both
+  render their lists in the page; Vision's whole list comes from one API call, filtered
+  here to Geography in English.
 - **Evolve IAS** (Geography) and **Kaveri IAS** (Agriculture, ranks without names).
+- **GS SCORE** — Geography test copies behind a sign-in; its page prints rank but no
+  year, so `year` is null rather than guessed.
 - **ConvertIAS** — a sign-in to open; the count of optional copies comes from each
   topper's page. Rows are marked `login`, sort last and hide with a chip.
 - **ForumIAS** — the posts rarely say which optional; a booklet is kept only where the
   filename or ConvertIAS names the subject as one of the three.
 
 Aggregators that re-host other institutes' scans (LotusArise, upscpdf.com) were not used.
+ForumIAS's 2023 and 2024 posts (313, read the same day) carry no Geography, Law or
+Agriculture booklet — their optional copies are PSIR and Public Administration.
+
+**English medium only, in both copy tabs** (asked for on 15 Sep 2026). Drishti IAS's
+Hindi-medium Geography copies were removed, and so was Ravi Gangwar (2023, AIR 616),
+the one Toppers row UnlockIAS files under Hindi medium. `check_copy` fails a row whose
+`medium` is not English or whose name is in Devanagari.
 
 **upsc.gov.in rate-limits hard.** It stopped answering entirely after roughly 45 requests
 in one session. `tools/answer-keys.py` waits 4 seconds between requests on purpose. Any

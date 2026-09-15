@@ -6,19 +6,19 @@
       "note": "Law"
     },
     {
-      "name": "Drishti IAS (Hindi)",
-      "url": "https://www.drishtiias.com/hindi/free-downloads/toppers-geography-copy",
-      "note": "Geography, Hindi medium"
+      "name": "Lawxpertsmv",
+      "url": "https://www.lawxpertsmv.com/blog/categories/achievers-in-upsc-law-optional",
+      "note": "Law"
     },
     {
-      "name": "ForumIAS",
-      "url": "https://forumias.com/blog/testimonials/",
-      "note": "optional copies inside a topper's post"
+      "name": "NEXT IAS",
+      "url": "https://www.nextias.com/toppers-answers-ias",
+      "note": "Geography test series copies"
     },
     {
-      "name": "ConvertIAS",
-      "url": "https://www.convertias.com/toppercopies",
-      "note": "sign in to open"
+      "name": "Vision IAS",
+      "url": "https://visionias.in/resources/toppers-answer-copy/",
+      "note": "Geography, filter by subject"
     },
     {
       "name": "Evolve IAS",
@@ -26,9 +26,24 @@
       "note": "Geography"
     },
     {
+      "name": "ForumIAS",
+      "url": "https://forumias.com/blog/testimonials/",
+      "note": "optional copies inside a topper's post"
+    },
+    {
       "name": "Kaveri IAS",
       "url": "https://kaverisias.com/agriculture/",
       "note": "Agriculture"
+    },
+    {
+      "name": "ConvertIAS",
+      "url": "https://www.convertias.com/toppercopies",
+      "note": "sign in to open"
+    },
+    {
+      "name": "GS SCORE",
+      "url": "https://iasscore.in/toppers-copy",
+      "note": "Geography test copies, sign in to open"
     }
   ],
   "copies": [
@@ -120,6 +135,180 @@
       ]
     },
     {
+      "name": "Manish",
+      "rank": 356,
+      "year": 2024,
+      "subject": "Geography",
+      "publisher": "NEXT IAS",
+      "url": "https://www.nextias.com/toppers-answers-ias",
+      "direct": true,
+      "files": [
+        {
+          "paper": "Test 1",
+          "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/6/GEO-T1-MANISH-R356-1750226863455.pdf"
+        },
+        {
+          "paper": "Test 2",
+          "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/6/GEO-T2-MANISH-R356-1750227173893.pdf"
+        },
+        {
+          "paper": "Test 5",
+          "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/6/GEO-T5-MANISH-R356-1750227191901.pdf"
+        }
+      ]
+    },
+    {
+      "name": "Sagar Kaushik",
+      "rank": 375,
+      "year": 2024,
+      "subject": "Geography",
+      "publisher": "NEXT IAS",
+      "url": "https://www.nextias.com/toppers-answers-ias",
+      "direct": true,
+      "files": [
+        {
+          "paper": "Test 1",
+          "url": "https://cdnstatic.nextias.com/newuploads/Nextias/2025/6/GEO-T1-SAGAR-KAUSHIK-R375-1750227225871.pdf"
+        }
+      ]
+    },
+    {
+      "name": "Vikash Yadav",
+      "rank": 648,
+      "year": 2023,
+      "subject": "Geography",
+      "publisher": "NEXT IAS",
+      "url": "https://www.nextias.com/toppers-answers-ias",
+      "direct": true,
+      "files": [
+        {
+          "paper": "Test 1",
+          "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/05e79e85886db31c562f8e2fb26b6867/31/test-1_vikash-yadav_-mt22cera001.pdf"
+        },
+        {
+          "paper": "Test 2",
+          "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/05e79e85886db31c562f8e2fb26b6867/32/test-2_vikash-yadav_-mt22gera001.pdf"
+        },
+        {
+          "paper": "Test 3",
+          "url": "https://next-ias-appsquadz.s3.ap-south-1.amazonaws.com/file_library/pdf/original/05e79e85886db31c562f8e2fb26b6867/33/test-3_vikash-yadav_-mt22gera001.pdf"
+        }
+      ]
+    },
+    {
+      "name": "Chandrakant Bagoria",
+      "rank": 75,
+      "year": 2022,
+      "subject": "Geography",
+      "publisher": "Evolve IAS",
+      "url": "https://evolveias.com/topper",
+      "direct": true,
+      "files": [
+        {
+          "paper": "Test 7",
+          "url": "https://evolveias.com/images/chandrakant.pdf"
+        }
+      ]
+    },
+    {
+      "name": "Someya Kumari",
+      "rank": 502,
+      "year": 2022,
+      "subject": "Geography",
+      "publisher": "Evolve IAS",
+      "url": "https://evolveias.com/topper",
+      "direct": true,
+      "files": [
+        {
+          "paper": "Test 5",
+          "url": "https://evolveias.com/images/someya.pdf"
+        }
+      ]
+    },
+    {
+      "name": "Yasharth Shekhar",
+      "rank": 12,
+      "year": 2021,
+      "subject": "Geography",
+      "publisher": "Evolve IAS",
+      "url": "https://evolveias.com/topper",
+      "direct": true,
+      "files": [
+        {
+          "paper": "Test 1",
+          "url": "https://evolveias.com/images/YasharthShakhar.pdf"
+        }
+      ]
+    },
+    {
+      "name": "Anshu Pant",
+      "rank": 193,
+      "year": 2021,
+      "subject": "Geography",
+      "publisher": "Evolve IAS",
+      "url": "https://evolveias.com/topper",
+      "direct": true,
+      "files": [
+        {
+          "paper": "Test 1",
+          "url": "https://evolveias.com/images/AshuPant.pdf"
+        }
+      ]
+    },
+    {
+      "name": "Abhishek Ranjan",
+      "rank": null,
+      "year": 2021,
+      "subject": "Geography",
+      "publisher": "Evolve IAS",
+      "url": "https://evolveias.com/topper",
+      "direct": true,
+      "files": [
+        {
+          "paper": "Test 6",
+          "url": "https://evolveias.com/images/AbhishekRanjan.pdf"
+        }
+      ]
+    },
+    {
+      "name": "Sambit Mishra",
+      "rank": 51,
+      "year": 2017,
+      "subject": "Geography",
+      "publisher": "Vision IAS",
+      "url": "https://visionias.in/resources/toppers-answer-copy/",
+      "direct": true,
+      "files": [
+        {
+          "paper": "Copy 1",
+          "url": "https://cdn.visionias.in/toppersanswerbooklet/28070_948_Sambit_Mishra_Rank_51.pdf"
+        },
+        {
+          "paper": "Copy 2",
+          "url": "https://cdn.visionias.in/toppersanswerbooklet/28070_950_Sambit_Mishra_Rank_51.pdf"
+        },
+        {
+          "paper": "Copy 3",
+          "url": "https://cdn.visionias.in/toppersanswerbooklet/28070_953_Sambit_Mishra_Rank_51.pdf"
+        }
+      ]
+    },
+    {
+      "name": "Adityavikram",
+      "rank": 60,
+      "year": 2017,
+      "subject": "Geography",
+      "publisher": "Vision IAS",
+      "url": "https://visionias.in/resources/toppers-answer-copy/",
+      "direct": true,
+      "files": [
+        {
+          "paper": "Copy",
+          "url": "https://cdn.visionias.in/toppersanswerbooklet/14075_779_Adityavikram_Rank_60.pdf"
+        }
+      ]
+    },
+    {
       "name": "Ankit Agrawal",
       "rank": 217,
       "year": 2025,
@@ -175,58 +364,6 @@
       "note": "23 optional copies"
     },
     {
-      "name": "जतिन कुमार",
-      "rank": 364,
-      "year": 2023,
-      "subject": "Geography",
-      "publisher": "Drishti IAS (Hindi)",
-      "url": "https://www.drishtiias.com/hindi/free-downloads/toppers-2023-Geography-Jatin-kumar-364",
-      "direct": true,
-      "medium": "Hindi",
-      "files": [
-        {
-          "paper": "Test 1",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/Drishti_IAS_Jatin_Kumar_Rank_364_Geography%20Optional%20Series%201.pdf"
-        },
-        {
-          "paper": "Test 2",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/Drishti_IAS_Jatin_Kumar_Rank_364_Geography%20Optional%20Series%202.pdf"
-        },
-        {
-          "paper": "Test 3",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/Drishti_IAS_Jatin_Kumar_Rank_364_Geography%20Optional%20Series%203.pdf"
-        },
-        {
-          "paper": "Test 4",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/Drishti_IAS_Jatin_Kumar_Rank_364_Geography%20Optional%20Series%204.pdf"
-        },
-        {
-          "paper": "Test 5",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/Drishti_IAS_Jatin_Kumar_Rank_364_Geography%20Optional%20Series%205.pdf"
-        },
-        {
-          "paper": "Test 6",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/Drishti_IAS_Jatin_Kumar_Rank_364_Geography%20Optional%20Series%206.pdf"
-        },
-        {
-          "paper": "Test 7",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/Drishti_IAS_Jatin_Kumar_Rank_364_Geography%20Optional%20Series%207.pdf"
-        },
-        {
-          "paper": "Test 8",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/Drishti_IAS_Jatin_Kumar_Rank_364_Geography%20Optional%20Series%208.pdf"
-        },
-        {
-          "paper": "Test 9",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/Drishti_IAS_Jatin_Kumar_Rank_364_Geography%20Optional%20Series%209.pdf"
-        },
-        {
-          "paper": "Test 10",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/Drishti_IAS_Jatin_Kumar_Rank_364_Geography%20Optional%20Series%2010.pdf"
-        }
-      ]
-    },
-    {
       "name": "Bidipto Sarkar",
       "rank": 987,
       "year": 2023,
@@ -236,21 +373,6 @@
       "direct": true,
       "login": true,
       "note": "6 optional copies"
-    },
-    {
-      "name": "Chandrakant Bagoria",
-      "rank": 75,
-      "year": 2022,
-      "subject": "Geography",
-      "publisher": "Evolve IAS",
-      "url": "https://evolveias.com/topper",
-      "direct": true,
-      "files": [
-        {
-          "paper": "Test 7",
-          "url": "https://evolveias.com/images/chandrakant.pdf"
-        }
-      ]
     },
     {
       "name": "B Sarvanan",
@@ -264,234 +386,213 @@
       "note": "15 optional copies"
     },
     {
-      "name": "Someya Kumari",
-      "rank": 502,
-      "year": 2022,
+      "name": "Saumya Mishra",
+      "rank": 18,
+      "year": null,
       "subject": "Geography",
-      "publisher": "Evolve IAS",
-      "url": "https://evolveias.com/topper",
-      "direct": true,
-      "files": [
-        {
-          "paper": "Test 5",
-          "url": "https://evolveias.com/images/someya.pdf"
-        }
-      ]
-    },
-    {
-      "name": "Yasharth Shekhar",
-      "rank": 12,
-      "year": 2021,
-      "subject": "Geography",
-      "publisher": "Evolve IAS",
-      "url": "https://evolveias.com/topper",
-      "direct": true,
-      "files": [
-        {
-          "paper": "Test 1",
-          "url": "https://evolveias.com/images/YasharthShakhar.pdf"
-        }
-      ]
-    },
-    {
-      "name": "सुनील कुमार धनवंता",
-      "rank": 22,
-      "year": 2021,
-      "subject": "Geography",
-      "publisher": "Drishti IAS (Hindi)",
-      "url": "https://www.drishtiias.com/hindi/free-downloads/toppers-2021-geography-sunil-kumar-dhanwanta-22",
-      "direct": true,
-      "medium": "Hindi",
-      "files": [
-        {
-          "paper": "Test 1",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/Sunil-Kumar-Dhanwanta-(22)-2021-G1.pdf"
-        }
-      ]
-    },
-    {
-      "name": "Anshu Pant",
-      "rank": 193,
-      "year": 2021,
-      "subject": "Geography",
-      "publisher": "Evolve IAS",
-      "url": "https://evolveias.com/topper",
-      "direct": true,
-      "files": [
-        {
-          "paper": "Test 1",
-          "url": "https://evolveias.com/images/AshuPant.pdf"
-        }
-      ]
-    },
-    {
-      "name": "Abhishek Ranjan",
-      "rank": null,
-      "year": 2021,
-      "subject": "Geography",
-      "publisher": "Evolve IAS",
-      "url": "https://evolveias.com/topper",
-      "direct": true,
-      "files": [
-        {
-          "paper": "Test 6",
-          "url": "https://evolveias.com/images/AbhishekRanjan.pdf"
-        }
-      ]
-    },
-    {
-      "name": "सुनील कुमार धनवंता",
-      "rank": 662,
-      "year": 2019,
-      "subject": "Geography",
-      "publisher": "Drishti IAS (Hindi)",
-      "url": "https://www.drishtiias.com/hindi/free-downloads/toppers-2019-geography-copy-sunil-kumar-dhanwanta-rank-662",
-      "direct": true,
-      "medium": "Hindi",
-      "files": [
-        {
-          "paper": "Test 1",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/Sunil-Kumar-Dhanwanta-G1.pdf"
-        },
-        {
-          "paper": "Test 2",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/Sunil-Kumar-Dhanwanta-G2.pdf"
-        },
-        {
-          "paper": "Test 3",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/Sunil-Kumar-Dhanwanta-G3.pdf"
-        },
-        {
-          "paper": "Test 4",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/Sunil-Kumar-Dhanwanta-G4.pdf"
-        },
-        {
-          "paper": "Test 16",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/Sunil-Kumar-Dhanwanta-G16.pdf"
-        }
-      ]
-    },
-    {
-      "name": "सुनील कुमार धनवंता",
-      "rank": 697,
-      "year": 2018,
-      "subject": "Geography",
-      "publisher": "Drishti IAS (Hindi)",
-      "url": "https://www.drishtiias.com/hindi/free-downloads/toppers-geography-copy-2018-sunil-kumar-dhanvanta-rank-697",
-      "direct": true,
-      "medium": "Hindi",
-      "files": [
-        {
-          "paper": "Test 1",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/697-Rank-Sunil-Kumar-Dhanvanta_G-1.pdf"
-        },
-        {
-          "paper": "Test 2",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/697-Rank-Sunil-Kumar-Dhanvanta_G-2.pdf"
-        },
-        {
-          "paper": "Test 3",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/697-Rank-Sunil-Kumar-Dhanvanta_G-3.pdf"
-        },
-        {
-          "paper": "Test 4",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/697-Rank-Sunil-Kumar-Dhanvanta_G-4.pdf"
-        },
-        {
-          "paper": "Test 5",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/697-Rank-Sunil-Kumar-Dhanvanta_G-5.pdf"
-        },
-        {
-          "paper": "Test 6",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/697-Rank-Sunil-Kumar-Dhanvanta_G-6.pdf"
-        },
-        {
-          "paper": "Test 7",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/697-Rank-Sunil-Kumar-Dhanvanta_G-7.pdf"
-        },
-        {
-          "paper": "Test 8",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/697-Rank-Sunil-Kumar-Dhanvanta_G-8.pdf"
-        },
-        {
-          "paper": "Test 9",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/697-Rank-Sunil-Kumar-Dhanvanta_G-9.pdf"
-        },
-        {
-          "paper": "Test 10",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/697-Rank-Sunil-Kumar-Dhanvanta_G-10.pdf"
-        }
-      ]
-    },
-    {
-      "name": "सिद्धार्थ कुमार मीणा",
-      "rank": 734,
-      "year": 2018,
-      "subject": "Geography",
-      "publisher": "Drishti IAS (Hindi)",
-      "url": "https://www.drishtiias.com/hindi/free-downloads/toppers-geography-copy-2018-siddharth-kumar-meena-rank-734",
-      "direct": true,
-      "medium": "Hindi",
-      "files": [
-        {
-          "paper": "Test 1",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/734-Rank-Siddharth-Kumar-Meena-G-1.pdf"
-        },
-        {
-          "paper": "Test 2",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/734-Rank-Siddharth-Kumar-Meena-G-2.pdf"
-        },
-        {
-          "paper": "Test 3",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/734-Rank-Siddharth-Kumar-Meena-G-3.pdf"
-        },
-        {
-          "paper": "Test 4",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/734-Rank-Siddharth-Kumar-Meena-G-4.pdf"
-        },
-        {
-          "paper": "Test 5",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/734-Rank-Siddharth-Kumar-Meena-G-5.pdf"
-        },
-        {
-          "paper": "Test 6",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/734-Rank-Siddharth-Kumar-Meena-G-6.pdf"
-        },
-        {
-          "paper": "Test 7",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/734-Rank-Siddharth-Kumar-Meena-G-7.pdf"
-        },
-        {
-          "paper": "Test 8",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/734-Rank-Siddharth-Kumar-Meena-G-8.pdf"
-        },
-        {
-          "paper": "Test 10",
-          "url": "https://www.drishtiias.com/hindi/images/pdf/734-Rank-Siddharth-Kumar-Meena-G-10.pdf"
-        }
-      ]
-    },
-    {
-      "name": "Kirti",
-      "rank": 304,
-      "year": 2025,
-      "subject": "Law",
-      "publisher": "ConvertIAS",
-      "url": "https://www.convertias.com/topperCopies/kirti_air-304_66a5dcb58d1f855afae07570",
+      "publisher": "GS SCORE",
+      "url": "https://iasscore.in/toppers-copy",
       "direct": true,
       "login": true,
-      "note": "2 optional copies"
+      "note": "2 Geography test copies"
     },
     {
-      "name": "Lavesh Verma",
-      "rank": 909,
-      "year": 2025,
-      "subject": "Law",
-      "publisher": "ConvertIAS",
-      "url": "https://www.convertias.com/topperCopies/lavesh-verma_air-909_6749b2eeb494b7cd73154f2b",
+      "name": "Vivek Garg",
+      "rank": 114,
+      "year": null,
+      "subject": "Geography",
+      "publisher": "GS SCORE",
+      "url": "https://iasscore.in/toppers-copy",
       "direct": true,
       "login": true,
-      "note": "4 optional copies"
+      "note": "7 Geography test copies"
+    },
+    {
+      "name": "Ritwik Mehta",
+      "rank": 115,
+      "year": null,
+      "subject": "Geography",
+      "publisher": "GS SCORE",
+      "url": "https://iasscore.in/toppers-copy",
+      "direct": true,
+      "login": true,
+      "note": "1 Geography test copy"
+    },
+    {
+      "name": "Shilpa Chauhan",
+      "rank": 188,
+      "year": null,
+      "subject": "Geography",
+      "publisher": "GS SCORE",
+      "url": "https://iasscore.in/toppers-copy",
+      "direct": true,
+      "login": true,
+      "note": "6 Geography test copies"
+    },
+    {
+      "name": "Sumegha Mishra",
+      "rank": 253,
+      "year": null,
+      "subject": "Geography",
+      "publisher": "GS SCORE",
+      "url": "https://iasscore.in/toppers-copy",
+      "direct": true,
+      "login": true,
+      "note": "2 Geography test copies"
+    },
+    {
+      "name": "Akshay Parihar",
+      "rank": 261,
+      "year": null,
+      "subject": "Geography",
+      "publisher": "GS SCORE",
+      "url": "https://iasscore.in/toppers-copy",
+      "direct": true,
+      "login": true,
+      "note": "1 Geography test copy"
+    },
+    {
+      "name": "Shivani Tiwari",
+      "rank": 294,
+      "year": null,
+      "subject": "Geography",
+      "publisher": "GS SCORE",
+      "url": "https://iasscore.in/toppers-copy",
+      "direct": true,
+      "login": true,
+      "note": "1 Geography test copy"
+    },
+    {
+      "name": "Piyush Gathala",
+      "rank": 309,
+      "year": null,
+      "subject": "Geography",
+      "publisher": "GS SCORE",
+      "url": "https://iasscore.in/toppers-copy",
+      "direct": true,
+      "login": true,
+      "note": "5 Geography test copies"
+    },
+    {
+      "name": "Rajat Kumar Rai",
+      "rank": 351,
+      "year": null,
+      "subject": "Geography",
+      "publisher": "GS SCORE",
+      "url": "https://iasscore.in/toppers-copy",
+      "direct": true,
+      "login": true,
+      "note": "4 Geography test copies"
+    },
+    {
+      "name": "Akash Kumar",
+      "rank": 466,
+      "year": null,
+      "subject": "Geography",
+      "publisher": "GS SCORE",
+      "url": "https://iasscore.in/toppers-copy",
+      "direct": true,
+      "login": true,
+      "note": "1 Geography test copy"
+    },
+    {
+      "name": "Aman Patel",
+      "rank": 470,
+      "year": null,
+      "subject": "Geography",
+      "publisher": "GS SCORE",
+      "url": "https://iasscore.in/toppers-copy",
+      "direct": true,
+      "login": true,
+      "note": "1 Geography test copy"
+    },
+    {
+      "name": "Ayush Rahul Kokate",
+      "rank": 513,
+      "year": null,
+      "subject": "Geography",
+      "publisher": "GS SCORE",
+      "url": "https://iasscore.in/toppers-copy",
+      "direct": true,
+      "login": true,
+      "note": "4 Geography test copies"
+    },
+    {
+      "name": "Raj Kumar Mahto",
+      "rank": 557,
+      "year": null,
+      "subject": "Geography",
+      "publisher": "GS SCORE",
+      "url": "https://iasscore.in/toppers-copy",
+      "direct": true,
+      "login": true,
+      "note": "1 Geography test copy"
+    },
+    {
+      "name": "Simran Sahu",
+      "rank": 568,
+      "year": null,
+      "subject": "Geography",
+      "publisher": "GS SCORE",
+      "url": "https://iasscore.in/toppers-copy",
+      "direct": true,
+      "login": true,
+      "note": "4 Geography test copies"
+    },
+    {
+      "name": "Kumari Someya",
+      "rank": 637,
+      "year": null,
+      "subject": "Geography",
+      "publisher": "GS SCORE",
+      "url": "https://iasscore.in/toppers-copy",
+      "direct": true,
+      "login": true,
+      "note": "9 Geography test copies"
+    },
+    {
+      "name": "Ankit Anand",
+      "rank": 663,
+      "year": null,
+      "subject": "Geography",
+      "publisher": "GS SCORE",
+      "url": "https://iasscore.in/toppers-copy",
+      "direct": true,
+      "login": true,
+      "note": "2 Geography test copies"
+    },
+    {
+      "name": "Sagar Kaushik",
+      "rank": 675,
+      "year": null,
+      "subject": "Geography",
+      "publisher": "GS SCORE",
+      "url": "https://iasscore.in/toppers-copy",
+      "direct": true,
+      "login": true,
+      "note": "1 Geography test copy"
+    },
+    {
+      "name": "Kartik Kansal",
+      "rank": 717,
+      "year": null,
+      "subject": "Geography",
+      "publisher": "GS SCORE",
+      "url": "https://iasscore.in/toppers-copy",
+      "direct": true,
+      "login": true,
+      "note": "1 Geography test copy"
+    },
+    {
+      "name": "Pankaj Soni",
+      "rank": 757,
+      "year": null,
+      "subject": "Geography",
+      "publisher": "GS SCORE",
+      "url": "https://iasscore.in/toppers-copy",
+      "direct": true,
+      "login": true,
+      "note": "1 Geography test copy"
     },
     {
       "name": "Rhythm Kataria",
@@ -730,6 +831,71 @@
       ]
     },
     {
+      "name": "Anmol Rathore",
+      "rank": 7,
+      "year": 2023,
+      "subject": "Law",
+      "publisher": "Lawxpertsmv",
+      "url": "https://www.lawxpertsmv.com/post/anmol-rathore-air-7-upsc-results-2023-answer-sheet-upsc-law-optional",
+      "direct": true,
+      "files": [
+        {
+          "paper": "Answer sheet",
+          "url": "https://www.lawxpertsmv.com/_files/ugd/9445bf_47c422cbe0ce481497ad390fda30a36b.pdf"
+        }
+      ]
+    },
+    {
+      "name": "Anakha K Vijay",
+      "rank": 220,
+      "year": 2023,
+      "subject": "Law",
+      "publisher": "Lawxpertsmv",
+      "url": "https://www.lawxpertsmv.com/post/anakha-k-vijay-air-220-upsc-law-optional-answer-sheets",
+      "direct": true,
+      "files": [
+        {
+          "paper": "Law of Torts · Test 1",
+          "url": "https://www.lawxpertsmv.com/_files/ugd/9445bf_119914d9ee1a4ac996b8a10962cb4df7.pdf"
+        },
+        {
+          "paper": "PIL topic",
+          "url": "https://www.lawxpertsmv.com/_files/ugd/9445bf_2ae4d80b3d0647e992101cc1691f27b7.pdf"
+        },
+        {
+          "paper": "Test 2",
+          "url": "https://www.lawxpertsmv.com/_files/ugd/9445bf_c4358a6f10ef4a77bd0cffe8a00d68fa.pdf"
+        },
+        {
+          "paper": "Test 3",
+          "url": "https://www.lawxpertsmv.com/_files/ugd/9445bf_6eb9c1b2400b4008a0387aa0e5ac7efc.pdf"
+        }
+      ]
+    },
+    {
+      "name": "Shivansh Agarwal",
+      "rank": 337,
+      "year": 2022,
+      "subject": "Law",
+      "publisher": "Lawxpertsmv",
+      "url": "https://www.lawxpertsmv.com/post/shivansh-agarwal-air-337-toppers-copies-of-upsc-2022-law-optional",
+      "direct": true,
+      "files": [
+        {
+          "paper": "Test 1",
+          "url": "https://www.lawxpertsmv.com/_files/ugd/9445bf_383b9404672448b284aeffe695a5f2fb.pdf"
+        },
+        {
+          "paper": "Test 2",
+          "url": "https://www.lawxpertsmv.com/_files/ugd/9445bf_e4156c30d080434b90c7f0ee040dae7b.pdf"
+        },
+        {
+          "paper": "Test 3",
+          "url": "https://www.lawxpertsmv.com/_files/ugd/9445bf_cf0ebcde607b45108551a4e129b68b5e.pdf"
+        }
+      ]
+    },
+    {
       "name": "Avinash V",
       "rank": 31,
       "year": 2021,
@@ -743,6 +909,104 @@
           "url": "https://www.defactolaw.in/_files/ugd/f721f3_ca50621479d2497284794ab0fd448655.pdf?index=true"
         }
       ]
+    },
+    {
+      "name": "Jaspinder Singh",
+      "rank": 33,
+      "year": 2021,
+      "subject": "Law",
+      "publisher": "Lawxpertsmv",
+      "url": "https://www.lawxpertsmv.com/post/jaspinder-singh-ias-air-33-2021-answer-copies-of-upsc-law-optional",
+      "direct": true,
+      "files": [
+        {
+          "paper": "Test 1",
+          "url": "https://www.lawxpertsmv.com/_files/ugd/38e9e6_7a27dfcfbc1f49a697e7ebb5fbb23416.pdf"
+        },
+        {
+          "paper": "Test 2",
+          "url": "https://www.lawxpertsmv.com/_files/ugd/38e9e6_e67fe331344e482e83a95beca44329e2.pdf"
+        }
+      ]
+    },
+    {
+      "name": "Shraddha Gome",
+      "rank": 60,
+      "year": 2021,
+      "subject": "Law",
+      "publisher": "Lawxpertsmv",
+      "url": "https://www.lawxpertsmv.com/post/shraddha-gome-air-60-upsc-law-optional-topper",
+      "direct": true,
+      "files": [
+        {
+          "paper": "Answer sheet",
+          "url": "https://www.lawxpertsmv.com/_files/ugd/38e9e6_f34ce16e7d8b45499fb8985ac60e1885.pdf"
+        }
+      ]
+    },
+    {
+      "name": "Lovish Garg",
+      "rank": 184,
+      "year": 2021,
+      "subject": "Law",
+      "publisher": "Lawxpertsmv",
+      "url": "https://www.lawxpertsmv.com/post/lovish-garg-air-184-upsc-law-optional-2021-topper-s-copy",
+      "direct": true,
+      "files": [
+        {
+          "paper": "Copy 1",
+          "url": "https://www.lawxpertsmv.com/_files/ugd/38e9e6_dbfb43216c2546eb9413c138d8f2d5af.pdf"
+        },
+        {
+          "paper": "Copy 2",
+          "url": "https://www.lawxpertsmv.com/_files/ugd/38e9e6_d9fc53b5bad0492ea9830651b7803424.pdf"
+        },
+        {
+          "paper": "Copy 3",
+          "url": "https://www.lawxpertsmv.com/_files/ugd/38e9e6_e0fde853731a4b05b5eb025c0d198917.pdf"
+        }
+      ]
+    },
+    {
+      "name": "Rishabh Trivedi",
+      "rank": 215,
+      "year": 2021,
+      "subject": "Law",
+      "publisher": "Lawxpertsmv",
+      "url": "https://www.lawxpertsmv.com/post/rishabh-trivedi-air-215-2021-upsc-law-optional-topper",
+      "direct": true,
+      "files": [
+        {
+          "paper": "Copy 1",
+          "url": "https://www.lawxpertsmv.com/_files/ugd/38e9e6_14bb555572c8471d8c21d91d77508562.pdf"
+        },
+        {
+          "paper": "Test 2",
+          "url": "https://www.lawxpertsmv.com/_files/ugd/38e9e6_4e8b776527114daab82e5a88be34c437.pdf"
+        }
+      ]
+    },
+    {
+      "name": "Kirti",
+      "rank": 304,
+      "year": 2025,
+      "subject": "Law",
+      "publisher": "ConvertIAS",
+      "url": "https://www.convertias.com/topperCopies/kirti_air-304_66a5dcb58d1f855afae07570",
+      "direct": true,
+      "login": true,
+      "note": "2 optional copies"
+    },
+    {
+      "name": "Lavesh Verma",
+      "rank": 909,
+      "year": 2025,
+      "subject": "Law",
+      "publisher": "ConvertIAS",
+      "url": "https://www.convertias.com/topperCopies/lavesh-verma_air-909_6749b2eeb494b7cd73154f2b",
+      "direct": true,
+      "login": true,
+      "note": "4 optional copies"
     }
   ]
 }

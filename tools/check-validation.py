@@ -225,6 +225,13 @@ def _(root):
     edit(root, "optional-copies.json", m)
 
 
+@case("a Hindi-medium copy", "not an English-medium copy")
+def _(root):
+    def m(d):
+        d["copies"][0]["medium"] = "Hindi"
+    edit(root, "optional-copies.json", m)
+
+
 @case("same optional topper entered twice", "are both rank")
 def _(root):
     def m(d):

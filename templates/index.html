@@ -3206,18 +3206,16 @@ function renderToppers(){
 /* ---------------- optional copies ----------------
    A tab of its own rather than more rows in Toppers' copies: those are GS and
    Essay, which everyone writes; an optional is read only by the people who
-   take it, so this one is chosen by subject first. Rows whose publisher never
-   said which optional the booklets are sit under their own chip, not under a
-   guess. Some publishers want a sign-in before a copy opens; those rows sort
-   last and say so, and one chip hides them. */
-const OC_NONE = "Subject not stated";
-const ocSubject = c => c.subject || OC_NONE;
+   take it, so this one is chosen by subject first -- and only the optionals
+   the Optional tab carries. Some publishers want a sign-in before a copy
+   opens; those rows sort last and say so, and one chip hides them. */
+const ocSubject = c => c.subject;
 function renderOptCopies(){
   const all = OPTCOPIES.copies || [];
   const counts = {};
   all.forEach(c => { counts[ocSubject(c)] = (counts[ocSubject(c)] || 0) + 1; });
-  const subs = Object.keys(counts).sort((a, b) =>
-    (a === OC_NONE) - (b === OC_NONE) || counts[b] - counts[a] || a.localeCompare(b));
+  const order = (OPTIONALS.subjects || []).map(s => s.name);
+  const subs = Object.keys(counts).sort((a, b) => order.indexOf(a) - order.indexOf(b));
   if(!state.ocsub || !counts[state.ocsub]) state.ocsub = subs[0];
   const inSub = all.filter(c => ocSubject(c) === state.ocsub);
   const open = inSub.filter(c => !c.login);

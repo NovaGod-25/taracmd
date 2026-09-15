@@ -1296,6 +1296,7 @@ describe("the toppers list", () => {
 /* Optional copies are their own tab, chosen by subject, and kept out of the
    Toppers tab: GS and Essay there, the optional papers here. */
 describe("the optional copies tab", () => {
+  const OPTS_NAMES = JSON.parse(inPage(win, `JSON.stringify(OPTIONALS.subjects.map(s => s.name))`));
   test("by subject, sign-in rows last and hideable, and none left in Toppers", () => {
     const out = JSON.parse(inPage(win, `(() => {
       state.tab = "optcopies"; state.ocsub = null; state.ocfree = false; markTab("optcopies"); render();
@@ -1318,8 +1319,7 @@ describe("the optional copies tab", () => {
       if(go){ go.click(); r.landed = state.tab + "/" + state.ocsub; }
       state.tab = "syllabus"; state.pset = "prelims"; state.ocfree = false; render();
       return JSON.stringify(r); })()`));
-    assert.ok(out.chips.length > 5, "one chip per optional");
-    assert.equal(out.chips[out.chips.length - 1], "Subject not stated", "the unlabelled ones last, not guessed into a subject");
+    assert.deepEqual(out.chips, OPTS_NAMES, "a chip for each of the app's optionals, in its order, and no other");
     assert.equal(out.lit, 0, "reached from the drawer, so no tab is lit");
     assert.equal(out.lawRows, out.law);
     assert.equal(out.loginLast, true, "rows that need a sign-in come after the ones that open");

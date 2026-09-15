@@ -217,11 +217,11 @@ def _(root):
     edit(root, "toppers.json", m)
 
 
-@case("optional copy with no subject key", "null if not stated")
+@case("optional copy for a subject the app does not carry", "not one of the app's optionals")
 def _(root):
-    # Unknown is null, said out loud; a missing key is a row nobody looked at.
+    # Only the optionals in optionals.json; anything else was asked to stay out.
     def m(d):
-        del d["copies"][0]["subject"]
+        d["copies"][0]["subject"] = "Sociology"
     edit(root, "optional-copies.json", m)
 
 

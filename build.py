@@ -350,18 +350,17 @@ def check_toppers(toppers) -> None:
             fail("a toppers' publisher has no name or no url")
 
 
-def check_optional_copies(opt) -> None:
+def check_optional_copies(opt, subjects: set[str]) -> None:
     """The Optional copies tab, kept apart from the Toppers tab on purpose. A row
-    is one topper's copies in one optional; `subject` is null only where the
-    publisher never said which optional the booklets are, and the tab files
-    those under their own heading rather than guessing."""
+    is one topper's copies in one optional, and the optional has to be one the
+    Optional tab carries (Geography, Law, Agriculture): copies for any other
+    subject were asked to be left out, so one is a mistake, not a bonus."""
     rows: dict[tuple, str] = {}
     for copy in opt.get("copies") or []:
         check_copy(copy, "optional copy")
-        if "subject" not in copy:
-            fail(f"optional copy {copy.get('name', '?')!r} has no 'subject' (null if not stated)")
-        elif copy["subject"] is not None and not str(copy["subject"]).strip():
-            fail(f"optional copy {copy.get('name', '?')!r} has a blank subject")
+        if copy.get("subject") not in subjects:
+            fail(f"optional copy {copy.get('name', '?')!r} is for {copy.get('subject')!r}, "
+                 f"not one of the app's optionals {sorted(subjects)}")
         key = (copy.get("year"), copy.get("rank"), copy.get("subject"))
         if copy.get("year") and copy.get("rank") and key in rows:
             fail(f"optional copies {rows[key]!r} and {copy.get('name')!r} are both rank {key[1]} "
@@ -453,7 +452,7 @@ def main() -> int:
     check_paper_tags(quiz, keys)
     check_optionals(opts)
     check_toppers(toppers)
-    check_optional_copies(optcopies)
+    check_optional_copies(optcopies, {s.get("name") for s in opts.get("subjects", [])})
     check_daily(daily)
 
     if problems:

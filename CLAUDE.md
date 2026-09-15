@@ -196,7 +196,7 @@ turns it green rather than leaving it looking like a failure.
 | `answer-keys.json` | Prelims answer keys: links, marking scheme, set-wise letters. GS-I and CSAT both complete 2017-2026, all four Series |
 | `quiz.json` | 2,595 questions: 35 written here, 846 from UPSC GS-I — every year 2017–2026 — 239 from UPSC CSAT (2020, 2021, 2024), and 1,475 from fifteen 2027 test series papers (Vision IAS 1, 3–6; ForumIAS 1–4 and Level 2 1–3; Vajiram PowerUp 2–4), with the institute's explanation as `why`. CSAT passages are stored once, in `passages` |
 | `toppers.json` | 311 toppers across 10 publishers, one row per topper per year: GS and Essay only. `files` is a topper's booklets, one per paper (717 in all), each drawn as its own chip. 245 rows are CSE 2025, the copies published in 2026 |
-| `optional-copies.json` | the Optional copies tab: 292 toppers' optional-paper copies in 13 subjects, 498 booklets, from De Facto Law, LevelUp IAS, Drishti IAS (Hindi), ForumIAS, Evolve IAS, Kaveri IAS and ConvertIAS. `subject` is null where the publisher never said; `login` marks a row that needs a sign-in to open |
+| `optional-copies.json` | the Optional copies tab: 33 toppers' copies in Geography (18), Law (11) and Agriculture (4), 85 booklets, from De Facto Law, Drishti IAS (Hindi), Evolve IAS, Kaveri IAS, ForumIAS and ConvertIAS. `subject` must be one of the optionals in `optionals.json`; `login` marks a row that needs a sign-in to open |
 | `daily.json` | daily current-affairs quiz sources: a URL pattern the page expands against the date |
 | `optionals.json` | the Optional tab: Geography, Law and Agriculture, 22/22 papers each 2016–2026. Its copies section points at the Optional copies tab |
 
@@ -628,18 +628,21 @@ it, so the tab is chosen by subject first. The ForumIAS booklets that were optio
 moved out of `toppers.json` into it, and a Toppers row whose only booklets were optional
 went with them. The big GS publishers still do not list copies by optional (checked 7 Sep
 2026 across Vision, GS SCORE, theIAShub and NEXT IAS); the subject specialists do, and they
-were read in once, by hand, links only, no scraper committed:
+were read in once, by hand, links only, no scraper committed. **Only Geography, Law and
+Agriculture are kept** — the owner's optionals, the same three the Optional tab carries.
+Copies for every other subject were found and then removed on request (15 Sep 2026), and
+`check_optional_copies` fails a row for any subject not in `optionals.json`, so they do
+not drift back in:
 
 - **De Facto Law** — a Wix page whose source order does not follow its layout, so each PDF
   was matched to the card heading drawn around it in a real browser, and years to the
   section it sits under. A file linked from two toppers' cards was left out.
-- **LevelUp IAS** — each Drive link belongs to the last "Name · AIR · year" above it; two
-  files listed under two different toppers were left out.
-- **Drishti IAS (Hindi)** — a page per topper, names as published, in Devanagari.
-- **ConvertIAS** — every optional, but a sign-in to open; the count of optional copies
-  comes from each topper's page. Rows are marked `login`, sort last and hide with a chip.
-- **ForumIAS** — the posts rarely say which optional; where neither the filename nor
-  ConvertIAS does, `subject` is null and the row sits under "Subject not stated".
+- **Drishti IAS (Hindi)** — Geography; a page per topper, names as published, in Devanagari.
+- **Evolve IAS** (Geography) and **Kaveri IAS** (Agriculture, ranks without names).
+- **ConvertIAS** — a sign-in to open; the count of optional copies comes from each
+  topper's page. Rows are marked `login`, sort last and hide with a chip.
+- **ForumIAS** — the posts rarely say which optional; a booklet is kept only where the
+  filename or ConvertIAS names the subject as one of the three.
 
 Aggregators that re-host other institutes' scans (LotusArise, upscpdf.com) were not used.
 

@@ -155,6 +155,8 @@ a{color:var(--accent-ink);text-decoration:none}
 .fchip{font-size:12.5px;font-weight:500;padding:6px 11px;border-radius:99px;border:1px solid var(--rule);
   background:var(--card);color:var(--ink-2);white-space:nowrap}
 .fchip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.filters.ocsubs{flex-wrap:wrap;overflow:visible}
+.ocsubs .fchip b{font-weight:600;opacity:.65;margin-left:2px}
 :root[data-theme="dark"] .fchip.on,
 :root:not([data-theme="light"]) .fchip.on{color:#0E131B}
 @media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .fchip.on{color:#fff}}
@@ -697,6 +699,8 @@ mark{background:var(--amber-soft);color:inherit;border-radius:3px;padding:0 1px}
 .opt.lonly .ol{font-size:13px}
 .qcard.run{margin-top:2px}
 .runacts{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.askrow{margin-top:10px}
+.runacts .askc{margin-right:auto}
 .runacts .fchip[disabled]{opacity:.4;cursor:default}
 /* the exam clock, and the paper after its submit */
 .ptools{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:-4px 0 12px}
@@ -807,6 +811,10 @@ button.fbar{background:none;border:0;padding:0;color:inherit;font:inherit;cursor
     <svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4 6.7 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg>
     <span><b>Toppers' copies</b><i>Published answer booklets, by rank and by subject</i></span>
   </button>
+  <button class="ditem" data-go="optcopies">
+    <svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"/><path d="M8 11h8M8 15h8M8 7h5"/></svg>
+    <span><b>Optional copies</b><i>Toppers' optional-paper booklets, by subject</i></span>
+  </button>
   <button class="ditem" id="dRead">
     <svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
     <span><b>Read the whole syllabus</b><i>All 1,723 subtopics, flat — and what prints</i></span>
@@ -837,6 +845,7 @@ const TOPPERS = __TOPPERS__;
 const KEYS = __KEYS__;
 const QUIZ = __QUIZ__;
 const OPTIONALS = __OPTIONALS__;
+const OPTCOPIES = __OPTCOPIES__;
 const DAILY = __DAILY__;
 const ARCHIVE = "https://www.upsc.gov.in/examinations/previous-question-papers/archives";
 const KEYINDEX = "https://www.upsc.gov.in/examinations/answer-key";
@@ -2327,11 +2336,8 @@ function shortPaper(p){
    years of them, plus an answer log per paper on the same footing as Mains —
    an optional answer is written under the same clock.
 
-   The toppers' copies here are curated by hand and the list is short. Not an
-   oversight: no publisher indexes its copies by optional subject, so finding
-   them means opening the section pages at the bottom of the tab and reading.
-   Harvesting them automatically would need a crawler per site, which is the
-   thing this project already looked at and turned down. */
+   Toppers' copies for an optional live in the Optional copies tab, read in
+   once from the publishers' pages; this tab points there by subject. */
 function renderOptional(){
   const subs = OPTIONALS.subjects || [];
   if(!state.opt || !subs.some(s=>s.id===state.opt)) state.opt = subs.length ? subs[0].id : null;
@@ -2373,10 +2379,13 @@ function renderOptional(){
     <div class="head"><h2>Toppers' copies</h2><span class="n">${s.copies.length}</span></div>
     ${s.copies.length ? `<div class="list">${s.copies.map(c =>
         copyRow(c, `${c.year} · ${esc(c.publisher)}${c.note ? " · " + esc(c.note) : ""}`)).join("")}</div>`
-      : `<div class="empty">None indexed yet for ${esc(s.short)}.<br><br>
-          No publisher lists its copies by optional subject, so these have to be
-          found by hand — open a section below, and add what you find to
-          <span class="mono">content/optionals.json</span>.</div>`}
+      : (() => {
+          const n = (OPTCOPIES.copies || []).filter(c => c.subject === s.name).length;
+          return n ? `<div class="list"><button class="tcard" data-ocgo="${esc(s.name)}">
+              <span style="flex:1"><span class="nm">${n} toppers' ${esc(s.short)} copies</span>
+              <span class="tmeta">in the Optional copies tab</span></span><span class="ext">${LINKI}</span></button></div>`
+            : `<div class="empty">None indexed yet for ${esc(s.short)}.</div>`;
+        })()}
 
     <div class="head"><h2>Where to look</h2></div>
     <div class="list">
@@ -2387,6 +2396,10 @@ function renderOptional(){
     <p class="note">These are the publishers' own pages, not a mirror. An optional booklet is usually inside a topper's full set rather than listed separately, so it is worth reading the testimonial as well as the scan — the choice of optional is often explained there.</p>`;
 
   view.querySelectorAll("[data-opt]").forEach(b=>b.onclick=()=>{state.opt=b.dataset.opt;renderOptional();});
+  view.querySelectorAll("[data-ocgo]").forEach(b=>b.onclick=()=>{
+    state.tab = "optcopies"; state.ocsub = b.dataset.ocgo; state.ocfree = false;
+    markTab(state.tab); render();
+  });
   view.querySelectorAll("[data-olog]").forEach(b=>b.onclick=()=>{
     const [yr, code, label] = b.dataset.olog.split("|");
     openWriting(+yr, code, label);
@@ -2643,6 +2656,46 @@ function paperClockRun(p){
    once: each of those questions carries the passage's id. It is drawn above
    every one of them, because a question is asked on its own here and the
    passage is half of it. */
+/* Ask Claude about a question. TaraCmd sends nothing itself: in the Android app
+   the question goes to the share sheet, straight into the Claude app when it is
+   installed; in a browser it goes to the browser's share sheet, or failing that
+   to the clipboard with claude.ai opened beside it. The answer lives in Claude. */
+function askText(q, pick){
+  const pass = q.passage && (QUIZ.passages || {})[q.passage];
+  const l = i => `(${LET[i].toLowerCase()})`;
+  return [
+    "Help me with this UPSC question.",
+    pass ? `Passage:\n${pass}` : "",
+    q.q,
+    q.options.map((o, i) => `${l(i)} ${o}`).join("\n"),
+    `Answer (${sourceLabel(q)}): ${l(q.answer)}`,
+    pick === null || pick === undefined || pick < 0 ? ""
+      : pick === q.answer ? `I chose ${l(pick)} and got it right.` : `I chose ${l(pick)}.`,
+    q.why ? `The explanation given with it: ${q.why}` : "",
+    "Explain why the answer is right, where each of the other options goes wrong, and the concept behind it that I should revise."
+  ].filter(Boolean).join("\n\n");
+}
+const askBtn = (q, pick) =>
+  `<button class="fchip askc" data-ask="${esc(q.id)}" data-askpick="${pick === null || pick === undefined ? "" : pick}">Ask Claude</button>`;
+async function askClaude(text, btn){
+  if(NATIVE && typeof NATIVE.askClaude === "function"){
+    try{ NATIVE.askClaude(text); return; }catch(e){}
+  }
+  if(navigator.share){
+    try{ await navigator.share({text}); return; }
+    catch(e){ if(e && e.name === "AbortError") return; }
+  }
+  try{ await navigator.clipboard.writeText(text); btn.textContent = "Copied — paste it into Claude"; }
+  catch(e){ btn.textContent = "Could not copy"; }
+  window.open("https://claude.ai/new", "_blank", "noopener");
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest && e.target.closest("[data-ask]");
+  if(!b) return;
+  const q = qById(b.dataset.ask);
+  if(q) askClaude(askText(q, b.dataset.askpick === "" ? null : +b.dataset.askpick), b);
+});
+
 function passageHtml(q){
   const t = q && q.passage && (QUIZ.passages || {})[q.passage];
   return t ? `<div class="qpass">${esc(t)}</div>` : "";
@@ -2825,7 +2878,8 @@ function renderPaperRun(root, p){
              <div class="opts">
                ${q.options.map((o, i) => `<button class="opt ${optCls(i)}" data-pick="${i}" ${lock}>
                  <span class="ol">${LET[i]}</span><span>${esc(o)}</span></button>`).join("")}
-             </div>${verdict}${sub && q.why ? `<div class="why2"><b>Why.</b> ${esc(q.why)}</div>` : ""}`
+             </div>${verdict}${sub && q.why ? `<div class="why2"><b>Why.</b> ${esc(q.why)}</div>` : ""}${
+             sub ? `<div class="askrow">${askBtn(q, picked)}</div>` : ""}`
           : `<div class="qstem mut">This one has not been typed in yet — the Commission publishes its papers as photographs. Mark what you chose and it still scores against the official key.</div>
              <div class="opts row4">${blanks}</div>${verdict}`}
       <div class="runacts">
@@ -3149,10 +3203,57 @@ function renderToppers(){
   view.querySelectorAll("[data-y]").forEach(b=>b.onclick=()=>{state.filter=b.dataset.y;renderToppers();});
   wireSaves();
 }
+/* ---------------- optional copies ----------------
+   A tab of its own rather than more rows in Toppers' copies: those are GS and
+   Essay, which everyone writes; an optional is read only by the people who
+   take it, so this one is chosen by subject first. Rows whose publisher never
+   said which optional the booklets are sit under their own chip, not under a
+   guess. Some publishers want a sign-in before a copy opens; those rows sort
+   last and say so, and one chip hides them. */
+const OC_NONE = "Subject not stated";
+const ocSubject = c => c.subject || OC_NONE;
+function renderOptCopies(){
+  const all = OPTCOPIES.copies || [];
+  const counts = {};
+  all.forEach(c => { counts[ocSubject(c)] = (counts[ocSubject(c)] || 0) + 1; });
+  const subs = Object.keys(counts).sort((a, b) =>
+    (a === OC_NONE) - (b === OC_NONE) || counts[b] - counts[a] || a.localeCompare(b));
+  if(!state.ocsub || !counts[state.ocsub]) state.ocsub = subs[0];
+  const inSub = all.filter(c => ocSubject(c) === state.ocsub);
+  const open = inSub.filter(c => !c.login);
+  const shown = (state.ocfree ? open : inSub).slice().sort((a, b) =>
+    (!!a.login - !!b.login) || (b.year || 0) - (a.year || 0) || (a.rank || 9999) - (b.rank || 9999));
+  document.getElementById("brandSub").textContent = all.length + " toppers";
+  view.innerHTML = `
+    <div class="head" style="margin-top:6px"><h2>Optional copies</h2><span class="n">${shown.length}</span></div>
+    <div class="filters ocsubs">
+      ${subs.map(s => `<button class="fchip ${s === state.ocsub ? "on" : ""}" data-ocsub="${esc(s)}">${esc(s)} <b>${counts[s]}</b></button>`).join("")}
+    </div>
+    ${open.length < inSub.length ? `<div class="filters">
+      <button class="fchip ${state.ocfree ? "" : "on"}" data-ocfree="">All ${inSub.length}</button>
+      <button class="fchip ${state.ocfree ? "on" : ""}" data-ocfree="1">Open without signing in ${open.length}</button>
+    </div>` : ""}
+    ${shown.length ? `<div class="list">${shown.map(c => copyRow(c, [
+        c.year || "year not given", esc(c.publisher), c.medium ? esc(c.medium) + " medium" : "",
+        c.note ? esc(c.note) : "", c.login ? "sign in to open" : ""].filter(Boolean).join(" · "))).join("")}</div>`
+      : `<div class="empty">Every ${esc(state.ocsub)} copy found so far needs a sign-in.</div>`}
+    <div class="head"><h2>Where they're published</h2></div>
+    <div class="list">
+      ${(OPTCOPIES.publishers || []).map(p => `<a class="tcard" href="${esc(p.url)}" target="_blank" rel="noopener">
+        <span style="flex:1"><span class="nm">${esc(p.name)}</span><span class="tmeta">${esc(p.note || "")}</span></span>
+        <span class="ext">${LINKI}</span></a>`).join("")}
+    </div>
+    <p class="note">An index, not a mirror: every row opens the publisher's own page, and each chip one booklet on it. Most of these are test-series answers written during preparation, not the Mains booklet itself — read them for how an optional answer is built: the framing, the diagrams and maps, the thinkers and cases cited.</p>`;
+  view.querySelectorAll("[data-ocsub]").forEach(b => b.onclick = () => { state.ocsub = b.dataset.ocsub; state.ocfree = false; renderOptCopies(); });
+  view.querySelectorAll("[data-ocfree]").forEach(b => b.onclick = () => { state.ocfree = !!b.dataset.ocfree; renderOptCopies(); });
+  wireSaves();
+}
+
 /* Android calls this when a download lands so the row can flip to "saved".
    Both tabs that offer a Save button have to listen. */
 window.taracmdSaved = function(){
   if(state.tab==="toppers") renderToppers();
+  else if(state.tab==="optcopies") renderOptCopies();
   else if(state.tab==="optional") renderOptional();
 };
 
@@ -3295,6 +3396,7 @@ function renderMistakes(root){
         <div class="act">
           <button class="fchip" data-mclear="${esc(id)}">I know it now — clear it</button>
           ${g.id ? `<button class="fchip" data-mtopic="${esc(g.id)}">Open the topic</button>` : ""}
+          ${askBtn(q, null)}
         </div>
       </details>`).join("")}
     </div>`).join("")}
@@ -3334,7 +3436,7 @@ function renderRetry(root, due){
           ? (x.m.done ? "Right — and that was its last interval, so it is cleared." : `Right. It comes back in ${RETRY_DAYS[x.m.step]} days.`)
           : `Not yet — the answer is <b>${LET[q.answer]}</b>. It comes back tomorrow.`}</p>
         ${q.why ? `<div class="why2"><b>Why.</b> ${esc(q.why)}</div>` : ""}
-        <div class="runacts"><button class="prim" id="mnext">${due.length ? "Next" : "Done"}</button></div>` : ""}
+        <div class="runacts">${askBtn(q, res.pick)}<button class="prim" id="mnext">${due.length ? "Next" : "Done"}</button></div>` : ""}
     </div>`;
   document.getElementById("mback").onclick = () => { state.mretry = false; state.mres = null; renderQuiz(); };
   root.querySelectorAll("[data-mpick]").forEach(b => b.onclick = () => {
@@ -3692,6 +3794,7 @@ function render(){
   else if(state.tab==="focus") renderFocus();
   else if(state.tab==="practice") renderQuiz();
   else if(state.tab==="docs") renderDocs();
+  else if(state.tab==="optcopies") renderOptCopies();
   else renderToppers();
   window.scrollTo(0,0);
 }

@@ -102,7 +102,7 @@ Things that will bite:
   trying makes Back unreliable, which is worse than having no gesture.
 - **The back ladder gained a rung and the drawer goes first**, because it is the topmost
   thing on screen: drawer → sheet → read view → collapse the outline → Syllabus tab → OS.
-- **Toppers lights no tab**, because it is reached from the drawer. `markTab` clears the
+- **Toppers and Optional copies light no tab**, because they are reached from the drawer. `markTab` clears the
   bar rather than leaving the previous tab lit and claiming you are somewhere you are not.
 - **The grid's column count must equal the number of tabs.** It is `repeat(5,1fr)` now —
   75px a column on a 375px phone, which is roomier than the six that fitted before the
@@ -195,9 +195,10 @@ turns it green rather than leaving it looking like a failure.
 | `pyq-papers.json` | official upsc.gov.in paper links per year — Prelims 22/24, Mains 54/60 |
 | `answer-keys.json` | Prelims answer keys: links, marking scheme, set-wise letters. GS-I and CSAT both complete 2017-2026, all four Series |
 | `quiz.json` | 2,595 questions: 35 written here, 846 from UPSC GS-I — every year 2017–2026 — 239 from UPSC CSAT (2020, 2021, 2024), and 1,475 from fifteen 2027 test series papers (Vision IAS 1, 3–6; ForumIAS 1–4 and Level 2 1–3; Vajiram PowerUp 2–4), with the institute's explanation as `why`. CSAT passages are stored once, in `passages` |
-| `toppers.json` | 322 toppers across 10 publishers, one row per topper per year. `files` is a topper's booklets, one per paper (755 in all), each drawn as its own chip. 256 rows are CSE 2025, the copies published in 2026 |
+| `toppers.json` | 311 toppers across 10 publishers, one row per topper per year: GS and Essay only. `files` is a topper's booklets, one per paper (717 in all), each drawn as its own chip. 245 rows are CSE 2025, the copies published in 2026 |
+| `optional-copies.json` | the Optional copies tab: 292 toppers' optional-paper copies in 13 subjects, 498 booklets, from De Facto Law, LevelUp IAS, Drishti IAS (Hindi), ForumIAS, Evolve IAS, Kaveri IAS and ConvertIAS. `subject` is null where the publisher never said; `login` marks a row that needs a sign-in to open |
 | `daily.json` | daily current-affairs quiz sources: a URL pattern the page expands against the date |
-| `optionals.json` | the Optional tab: Geography, Law and Agriculture, 22/22 papers each 2016–2026, plus curated copies |
+| `optionals.json` | the Optional tab: Geography, Law and Agriculture, 22/22 papers each 2016–2026. Its copies section points at the Optional copies tab |
 
 ## Feeding question papers in
 
@@ -621,13 +622,26 @@ origin, which makes `localStorage` unreliable across WebView versions — and th
 ticks live in `localStorage`. `APP_HOST` in `MainActivity.kt` is a host Google reserves
 for this; it never resolves on the network.
 
-**No publisher indexes its toppers' copies by optional subject.** Checked 7 Sep 2026
-across Vision, GS SCORE, theIAShub and NEXT IAS: the listings are by rank and name, the
-"geography optional" hits are meta-keywords and course menus, and the optional booklet
-sits inside a topper's full set rather than being listed on its own. So `copies` in
-`optionals.json` is curated by hand and starts empty — the tab links the publishers'
-section pages instead. Filling it automatically would need a crawler per site across ten
-sites, which is the thing already turned down above. Do not quietly build it.
+**Optional copies are their own tab, apart from Toppers' copies.** Asked for that way on
+15 Sep 2026: GS and Essay are read by everyone, an optional only by the people who take
+it, so the tab is chosen by subject first. The ForumIAS booklets that were optional papers
+moved out of `toppers.json` into it, and a Toppers row whose only booklets were optional
+went with them. The big GS publishers still do not list copies by optional (checked 7 Sep
+2026 across Vision, GS SCORE, theIAShub and NEXT IAS); the subject specialists do, and they
+were read in once, by hand, links only, no scraper committed:
+
+- **De Facto Law** — a Wix page whose source order does not follow its layout, so each PDF
+  was matched to the card heading drawn around it in a real browser, and years to the
+  section it sits under. A file linked from two toppers' cards was left out.
+- **LevelUp IAS** — each Drive link belongs to the last "Name · AIR · year" above it; two
+  files listed under two different toppers were left out.
+- **Drishti IAS (Hindi)** — a page per topper, names as published, in Devanagari.
+- **ConvertIAS** — every optional, but a sign-in to open; the count of optional copies
+  comes from each topper's page. Rows are marked `login`, sort last and hide with a chip.
+- **ForumIAS** — the posts rarely say which optional; where neither the filename nor
+  ConvertIAS does, `subject` is null and the row sits under "Subject not stated".
+
+Aggregators that re-host other institutes' scans (LotusArise, upscpdf.com) were not used.
 
 **upsc.gov.in rate-limits hard.** It stopped answering entirely after roughly 45 requests
 in one session. `tools/answer-keys.py` waits 4 seconds between requests on purpose. Any
@@ -635,7 +649,7 @@ new scraping should be designed to run locally and unhurried, never in CI.
 
 ## The JS ↔ native contract
 
-Thirteen functions, and nothing else crosses. Changing a name on either side breaks it
+Fifteen functions, and nothing else crosses. Changing a name on either side breaks it
 silently, because the page checks for the bridge before using it and falls back to
 browser behaviour when it is absent.
 
@@ -643,7 +657,7 @@ browser behaviour when it is absent.
 |---|---|---|
 | page → native | `AndroidHost.savedPath(url)` | non-null once this PDF is on disk, so the row can read "saved" |
 | page → native | `AndroidHost.saveCopy(url)` | one URL to DownloadManager |
-| native → page | `window.taracmdSaved()` | a download landed; re-render the Toppers tab |
+| native → page | `window.taracmdSaved()` | a download landed; re-render the Toppers or Optional copies tab |
 | page → native | `AndroidHost.appVersion()` | the installed versionName, which only the APK knows |
 | page → native | `AndroidHost.focusAwake(on)` | hold the screen awake for a focus run, and let it sleep after |
 | native → page | `window.taracmdBack()` | hardware back. Closes sheet → collapses the outline → returns to the Syllabus tab → returns `false` so the OS takes over |
@@ -655,6 +669,7 @@ browser behaviour when it is absent.
 | page → native | `AndroidHost.docsOpen(id)` | hand one to whatever the phone reads it with |
 | page → native | `AndroidHost.docsRemove(id)` | delete it — the file, not a listing of it |
 | native → page | `window.taracmdDocs()` | the shelf changed (folder picked, files added); re-render |
+| page → native | `AndroidHost.askClaude(text)` | share a question to the Claude app (the chooser if it is not installed). TaraCmd sends nothing and holds no key; off Android the page uses the browser's share sheet, or copies the text and opens claude.ai |
 
 ### Sitting a paper: the clock, the submit, the retake
 

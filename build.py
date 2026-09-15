@@ -350,6 +350,28 @@ def check_toppers(toppers) -> None:
             fail("a toppers' publisher has no name or no url")
 
 
+def check_optional_copies(opt) -> None:
+    """The Optional copies tab, kept apart from the Toppers tab on purpose. A row
+    is one topper's copies in one optional; `subject` is null only where the
+    publisher never said which optional the booklets are, and the tab files
+    those under their own heading rather than guessing."""
+    rows: dict[tuple, str] = {}
+    for copy in opt.get("copies") or []:
+        check_copy(copy, "optional copy")
+        if "subject" not in copy:
+            fail(f"optional copy {copy.get('name', '?')!r} has no 'subject' (null if not stated)")
+        elif copy["subject"] is not None and not str(copy["subject"]).strip():
+            fail(f"optional copy {copy.get('name', '?')!r} has a blank subject")
+        key = (copy.get("year"), copy.get("rank"), copy.get("subject"))
+        if copy.get("year") and copy.get("rank") and key in rows:
+            fail(f"optional copies {rows[key]!r} and {copy.get('name')!r} are both rank {key[1]} "
+                 f"in {key[0]} {key[2]}")
+        rows[key] = copy.get("name", "?")
+    for p in opt.get("publishers") or []:
+        if not p.get("name") or not p.get("url"):
+            fail("an optional copies' publisher has no name or no url")
+
+
 DAILY_FIELDS = re.compile(r"\{(yyyy|mm|dd|d|month)\}")
 
 
@@ -419,6 +441,7 @@ def main() -> int:
     subjects = load("subjects.json")
     pyq = load("pyq-papers.json")
     toppers = load("toppers.json")
+    optcopies = load("optional-copies.json")
     keys = load("answer-keys.json")
     quiz = load("quiz.json")
     opts = load("optionals.json")
@@ -430,6 +453,7 @@ def main() -> int:
     check_paper_tags(quiz, keys)
     check_optionals(opts)
     check_toppers(toppers)
+    check_optional_copies(optcopies)
     check_daily(daily)
 
     if problems:
@@ -444,7 +468,7 @@ def main() -> int:
 
     data = {"__SUBJECTS__": subjects, "__PYQ__": pyq, "__TOPPERS__": toppers,
             "__KEYS__": keys, "__QUIZ__": quiz, "__OPTIONALS__": opts,
-            "__DAILY__": daily}
+            "__DAILY__": daily, "__OPTCOPIES__": optcopies}
 
     values = {t: json.dumps(v, ensure_ascii=False, separators=(",", ":"))
               for t, v in data.items()}

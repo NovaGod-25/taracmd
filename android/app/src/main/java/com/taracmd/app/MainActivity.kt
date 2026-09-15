@@ -75,6 +75,9 @@ class MainActivity : AppCompatActivity() {
          * not one of the owner's documents.
          */
         private const val BACKUP_NAME = "TaraCmd progress.json"
+
+        /** The Claude app, which an Ask Claude tap shares a question straight into. */
+        private const val CLAUDE_APP = "com.anthropic.claude"
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -426,6 +429,27 @@ class MainActivity : AppCompatActivity() {
 
             runCatching {
                 (getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager).enqueue(req)
+            }
+        }
+
+        /**
+         * Hand a question to Claude. The page writes the text; this only opens
+         * Android's share sheet with it -- aimed straight at the Claude app
+         * when it is installed, the ordinary chooser when it is not. TaraCmd
+         * sends nothing itself and holds no key or account: the question is
+         * asked, and answered, in the owner's own Claude app.
+         */
+        @JavascriptInterface
+        fun askClaude(text: String) {
+            runOnUiThread {
+                val send = Intent(Intent.ACTION_SEND)
+                    .setType("text/plain")
+                    .putExtra(Intent.EXTRA_TEXT, text)
+                try {
+                    startActivity(Intent(send).setPackage(CLAUDE_APP))
+                } catch (e: ActivityNotFoundException) {
+                    runCatching { startActivity(Intent.createChooser(send, "Ask Claude")) }
+                }
             }
         }
 

@@ -217,6 +217,22 @@ def _(root):
     edit(root, "toppers.json", m)
 
 
+@case("optional copy with no subject key", "null if not stated")
+def _(root):
+    # Unknown is null, said out loud; a missing key is a row nobody looked at.
+    def m(d):
+        del d["copies"][0]["subject"]
+    edit(root, "optional-copies.json", m)
+
+
+@case("same optional topper entered twice", "are both rank")
+def _(root):
+    def m(d):
+        c = next(x for x in d["copies"] if x.get("year") and x.get("rank"))
+        d["copies"].append(dict(c, name="Someone Else"))
+    edit(root, "optional-copies.json", m)
+
+
 @case("daily url with no date in it", "no date in it")
 def _(root):
     # A pattern without the date would point at the same day forever.

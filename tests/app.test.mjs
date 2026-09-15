@@ -516,7 +516,7 @@ describe("navigation", () => {
     const items = JSON.parse(inPage(win,
       `JSON.stringify([...document.querySelectorAll(".ditem b")].map(e => e.textContent))`));
     assert.deepEqual(items,
-      ["Toppers' copies", "Read the whole syllabus", "Back up or restore", "Updates"],
+      ["Toppers' copies", "Optional copies", "Read the whole syllabus", "Back up or restore", "Updates"],
       "the drawer is where rare destinations go, so name them rather than count them");
     inPage(win, `state.tab = "toppers"; markTab("toppers"); render();`);
     assert.equal(Number(inPage(win, `document.querySelectorAll(".tab.on").length`)), 0,
@@ -1129,6 +1129,43 @@ describe("CSAT on the answer grid", () => {
   });
 });
 
+/* Ask Claude hands a question to the share sheet. The text has to stand on its
+   own, because Claude sees nothing else: the passage, the stem, every option,
+   the key and what was chosen. */
+describe("asking Claude about a question", () => {
+  test("the question travels whole, and the notebook and the retry offer it", () => {
+    const out = JSON.parse(inPage(win, `(() => {
+      const q = QUIZ.questions.find(x => x.passage) || QUIZ.questions[0];
+      const t = askText(q, (q.answer + 1) % 4);
+      const r = { stem: t.includes(q.q), opts: q.options.every(o => t.includes(o)),
+                  pass: t.includes(QUIZ.passages[q.passage]),
+                  key: t.includes("(" + LET[q.answer].toLowerCase() + ")"),
+                  chose: t.includes("I chose (" + LET[(q.answer + 1) % 4].toLowerCase() + ")") };
+      store.mistakes = {[q.id]: {on: Date.now(), step: 0, wrong: 1, right: 0, due: Date.now() - 1000}};
+      state.tab = "practice"; state.qmode = "mistakes"; state.qpaperId = null; state.mretry = false; state.mres = null; render();
+      r.inNotebook = !!document.querySelector('.mrow [data-ask="' + q.id + '"]');
+      let shared = null; navigator.share = d => { shared = d.text; return Promise.resolve(); };
+      document.querySelector('.mrow [data-ask]').click();
+      r.shared = shared === askText(q, null);
+      document.getElementById("mgo").click();
+      r.beforePick = !!document.querySelector(".qcard.run [data-ask]");
+      document.querySelector('[data-mpick="' + q.answer + '"]').click();
+      r.afterPick = document.querySelector(".qcard.run [data-ask]").dataset.askpick === String(q.answer);
+      delete navigator.share; store.mistakes = {}; state.mretry = false; state.mres = null; state.qmode = "daily";
+      state.tab = "syllabus"; render();
+      return JSON.stringify(r); })()`));
+    assert.equal(out.stem, true);
+    assert.equal(out.opts, true, "every option is in it");
+    assert.equal(out.pass, true, "and the passage a CSAT question stands on");
+    assert.equal(out.key, true);
+    assert.equal(out.chose, true, "and what was chosen");
+    assert.equal(out.inNotebook, true);
+    assert.equal(out.shared, true, "a tap hands exactly that text to the share sheet");
+    assert.equal(out.beforePick, false, "the retry does not offer it before you answer");
+    assert.equal(out.afterPick, true, "and after, it carries your pick");
+  });
+});
+
 /* The mistakes notebook: every question got wrong on a submitted paper, kept
    across all papers, grouped by topic, and asked again on a widening schedule. */
 describe("the mistakes notebook", () => {
@@ -1253,6 +1290,43 @@ describe("the toppers list", () => {
     assert.equal(out.chips, out.booklets);
     assert.equal(out.nested, 0);
     assert.equal(out.blank, 0, "every chip names its paper");
+  });
+});
+
+/* Optional copies are their own tab, chosen by subject, and kept out of the
+   Toppers tab: GS and Essay there, the optional papers here. */
+describe("the optional copies tab", () => {
+  test("by subject, sign-in rows last and hideable, and none left in Toppers", () => {
+    const out = JSON.parse(inPage(win, `(() => {
+      state.tab = "optcopies"; state.ocsub = null; state.ocfree = false; markTab("optcopies"); render();
+      const chips = [...document.querySelectorAll("[data-ocsub]")].map(b => b.dataset.ocsub);
+      const r = { chips, lit: document.querySelectorAll(".tab.on").length };
+      state.ocsub = "Law"; renderOptCopies();
+      const law = OPTCOPIES.copies.filter(c => c.subject === "Law");
+      const rowMetas = () => [...document.querySelectorAll(".tcard .tmeta")].filter(e => e.closest(".tcard").querySelector(".rank"));
+      r.lawRows = rowMetas().length;
+      r.law = law.length;
+      const metas = rowMetas().map(e => e.textContent);
+      const firstLogin = metas.findIndex(t => /sign in to open/.test(t));
+      r.loginLast = firstLogin < 0 || metas.slice(firstLogin).every(t => /sign in to open/.test(t));
+      const free = document.querySelector('[data-ocfree="1"]');
+      if(free){ free.click(); r.freeRows = rowMetas().filter(e => /sign in to open/.test(e.textContent)).length; }
+      r.inToppers = TOPPERS.copies.some(c => (c.files || []).some(f => /^Optional/.test(f.paper)));
+      state.tab = "papers"; state.pset = "optional"; state.opt = "law"; render();
+      const go = document.querySelector("[data-ocgo]");
+      r.pointer = !!go;
+      if(go){ go.click(); r.landed = state.tab + "/" + state.ocsub; }
+      state.tab = "syllabus"; state.pset = "prelims"; state.ocfree = false; render();
+      return JSON.stringify(r); })()`));
+    assert.ok(out.chips.length > 5, "one chip per optional");
+    assert.equal(out.chips[out.chips.length - 1], "Subject not stated", "the unlabelled ones last, not guessed into a subject");
+    assert.equal(out.lit, 0, "reached from the drawer, so no tab is lit");
+    assert.equal(out.lawRows, out.law);
+    assert.equal(out.loginLast, true, "rows that need a sign-in come after the ones that open");
+    assert.equal(out.freeRows, 0, "and one chip hides them");
+    assert.equal(out.inToppers, false, "no optional booklet is left in the Toppers tab");
+    assert.equal(out.pointer, true, "the Optional tab points at its subject's copies");
+    assert.equal(out.landed, "optcopies/Law");
   });
 });
 

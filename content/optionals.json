@@ -175,7 +175,338 @@
           ]
         }
       ],
-      "copies": []
+      "copies": [],
+      "syllabus": [
+        {
+          "paper": "Paper I",
+          "title": "Principles of Geography",
+          "parts": [
+            {
+              "title": "Physical Geography",
+              "topics": [
+                {
+                  "name": "Geomorphology",
+                  "points": [
+                    "Factors controlling landform development",
+                    "endogenetic and exogenetic forces",
+                    "Origin and evolution of the earth’s crusts",
+                    "Fundamentals of geomagnetism",
+                    "Physical conditions of the earth’s interior",
+                    "Geosynclines",
+                    "Continental drift",
+                    "Isostasy",
+                    "Plate tectonics",
+                    "Recent views on mountain building",
+                    "Volcanicity",
+                    "Earthquakes and Tsunamis",
+                    "Concepts of geomorphic cycles and Land scape development",
+                    "Denudation chronology",
+                    "Channel morphology",
+                    "Erosion surfaces",
+                    "Slope development",
+                    "Applied Geomorphology",
+                    "Geomorphology, economic geology and environment"
+                  ]
+                },
+                {
+                  "name": "Climatology",
+                  "points": [
+                    "Temperature and pressure belts of the world",
+                    "Heat budget of the earth",
+                    "Atmospheric circulation",
+                    "Atmospheric stability and instability",
+                    "Planetary and local winds",
+                    "Monsoons and jet streams",
+                    "Air masses and fronts",
+                    "Temperate and tropical cyclones",
+                    "Types and distribution of precipitation",
+                    "Weather and Climate",
+                    "Koppen’s Thornthwaite’s and Trewar Tha’s classification of world climate",
+                    "Hydrological cycle",
+                    "Global climatic change, and role and response of man in climatic changes Applied climatology and Urban climate"
+                  ]
+                },
+                {
+                  "name": "Oceanography",
+                  "points": [
+                    "Bottom topography of the Atlantic, Indian and Pacific Oceans",
+                    "Temperature and salinity of the oceans",
+                    "Heat and salt budgets, Ocean deposits",
+                    "Waves, currents and tides",
+                    "Marine resources",
+                    "biotic, mineral and energy resources",
+                    "Coral reefs coral bleaching",
+                    "Sea-level changes",
+                    "Law of the sea and marine pollution"
+                  ]
+                },
+                {
+                  "name": "Biogeography",
+                  "points": [
+                    "Genesis of soils",
+                    "Classification and distribution of soils",
+                    "Soil profile",
+                    "Soil erosion, Degradation and conservation",
+                    "Factors influencing world distribution of plants and animals",
+                    "Problems of deforestation and conservation measures",
+                    "Social forestry, agro-forestry",
+                    "Wild life",
+                    "Major gene pool centres"
+                  ]
+                },
+                {
+                  "name": "Environmental Geography",
+                  "points": [
+                    "Principle ecology",
+                    "Human ecological adaptations",
+                    "Influence of man on ecology and environment",
+                    "Global and regional ecological changes and imbalances",
+                    "Ecosystem their management and conservation",
+                    "Environmental degradation, management and conservation",
+                    "Biodiversity and sustainable development",
+                    "Environmental policy",
+                    "Environmental hazards and remedial measures",
+                    "Environmental education and legislation"
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "Human Geography",
+              "topics": [
+                {
+                  "name": "Perspectives in Human Geography",
+                  "points": [
+                    "Areal differentiation",
+                    "Regional synthesis",
+                    "Dichotomy and dualism",
+                    "Environmentalism",
+                    "Quantitative revolution and locational analysis",
+                    "Radical, behavioural, human and welfare approaches",
+                    "Languages, religions and secularisation",
+                    "Cultural regions of the world",
+                    "Human development index"
+                  ]
+                },
+                {
+                  "name": "Economic Geography",
+                  "points": [
+                    "World economic development: measurement and problems",
+                    "World resources and their distribution",
+                    "Energy crisis",
+                    "the limits to growth",
+                    "World agriculture: typology of agricultural regions",
+                    "Agricultural inputs and productivity",
+                    "Food and nutritions problems",
+                    "Food security",
+                    "famine: causes, effects and remedies",
+                    "World industries: location patterns and problems",
+                    "Patterns of world trade"
+                  ]
+                },
+                {
+                  "name": "Population and Settlement Geography",
+                  "points": [
+                    "Growth and distribution of world population",
+                    "Demographic attributes",
+                    "Causes and consequences of migration",
+                    "Concepts of over-under-and optimum population",
+                    "Population theories, world population problems and policies, Social well-being and quality of life",
+                    "Population as social capital",
+                    "Types and patterns of rural settlements",
+                    "Environmental issues in rural settlements",
+                    "Hierarchy of urban settlements",
+                    "Urban morphology",
+                    "Concept of primate city and rank-size rule",
+                    "Functional classification of towns",
+                    "Sphere of urban influence",
+                    "Rural-urban fringe",
+                    "Satellite towns",
+                    "Problems and remedies of urbanization",
+                    "Sustainable development of cities"
+                  ]
+                },
+                {
+                  "name": "Regional Planning",
+                  "points": [
+                    "Concept of a region",
+                    "Types of regions and methods of regionalisation",
+                    "Growth centres and growth poles",
+                    "Regional imbalances",
+                    "Regional development strategies",
+                    "Environmental issues in regional planning",
+                    "Planning for sustainable development"
+                  ]
+                },
+                {
+                  "name": "Models, Theories and Laws in Human Geography",
+                  "points": [
+                    "System analysis in Human geography",
+                    "Malthusian, Marxian and demographic transition models",
+                    "Central Place theories of Christaller and Losch",
+                    "Perroux and Boudeville",
+                    "Von Thunen’s model of agricultural location",
+                    "Weber’s model of industrial location",
+                    "Ostov’s model of stages of growth",
+                    "Heart-land and Rimland theories",
+                    "Laws of international boundaries and frontiers"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "paper": "Paper II",
+          "title": "Geography of India",
+          "parts": [
+            {
+              "title": "",
+              "topics": [
+                {
+                  "name": "Physical Setting",
+                  "points": [
+                    "Space relationship of India with neighbouring countries",
+                    "Structure and relief",
+                    "Drainage system and watersheds",
+                    "Physiographic regions",
+                    "Mechanism of Indian monsoons and rainfall patterns",
+                    "Tropical cyclones and western disturbances",
+                    "Floods and droughts",
+                    "Climatic regions",
+                    "Natural vegetation, Soil types and their distributions"
+                  ]
+                },
+                {
+                  "name": "Resources",
+                  "points": [
+                    "Land, surface and ground water, energy, minerals, biotic and marine resources, Forest and wild life resources and their conservation",
+                    "Energy crisis"
+                  ]
+                },
+                {
+                  "name": "Agriculture",
+                  "points": [
+                    "Infrastructure: irrigation, seeds, fertilizers, power",
+                    "Institutional factors",
+                    "land holdings, land tenure and land reforms",
+                    "Cropping pattern, agricultural productivity, agricultural intensity, crop combination, land capability",
+                    "Agro and social-forestry",
+                    "Green revolution and its socio-economic and ecological implications",
+                    "Significance of dry farming",
+                    "Livestock resources and white revolution",
+                    "Aqua-culture",
+                    "Sericulture, Agriculture and poultry",
+                    "Agricultural regionalisation",
+                    "Agro-climatic zones",
+                    "Agro-ecological regions"
+                  ]
+                },
+                {
+                  "name": "Industry",
+                  "points": [
+                    "Evolution of industries",
+                    "Locational factors of cotton, jute, textile, iron and steel, aluminium, fertiliser, paper, chemical and pharmaceutical, automobile, cottage and agro-based industries",
+                    "Industrial houses and complexes including public sector undertakings",
+                    "Industrial regionalisation",
+                    "New industrial policy",
+                    "Multinationals and liberalisation",
+                    "Special Economic Zones",
+                    "Tourism including ecotourism"
+                  ]
+                },
+                {
+                  "name": "Transport, Communication and Trade",
+                  "points": [
+                    "Road, railway, waterway, airway and pipeline net works and their complementary roles in regional development",
+                    "Growing importance of ports on national and foreign trade",
+                    "Trade balance",
+                    "Trade Policy",
+                    "Export processing zones",
+                    "Developments in communication and information technology and their impacts on economy and society",
+                    "Indian space programme"
+                  ]
+                },
+                {
+                  "name": "Cultural Setting",
+                  "points": [
+                    "Historical Perspective of Indian Society",
+                    "Racial linguistic and ethnic diversities",
+                    "religious minorities",
+                    "Major tribes, tribal areas and their problems",
+                    "Cultural regions",
+                    "Growth, distribution and density of population",
+                    "Demographic attributes: sex-ratio, age structure, literacy rate, work-force, dependency ratio, longevity",
+                    "migration (inter-regional, intraregional and international) and associated problems",
+                    "Population problems and policies",
+                    "Health indicators"
+                  ]
+                },
+                {
+                  "name": "Settlements",
+                  "points": [
+                    "Types, patterns and morphology of rural settlements",
+                    "Urban developments",
+                    "Morphology of Indian cities",
+                    "Functional classification of Indian cities",
+                    "Conurbations and metropolitan regions",
+                    "Urban sprawl",
+                    "Slums and asssociated problems",
+                    "Town planning",
+                    "Problems of urbanisation and remedies"
+                  ]
+                },
+                {
+                  "name": "Regional Development and Planning",
+                  "points": [
+                    "Experience of regional planning in India",
+                    "Five Year Plans",
+                    "Integrated rural development programmes",
+                    "Panchayati Raj and decentralised planning",
+                    "Command area development",
+                    "Watershed management",
+                    "Planning for backward area, desert, drought-prone, hill tribal area development",
+                    "Multi-level planning",
+                    "Regional planning and development of island territories"
+                  ]
+                },
+                {
+                  "name": "Political Aspects",
+                  "points": [
+                    "Geographical basis of Indian federalism",
+                    "State reorganisation",
+                    "Emergence of new states",
+                    "Regional consciousness and inter-state issues",
+                    "International boundary of India and related issues",
+                    "Cross-border terrorism",
+                    "India’s role in world affairs",
+                    "Geopolitics of South Asia and Indian Ocean realm"
+                  ]
+                },
+                {
+                  "name": "Contemporary Issues",
+                  "points": [
+                    "Ecological issues: Environmental hazards: landslides, earthquakes, Tsunamis, floods and droughts, epidemics",
+                    "Issues related to environmental pollution",
+                    "Changes in patterns of land use",
+                    "Principles of environmental impact assessment and environmental management",
+                    "Population explosion and food security",
+                    "Environmental degradation",
+                    "Deforestation, desertification and soil erosion",
+                    "Problems of agrarian and industrial unrest",
+                    "Regional disparities in economic development",
+                    "Concept of sustainable growth and development",
+                    "Environmental awareness",
+                    "Linkage of rivers",
+                    "Globalisation and Indian economy"
+                  ]
+                }
+              ]
+            }
+          ],
+          "note": "Candidates will be required to answer one compulsory map question pertinent to subjects covered by this paper."
+        }
+      ]
     },
     {
       "id": "law",
@@ -351,7 +682,387 @@
           ]
         }
       ],
-      "copies": []
+      "copies": [],
+      "syllabus": [
+        {
+          "paper": "Paper I",
+          "title": "",
+          "parts": [
+            {
+              "title": "Constitutional and Administrative Law",
+              "topics": [
+                {
+                  "name": "Constitution and Constitutionalism:The distinctive features of the Constitution",
+                  "points": []
+                },
+                {
+                  "name": "Fundamental Rights—Public interest litigation; Legal Aid; Legal services authority",
+                  "points": []
+                },
+                {
+                  "name": "Relationship between Fundamental rights, Directive principles and Fundamental duties",
+                  "points": []
+                },
+                {
+                  "name": "Constitutional Position of the President and relation with the Council of Ministers",
+                  "points": []
+                },
+                {
+                  "name": "Governor and his powers",
+                  "points": []
+                },
+                {
+                  "name": "Supreme Court and the High Courts",
+                  "points": [
+                    "Appointments and transfer",
+                    "Powers, functions and jurisdiction"
+                  ]
+                },
+                {
+                  "name": "Centre, States and local bodies",
+                  "points": [
+                    "Distribution of legislative powers between the Union and the States",
+                    "Local Bodies",
+                    "Administrative relationship among Union, State and Local Bodies",
+                    "Eminent domain-State property-common property-community property"
+                  ]
+                },
+                {
+                  "name": "Legislative powers, privileges and immunities",
+                  "points": []
+                },
+                {
+                  "name": "Services under the Union and the States",
+                  "points": [
+                    "Recruitment and conditions of services; Constitutional safeguards; Administrative tribunals",
+                    "Union Public Service Commission and State Public Service Commissions—Power and functions",
+                    "Election Commission—Power and functions"
+                  ]
+                },
+                {
+                  "name": "Emergency provisions",
+                  "points": []
+                },
+                {
+                  "name": "Amendment of the Constitution",
+                  "points": []
+                },
+                {
+                  "name": "Principle of Natural Justice—Emerging trends and judicial approach",
+                  "points": []
+                },
+                {
+                  "name": "Delegated legislation and its constitutionality",
+                  "points": []
+                },
+                {
+                  "name": "Separation of powers and constitutional governance",
+                  "points": []
+                },
+                {
+                  "name": "Judicial review of administrative action",
+                  "points": []
+                },
+                {
+                  "name": "Ombudsman: Lokayukta, Lokpal etc",
+                  "points": []
+                }
+              ]
+            },
+            {
+              "title": "International Law",
+              "topics": [
+                {
+                  "name": "Nature and Definition of International Law",
+                  "points": []
+                },
+                {
+                  "name": "Relationship between International Law and Municipal Law",
+                  "points": []
+                },
+                {
+                  "name": "State Recognition and State Succession",
+                  "points": []
+                },
+                {
+                  "name": "Law of the sea: Inland Waters,Territorial Sea, Contiguous Zone, Continental Shelf, Exclusive Economic Zone and High Seas",
+                  "points": []
+                },
+                {
+                  "name": "Individuals: Nationality, statelessness; Human Rights and procedures available for their enforcement",
+                  "points": []
+                },
+                {
+                  "name": "Territorial jurisdiction of States, Extradition and Asylum",
+                  "points": []
+                },
+                {
+                  "name": "Treaties : Formation, application, termination and reservation",
+                  "points": []
+                },
+                {
+                  "name": "United Nations : Its principal organs, powers and functions and reform",
+                  "points": []
+                },
+                {
+                  "name": "Peaceful settlement of disputes—different modes",
+                  "points": []
+                },
+                {
+                  "name": "Lawful recourse to force : aggressions, self-defence, intervention",
+                  "points": []
+                },
+                {
+                  "name": "Fundamental principles of international humanitarian law—International conventions and contemporary developments",
+                  "points": []
+                },
+                {
+                  "name": "Legality of the use of nuclear weapons; ban on testing of nuclear weapons; Nuclear non- proliferation treaty, CTST",
+                  "points": []
+                },
+                {
+                  "name": "International Terrorism, State sponsored terrorism, Hijacking, International Criminal Court",
+                  "points": []
+                },
+                {
+                  "name": "New International Economic Order and Monetary Law : WTO, TRIPS, GATT, IMF, World Bank",
+                  "points": []
+                },
+                {
+                  "name": "Protection and Improvement of the Human Environment : International Efforts",
+                  "points": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "paper": "Paper II",
+          "title": "",
+          "parts": [
+            {
+              "title": "Law of Crimes",
+              "topics": [
+                {
+                  "name": "General principles of Criminal liability : mens rea and actus reus, mens rea in statutory offences",
+                  "points": []
+                },
+                {
+                  "name": "Kinds of punishment and emerging trends as to abolition of capital punishment",
+                  "points": []
+                },
+                {
+                  "name": "Preparations and criminal attempt",
+                  "points": []
+                },
+                {
+                  "name": "General exceptions",
+                  "points": []
+                },
+                {
+                  "name": "Joint and constructive liability",
+                  "points": []
+                },
+                {
+                  "name": "Abetment",
+                  "points": []
+                },
+                {
+                  "name": "Criminal conspiracy",
+                  "points": []
+                },
+                {
+                  "name": "Offences against the State",
+                  "points": []
+                },
+                {
+                  "name": "Offences against public tranquility",
+                  "points": []
+                },
+                {
+                  "name": "Offences against human body",
+                  "points": []
+                },
+                {
+                  "name": "Offences against property",
+                  "points": []
+                },
+                {
+                  "name": "Offences against women",
+                  "points": []
+                },
+                {
+                  "name": "Defamation",
+                  "points": []
+                },
+                {
+                  "name": "Prevention of Corruption Act, 1988",
+                  "points": []
+                },
+                {
+                  "name": "Protection of Civil Rights Act, 1955 and subsequent legislative developments",
+                  "points": []
+                },
+                {
+                  "name": "Plea bargaining",
+                  "points": []
+                }
+              ]
+            },
+            {
+              "title": "Law of Torts",
+              "topics": [
+                {
+                  "name": "Nature and definition",
+                  "points": []
+                },
+                {
+                  "name": "Liability based upon fault and strict liability; Absolute liability",
+                  "points": []
+                },
+                {
+                  "name": "Vicarious liability including State Liability",
+                  "points": []
+                },
+                {
+                  "name": "General defences",
+                  "points": []
+                },
+                {
+                  "name": "Joint tort fessors",
+                  "points": []
+                },
+                {
+                  "name": "Remedies",
+                  "points": []
+                },
+                {
+                  "name": "Negligence",
+                  "points": []
+                },
+                {
+                  "name": "Defamation",
+                  "points": []
+                },
+                {
+                  "name": "Nuisance",
+                  "points": []
+                },
+                {
+                  "name": "Conspiracy",
+                  "points": []
+                },
+                {
+                  "name": "False imprisonment",
+                  "points": []
+                },
+                {
+                  "name": "Malicious prosecution",
+                  "points": []
+                },
+                {
+                  "name": "Consumer Protection Act, 1986",
+                  "points": []
+                }
+              ]
+            },
+            {
+              "title": "Law of Contracts and Mercantile Law",
+              "topics": [
+                {
+                  "name": "Nature and formation of contract/E-contract",
+                  "points": []
+                },
+                {
+                  "name": "Factors vitiating free consent",
+                  "points": []
+                },
+                {
+                  "name": "Void, voidable, illegal and unenforceable agreements",
+                  "points": []
+                },
+                {
+                  "name": "Performance and discharge of contracts",
+                  "points": []
+                },
+                {
+                  "name": "Quasi-contracts",
+                  "points": []
+                },
+                {
+                  "name": "Consequences of breach of contract",
+                  "points": []
+                },
+                {
+                  "name": "Contract of indemnity, guarantee and insurance",
+                  "points": []
+                },
+                {
+                  "name": "Contract of agency",
+                  "points": []
+                },
+                {
+                  "name": "Sale of goods and hire purchase",
+                  "points": []
+                },
+                {
+                  "name": "Formation and dissolution of partnership",
+                  "points": []
+                },
+                {
+                  "name": "Negotiable Instruments Act, 1881",
+                  "points": []
+                },
+                {
+                  "name": "Arbitration and Conciliation Act, 1996",
+                  "points": []
+                },
+                {
+                  "name": "Standard form contracts",
+                  "points": []
+                }
+              ]
+            },
+            {
+              "title": "Contemporary Legal Developments",
+              "topics": [
+                {
+                  "name": "Public Interest Litigation",
+                  "points": []
+                },
+                {
+                  "name": "Intellectual property rights—Concept, types/prospects",
+                  "points": []
+                },
+                {
+                  "name": "Information Technology Law including Cyber Laws—Concept, purpose/prospects",
+                  "points": []
+                },
+                {
+                  "name": "Competition Law—Concept, purpose/prospects",
+                  "points": []
+                },
+                {
+                  "name": "Alternate Dispute Resolution—Concept, types/prospects",
+                  "points": []
+                },
+                {
+                  "name": "Major statutes concerning environmental law",
+                  "points": []
+                },
+                {
+                  "name": "Right to Information Act",
+                  "points": []
+                },
+                {
+                  "name": "Trial by media",
+                  "points": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "agriculture",
@@ -527,7 +1238,208 @@
           ]
         }
       ],
-      "copies": []
+      "copies": [],
+      "syllabus": [
+        {
+          "paper": "Paper I",
+          "title": "",
+          "parts": [
+            {
+              "title": "",
+              "topics": [
+                {
+                  "name": "Ecology and its relevance to man, natural resources, their sustainable management and conservation",
+                  "points": [
+                    "Physical and social environment as factors of crop distribution and production",
+                    "Agro ecology",
+                    "cropping pattern as indicators of environments",
+                    "Environmental pollution and associated hazards to crops, animals and humans",
+                    "Climate change—International conventions and global initiatives",
+                    "Green house effect and global warming",
+                    "Advance tools for ecosystem analysis—Remote Sensing (RS) and Geographic Information Systems (GIS)"
+                  ]
+                },
+                {
+                  "name": "Cropping patterns in different agro-climatic zones of the country",
+                  "points": [
+                    "Impact of high-yielding and short-duration varieties on shifts in cropping patterns",
+                    "Concepts of various cropping, and farming systems",
+                    "Organic and Precision farming",
+                    "Package of practices for production of important cereals, pulses, oil seeds, fibres, sugar, commercial and fodder crops"
+                  ]
+                },
+                {
+                  "name": "Important features, and scope of various types of forestry plantations such as social forestry, agro-forestry, and natural forests: Propagation of forest plants",
+                  "points": [
+                    "Forest products",
+                    "Agro-forestry and value addition",
+                    "Conservation of forest flora and fauna"
+                  ]
+                },
+                {
+                  "name": "Weeds, their characteristics, dissemination and association with various crops; their multiplications; cultural, biological, and chemical control of weeds",
+                  "points": []
+                },
+                {
+                  "name": "Soil—physical, chemical and biological properties",
+                  "points": [
+                    "Processes and factors of soil formation",
+                    "soils of India",
+                    "Mineral and organic constituents of soils and their role in maintaining soil productivity",
+                    "Essential plant nutrients and other beneficial elements in soils and plants",
+                    "Principles of soil fertility, soil testing and fertiliser recommendations, integrated nutrient management Biofertilizers",
+                    "Losses of nitrogen in soil, nitrogen-use efficiency in submerged rice soils, nitrogen fixation in soils",
+                    "Efficient phosphorus and potassium use",
+                    "Problem soils and their reclamation",
+                    "Soil factors affecting green house gas emission"
+                  ]
+                },
+                {
+                  "name": "Soil conservation, integrated watershed management",
+                  "points": [
+                    "Soil erosion and its management",
+                    "Dry land agriculture and its problems",
+                    "Technology for stabilising agriculture production in rain fed areas"
+                  ]
+                },
+                {
+                  "name": "Water-use efficiency in relation to crop production, criteria for scheduling irrigations, ways and means of reducing run-off losses of irrigation water",
+                  "points": [
+                    "Rainwater harvesting",
+                    "Drip and sprinkler irrigation",
+                    "Drainage of water-logged soils, quality of irrigation water, effect of industrial effluents on soil and water pollution",
+                    "Irrigation projects in India"
+                  ]
+                },
+                {
+                  "name": "Farm management, scope, importance and characteristics, farm planning",
+                  "points": [
+                    "Optimum resource use and budgeting",
+                    "Economics of different types of farming systems",
+                    "Marketing management strategies for development, market intelligence",
+                    "price fluctuations and their cost",
+                    "role of co-operatives in agricultural economy",
+                    "types and systems of farming and factors affecting them",
+                    "Agricultural price policy",
+                    "Crop Insurance"
+                  ]
+                },
+                {
+                  "name": "Agricultural extension, its importance and role, methods of evaluation of extension programmes, socio-economic survey and status of big, small and marginal farmers and landless agricultural labourers; Training programmes for extension workers",
+                  "points": [
+                    "Role of Krishi Vigyan Kendra’s (KVK) in dissemination of Agricultural technologies",
+                    "Non-Government Organisation (NGO) and self-help group approach for rural development"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "paper": "Paper II",
+          "title": "",
+          "parts": [
+            {
+              "title": "",
+              "topics": [
+                {
+                  "name": "Cell structure, function and cell cycle",
+                  "points": [
+                    "Synthesis, structure and function of genetic material",
+                    "Laws of heredity",
+                    "Chromosome structure, chromosomal aberrations, linkage and cross-over, and their significance in recombination breeding",
+                    "Polyploidy, euploids and aneuploids",
+                    "Mutation—and their role in crop improvement",
+                    "Heritability, sterility and incompatibility, classification and their application in crop improvement",
+                    "Cytoplasmic inheritance, sex-linked, sex-influenced and sex-limited characters"
+                  ]
+                },
+                {
+                  "name": "History of plant breeding",
+                  "points": [
+                    "Modes of reproduction, selfing and crossing techniques",
+                    "Origin, evolution and domestication of crop plants, center of origin, law of homologous series, crop genetic resources— conservation and utilization",
+                    "Application of principles of plant breeding, improvement of crop plants",
+                    "Molecular markers and their application in plant improvement",
+                    "Pure-line selection, pedigree, mass and recurrent selections, combining ability, its significance in plant breeding",
+                    "Heterosis and its exploitation",
+                    "Somatic hybridization",
+                    "Breeding for disease and pest resistance",
+                    "Role of interspecific and intergeneric hybridization",
+                    "Role of genetic engineering and biotechnology in crop improvement Genetically modified crop plants"
+                  ]
+                },
+                {
+                  "name": "Seed production and processing technologies",
+                  "points": [
+                    "Seed certification, Seed testing and storage",
+                    "DNA finger printing and seed registration",
+                    "Role of public and private sectors in seed production, and marketing",
+                    "Intellectual Property Rights (IPR) issues, WTO issues and its impact on Agriculture"
+                  ]
+                },
+                {
+                  "name": "Principles of Plant Physiology with reference to plant nutrition, absorption, translocation and metabolism of nutrients",
+                  "points": [
+                    "Soil-water-plant relationship"
+                  ]
+                },
+                {
+                  "name": "Enzymes and plant pigments; photosynthesis—modern concepts and factors affecting the process, aerobic and anaerobic respiration; C3, C4 and CAM mechanisms",
+                  "points": [
+                    "Carbohydrate, protein and fat metabolism",
+                    "Growth and development",
+                    "photoperiodism and vernalization",
+                    "Plant growth substances and their role in crop production",
+                    "Physiology of seed development and germination",
+                    "dormancy",
+                    "Stress physiology—draught, salt and water stress"
+                  ]
+                },
+                {
+                  "name": "Major fruits, plantation crops, vegetables, spices and flower crops",
+                  "points": [
+                    "package practices of major horticultural crops",
+                    "Protected cultivation and high tech horticulture",
+                    "Post-harvest technology and value addition of fruits and vegetables",
+                    "Landscaping and commercial floriculture",
+                    "Medicinal and aromatic plants",
+                    "Role of fruits and vegetables in human nutrition"
+                  ]
+                },
+                {
+                  "name": "Diagnosis of pests and diseases of field crops, vegetables, orchard and plantation crops and their economic importance",
+                  "points": [
+                    "Classification of pests and diseases and their management",
+                    "Integrated pest and diseases management",
+                    "Storage pests and their management",
+                    "Biological control of pests and diseases",
+                    "Epidemiology and forecasting of major crop pests and diseases",
+                    "Plant quarantine measures",
+                    "Pesticides, their formulation and modes of action"
+                  ]
+                },
+                {
+                  "name": "Food production and consumption trends in India",
+                  "points": [
+                    "Food security and growing population—vision 2020",
+                    "Reasons for grain surplus",
+                    "National and International food policies",
+                    "Production, procurement, distribution constraints",
+                    "Availability of foodgrains, per capita expenditure on food",
+                    "Trends in poverty, Public Distribution System and Below Poverty Line population, Targeted Public Distribution System (PDS), policy implementation in context to globalization",
+                    "Processing constraints",
+                    "Relation of food production to National Dietary Guidelines and food consumption pattern",
+                    "Food based dietary approaches to eliminate hunger",
+                    "Nutrient deficiency—Micro nutrient deficiency: Protein Energy Malnutrition or Protein Calorie Malnutrition (PEM or PCM), Micro nutrient deficiency and HRD in context of work capacity of women and children",
+                    "Food grain productivity and food security"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "publishers": [
@@ -561,5 +1473,6 @@
       "url": "https://www.insightsonindia.com/upsc-toppers-answer-copies-download-ias-toppers-answer-booklets/",
       "note": "Older sets, some as direct PDFs."
     }
-  ]
+  ],
+  "syllabus_source": "https://www.upsc.gov.in/sites/default/files/Notif-CSP-2026-Engl-060226Rev.pdf"
 }

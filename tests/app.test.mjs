@@ -279,83 +279,118 @@ describe("scoring a Prelims paper against the official key", () => {
 });
 
 describe("the syllabus tab", () => {
-  test("by subject: nine groups, and the counts add up to the whole syllabus", () => {
-    const g = JSON.parse(inPage(win, `
-      (() => { state.lens = "subject";
-        return JSON.stringify(groups().map(x => ({id: x.id, n: x.topics.length}))); })()`));
-    assert.equal(g.length, 9);
-    assert.equal(g.reduce((a, x) => a + x.n, 0), 249);
+  /* A page to read: every subject a coloured card, every topic numbered, its
+     points a tap away, and nothing to tick. */
+  test("every subject, topic and point is on the page, and nothing asks for a tick", () => {
+    const out = JSON.parse(inPage(win, `(() => {
+      state.tab = "syllabus"; state.read = false; state.sview = "gs"; render();
+      const gs = [...document.querySelectorAll("#sdoc .ssec:not(.sopt)")];
+      const r = {
+        subjects: gs.length,
+        topics: gs.reduce((a, s) => a + s.querySelectorAll(".stp").length, 0),
+        points: gs.reduce((a, s) => a + s.querySelectorAll(".stp-l li").length, 0),
+        ticks: document.querySelectorAll("#sdoc [data-tick], #sdoc input[type=checkbox]").length,
+        closed: gs.every(s => [...s.querySelectorAll("details")].every(d => !d.open)),
+        papersNamed: gs.every(s => [...s.querySelectorAll(".stp-p")].every(e => e.textContent.trim().length > 0)),
+        hues: new Set(gs.map(s => s.style.getPropertyValue("--h"))).size,
+        noOptionals: document.querySelectorAll("#sdoc .sopt").length === 0 };
+      return JSON.stringify(r); })()`));
+    assert.equal(out.subjects, 9);
+    assert.equal(out.topics, 249);
+    assert.equal(out.points, 1760, "every point is there, folded under its topic");
+    assert.equal(out.ticks, 0, "reading the syllabus does not ask for a tick");
+    assert.equal(out.closed, true, "the points stay folded until a topic is tapped");
+    assert.equal(out.papersNamed, true, "each topic says which papers it serves, in words");
+    assert.equal(out.hues, 9, "each subject has a colour of its own");
+    assert.equal(out.noOptionals, true, "the optionals are on their own page, not under GS");
   });
 
-  /* The lens is the point of the tab: the Commission sets the syllabus per
-     paper, and 240 of 249 topics carry more than one paper tag, so this is a
-     genuinely different shape of the same material rather than the same list
-     grouped twice. */
-  test("by paper: six papers, each holding exactly the topics tagged for it", () => {
-    const g = JSON.parse(inPage(win, `
-      (() => { state.lens = "paper";
-        const out = groups().map(x => ({
-          id: x.id, n: x.topics.length,
-          tagged: ALL_TOPICS.filter(t => t.tp.papers.includes(x.id)).length }));
-        state.lens = "subject";
-        return JSON.stringify(out); })()`));
-    assert.deepEqual(g.map(x => x.id),
-      ["prelims", "mains-gs1", "mains-gs2", "mains-gs3", "mains-gs4", "essay"]);
-    for (const x of g) assert.equal(x.n, x.tagged, `${x.id} lost topics in the regroup`);
-    assert.equal(g.find(x => x.id === "prelims").n, 242);
-  });
-
-  test("most topics serve more than one paper, so the lenses really do differ", () => {
+  test("most topics serve more than one paper", () => {
     const multi = Number(inPage(win, "ALL_TOPICS.filter(x => x.tp.papers.length > 1).length"));
     assert.equal(multi, 240);
   });
 
-  test("progress counts topics and subtopics separately", () => {
-    setStore(win, { done: {} });
-    const t = JSON.parse(inPage(win, "JSON.stringify(tally(ALL_TOPICS.map(x => x.tp)))"));
-    assert.equal(t.tTot, 249);
-    assert.equal(t.sTot, 1760);
-    assert.equal(t.tDone, 0);
-    // finishing one topic moves the topic count by one and the subtopic count
-    // by that topic's length — one percentage could not say both
-    const n = Number(inPage(win, `
-      (() => { const tp = ALL_TOPICS[0].tp;
-        store.done[tp.id] = tp.subtopics.map((_, i) => i);
-        return tp.subtopics.length; })()`));
-    const after = JSON.parse(inPage(win, "JSON.stringify(tally(ALL_TOPICS.map(x => x.tp)))"));
-    assert.equal(after.tDone, 1);
-    assert.equal(after.sDone, n);
+  /* The three optionals, on a page of their own, one at a time, in the
+     Commission's words: each paper its own card. */
+  test("the optional page shows one optional at a time, a card per paper, in the Commission's words", () => {
+    const out = JSON.parse(inPage(win, `(() => {
+      state.tab = "syllabus"; state.sview = "gs"; state.osub = null; render();
+      document.querySelector('[data-sview="opt"]').click();
+      const cards = () => [...document.querySelectorAll("#sdoc .ssec.sopt")];
+      const r = {
+        first: cards().map(c => c.id),
+        noGs: document.querySelectorAll("#sdoc .ssec:not(.sopt)").length === 0,
+        geoTopics: cards().reduce((a, c) => a + c.querySelectorAll(".stp").length, 0),
+        mapNote: /compulsory map question/.test(document.getElementById("sdoc").textContent) };
+      document.querySelector('[data-osub="law"]').click();
+      r.law = cards().map(c => c.id);
+      r.lawCrimes = /Offences against women/.test(document.getElementById("sdoc").textContent);
+      r.lawOnly = !/Geomorphology/.test(document.getElementById("sdoc").textContent);
+      document.querySelector('[data-osub="agriculture"]').click();
+      r.agriSeed = /Seed certification/.test(document.getElementById("sdoc").textContent);
+      r.back = taracmdBack() && state.sview === "gs";
+      state.osub = null;
+      return JSON.stringify(r);
+    })()`));
+    assert.deepEqual(out.first, ["o-geography-paperi", "o-geography-paperii"], "Geography first, Paper I and Paper II as two cards");
+    assert.equal(out.noGs, true, "no General Studies subject on the optional page");
+    assert.equal(out.geoTopics, 20, "Paper I has ten, Paper II ten");
+    assert.equal(out.mapNote, true, "Paper II's note about the map question is kept");
+    assert.deepEqual(out.law, ["o-law-paperi", "o-law-paperii"], "choosing Law shows Law alone");
+    assert.equal(out.lawCrimes, true);
+    assert.equal(out.lawOnly, true, "and nothing of Geography");
+    assert.equal(out.agriSeed, true);
+    assert.equal(out.back, true, "back steps from the optional page to General Studies");
+  });
+
+  test("search narrows the page, opens what matched and marks the words", () => {
+    const out = JSON.parse(inPage(win, `(() => {
+      state.tab = "syllabus"; state.sview = "gs"; render();
+      runSearch("monsoon");
+      const r = { topics: document.querySelectorAll("#sdoc .stp").length,
+                  marked: document.querySelectorAll("#sdoc mark").length > 0,
+                  openHit: [...document.querySelectorAll("#sdoc details[open]")].some(d => d.querySelector("mark")) };
+      runSearch("zzqqxx");
+      r.none = /Nothing in the syllabus matches/.test(document.getElementById("sdoc").textContent);
+      runSearch("");
+      r.back = document.querySelectorAll("#sdoc .ssec:not(.sopt) .stp").length;
+      return JSON.stringify(r); })()`));
+    assert.ok(out.topics > 0 && out.topics < 249, "monsoon matches some topics, not all");
+    assert.equal(out.marked, true);
+    assert.equal(out.openHit, true, "a topic whose points matched is opened so the words show");
+    assert.equal(out.none, true);
+    assert.equal(out.back, 249, "clearing the search brings the whole page back");
+  });
+
+  /* Changing subject from deep in the page is one tap: the strip sticks, and
+     it lights the subject being read. */
+  /* Changing page or subject from deep in the page is one tap: the switch and
+     the strip stick under the app bar together. */
+  test("the switch and the strip stick together, and each strip reaches its page", () => {
+    const out = JSON.parse(inPage(win, `(() => {
+      state.tab = "syllabus"; state.sview = "gs"; render();
+      const stick = document.getElementById("sstick");
+      const r = {
+        together: !!(stick && stick.querySelector("[data-sview]") && stick.querySelector("#sjump")),
+        gs: [...document.querySelectorAll("#sjump [data-jump]")].map(b => b.dataset.jump) };
+      r.gsOk = r.gs.every(id => !!document.getElementById(id));
+      state.sview = "opt"; render();
+      r.opt = [...document.querySelectorAll("#sjump [data-osub]")].map(b => b.dataset.osub);
+      state.sview = "gs"; render();
+      return JSON.stringify(r);
+    })()`));
+    assert.equal(out.together, true, "the GS / Optional switch rides in the sticky bar with the strip");
+    assert.equal(out.gs.length, 9, "the nine GS subjects");
+    assert.equal(out.gsOk, true, "every GS button has a subject to go to");
+    assert.deepEqual(out.opt, ["geography", "law", "agriculture"], "the three optionals, as choices");
   });
 
   test("read-it-all renders every subtopic, not a teaser", () => {
     const html = inPage(win, "readHtml()");
     const items = (html.match(/<li>/g) || []).length;
-    assert.equal(items, 1760, "the whole syllabus has to be in the read view");
+    assert.equal(items, 1760, "the whole syllabus has to be in the print view");
     assert.equal((html.match(/<h2>/g) || []).length, 9);
     assert.equal((html.match(/<h3>/g) || []).length, 249);
-  });
-
-  test("a topic opened in place shows all of its subtopics and what it counts for", () => {
-    const out = JSON.parse(inPage(win, `
-      (() => { const tp = ALL_TOPICS.find(x => x.tp.papers.length > 1).tp;
-        const h = subtopicsHtml(tp, "");
-        return JSON.stringify({ boxes: (h.match(/data-tick=/g) || []).length,
-                                subtopics: tp.subtopics.length,
-                                counts: /Counts for /.test(h) }); })()`));
-    assert.equal(out.boxes, out.subtopics, "every subtopic is a tick target");
-    assert.ok(out.counts, "the topic says which papers it serves");
-  });
-
-  test("search reaches subtopics and marks what matched", () => {
-    const out = JSON.parse(inPage(win, `
-      (() => { const term = "monsoon";
-        const hits = ALL_TOPICS.filter(({tp}) =>
-          tp.name.toLowerCase().includes(term) ||
-          tp.subtopics.some(s => s.toLowerCase().includes(term)));
-        const h = topicHtml(hits[0].tp, hits[0].s, term);
-        return JSON.stringify({ topics: hits.length, marked: /<mark>/.test(h) }); })()`));
-    assert.ok(out.topics > 0, "monsoon should match something in a UPSC syllabus");
-    assert.ok(out.marked, "matched words are highlighted");
   });
 });
 
@@ -516,7 +551,7 @@ describe("navigation", () => {
     const items = JSON.parse(inPage(win,
       `JSON.stringify([...document.querySelectorAll(".ditem b")].map(e => e.textContent))`));
     assert.deepEqual(items,
-      ["Toppers' copies", "Optional copies", "Read the whole syllabus", "Back up or restore", "Updates"],
+      ["Toppers' copies", "Optional copies", "Print the syllabus", "Back up or restore", "Updates"],
       "the drawer is where rare destinations go, so name them rather than count them");
     inPage(win, `state.tab = "toppers"; markTab("toppers"); render();`);
     assert.equal(Number(inPage(win, `document.querySelectorAll(".tab.on").length`)), 0,
@@ -525,15 +560,14 @@ describe("navigation", () => {
 
   /* The ladder is the part a regroup can quietly break. Drawer first, because
      it is the topmost thing on the screen. */
-  test("back unwinds drawer, then sheet, then the outline, then the tab", () => {
-    inPage(win, `state.tab = "syllabus"; state.read = false; openId = null;
-                 state.open = new Set(); state.openTopics = new Set(); openDrawer();`);
+  test("back unwinds drawer, then the print view, then the tab", () => {
+    inPage(win, `state.tab = "syllabus"; state.read = false; openId = null; openDrawer();`);
     assert.equal(inPage(win, "taracmdBack()"), true, "drawer closes first");
     assert.equal(inPage(win, "drawerOpen()"), false);
 
-    inPage(win, `state.open = new Set(["polity"]);`);
-    assert.equal(inPage(win, "taracmdBack()"), true, "an open outline collapses");
-    assert.equal(Number(inPage(win, "state.open.size")), 0);
+    inPage(win, `state.read = true;`);
+    assert.equal(inPage(win, "taracmdBack()"), true, "the print view closes");
+    assert.equal(inPage(win, "state.read"), false);
 
     inPage(win, `state.tab = "papers"; markTab("papers");`);
     assert.equal(inPage(win, "taracmdBack()"), true, "any other tab returns to the syllabus");
@@ -576,36 +610,10 @@ describe("updates", () => {
   });
 });
 
-describe("today's plan and the focus history", () => {
-  test("the plan is drawn from your own data, not invented", () => {
-    // nothing done, nothing due, quiz logged -> nothing to do
-    const today = new Date().toISOString().slice(0, 10);
-    setStore(win, { done: {}, revised: {}, picks: {}, daily: { [today]: {score: 5, of: 5} } });
-    assert.equal(JSON.parse(inPage(win, "JSON.stringify(planItems())")).length, 0,
-      "an empty plan is honest when there is nothing due");
-
-    // a finished topic revised long ago falls due, and lands on the plan
-    inPage(win, `(() => { const tp = ALL_TOPICS[0].tp;
-      store.done[tp.id] = tp.subtopics.map((_, i) => i);
-      store.revised[tp.id] = [Date.now() - 200 * 86400000]; })()`);
-    const items = JSON.parse(inPage(win, "JSON.stringify(planItems())"));
-    assert.equal(items.length, 1);
-    assert.equal(items[0].kind, "topic");
-    assert.match(items[0].note, /overdue/);
-  });
-
-  test("the plan is capped, so a backlog does not become a wall", () => {
-    inPage(win, `(() => { store.done = {}; store.revised = {};
-      ALL_TOPICS.slice(0, 40).forEach(({tp}) => {
-        store.done[tp.id] = tp.subtopics.map((_, i) => i);
-        store.revised[tp.id] = [Date.now() - 300 * 86400000]; }); })()`);
-    const topics = JSON.parse(inPage(win, `JSON.stringify(planItems().filter(i => i.kind === "topic"))`));
-    assert.equal(topics.length, Number(inPage(win, "PLAN_N")),
-      "forty overdue topics is a list nobody reads; the syllabus tab has the rest");
-  });
-
+describe("the focus history", () => {
   test("history counts only runs that were seen out", () => {
     const DAY = 86400000;
+    setStore(win, { focus: [], focusDays: {} });
     inPage(win, `store.focus = [
       {on: Date.now(),           mins: 25, ran: 1500, kind: "done"},
       {on: Date.now(),           mins: 45, ran: 600,  kind: "void"},
@@ -781,42 +789,6 @@ describe("the question palette", () => {
         return c;
       })()`);
     assert.match(out, /\bdone\b/, "answered beats seen, or coming back would look like failing");
-  });
-});
-
-/* The syllabus tab is called Syllabus, and used to open on three stacked
-   dashboard cards with the syllabus itself below the fold. The map is the
-   whole of it on one screen — every topic, one square. */
-describe("the syllabus map", () => {
-  test("every topic gets a square, and none is invented", () => {
-    const out = JSON.parse(inPage(win, `
-      (() => {
-        state.tab = "syllabus"; state.lens = "map"; render();
-        const tiles = [...document.querySelectorAll(".mt")];
-        const ids = tiles.map(t => t.dataset.sheet);
-        return JSON.stringify({
-          tiles: tiles.length,
-          topics: ALL_TOPICS.length,
-          subjects: document.querySelectorAll(".mapsub").length,
-          allReal: ids.every(id => !!OWNER[id]),
-          unique: new Set(ids).size
-        });
-      })()`));
-    assert.equal(out.tiles, out.topics, "one square per topic, all 249 of them");
-    assert.equal(out.unique, out.topics, "and no topic drawn twice");
-    assert.equal(out.subjects, 9);
-    assert.ok(out.allReal, "every square resolves to a real topic");
-  });
-
-  test("the map opens on the syllabus, not on a stack of cards", () => {
-    const out = JSON.parse(inPage(win, `
-      (() => {
-        state.tab = "syllabus"; state.lens = "map"; render();
-        return JSON.stringify({ pace: document.querySelectorAll(".pace").length,
-                                map: document.querySelectorAll(".mapwrap").length });
-      })()`));
-    assert.equal(out.map, 1);
-    assert.equal(out.pace, 0, "the exam clock folds into the map's own header line");
   });
 });
 
@@ -1216,16 +1188,15 @@ describe("the mistakes notebook", () => {
     assert.equal(out.right, 9);
   });
 
-  test("due mistakes go on the plan, and the notebook asks them one at a time", () => {
+  test("the notebook badges what is due and asks them one at a time", () => {
     const out = JSON.parse(inPage(win, `(() => {
       const q = QUIZ.questions.find(x => x.source), q2 = QUIZ.questions.find(x => x.paper);
       store.mistakes = {
         [q.id]: {on: Date.now() - 3 * 86400000, step: 0, wrong: 1, right: 0, due: Date.now() - 1000},
         [q2.id]: {on: Date.now(), step: 0, wrong: 1, right: 0, due: Date.now() + 86400000}};
-      const r = { plan: planItems().filter(i => i.kind === "mistakes").map(i => i.title) };
-      const box = document.createElement("div"); box.innerHTML = planHtml(); document.body.appendChild(box);
-      bindPlan(box); box.querySelector('[data-plan="mistakes"]').click(); box.remove();
-      r.mode = state.qmode;
+      state.tab = "practice"; state.qmode = "mistakes"; state.qpaperId = null; state.mretry = false; state.mres = null;
+      markTab("practice"); render();
+      const r = { mode: state.qmode };
       r.badge = (document.querySelector(".modes .mbadge") || {}).textContent;
       r.rows = document.querySelectorAll(".mrow").length;
       r.squares = document.querySelectorAll(".mrow .mt").length;
@@ -1242,8 +1213,7 @@ describe("the mistakes notebook", () => {
       r.left = document.querySelectorAll(".mrow").length;
       store.mistakes = {}; state.qmode = "daily";
       return JSON.stringify(r); })()`));
-    assert.deepEqual(out.plan, ["1 mistake to try again"], "only the one due today is on the plan");
-    assert.equal(out.mode, "mistakes", "and it opens the notebook");
+    assert.equal(out.mode, "mistakes");
     assert.equal(out.badge, "1");
     assert.equal(out.rows, 2, "the notebook holds every open mistake, due or not");
     assert.equal(out.squares, 0, "and none of its text wears the map square's class");

@@ -33,46 +33,45 @@ what `build.py` produces, which is the guard that was missing.
 
 ## The syllabus tab
 
-The first tab **is** the syllabus, not a menu in front of it. It used to be eight cards
-leading to a per-subject list leading to a modal, which meant the 1,723 subtopics — the
-actual syllabus — could only be seen eight at a time, one topic at a time, 242 modals
-deep. Now it is one page: groups open in place, topics open in place, and every subtopic
-is its own tick target.
+**A page to read, not something to operate.** Rebuilt on 15 Sep 2026 after the owner
+found the old tab hard to follow — a map of 249 unlabelled squares, a Map / By subject /
+By paper switch, weight stripes, chips like "GS1" and "7d", topics that opened on a tap
+and subtopics that ticked. None of that is on the tab now, and it should not creep back:
+the owner asked for a tidy page with gaps between subjects and colour codes, and
+explicitly said opening topics to tick parts was unnecessary.
 
-**Three lenses, and Map is the one it opens on.** Map draws all 249 topics as one square
-each, grouped by subject — the whole of what the Commission examines on a screen and a
-half, which a scrolling outline can never be. Colour there is progress, never weight:
-where you have and have not been is a fact, and weight is an editorial claim that at the
-moment barely discriminates. Tap a square for the topic, a subject's name to drop into
-the outline at that subject.
+What it is:
 
-`By subject` and `By paper` are the other two, and they are the point of the tab rather
-than a gimmick: **240 of the 249 carry more than one paper tag**, so how the material is
-taught and how the Commission sets it (Prelims 242, GS-I 69, GS-II 82, GS-III 147, GS-IV
-5, Essay 28) really are different shapes of one syllabus. Anything that regroups topics
-must keep every topic: `tests/` checks the paper lens holds exactly the topics tagged for
-each paper, and that the map draws every topic exactly once.
+- A switch at the top, **General Studies | Optional**. They are two pages, not one scroll
+  (asked for separately): the GS points are this app's study breakdown of the Commission's
+  few broad GS lines, the optional syllabi are the Commission's own words, and you read
+  one or the other.
+- Every subject is a card in its own hue (`SUBJECT_HUE`, `OPTIONAL_HUE`; the stylesheet
+  turns the hue into ink, a soft wash and a hairline for light and for dark), with a wide
+  gap between cards. Topics are numbered; a GS topic says which papers it serves, in words.
+- **A topic shows its name; its points open on a tap** (`<details>`). The owner asked for
+  that after seeing the GS points were not the official syllabus. Search opens every topic
+  whose points matched, so the marked words are visible.
+- **The General Studies | Optional switch and the subject strip stick under the app bar
+  together** (`#sstick`), so changing page or subject from deep in CSAT is one tap — the
+  owner asked twice, first for the strip and then for the switch. On the GS page the strip
+  lights the subject being read (`syllabusSpy`).
+- **The Optional page shows one optional at a time** (`state.osub`), chosen on the strip,
+  and each paper is a card of its own. Three optionals stacked in one column was one long
+  scroll of three different subjects. `--top-h` is measured
+  from the real app bar, because the PWA and the Android app pad it differently. A jump
+  scrolls to where the strip *will* sit once stuck — measuring its current position
+  stopped short of the target on the first jump.
+- The optional syllabi live in `optionals.json` → `syllabus`, paper > part > topic >
+  points, taken from the CSE 2026 notification (`syllabus_source`). Only the line breaks
+  and the split into points (on ";" and full stops) are ours; the Commission's own typos
+  ("Trewar Tha's", "Ostov's") are kept. Agriculture is prose, so each paragraph is a topic
+  named by its first sentence. `check_optionals` insists on Paper I and Paper II.
 
-**The map view suppresses the dashboard cards on purpose.** The tab is called Syllabus and
-it used to open on three stacked cards — Today, the exam clock, the counts strip — with
-the syllabus itself below the fold. In the map the exam clock folds into the map's own
-header line and Today moves below the picture. There is a test that the pace card is not
-drawn in map view, because the temptation to put it back is real.
-
-Things that will bite:
-
-- **`state.open` and `state.openTopics` are Sets, and they are not persisted.** They are
-  view state, not progress; `taracmd-v1` never sees them. Back collapses them before it
-  leaves the tab, which is the middle rung of the `taracmdBack()` ladder.
-- **Ticking re-renders, so it must not lose your place.** `refreshBehind()` restores the
-  scroll position and any live search. Toggling a group goes through it for that reason;
-  `render()` scrolls to the top and would throw you back up a 242-topic page.
-- **Progress is two numbers, never one.** Topics finished and subtopics ticked say
-  different things and a single percentage hides which you mean.
-- The topic sheet still exists and still owns revision — `Open · mark revised` in an
-  expanded topic. Reading moved into the page; revision did not.
-- `Read it all` renders the whole syllabus flat with no controls, and is what `@media
-  print` prints. The app is one file, so printing is a stylesheet rather than an export.
+Ticks, revision dates and Today's plan are no longer on this tab. The store still carries
+`done` and `revised` (the backup keeps them, and the topic sheet a mistake opens still
+shows them); nothing was deleted. The drawer's **Print the syllabus** keeps the flat,
+colourless copy that `@media print` prints.
 
 ## Navigation
 
@@ -80,9 +79,10 @@ Five tabs and a drawer, after the bar reached seven and stopped having a shape.
 
 ```
 Syllabus   Papers      Practice    Focus   Shelf     ☰ drawer
-├ Map      ├ Prelims   ├ Daily                       ├ Toppers' copies
-├ Subject  ├ Mains     ├ Papers                      ├ Read the whole syllabus
-└ Paper    └ Optional  └ Mistakes                    ├ Back up or restore
+├ GS       ├ Prelims   ├ Daily                       ├ Toppers' copies
+└ Optional ├ Mains     ├ Papers                      ├ Optional copies
+           └ Optional  └ Mistakes                    ├ Print the syllabus
+                                                     ├ Back up or restore
                                                      └ Theme
 ```
 

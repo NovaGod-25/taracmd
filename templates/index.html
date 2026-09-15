@@ -97,21 +97,7 @@ a{color:var(--accent-ink);text-decoration:none}
 #q::placeholder{color:var(--ink-3)}
 #q:focus{border-color:var(--accent);outline:none}
 
-/* ---------- subject grid ---------- */
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-@media(min-width:620px){.grid{grid-template-columns:repeat(3,1fr)}}
-.sub-card{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:13px 13px 11px;
-  text-align:left;display:flex;flex-direction:column;gap:9px;box-shadow:var(--shadow);transition:transform .12s,border-color .12s}
-.sub-card:hover{transform:translateY(-1px);border-color:var(--rule-2)}
-.sub-card .em{font-size:19px;line-height:1}
-.sub-card .nm{font-family:"IBM Plex Serif",Georgia,serif;font-weight:600;font-size:15px;line-height:1.25}
-.sub-card .meta{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ink-3);
-  display:flex;justify-content:space-between;align-items:center;letter-spacing:.02em}
 .bar{height:4px;border-radius:99px;background:var(--sunk);overflow:hidden}
-/* Grid stretches every card in a row to the tallest. Without this the bar and
-   the count stay top-aligned, so a subject whose name wraps to two lines
-   ("International Relations") leaves its neighbour's footer floating. */
-.sub-card .bar{margin-top:auto}
 .bar > i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .3s}
 
 /* ---------- section heads ---------- */
@@ -120,27 +106,16 @@ a{color:var(--accent-ink);text-decoration:none}
 .head .n{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-3);letter-spacing:.03em}
 .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3)}
 
-/* ---------- topic rows ---------- */
 .list{background:var(--card);border:1px solid var(--rule);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
-.row{display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;padding:12px 13px;
-  border-bottom:1px solid var(--rule);position:relative}
-.row:last-child{border-bottom:none}
-.row:hover{background:var(--card-2)}
 .stripe{width:3px;align-self:stretch;border-radius:99px;flex:none;background:var(--rule-2)}
 .stripe.high{background:var(--mark)}
 .stripe.medium{background:var(--amber)}
 .stripe.low{background:var(--rule-2)}
-.row .body{flex:1;min-width:0;display:block}
-.row .t,.row .s{display:block}
-.row .t{font-weight:500;font-size:14.5px;line-height:1.35}
-.row .s{color:var(--ink-3);font-size:12.5px;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .chips{display:flex;gap:4px;flex-wrap:wrap;margin-top:7px}
 .chip{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.03em;padding:2px 6px;border-radius:5px;
   background:var(--sunk);color:var(--ink-2);white-space:nowrap}
 .chip.p{background:var(--accent-soft);color:var(--accent-ink)}
 .chip.e{background:var(--amber-soft);color:var(--amber)}
-.chip.due{background:var(--mark-soft);color:var(--mark)}
-.chip.sched{background:transparent;color:var(--ink-3);box-shadow:inset 0 0 0 1px var(--rule)}
 .tick{flex:none;width:20px;height:20px;border-radius:6px;border:1.5px solid var(--rule-2);display:grid;place-items:center;
   margin-top:1px;color:transparent}
 .tick.on{background:var(--accent);border-color:var(--accent);color:#fff}
@@ -160,12 +135,6 @@ a{color:var(--accent-ink);text-decoration:none}
 :root[data-theme="dark"] .fchip.on,
 :root:not([data-theme="light"]) .fchip.on{color:#0E131B}
 @media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .fchip.on{color:#fff}}
-
-/* ---------- weight legend ---------- */
-.legend{display:flex;gap:14px;font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ink-3);
-  margin:0 0 10px;padding:0 2px;flex-wrap:wrap}
-.legend span{display:inline-flex;align-items:center;gap:5px}
-.legend i{width:8px;height:3px;border-radius:99px;display:block}
 
 /* ---------- year / paper cards ---------- */
 .year{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:12px 13px;margin-bottom:9px;box-shadow:var(--shadow)}
@@ -324,15 +293,6 @@ a{color:var(--accent-ink);text-decoration:none}
   font-size:11px;font-weight:500;color:var(--ink-2)}
 .savebtn:hover{color:var(--ink);border-color:var(--accent)}
 
-/* ---------- pace strip ---------- */
-.pace{display:flex;gap:15px;align-items:center;background:var(--card);border:1px solid var(--rule);
-  border-radius:14px;padding:13px 15px;box-shadow:var(--shadow);margin-bottom:4px}
-.pace .pl{flex:none;text-align:center;padding-right:15px;border-right:1px solid var(--rule)}
-.pace .pl .big{font-size:26px;font-weight:600;letter-spacing:-.02em;display:block;line-height:1.1}
-.pace .pl .lil{font-size:10.5px;color:var(--ink-3);display:block;max-width:82px;line-height:1.3;margin-top:2px}
-.pace .pr{flex:1;display:flex;flex-direction:column;gap:3px;font-size:12.5px;color:var(--ink-2);min-width:0}
-.pace .pr b{color:var(--ink)}
-
 /* ---------- Mains answer log ---------- */
 .papers.logs{margin-top:7px;padding-top:7px;border-top:1px dashed var(--rule)}
 .pbtn.log{background:transparent;border-style:dashed;color:var(--ink-3);font-size:12px;padding:5px 9px}
@@ -378,82 +338,82 @@ a{color:var(--accent-ink);text-decoration:none}
 .hide{display:none!important}
 .mono{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
 
-/* ---------------- the syllabus outline ---------------- */
-/* The shape strip: how big the syllabus is and where the mass sits. The bar
-   is drawn twice — the pale track is how many topics that group holds, the
-   solid overlay is how much of it is ticked — so size and progress read off
-   the same line instead of competing for space. */
-.shape{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:12px 13px;margin-bottom:14px}
-.shead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:12.5px;margin-bottom:10px}
-.shead .n{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ink-3)}
-.sbars{display:flex;flex-direction:column;gap:5px}
-.sbar{display:grid;grid-template-columns:minmax(78px,1fr) 2.4fr auto;align-items:center;gap:9px;
-  width:100%;background:none;border:0;padding:2px 0;cursor:pointer;text-align:left;color:inherit}
-.sbar:hover .sb-l{color:var(--ink)}
-.sb-l{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-2);
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.sb-i{font-size:13px;line-height:1}
-.sb-t{position:relative;height:7px;border-radius:99px;background:var(--sunk);overflow:hidden}
-.sb-t > i{position:absolute;left:0;top:0;height:100%;background:var(--rule-2);border-radius:99px}
-.sb-t > b{position:absolute;left:0;top:0;height:100%;background:var(--accent);border-radius:99px}
-.sb-n{font-size:10.5px;color:var(--ink-3);min-width:26px;text-align:right}
-
-/* Lens switch. Two shapes of one syllabus, so it is a segmented control and
-   not a filter chip — picking one is not narrowing, it is re-grouping. */
-.lens{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:16px 0 10px}
-.seg{display:inline-flex;background:var(--sunk);border-radius:99px;padding:3px;gap:2px}
-.seg button{font-size:12.5px;font-weight:500;padding:6px 13px;border-radius:99px;border:0;
-  background:none;color:var(--ink-3);cursor:pointer}
-.seg button.on{background:var(--card);color:var(--ink);box-shadow:var(--shadow)}
-.lens-r{display:flex;gap:12px}
-
-/* The eight (or six) group icons, for getting down the page without scrolling
-   past everything in between. */
-.jump{display:flex;gap:6px;overflow-x:auto;padding:0 0 12px}
-.jump::-webkit-scrollbar{display:none}
-.jump button{flex:none;width:34px;height:34px;border-radius:10px;border:1px solid var(--rule);
-  background:var(--card);font-size:15px;line-height:1;cursor:pointer}
-.jump button:hover{border-color:var(--accent);transform:translateY(-1px)}
-
-.grp{margin-bottom:10px;scroll-margin-top:8px}
-/* Sticky, so you always know which subject or paper you are reading inside a
-   242-topic scroll. */
-.ghead{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:10px;width:100%;text-align:left;
-  padding:11px 13px;border:1px solid var(--rule);border-radius:12px;background:var(--card);
-  cursor:pointer;color:inherit}
-.ghead.open{border-bottom-left-radius:0;border-bottom-right-radius:0}
-.ghead:hover{border-color:var(--rule-2)}
-.gi{font-size:17px;line-height:1;flex:none}
-.gt{flex:1;min-width:0}
-.gn{display:block;font-family:"IBM Plex Serif",Georgia,serif;font-weight:600;font-size:14.5px;line-height:1.25}
-.gm{display:block;font-size:10.5px;color:var(--ink-3);margin-top:3px}
-.gbar{flex:none;width:56px;height:4px;border-radius:99px;background:var(--sunk);overflow:hidden}
-.gbar > i{display:block;height:100%;background:var(--accent);border-radius:99px}
-.caret{flex:none;width:20px;text-align:center;font-size:16px;color:var(--ink-3);line-height:1}
-
-.tlist{background:var(--card);border:1px solid var(--rule);border-top:0;
-  border-radius:0 0 12px 12px;overflow:hidden}
-.tw{border-bottom:1px solid var(--rule)}
-.tw:last-child{border-bottom:none}
-.tw.open{background:var(--card-2)}
-.tw .row{border-bottom:none}
-
-/* Subtopics in place. This is the syllabus itself — all of a topic, not two
-   of seven — and each line is the tick target, so reading and marking are the
-   same gesture. */
-.subs{padding:2px 13px 12px 27px}
-.sub{display:flex;align-items:flex-start;gap:9px;width:100%;text-align:left;padding:7px 8px;
-  border:0;border-radius:8px;background:none;cursor:pointer;color:var(--ink-2);font-size:13px;line-height:1.45}
-.sub:hover{background:var(--sunk)}
-.sub .box{flex:none;width:16px;height:16px;margin-top:1px;border:1.5px solid var(--rule-2);border-radius:5px;
-  display:grid;place-items:center;color:transparent}
-.sub .box svg{width:11px;height:11px;stroke:currentColor;stroke-width:3;fill:none}
-.sub.on .box{background:var(--accent);border-color:var(--accent);color:#fff}
-.sub.on .stxt{color:var(--ink-3);text-decoration:line-through;text-decoration-color:var(--rule-2)}
-.subfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
-  padding:9px 8px 2px;border-top:1px dashed var(--rule);margin-top:6px}
-.also{font-size:11.5px;color:var(--ink-3)}
-.chip.m{background:var(--amber-soft);color:var(--amber)}
+/* ---------------- the syllabus, to read ----------------
+   One card per subject, each in its own hue (--h, set per card from
+   SUBJECT_HUE), with a wide gap between cards so subjects never run together.
+   The hue is turned into ink, a soft wash and a hairline here, once for light
+   and once for dark, so the colours stay readable in both themes. */
+.ssec,.sjc{--s-ink:hsl(var(--h) 60% 32%);--s-soft:hsl(var(--h) 60% 95%);--s-line:hsl(var(--h) 40% 84%)}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .ssec,:root:not([data-theme="light"]) .sjc{
+    --s-ink:hsl(var(--h) 70% 74%);--s-soft:hsl(var(--h) 32% 17%);--s-line:hsl(var(--h) 26% 28%)}
+}
+:root[data-theme="dark"] .ssec,:root[data-theme="dark"] .sjc{
+  --s-ink:hsl(var(--h) 70% 74%);--s-soft:hsl(var(--h) 32% 17%);--s-line:hsl(var(--h) 26% 28%)}
+.sintro{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 14px;font-size:13px;
+  color:var(--ink-2);margin:0 2px 10px;line-height:1.45}
+.sintro b{color:var(--ink);font-weight:600}
+/* The switch and the subject strip, stuck together under the app bar. The
+   block spans the gutter so the page does not show through at the sides. */
+.sstick{position:sticky;top:var(--top-h,58px);z-index:30;margin:0 -14px 18px;padding:6px 14px 0;
+  background:var(--paper);border-bottom:1px solid var(--rule)}
+.sstick .sseg{margin:0 0 2px}
+.sjump{display:flex;align-items:center;gap:7px;overflow-x:auto;scrollbar-width:none;padding:6px 0 10px}
+.sjump::-webkit-scrollbar{display:none}
+.sjc{flex:none;font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:99px;border:1.5px solid var(--s-line);
+  background:var(--s-soft);color:var(--s-ink);cursor:pointer;white-space:nowrap}
+.sjc.on{background:var(--s-ink);border-color:var(--s-ink);color:var(--card)}
+.sjl{flex:none;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);
+  padding-left:9px;margin-left:3px;border-left:1px solid var(--rule-2)}
+.ssec{margin:0 0 34px;background:var(--card);border:1px solid var(--s-line);
+  border-top:5px solid var(--s-ink);border-radius:16px;overflow:hidden;box-shadow:var(--shadow)}
+.ssh{display:flex;align-items:center;gap:10px;padding:14px 16px;background:var(--s-soft);
+  border-bottom:1px solid var(--s-line)}
+.ssh h2{flex:1;min-width:0;font-size:18px;line-height:1.25;color:var(--s-ink)}
+.ssi{font-size:22px;line-height:1;flex:none}
+.ssn{flex:none;font-size:11.5px;color:var(--ink-3);font-family:"IBM Plex Mono",monospace}
+.sbadge{flex:none;font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  padding:3px 8px;border-radius:99px;background:var(--card);color:var(--s-ink);border:1px solid var(--s-line)}
+.stopics{list-style:none;margin:0;padding:0}
+.stp{border-top:1px solid var(--rule)}
+.stp:first-child{border-top:0}
+.stp details > summary{list-style:none;cursor:pointer}
+.stp details > summary::-webkit-details-marker{display:none}
+.stp-h{display:flex;gap:11px;align-items:flex-start;padding:13px 16px}
+.stp.plain .stp-h{padding:11px 16px}
+.stp-n{flex:none;min-width:26px;height:26px;padding:0 5px;border-radius:8px;display:grid;place-items:center;
+  font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;background:var(--s-soft);color:var(--s-ink)}
+.stp-b{flex:1;min-width:0;padding-top:2px}
+.stp-t{display:block;font-size:15px;font-weight:600;line-height:1.38;color:var(--ink)}
+.stp.plain .stp-t{font-weight:500;font-size:14.5px}
+.stp-p{display:block;font-size:11.5px;color:var(--ink-3);margin-top:3px}
+/* the count of points, and the chevron that says the row opens */
+.stp-c{flex:none;display:flex;align-items:center;gap:6px;margin-top:4px;font-size:11.5px;color:var(--ink-3);
+  font-family:"IBM Plex Mono",monospace}
+.stp-c::after{content:"";width:7px;height:7px;border-right:2px solid var(--s-ink);border-bottom:2px solid var(--s-ink);
+  transform:rotate(45deg) translateY(-2px);transition:transform .15s}
+.stp details[open] .stp-c::after{transform:rotate(-135deg) translate(-1px,-1px)}
+.stp details[open] > summary{background:var(--s-soft)}
+.stp-l{margin:0;padding:6px 16px 14px 70px;list-style:disc;background:var(--card)}
+.stp-l li{font-size:14px;line-height:1.6;color:var(--ink-2);margin:3px 0;padding-left:2px}
+.stp-l li::marker{color:var(--s-ink)}
+/* the optionals: the paper as a band, the part as a label */
+.sseg{background:var(--card);border:1px solid var(--rule);padding:4px}
+.sseg button{font-size:14px;font-weight:600;padding:9px 12px;color:var(--ink-2)}
+.sseg button.on{background:var(--accent);color:#fff;box-shadow:none}
+:root[data-theme="dark"] .sseg button.on,
+:root:not([data-theme="light"]) .sseg button.on{color:#0E131B}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .sseg button.on{color:#fff}}
+.spaper + .spaper{border-top:1px solid var(--s-line)}
+.sph{font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:13px;font-weight:600;margin-left:6px;padding:2px 8px;
+  border-radius:99px;background:var(--card);border:1px solid var(--s-line);vertical-align:3px}
+.spaper-h{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;padding:11px 16px;font-size:13.5px;color:var(--ink-2);
+  background:var(--card-2);border-bottom:1px solid var(--rule)}
+.spaper-h b{color:var(--s-ink);font-size:14.5px}
+.spaper-h span{margin-left:auto;font-size:11px;color:var(--ink-3);font-family:"IBM Plex Mono",monospace}
+.spart{padding:12px 16px 2px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--s-ink)}
+.snote{margin:0;padding:10px 16px 14px;font-size:12.5px;color:var(--ink-2);background:var(--s-soft);
+  border-top:1px solid var(--s-line)}
 mark{background:var(--amber-soft);color:inherit;border-radius:3px;padding:0 1px}
 
 /* Read it all: the flat document. No chrome, no checkboxes, and it is what
@@ -562,34 +522,7 @@ mark{background:var(--amber-soft);color:inherit;border-radius:3px;padding:0 1px}
 .fbm{font-size:9.5px;color:var(--ink-3);height:11px}
 .fbd{font-size:9.5px;color:var(--ink-3)}
 
-/* ---------------- today's plan ---------------- */
-.plan{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:12px 13px 10px;margin-bottom:14px}
-.phead{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:8px}
-.phead h2{font-size:15px}
-.phead .n{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ink-3)}
-.plist{display:flex;flex-direction:column}
-.pitem{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:9px 2px;
-  border-bottom:1px solid var(--rule);color:inherit;cursor:pointer}
-.pitem:last-child{border-bottom:none}
-.pitem:hover .pt{color:var(--accent-ink)}
-.pdot{flex:none;width:7px;height:7px;border-radius:99px;background:var(--accent)}
-.pdot.daily{background:var(--amber)}
-.pdot.wrong{background:var(--mark)}
-.pbody{flex:1;min-width:0}
-.pt{display:block;font-size:13.5px;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ps{display:block;font-size:11px;color:var(--ink-3);margin-top:2px}
-.pgo{flex:none;color:var(--ink-3);font-size:17px;line-height:1}
-
-/* One control row for the syllabus, scrolling sideways rather than wrapping. */
-.ctrl{display:flex;align-items:center;gap:7px;overflow-x:auto;padding:4px 0 12px;
-  -webkit-overflow-scrolling:touch}
-.ctrl::-webkit-scrollbar{display:none}
-.ctrl > *{flex:none}
-.cdiv{width:1px;height:20px;background:var(--rule);margin:0 2px}
 .fchip.ghost{border-style:dashed;color:var(--ink-3)}
-.shead{display:flex;width:100%;justify-content:space-between;align-items:baseline;gap:10px;
-  font-size:12.5px;cursor:pointer;color:inherit;text-align:left}
-.shead .n i{font-style:normal;display:inline-block;width:12px;text-align:center;color:var(--ink-3)}
 
 /* A typed-in question inside the answer sheet. */
 .cell.wide{grid-column:1/-1;display:block;padding:12px 13px;text-align:left}
@@ -652,32 +585,6 @@ mark{background:var(--amber-soft);color:inherit;border-radius:3px;padding:0 1px}
 .plegend i.done{background:var(--go-soft);border-color:var(--go)}
 .plegend i.left{background:var(--mark-soft);border-color:var(--mark)}
 .plegend i.here{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
-/* The map. Fixed squares in a wrapping row rather than a stretching grid: a
-   topic is a topic, and squares that resize with the column would make
-   Geography's thirty look bigger than Polity's thirty. */
-.mapwrap{margin-top:2px}
-.mapline{display:flex;flex-wrap:wrap;gap:4px 14px;padding:10px 12px;margin:0 0 12px;
-  background:var(--card);border:1px solid var(--rule);border-radius:12px;
-  font-size:12.5px;color:var(--ink-3);box-shadow:var(--shadow)}
-.mapline b{color:var(--ink);font-size:13.5px}
-.mapsub{margin-bottom:13px}
-.maph{display:flex;align-items:center;gap:8px;width:100%;padding:3px 2px 7px;
-  background:none;border:0;color:var(--ink);cursor:pointer;text-align:left}
-.maph .gi{font-size:15px;flex:none}
-.maph .mn{font-weight:600;font-size:13.5px;flex:none}
-.maph .mm{font-size:11.5px;color:var(--ink-3);flex:none;font-family:"IBM Plex Mono",monospace}
-.mbar{flex:1;height:3px;border-radius:2px;background:var(--sunk);overflow:hidden;min-width:20px}
-.mbar i{display:block;height:100%;background:var(--go);border-radius:2px}
-.mtiles{display:flex;flex-wrap:wrap;gap:4px}
-.mt{width:16px;height:16px;border-radius:3px;padding:0;cursor:pointer;
-  border:1px solid var(--rule);background:var(--card)}
-.mt:hover{border-color:var(--rule-2)}
-.mt.part{background:var(--accent-soft);border-color:var(--accent)}
-.mt.done{background:var(--go-soft);border-color:var(--go)}
-.mt.due{background:var(--amber-soft);border-color:var(--amber)}
-.plegend i.mdone{background:var(--go-soft);border-color:var(--go)}
-.plegend i.mpart{background:var(--accent-soft);border-color:var(--accent)}
-.plegend i.mdue{background:var(--amber-soft);border-color:var(--amber)}
 /* the shelf */
 .dbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:2px 0 12px}
 .dfolder{flex:1;min-width:120px;font-size:12px;color:var(--ink-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -744,7 +651,6 @@ button.fbar{background:none;border:0;padding:0;color:inherit;font:inherit;cursor
 .omr .cell .ck{display:block;font-family:"IBM Plex Mono",monospace;font-size:9.5px;color:var(--go);margin-top:3px}
 .omr .cb button[disabled],.copt[disabled]{cursor:default}
 /* the mistakes notebook */
-.pdot.mistakes{background:var(--mark)}
 .modes .mbadge{display:inline-block;min-width:16px;padding:0 5px;margin-left:5px;border-radius:99px;
   background:var(--mark);color:#fff;font-size:10.5px;line-height:16px;font-weight:600}
 .mgroup{margin:14px 0 6px}
@@ -817,7 +723,7 @@ button.fbar{background:none;border:0;padding:0;color:inherit;font:inherit;cursor
   </button>
   <button class="ditem" id="dRead">
     <svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
-    <span><b>Read the whole syllabus</b><i>All 1,723 subtopics, flat — and what prints</i></span>
+    <span><b>Print the syllabus</b><i>A plain black-and-white copy for paper</i></span>
   </button>
   <button class="ditem" id="dData">
     <svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M4 20h16"/></svg>
@@ -1023,287 +929,157 @@ const DOWNI = '<svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="M7 11l5 5 5
 
 /* ---------------- state ---------------- */
 let state = {
-  tab: "syllabus", filter: "all", tfilter: "all",
+  tab: "syllabus", filter: "all",
   pset: "prelims",        // which paper index the Papers tab is showing
   qpaperId: null,         // the paper being sat, or null for the folder list
   qn: 1,                  // which question of it
-  lens: "map",            // "map" | "subject" | "paper" — three shapes of one syllabus
-  open: new Set(),        // expanded groups
-  openTopics: new Set(),  // topics expanded in place
-  shape: false,           // the size-and-progress bars, folded away by default
   read: false,            // the flat, printable read-it-all view
+  sview: "gs",            // the Syllabus tab's page: "gs" (General Studies) or "opt" (optionals)
+  osub: null,             // which optional the Optional page shows; null is the first
   fday: null,             // the focus day opened to its runs
 };
 
 /* ---------------- renderers ---------------- */
 /* ---------------- the syllabus ----------------
-   This tab IS the syllabus, not a menu standing in front of it. Eight
-   subjects, 242 topics and 1,723 subtopics, on one page that opens in place
-   and reads all the way down. It used to be eight cards leading to a list
-   leading to a modal, which meant the 1,723 lines — the actual syllabus —
-   could only be seen eight at a time, one topic at a time, 242 modals deep.
+   A page to read, laid out like a well-printed syllabus: every subject its own
+   coloured card with room around it, every topic numbered, every point listed
+   under it, and all of it open. There is nothing to tap to see more and
+   nothing to tick.
 
-   Two lenses over the same topics. BY SUBJECT is how the material is taught.
-   BY PAPER is how the Commission actually sets it, and 240 of the 242 topics
-   carry more than one paper tag, so the two are genuinely different shapes of
-   one syllabus rather than the same list printed twice. */
+   It used to be something to operate -- a map of 249 unlabelled squares, a
+   Map / By subject / By paper switch, weight stripes, chips like "GS1" and
+   "7d", topics that opened on a tap and subtopics that ticked. The owner found
+   it hard to follow and asked for a tidy page instead (15 Sep 2026), so the
+   tab now only does the one thing it is named for. Ticks already in the store
+   are kept: the backup still carries them, and the topic sheet a mistake opens
+   still shows them. This tab just does not ask for them. */
 
-const PAPER_ORDER = ["prelims", "mains-gs1", "mains-gs2", "mains-gs3", "mains-gs4", "essay"];
 const PAPER_NAME = {
   prelims: "Prelims", "mains-gs1": "Mains GS-I", "mains-gs2": "Mains GS-II",
   "mains-gs3": "Mains GS-III", "mains-gs4": "Mains GS-IV", essay: "Essay",
 };
-const PAPER_ICON = {
-  prelims: "◷", "mains-gs1": "🏛", "mains-gs2": "⚖", "mains-gs3": "📈",
-  "mains-gs4": "🧭", essay: "✍",
-};
 const ALL_TOPICS = SUBJECTS.flatMap(s => s.topics.map(tp => ({tp, s})));
-const OWNER = {};
-ALL_TOPICS.forEach(x => { OWNER[x.tp.id] = x; });
 
-const ticked = tp => (store.done[tp.id] || []).length;
-
-/* Topics and subtopics counted separately. One percentage cannot say which it
-   means, and "68% of topics" is a different claim from 68% of the reading. */
-function tally(list){
-  let tDone = 0, sTot = 0, sDone = 0;
-  for(const tp of list){
-    sTot += tp.subtopics.length;
-    const d = ticked(tp);
-    sDone += d;
-    if(tp.subtopics.length && d >= tp.subtopics.length) tDone++;
-  }
-  return {tTot: list.length, tDone, sTot, sDone, pct: sTot ? sDone / sTot : 0};
-}
-
-function groups(){
-  if(state.lens === "paper"){
-    return PAPER_ORDER
-      .map(p => ({id: p, icon: PAPER_ICON[p], name: PAPER_NAME[p], short: PAPER_NAME[p],
-                  topics: ALL_TOPICS.filter(x => x.tp.papers.includes(p)).map(x => x.tp)}))
-      .filter(g => g.topics.length);
-  }
-  return SUBJECTS.map(s => ({id: s.id, icon: s.icon, name: s.name, short: s.short, topics: s.topics}));
-}
-
-function passesFilter(tp){
-  if(state.tfilter === "due") return isDue(tp);
-  if(state.tfilter === "high") return tp.weight === "high";
-  if(state.tfilter === "left") return ticked(tp) < tp.subtopics.length;
-  return true;
-}
+/* One hue per subject, so a long page reads by colour as well as by heading:
+   you can see you have crossed from Polity into Economics before you read the
+   word. Only the hue is fixed here; how light or dark it is drawn follows the
+   theme, in the stylesheet (.ssec, .sjc). A subject added later still gets a
+   hue of its own from its position. The optionals get hues of their own too,
+   but they are told apart from GS by their section and their badge, not by
+   colour alone. */
+const SUBJECT_HUE = {geography: 152, scitech: 222, environment: 96, security: 2, ir: 196,
+                     history: 28, polity: 272, economics: 46, csat: 322};
+const OPTIONAL_HUE = {geography: 180, law: 338, agriculture: 72};
+const hueOf = s => SUBJECT_HUE[s.id] ?? (SUBJECTS.indexOf(s) * 40) % 360;
+const optHueOf = o => OPTIONAL_HUE[o.id] ?? (OPTIONALS.subjects.indexOf(o) * 60 + 20) % 360;
 
 const hl = (s, term) => !term ? esc(s)
-  : esc(s).replace(new RegExp("(" + term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "ig"), "<mark>$1</mark>");
+  : esc(s).replace(new RegExp("(" + esc(term).replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "ig"), "<mark>$1</mark>");
+const cap = s => s ? s[0].toUpperCase() + s.slice(1) : s;
 
-/* The shape of the whole thing in one strip: how big is this, and where does
-   the mass sit? Nothing answered that before, and it is the first thing you
-   want to know about a syllabus you have to finish by a date. */
-/* The syllabus as a picture, which is the one thing a scrolling outline can
-   never be. Eight subjects, 242 topics, one square each — the whole of what
-   the Commission examines on a screen and a half, so "what is the UPSC
-   syllabus" has an answer you can see rather than one you have to scroll.
-
-   Colour is progress, never weight. Weight is an editorial claim and at the
-   moment a weak one (145 of 242 are tagged high); where you have and have not
-   been is a fact, and a fact is what a picture should be made of. */
-function mapHtml(){
-  const ex = nextExam();
-  const days = ex ? Math.max(0, Math.ceil((ex.on - Date.now()) / DAY)) : null;
-  const nSub = SUBJECTS.reduce((a, s) => a + s.topics.reduce((b, t) => b + t.subtopics.length, 0), 0);
-  const t0 = tally(ALL_TOPICS.map(x => x.tp));
-
-  return `<div class="mapwrap">
-    <div class="mapline">
-      <span><b class="mono">${SUBJECTS.length}</b> subjects</span>
-      <span><b class="mono">${ALL_TOPICS.length}</b> topics</span>
-      <span><b class="mono">${nSub.toLocaleString()}</b> subtopics</span>
-      ${days !== null ? `<span><b class="mono">${days}</b> days to ${esc(ex.name)}</span>` : ""}
-      <span><b class="mono">${t0.tDone}</b> finished</span>
-    </div>
-    ${SUBJECTS.map(s => {
-      const t = tally(s.topics);
-      return `<section class="mapsub">
-        <button class="maph" data-mapsub="${s.id}">
-          <span class="gi">${s.icon}</span>
-          <span class="mn">${esc(s.name)}</span>
-          <span class="mm mono">${t.tDone}/${t.tTot}</span>
-          <span class="mbar"><i style="width:${(t.pct * 100).toFixed(1)}%"></i></span>
-        </button>
-        <div class="mtiles">
-          ${s.topics.map(tp => {
-            // due beats finished on purpose: a topic that has come round again
-            // is work, and work is what the picture is for
-            const st = isDue(tp) ? "due" : isComplete(tp) ? "done" : ticked(tp) ? "part" : "";
-            return `<button class="mt ${st}" data-sheet="${tp.id}" title="${esc(tp.name)}"></button>`;
-          }).join("")}
-        </div>
-      </section>`;
-    }).join("")}
-    <div class="plegend" style="margin-top:12px">
-      <span><i class="mdone"></i>finished</span>
-      <span><i class="mpart"></i>started</span>
-      <span><i class="mdue"></i>due again</span>
-      <span><i></i>not started</span>
-    </div>
-    <p class="note">Every square is one topic — tap it to open its subtopics and tick them off.
-      Tap a subject's name to drop into the full outline at that subject.</p>
-  </div>`;
+/* One topic. Its name shows; its points open on a tap. Most GS points are this
+   app's own study breakdown rather than the Commission's words, so they stay
+   folded until you ask for them (asked for on 15 Sep 2026). A search opens
+   every topic it matched, so the marked words are on screen. A topic with no
+   points -- most of the Law syllabus -- is just its line. */
+function topicItem(n, name, sub, pts, term){
+  const t = term ? term.toLowerCase() : "";
+  const hit = t && pts.some(x => x.toLowerCase().includes(t));
+  const head = `<span class="stp-n">${n}</span><span class="stp-b">
+      <span class="stp-t">${hl(cap(name), term)}</span>
+      ${sub ? `<span class="stp-p">${esc(sub)}</span>` : ""}
+    </span>`;
+  if(!pts.length) return `<li class="stp plain"><div class="stp-h">${head}</div></li>`;
+  return `<li class="stp"><details ${hit ? "open" : ""}>
+    <summary class="stp-h">${head}<span class="stp-c">${pts.length}</span></summary>
+    <ul class="stp-l">${pts.map(x => `<li>${hl(cap(x), term)}</li>`).join("")}</ul>
+  </details></li>`;
 }
 
-function shapeHtml(){
-  const gs = groups();
-  const max = Math.max(...gs.map(g => g.topics.length));
-  const t = tally(ALL_TOPICS.map(x => x.tp));
-  const multi = ALL_TOPICS.filter(x => x.tp.papers.length > 1).length;
-  /* The bars were worth seeing once and then occupied the top of the screen
-     every time. The line of counts stays, because that is the part you read;
-     the shape folds away behind it. */
-  const open = !!state.shape;
-  return `<div class="shape">
-    <button class="shead" id="shapeToggle">
-      <span><b class="mono">${t.tTot}</b> topics · <b class="mono">${t.sTot.toLocaleString()}</b> subtopics</span>
-      <span class="n">${t.tDone} done · ${t.sDone.toLocaleString()} ticked <i>${open ? "−" : "+"}</i></span>
-    </button>
-    ${!open ? "" : `<div class="sbars">
-      ${gs.map(g => {
-        const gt = tally(g.topics);
-        return `<button class="sbar" data-jump="${g.id}">
-          <span class="sb-l"><span class="sb-i">${g.icon}</span>${esc(g.short)}</span>
-          <span class="sb-t"><i style="width:${(g.topics.length / max * 100).toFixed(1)}%"></i><b style="width:${(g.topics.length / max * gt.pct * 100).toFixed(1)}%"></b></span>
-          <span class="sb-n mono">${g.topics.length}</span>
-        </button>`;
-      }).join("")}
-    </div>
-    <p class="note" style="margin-top:9px">${multi} of ${t.tTot} topics count for more than one paper — revising once
-      serves Prelims and Mains together. <b>By paper</b> shows the syllabus the way the Commission sets it.</p>`}
-  </div>`;
+const matches = (t, name, pts) => !t || name.toLowerCase().includes(t) || pts.some(x => x.toLowerCase().includes(t));
+
+/* The two pages the tab switches between. General Studies and the optionals
+   are kept apart rather than one after the other (asked for on 15 Sep 2026):
+   they are different kinds of text -- a study breakdown of broad GS lines
+   against the Commission's own optional syllabus -- and you read one or the
+   other, not both in one scroll. With a search term each keeps only the topics
+   that mention it, still under their own coloured subject and still numbered
+   as in the syllabus. */
+function gsDoc(term){
+  const t = term ? term.toLowerCase() : "";
+  let shown = 0;
+  const html = SUBJECTS.map(s => {
+    const topics = s.topics.map((tp, i) => ({tp, n: i + 1})).filter(({tp}) => matches(t, tp.name, tp.subtopics));
+    if(!topics.length) return "";
+    shown += topics.length;
+    return `<section class="ssec" id="s-${s.id}" style="--h:${hueOf(s)}">
+      <header class="ssh">
+        <span class="ssi">${s.icon}</span>
+        <h2>${esc(s.name)}</h2>
+        <span class="ssn">${t ? topics.length + " of " : ""}${s.topics.length} topics</span>
+      </header>
+      <ol class="stopics">${topics.map(({tp, n}) =>
+        topicItem(n, tp.name, tp.papers.map(p => PAPER_NAME[p] || p).join(" · "), tp.subtopics, term)).join("")}</ol>
+    </section>`;
+  }).join("");
+  return {html, shown};
 }
 
-/* A topic opened in place. The sheet still exists and still owns revision;
-   this is for reading, and reading the whole of a topic should not cost a
-   navigation. */
-function subtopicsHtml(tp, term){
-  const done = new Set(store.done[tp.id] || []);
-  return `<div class="subs">
-    ${tp.subtopics.map((x, i) => `
-      <button class="sub ${done.has(i) ? "on" : ""}" data-tick="${tp.id}" data-i="${i}">
-        <span class="box">${CHECK}</span><span class="stxt">${hl(x, term)}</span>
-      </button>`).join("")}
-    <div class="subfoot">
-      <span class="also">Counts for ${tp.papers.map(p => PAPER_NAME[p] || p).join(", ")}</span>
-      <button class="linky" data-sheet="${tp.id}">Open · mark revised</button>
-    </div>
-  </div>`;
+const OPT_SUBJECTS = () => (OPTIONALS.subjects || []).filter(o => o.syllabus);
+
+/* One optional at a time, chosen on the strip (asked for on 15 Sep 2026: the
+   three stacked in one column were one long scroll of three different
+   subjects). Each paper is a card of its own, so Paper I and Paper II do not
+   run together either. */
+const currentOpt = () => {
+  const subs = OPT_SUBJECTS();
+  return subs.find(o => o.id === state.osub) || subs[0];
+};
+
+function optDoc(term){
+  const t = term ? term.toLowerCase() : "";
+  const o = currentOpt();
+  if(!o) return {html: "", shown: 0};
+  let shown = 0;
+  const html = o.syllabus.map(paper => {
+    const parts = paper.parts.map(part => {
+      const topics = part.topics.map((tp, i) => ({tp, n: i + 1})).filter(({tp}) => matches(t, tp.name, tp.points || []));
+      if(!topics.length) return "";
+      shown += topics.length;
+      return `${part.title ? `<div class="spart">${esc(part.title)}</div>` : ""}
+        <ol class="stopics">${topics.map(({tp, n}) => topicItem(n, tp.name, "", tp.points || [], term)).join("")}</ol>`;
+    }).join("");
+    if(!parts) return "";
+    return `<section class="ssec sopt" id="o-${o.id}-${paper.paper.replace(/\W+/g, "").toLowerCase()}" style="--h:${optHueOf(o)}">
+      <header class="ssh">
+        <span class="ssi">${o.icon}</span>
+        <h2>${esc(o.name)} <span class="sph">${esc(paper.paper)}</span></h2>
+        <span class="ssn">250 marks</span>
+      </header>
+      ${paper.title ? `<div class="spaper-h">${esc(paper.title)}</div>` : ""}
+      ${parts}
+      ${paper.note && !t ? `<p class="snote">${esc(paper.note)}</p>` : ""}
+    </section>`;
+  }).join("");
+  return {html, shown};
 }
 
-function topicHtml(tp, s, term){
-  const open = state.openTopics.has(tp.id);
-  const dn = ticked(tp), tot = tp.subtopics.length;
-  const d = dueIn(tp);
-  const dueChip = d === null ? "" : d <= 0 ? `<span class="chip due">due</span>` : `<span class="chip sched">${d}d</span>`;
-  const matched = term ? tp.subtopics.filter(x => x.toLowerCase().includes(term)) : [];
-  const teaser = (matched.length ? matched : tp.subtopics).slice(0, 2).join(" · ");
-  return `<div class="tw ${open ? "open" : ""}">
-    <button class="row" data-open="${tp.id}">
-      <span class="stripe ${tp.weight}"></span>
-      <span class="body">
-        <span class="t">${hl(tp.name, term)}</span>
-        <span class="s">${s ? esc(s.short) + " · " : ""}${hl(teaser, term)}</span>
-        <span class="chips">${chipHtml(tp)}<span class="chip">${dn}/${tot}</span>${dueChip}${
-          term && matched.length ? `<span class="chip m">${matched.length} match${matched.length > 1 ? "es" : ""}</span>` : ""}</span>
-      </span>
-      <span class="caret">${open ? "−" : "+"}</span>
-    </button>
-    ${open ? subtopicsHtml(tp, term) : ""}
-  </div>`;
-}
+const syllabusDoc = term => (state.sview === "opt" ? optDoc : gsDoc)(term);
 
-/* Everything, flat, no controls: for reading end to end and for printing. The
-   app is one file and prints as one document, so this costs a stylesheet
+/* Everything, flat, no colour: what the drawer's Print the syllabus shows and
+   what @media print prints. The app is one file, so printing is a stylesheet
    rather than an export. */
 function readHtml(){
   const subs = ALL_TOPICS.reduce((a, x) => a + x.tp.subtopics.length, 0);
   return `<div class="readdoc">
     <h1>UPSC Civil Services — the syllabus</h1>
-    <p class="note">${ALL_TOPICS.length} topics, ${subs.toLocaleString()} subtopics. Ticks are
-      left out on purpose: this view is for reading.</p>
+    <p class="note">${ALL_TOPICS.length} topics, ${subs.toLocaleString()} points.</p>
     ${SUBJECTS.map(s => `
       <h2>${s.icon} ${esc(s.name)}</h2>
       ${s.topics.map(tp => `
         <h3>${esc(tp.name)}<span class="rp">${tp.papers.map(p => PAPER_NAME[p]).join(" · ")}</span></h3>
         <ul>${tp.subtopics.map(x => `<li>${esc(x)}</li>`).join("")}</ul>`).join("")}`).join("")}
   </div>`;
-}
-
-/* ---------------- today ----------------
-   What to study, rather than what exists.
-
-   The app already knew all of this and made you assemble it: which topics had
-   fallen due, whether the daily quiz was logged, which practice answers you
-   got wrong. That is a to-do list, and it was scattered across three tabs.
-
-   Nothing here is a new obligation invented by the app. Every line is
-   something already true of your own data, and every line is one tap from the
-   thing it is about. */
-const PLAN_N = 6;
-
-function planItems(){
-  const out = [];
-  const due = ALL_TOPICS.filter(x => isDue(x.tp)).sort((a, b) => dueIn(a.tp) - dueIn(b.tp));
-  for(const {tp, s} of due.slice(0, PLAN_N)){
-    const d = dueIn(tp);
-    out.push({kind: "topic", id: tp.id, title: tp.name, sub: s.short,
-              note: d < 0 ? `${-d}d overdue` : "due today"});
-  }
-
-  const today = new Date().toISOString().slice(0, 10);
-  const dow = new Date().getDay();
-  if(dow !== 0 && !(store.daily || {})[today])
-    out.push({kind: "daily", title: "Today's current-affairs quiz", sub: "Practice",
-              note: "not logged"});
-
-  /* Mistakes come back on their own schedule, and only the ones due today
-     are on the plan -- the notebook has the rest. */
-  const mdue = mistakesDue().length;
-  if(mdue) out.push({kind: "mistakes", title: `${mdue} mistake${mdue > 1 ? "s" : ""} to try again`,
-                     sub: "Practice", note: "due today"});
-  return out;
-}
-
-function planHtml(){
-  const items = planItems();
-  const done = ALL_TOPICS.filter(x => isComplete(x.tp)).length;
-  if(!items.length){
-    return `<div class="plan">
-      <div class="phead"><h2>Today</h2><span class="n">nothing due</span></div>
-      <p class="note" style="margin:0">Nothing has fallen due and today's quiz is logged.
-        ${done < ALL_TOPICS.length
-          ? "Start something new below — the syllabus is sorted by how often it comes up."
-          : "The whole syllabus is ticked off; the decay schedule will bring it back round."}</p>
-    </div>`;
-  }
-  return `<div class="plan">
-    <div class="phead"><h2>Today</h2><span class="n">${items.length} to do</span></div>
-    <div class="plist">
-      ${items.map(i => `<button class="pitem" data-plan="${i.kind}" data-id="${i.id || ""}">
-        <span class="pdot ${i.kind}"></span>
-        <span class="pbody"><span class="pt">${esc(i.title)}</span>
-          <span class="ps">${esc(i.sub)} · ${esc(i.note)}</span></span>
-        <span class="pgo">›</span>
-      </button>`).join("")}
-    </div>
-  </div>`;
-}
-
-function bindPlan(root){
-  root.querySelectorAll("[data-plan]").forEach(b => b.onclick = () => {
-    const k = b.dataset.plan;
-    if(k === "topic"){ openTopic(b.dataset.id); return; }
-    state.tab = "practice"; state.qmode = k === "daily" ? "daily" : k === "mistakes" ? "mistakes" : "papers";
-    state.mretry = false; state.mres = null;
-    markTab("practice"); render();
-  });
 }
 
 function renderSyllabus(){
@@ -1319,193 +1095,114 @@ function renderSyllabus(){
     return;
   }
 
-  const gs = groups();
-  const anyOpen = gs.some(g => state.open.has(g.id));
-  const dueCount = ALL_TOPICS.filter(x => isDue(x.tp)).length;
-
+  const ex = nextExam();
+  const days = ex ? Math.max(0, Math.ceil((ex.on - Date.now()) / DAY)) : null;
+  const opt = state.sview === "opt" && OPT_SUBJECTS().length;
+  if(!opt) state.sview = "gs";
+  const o = opt ? currentOpt() : null;
   view.innerHTML = `
     <div class="searchwrap">
       <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
-      <input id="q" type="search" placeholder="Search __N_TOPICS__ topics and __N_SUBTOPICS__ subtopics" autocomplete="off">
+      <input id="q" type="search" placeholder="${opt ? "Search " + esc(o.name) + " optional" : "Search General Studies"}" autocomplete="off">
     </div>
-    <div id="results"></div>
-    <div id="home">
-      <!-- In the map the syllabus comes first and the day's list after it: the
-           tab is called Syllabus, and it used to open on three stacked cards
-           with the syllabus somewhere below the fold. -->
-      ${state.lens === "map" ? "" : planHtml() + paceHtml(ALL_TOPICS.length) + shapeHtml()}
-      <!-- One row. It was three — lens, filters, and a bar of eight jump icons —
-           stacked above the content on every visit. The jump bar is gone
-           because collapsing the groups gives you the same eight rows, as
-           headings you can actually read, and Today links straight to a topic
-           anyway. What is left scrolls sideways rather than wrapping. -->
-      <div class="ctrl">
-        <div class="seg">
-          <button class="${state.lens === "map" ? "on" : ""}" data-lens="map">Map</button>
-          <button class="${state.lens === "subject" ? "on" : ""}" data-lens="subject">By subject</button>
-          <button class="${state.lens === "paper" ? "on" : ""}" data-lens="paper">By paper</button>
-        </div>
-        ${state.lens === "map" ? "" : `<span class="cdiv"></span>
-        ${[["all", "All"], ["due", "Due " + dueCount], ["high", "High weight"], ["left", "Not done"]]
-          .map(([k, l]) => `<button class="fchip ${state.tfilter === k ? "on" : ""}" data-f="${k}">${l}</button>`).join("")}
-        <span class="cdiv"></span>
-        <button class="fchip ghost" id="expAll">${anyOpen ? "Collapse all" : "Expand all"}</button>`}
-      </div>
-      ${state.lens === "map" ? mapHtml() + planHtml() : gs.map(g => {
-        const shown = g.topics.filter(passesFilter);
-        const t = tally(g.topics);
-        const open = state.open.has(g.id);
-        return `<section class="grp" id="g-${g.id}">
-          <button class="ghead ${open ? "open" : ""}" data-grp="${g.id}">
-            <span class="gi">${g.icon}</span>
-            <span class="gt">
-              <span class="gn">${esc(g.name)}</span>
-              <span class="gm mono">${t.tDone}/${t.tTot} topics · ${t.sDone}/${t.sTot} subtopics${
-                shown.length !== g.topics.length ? " · " + shown.length + " shown" : ""}</span>
-            </span>
-            <span class="gbar"><i style="width:${(t.pct * 100).toFixed(1)}%"></i></span>
-            <span class="caret">${open ? "−" : "+"}</span>
-          </button>
-          ${open ? (shown.length
-            ? `<div class="tlist">${shown.map(tp => topicHtml(tp, state.lens === "paper" ? OWNER[tp.id].s : null, "")).join("")}</div>`
-            : `<div class="empty">Nothing here under this filter.</div>`) : ""}
-        </section>`;
-      }).join("")}
-      ${state.lens === "map" ? "" : `<p class="note">Weight bands come from how often a topic has surfaced in the last ten years of papers. Tick subtopics as you revise, and mark a topic revised when you go back over it. Reading the whole syllabus and backing it up are both in the menu, top right.</p>`}
-    </div>`;
+    <div class="sintro">
+      ${opt
+        ? `<span>The Commission's own syllabus, word for word. In Mains you write <b>one</b> optional: two papers of 250 marks each.</span>`
+        : `<span><b>${SUBJECTS.length} subjects</b> and <b>${ALL_TOPICS.length} topics</b>. Tap a topic to see its points.</span>
+           ${days !== null ? `<span><b>${days}</b> days to ${esc(ex.name)}</span>` : ""}`}
+    </div>
+    <div class="sstick" id="sstick">
+      ${OPT_SUBJECTS().length ? `<div class="seg segwide sseg">
+        <button class="${opt ? "" : "on"}" data-sview="gs">General Studies</button>
+        <button class="${opt ? "on" : ""}" data-sview="opt">Optional</button>
+      </div>` : ""}
+      <nav class="sjump" id="sjump" aria-label="${opt ? "Choose an optional" : "Go to a subject"}">
+        ${opt
+          ? OPT_SUBJECTS().map(x => `<button class="sjc ${x.id === o.id ? "on" : ""}" style="--h:${optHueOf(x)}" data-osub="${x.id}">${x.icon} ${esc(x.name)}</button>`).join("")
+          : SUBJECTS.map(x => `<button class="sjc" style="--h:${hueOf(x)}" data-jump="s-${x.id}">${x.icon} ${esc(x.short)}</button>`).join("")}
+      </nav>
+    </div>
+    <div id="sdoc">${syllabusDoc("").html}</div>
+    <p class="note">${opt
+      ? `From the Commission's <a href="${esc(OPTIONALS.syllabus_source || "https://upsc.gov.in")}" target="_blank" rel="noopener">CSE notification</a>; only the line breaks and the split into points are the app's.`
+      : `These topics and points are this app's study breakdown of the Commission's broad General Studies syllabus, not its wording.`}</p>`;
+
+  /* Switching page or optional from deep down lands at the top of the new
+     page's content, just under the stuck bar -- not back at the search box. */
+  const toContent = () => {
+    const doc = document.getElementById("sdoc");
+    if(!doc) return;
+    const y = doc.getBoundingClientRect().top + window.scrollY - stuckHeight() - 8;
+    window.scrollTo(0, Math.max(0, Math.min(window.scrollY, y)));
+  };
+  view.querySelectorAll("[data-sview]").forEach(b => b.onclick = () => {
+    if(state.sview === b.dataset.sview) return;
+    const y = window.scrollY;
+    state.sview = b.dataset.sview; renderSyllabus();
+    window.scrollTo(0, y); toContent(); syllabusSpy();
+  });
+  view.querySelectorAll("[data-osub]").forEach(b => b.onclick = () => {
+    if(state.osub === b.dataset.osub) return;
+    const y = window.scrollY;
+    state.osub = b.dataset.osub; renderSyllabus();
+    window.scrollTo(0, y); toContent();
+  });
 
   const q = document.getElementById("q");
   q.addEventListener("input", () => runSearch(q.value.trim()));
-  const st = document.getElementById("shapeToggle");
-  if(st) st.onclick = () => { state.shape = !state.shape; refreshBehind(); };
-  const dj = document.getElementById("dueJump");
-  if(dj) dj.onclick = () => { state.tfilter = "due"; state.open = new Set(gs.map(g => g.id)); render(); };
-  const ea = document.getElementById("expAll");
-  if(ea) ea.onclick = () => {
-    state.open = anyOpen ? new Set() : new Set(gs.map(g => g.id));
-    render();
-  };
-  view.querySelectorAll("[data-lens]").forEach(b => b.onclick = () => {
-    state.lens = b.dataset.lens; state.open = new Set(); render();
-  });
-  view.querySelectorAll("[data-f]").forEach(b => b.onclick = () => { state.tfilter = b.dataset.f; render(); });
   view.querySelectorAll("[data-jump]").forEach(b => b.onclick = () => {
-    const id = b.dataset.jump;
-    state.open.add(id);
-    render();
-    const el = document.getElementById("g-" + id);
-    if(el) el.scrollIntoView({behavior: "smooth", block: "start"});
+    const el = document.getElementById(b.dataset.jump);
+    if(!el) return;
+    window.scrollTo({top: el.getBoundingClientRect().top + window.scrollY - stuckHeight() - 4, behavior: "smooth"});
   });
-  view.querySelectorAll("[data-mapsub]").forEach(b => b.onclick = () => {
-    // the map is for seeing; the outline is for working. A subject's name is
-    // the door between them.
-    state.lens = "subject"; state.open = new Set([b.dataset.mapsub]); render();
-    const el = document.getElementById("g-" + b.dataset.mapsub);
-    if(el) el.scrollIntoView({behavior: "smooth", block: "start"});
-  });
-  bindPlan(view);
-  bindOutline(view);
+  syllabusSpy();
 }
 
-/* Search reads the same 1,723 subtopics the outline does, and returns the same
-   rows — so a hit expands, ticks and links exactly like the tree it came from,
-   with the matched words marked. */
-function runSearch(term){
-  const res = document.getElementById("results"), home = document.getElementById("home");
-  if(!res) return;
-  if(!term || term.length < 2){ res.innerHTML = ""; home.classList.remove("hide"); return; }
-  home.classList.add("hide");
-  const t = term.toLowerCase();
-  const hits = [];
-  for(const {tp, s} of ALL_TOPICS){
-    const inName = tp.name.toLowerCase().includes(t);
-    const subs = tp.subtopics.filter(x => x.toLowerCase().includes(t));
-    if(inName || subs.length) hits.push({tp, s, n: subs.length});
+/* The switch and the subject strip stick under the app bar together, so both
+   changing page (General Studies / Optional) and changing subject are one tap
+   from anywhere on the page, not a scroll back up (asked for on 15 Sep 2026).
+   On the General Studies page the strip lights the subject being read and
+   slides it into view. --top-h is the app bar's real height, which differs
+   between the PWA (safe-area padding) and the Android app (inset margins).
+   stuckHeight is where the bar will sit once stuck, not where it is now: before
+   the first scroll it is still in the flow, and a jump measured from there
+   stops short. */
+function stuckHeight(){
+  const stick = document.getElementById("sstick"), bar = document.getElementById("top");
+  return (bar ? bar.offsetHeight : 0) + (stick ? stick.offsetHeight : 0);
+}
+function syllabusSpy(){
+  const nav = document.getElementById("sjump");
+  if(!nav || state.tab !== "syllabus" || state.read) return;
+  const top = document.getElementById("top");
+  document.documentElement.style.setProperty("--top-h", (top ? top.offsetHeight : 0) + "px");
+  if(state.sview === "opt") return;
+  const stick = document.getElementById("sstick");
+  const line = (stick ? stick.getBoundingClientRect().bottom : 0) + 8;
+  let cur = null;
+  for(const sec of document.querySelectorAll("#sdoc .ssec")){
+    if(sec.getBoundingClientRect().top <= line) cur = sec.id;
+    else break;
   }
-  if(!hits.length){ res.innerHTML = `<div class="empty">Nothing matches “${esc(term)}”.</div>`; return; }
-  const subHits = hits.reduce((a, h) => a + h.n, 0);
-  res.innerHTML = `<div class="head"><h2>Results</h2><span class="n">${hits.length} topics · ${subHits} subtopics</span></div>
-    <div class="tlist">${hits.slice(0, 80).map(h => topicHtml(h.tp, h.s, t)).join("")}</div>`;
-  bindOutline(res);
-}
-
-/* Kept for the sheet and anywhere else that still wants a plain row. */
-function rowHtml(tp, s, subline){
-  const dn = ticked(tp), tot = tp.subtopics.length;
-  const complete = dn === tot && tot > 0;
-  const d = dueIn(tp);
-  const dueChip = d === null ? "" : d <= 0 ? `<span class="chip due">due</span>` : `<span class="chip sched">${d}d</span>`;
-  return `<button class="row" data-topic="${tp.id}">
-    <span class="stripe ${tp.weight}"></span>
-    <span class="body">
-      <span class="t">${esc(tp.name)}</span>
-      <span class="s">${esc(subline || (s ? s.short + " · " : "") + tp.subtopics.slice(0, 2).join(" · "))}</span>
-      <span class="chips">${chipHtml(tp)}<span class="chip">${dn}/${tot}</span>${dueChip}</span>
-    </span>
-    <span class="tick ${complete ? "on" : ""}">${CHECK}</span>
-  </button>`;
-}
-
-/* One place binds the outline, so search results behave exactly like the tree:
-   same rows, same expansion, same ticking. */
-function bindOutline(root){
-  root.querySelectorAll("[data-grp]").forEach(b => b.onclick = () => {
-    const id = b.dataset.grp;
-    state.open.has(id) ? state.open.delete(id) : state.open.add(id);
-    refreshBehind();          // keeps your place; render() would jump to the top
+  nav.querySelectorAll(".sjc").forEach(b => {
+    const on = b.dataset.jump === cur;
+    if(on && !b.classList.contains("on") && typeof nav.scrollTo === "function"){
+      nav.scrollTo({left: b.offsetLeft - (nav.clientWidth - b.offsetWidth) / 2, behavior: "smooth"});
+    }
+    b.classList.toggle("on", on);
   });
-  root.querySelectorAll("[data-open]").forEach(b => b.onclick = () => {
-    const id = b.dataset.open;
-    state.openTopics.has(id) ? state.openTopics.delete(id) : state.openTopics.add(id);
-    refreshBehind();
-  });
-  root.querySelectorAll("[data-tick]").forEach(b => b.onclick = e => {
-    e.stopPropagation();
-    const tp = OWNER[b.dataset.tick].tp;
-    toggleSub(tp.id, +b.dataset.i, tp.subtopics.length);
-    refreshBehind();
-  });
-  root.querySelectorAll("[data-sheet]").forEach(b => b.onclick = e => {
-    e.stopPropagation(); openTopic(b.dataset.sheet);
-  });
-  root.querySelectorAll("[data-topic]").forEach(b => b.onclick = () => openTopic(b.dataset.topic));
 }
+window.addEventListener("scroll", () => { if(state.tab === "syllabus") syllabusSpy(); }, {passive: true});
+window.addEventListener("resize", () => { if(state.tab === "syllabus") syllabusSpy(); });
 
-function bindRows(root){
-  root.querySelectorAll("[data-topic]").forEach(b => b.onclick = () => openTopic(b.dataset.topic));
-}
-
-
-/* What the exam calendar and your own ticks jointly imply.
-   The daily rate is only shown when there is enough runway for it to mean
-   anything. Inside the last month "35 topics a day" is not a plan, it is an
-   insult, so the strip switches to plain counts instead. */
-const PACE_HORIZON = 30;
-
-function paceHtml(total){
-  const ex = nextExam();
-  if(!ex) return "";
-  const days = Math.max(0, Math.ceil((ex.on - Date.now()) / DAY));
-  const done = SUBJECTS.reduce((a, s) => a + s.topics.filter(isComplete).length, 0);
-  const due = SUBJECTS.reduce((a, s) => a + s.topics.filter(isDue).length, 0);
-  const left = total - done;
-  const rate = left / Math.max(1, days);
-
-  let second;
-  if(!left) second = "whole syllabus ticked off";
-  else if(days >= PACE_HORIZON)
-    second = `<b class="mono">${rate < 10 ? rate.toFixed(1) : Math.round(rate)}</b> topics a day to cover the rest`;
-  else
-    second = `<b class="mono">${left}</b> still untouched — revision territory now, not first pass`;
-
-  return `<div class="pace">
-    <div class="pl"><span class="big mono">${days}</span><span class="lil">days to ${esc(ex.name)}</span></div>
-    <div class="pr">
-      <span><b class="mono">${done}</b> of ${total} topics finished</span>
-      <span>${second}</span>
-      ${due ? `<span><button class="linky" id="dueJump"><b class="mono">${due}</b> due for revision</button></span>` : ""}
-    </div>
-  </div>`;
+/* Search narrows the same page rather than switching to a results list, so a
+   hit is read exactly where it sits in the syllabus. */
+function runSearch(term){
+  const doc = document.getElementById("sdoc");
+  if(!doc) return;
+  const t = term && term.length >= 2 ? term : "";
+  const r = syllabusDoc(t);
+  doc.innerHTML = t && !r.shown ? `<div class="empty">Nothing in the syllabus matches “${esc(term)}”.</div>` : r.html;
 }
 
 /* ---------------- focus ----------------
@@ -2097,21 +1794,6 @@ function openWriting(year, code, label){
   sheet.classList.add("on"); sheetBg.classList.add("on");
 }
 
-/* Everything falling due, across all eight subjects, oldest debt first. Rides
-   on the same #results slot the search uses. */
-function showDue(){
-  const res = document.getElementById("results"), home = document.getElementById("home");
-  if(!res) return;
-  const rows = [];
-  for(const s of SUBJECTS) for(const tp of s.topics) if(isDue(tp)) rows.push({s, tp});
-  rows.sort((a, b) => dueIn(a.tp) - dueIn(b.tp));
-  home.classList.add("hide");
-  res.innerHTML = `<div class="head"><h2>Due for revision</h2><span class="n">${rows.length}</span></div>
-    ${rows.length ? `<div class="list">${rows.map(r => rowHtml(r.tp, r.s, null)).join("")}</div>` : `<div class="empty">Nothing due. Come back tomorrow.</div>`}
-    <p class="note">Longest-neglected first. Go back over one, then tap <b>Revised again</b> in the sheet — it returns at a wider interval each time: ${REVISE_DAYS.join(", ")} days, then every ${REVISE_DAYS[REVISE_DAYS.length - 1]}.</p>`;
-  bindRows(res);
-}
-
 /* ---------------- backup ----------------
    All of this lives in one browser's localStorage and nowhere else. Clear site
    data, reinstall the APK or change phone and it is gone, so there has to be a
@@ -2235,9 +1917,7 @@ window.taracmdBack = function(){
   if(drawerOpen()){ closeDrawer(); return true; }
   if(openId){ closeSheet(); return true; }
   if(state.tab==="syllabus" && state.read){ state.read=false; render(); return true; }
-  if(state.tab==="syllabus" && (state.openTopics.size || state.open.size)){
-    state.openTopics = new Set(); state.open = new Set(); render(); return true;
-  }
+  if(state.tab==="syllabus" && state.sview==="opt"){ state.sview="gs"; render(); return true; }
   if(state.tab!=="syllabus"){ document.querySelector('.tab[data-tab="syllabus"]').click(); return true; }
   return false;
 };

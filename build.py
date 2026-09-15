@@ -310,6 +310,19 @@ def check_optionals(opts) -> None:
         for copy in sub.get("copies") or []:
             check_copy(copy, f"optional {sid!r} copy")
 
+        # The official syllabus, word for word from the Commission's notification,
+        # drawn on the Syllabus tab: two papers, each topic with a name.
+        syl = sub.get("syllabus")
+        if syl is not None:
+            if [p.get("paper") for p in syl] != ["Paper I", "Paper II"]:
+                fail(f"optional {sid!r} syllabus has papers {[p.get('paper') for p in syl]}, expected Paper I and Paper II")
+            for p in syl:
+                topics = [t for part in p.get("parts") or [] for t in part.get("topics") or []]
+                if not topics:
+                    fail(f"optional {sid!r} syllabus {p.get('paper')} has no topics")
+                if any(not str(t.get("name", "")).strip() for t in topics):
+                    fail(f"optional {sid!r} syllabus {p.get('paper')} has a topic with no name")
+
     if not seen:
         fail("optionals.json lists no subjects")
 

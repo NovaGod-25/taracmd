@@ -3899,6 +3899,9 @@ function applyTheme(t){
   const m = document.createElement("meta");
   m.name = "theme-color"; m.content = dark ? "#0E131B" : "#EDEFF2";
   document.head.appendChild(m);
+  // In the app, the strips behind the status and gesture bars follow the
+  // page's theme, which can differ from the phone's.
+  if(NATIVE && typeof NATIVE.barsTheme === "function"){ try{ NATIVE.barsTheme(dark); }catch(e){} }
 }
 themeBtn.onclick = ()=>{
   const cur = document.documentElement.getAttribute("data-theme");

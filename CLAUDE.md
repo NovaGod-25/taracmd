@@ -616,6 +616,14 @@ which means a store written by an older build still opens.
 Backup is a copyable blob in a sheet (plus a file download on the web), and in the
 Android app the whole store is also written to the shelf folder — see The shelf.
 
+**The page is kept clear of the status and gesture bars by margins, not padding.** From
+Android 15 (targetSdk 35) the window is edge to edge whatever the app asks for, and
+`env(safe-area-inset-*)` reads zero inside the WebView. The first fix padded the WebView by
+the insets; a WebView draws its page over its whole bounds and ignores its own padding, so
+it shipped and changed nothing (a phone screenshot on 15 Sep 2026 still had the clock over
+the title). `MainActivity` now puts the WebView in a `FrameLayout`, sets its margins to the
+insets, and fills the gaps with two strips painted the page's `--paper` and `--card`.
+
 **The Android page is served over `https://appassets.androidplatform.net/`** via
 `WebViewAssetLoader`, not `file:///android_asset/`. A `file://` page has an opaque
 origin, which makes `localStorage` unreliable across WebView versions — and the revision
@@ -667,7 +675,7 @@ new scraping should be designed to run locally and unhurried, never in CI.
 
 ## The JS ↔ native contract
 
-Fifteen functions, and nothing else crosses. Changing a name on either side breaks it
+Sixteen functions, and nothing else crosses. Changing a name on either side breaks it
 silently, because the page checks for the bridge before using it and falls back to
 browser behaviour when it is absent.
 
@@ -687,6 +695,7 @@ browser behaviour when it is absent.
 | page → native | `AndroidHost.docsOpen(id)` | hand one to whatever the phone reads it with |
 | page → native | `AndroidHost.docsRemove(id)` | delete it — the file, not a listing of it |
 | native → page | `window.taracmdDocs()` | the shelf changed (folder picked, files added); re-render |
+| page → native | `AndroidHost.barsTheme(dark)` | the page applied a theme; paint the strips behind the status and gesture bars to match, with readable icons |
 | page → native | `AndroidHost.askClaude(text)` | share a question to the Claude app (the chooser if it is not installed). TaraCmd sends nothing and holds no key; off Android the page uses the browser's share sheet, or copies the text and opens claude.ai |
 
 ### Sitting a paper: the clock, the submit, the retake

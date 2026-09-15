@@ -9,6 +9,12 @@ import android.os.Build
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.SharedPreferences
+import android.content.res.Configuration
+import android.view.Gravity
+import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
+import androidx.core.view.WindowCompat
 import android.net.Uri
 import android.os.Bundle
 import android.provider.DocumentsContract
@@ -44,6 +50,25 @@ import org.json.JSONObject
 class MainActivity : AppCompatActivity() {
 
     private lateinit var web: WebView
+    private lateinit var topStrip: View
+    private lateinit var bottomStrip: View
+    private lateinit var barsFrame: FrameLayout
+
+    /**
+     * Colour the strips behind the status and gesture bars to match the page,
+     * and pick status-bar icons that can be read on them. The page says which
+     * theme it is showing (it can differ from the phone's), through barsTheme.
+     * The colours are the page's --paper (its top bar) and --card (its tab bar).
+     */
+    private fun paintBars(dark: Boolean) {
+        topStrip.setBackgroundColor(if (dark) 0xFF0E131B.toInt() else 0xFFEDEFF2.toInt())
+        bottomStrip.setBackgroundColor(if (dark) 0xFF161D28.toInt() else 0xFFFFFFFF.toInt())
+        barsFrame.setBackgroundColor(if (dark) 0xFF0E131B.toInt() else 0xFFEDEFF2.toInt())
+        WindowCompat.getInsetsController(window, barsFrame).apply {
+            isAppearanceLightStatusBars = !dark
+            isAppearanceLightNavigationBars = !dark
+        }
+    }
     private lateinit var loader: WebViewAssetLoader
     private var downloadWatcher: BroadcastReceiver? = null
     private lateinit var pickShelf: ActivityResultLauncher<Uri?>
@@ -75,6 +100,8 @@ class MainActivity : AppCompatActivity() {
          * not one of the owner's documents.
          */
         private const val BACKUP_NAME = "TaraCmd progress.json"
+
+        private const val MATCH = ViewGroup.LayoutParams.MATCH_PARENT
 
         /** The Claude app, which an Ask Claude tap shares a question straight into. */
         private const val CLAUDE_APP = "com.anthropic.claude"
@@ -113,48 +140,67 @@ class MainActivity : AppCompatActivity() {
             .build()
 
         web = WebView(this)
-        setContentView(web)
+        topStrip = View(this)
+        bottomStrip = View(this)
+        val frame = FrameLayout(this).apply {
+            addView(web, FrameLayout.LayoutParams(MATCH, MATCH))
+            addView(topStrip, FrameLayout.LayoutParams(MATCH, 0, Gravity.TOP))
+            addView(bottomStrip, FrameLayout.LayoutParams(MATCH, 0, Gravity.BOTTOM))
+        }
+        setContentView(frame)
+        barsFrame = frame
 
         /*
          * Keep the page out from under the status and navigation bars.
          *
          * targetSdk 35 means Android 15 draws this activity edge to edge
-         * whether it asks to or not, so the WebView starts at pixel zero and
+         * whether it asks to or not, so the window starts at pixel zero and
          * the page's own top bar ends up underneath the clock and the battery.
-         * The page cannot fix that alone: env(safe-area-inset-*) reads zero
-         * here, because as far as the WebView is concerned it has the whole
-         * window.
+         * env(safe-area-inset-*) reads zero inside the WebView, so the page
+         * cannot fix it alone.
          *
-         * Padding the WebView by the system-bar insets is what actually
-         * moves it, and it handles the gesture bar at the bottom in the same
-         * pass. The window background is @color/paper and follows the theme,
-         * so the strip behind the status bar matches the page rather than
-         * flashing white.
+         * The WebView is inset by MARGINS inside a frame, not by padding.
+         * Padding it was the fix shipped before, and it did nothing: a WebView
+         * draws its page across its whole bounds and ignores its own padding,
+         * so the insets were applied and the page never moved -- the clock and
+         * the gesture bar both stayed on top of it. Margins shrink the view
+         * itself. The two strips fill the space the margins leave, painted in
+         * the page's own top-bar and tab-bar colours (see paintBars).
+         *
+         * AppCompat's decor can hand a child a zero top inset, and from
+         * Android 15 the window is edge to edge whatever the app asks, so a
+         * zero there is read from the window's own insets instead. Below 15 a
+         * zero is taken at its word: the decor may really have fitted it.
          */
-        /*
-         * The listener on its own was not enough, and the page still came up
-         * under the clock: AppCompat's decor consumes the top inset before it
-         * reaches a child in some configurations, so the WebView is handed a
-         * zero. From Android 15 the window is edge to edge whatever the app
-         * asks for, so a zero top inset there is always wrong -- read the
-         * window's own insets instead. Below 15 a zero is taken at its word,
-         * because there the decor really may have fitted the content already
-         * and padding again would leave a gap under the status bar.
-         */
-        fun padToInsets(dispatched: WindowInsetsCompat?) {
+        fun fitToInsets(dispatched: WindowInsetsCompat?) {
             val want = WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
             var bars = dispatched?.getInsets(want)
             if ((bars == null || bars.top == 0) && Build.VERSION.SDK_INT >= 35) {
-                bars = ViewCompat.getRootWindowInsets(web)?.getInsets(want)
+                bars = ViewCompat.getRootWindowInsets(frame)?.getInsets(want)
             }
-            bars?.let { web.setPadding(it.left, it.top, it.right, it.bottom) }
+            val b = bars ?: return
+            (web.layoutParams as FrameLayout.LayoutParams).apply {
+                setMargins(b.left, b.top, b.right, b.bottom)
+                web.layoutParams = this
+            }
+            (topStrip.layoutParams as FrameLayout.LayoutParams).apply {
+                height = b.top
+                topStrip.layoutParams = this
+            }
+            (bottomStrip.layoutParams as FrameLayout.LayoutParams).apply {
+                height = b.bottom
+                bottomStrip.layoutParams = this
+            }
         }
-        ViewCompat.setOnApplyWindowInsetsListener(web) { _, insets ->
-            padToInsets(insets)
+        ViewCompat.setOnApplyWindowInsetsListener(frame) { _, insets ->
+            fitToInsets(insets)
             insets
         }
         // and once after the first layout, for the case where no dispatch arrives
-        web.post { padToInsets(null) }
+        frame.post { fitToInsets(null) }
+        val night = (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) ==
+            Configuration.UI_MODE_NIGHT_YES
+        paintBars(night)
 
         web.settings.apply {
             javaScriptEnabled = true
@@ -451,6 +497,12 @@ class MainActivity : AppCompatActivity() {
                     runCatching { startActivity(Intent.createChooser(send, "Ask Claude")) }
                 }
             }
+        }
+
+        /** The page's theme changed (or was applied at start): repaint the bar strips. */
+        @JavascriptInterface
+        fun barsTheme(dark: Boolean) {
+            runOnUiThread { paintBars(dark) }
         }
 
         /** The shelf folder's name, or null while none is picked. */

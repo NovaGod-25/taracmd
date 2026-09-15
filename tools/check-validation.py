@@ -202,6 +202,21 @@ def _(root):
     edit(root, "optionals.json", m)
 
 
+@case("topper booklet with no paper", "no paper or no url")
+def _(root):
+    # A booklet with no label would draw as a blank chip.
+    def m(d):
+        d["copies"][0]["files"] = [{"url": "https://example.com/gs1.pdf"}]
+    edit(root, "toppers.json", m)
+
+
+@case("same topper entered twice", "are both rank")
+def _(root):
+    def m(d):
+        d["copies"].append(dict(d["copies"][0], name="Someone Else"))
+    edit(root, "toppers.json", m)
+
+
 @case("daily url with no date in it", "no date in it")
 def _(root):
     # A pattern without the date would point at the same day forever.

@@ -308,12 +308,46 @@ def check_optionals(opts) -> None:
                 fail(f"optional {sid!r} {y} has papers {codes}, expected ['p1', 'p2']")
 
         for copy in sub.get("copies") or []:
-            for field in ("name", "year", "publisher", "url"):
-                if field not in copy:
-                    fail(f"optional {sid!r} copy {copy.get('name', '?')!r} has no {field!r}")
+            check_copy(copy, f"optional {sid!r} copy")
 
     if not seen:
         fail("optionals.json lists no subjects")
+
+
+def check_copy(copy, where: str) -> None:
+    """One published answer copy. `files` is its booklets, one per paper, each
+    opened by its own chip -- so a booklet with no label would be a blank chip,
+    and one listed twice would be two chips for the same PDF."""
+    name = copy.get("name", "?")
+    for field in ("name", "year", "publisher", "url"):
+        if field not in copy:
+            fail(f"{where} {name!r} has no {field!r}")
+    urls = [copy.get("url")]
+    for f in copy.get("files") or []:
+        if not f.get("paper") or not f.get("url"):
+            fail(f"{where} {name!r} has a booklet with no paper or no url")
+        elif f["url"] in urls:
+            fail(f"{where} {name!r} lists {f['url']} twice")
+        urls.append(f.get("url"))
+    for u in urls:
+        if u and not str(u).startswith("https://"):
+            fail(f"{where} {name!r} links {u}, which is not https")
+
+
+def check_toppers(toppers) -> None:
+    """The Toppers tab. One row per topper per year: two rows for the same rank
+    in the same year are the same person entered twice, and their booklets
+    belong together in one row."""
+    rows: dict[tuple, str] = {}
+    for copy in toppers.get("copies") or []:
+        check_copy(copy, "topper")
+        key = (copy.get("year"), copy.get("rank"))
+        if copy.get("rank") and key in rows:
+            fail(f"toppers {rows[key]!r} and {copy.get('name')!r} are both rank {key[1]} in {key[0]}")
+        rows[key] = copy.get("name", "?")
+    for p in toppers.get("publishers") or []:
+        if not p.get("name") or not p.get("url"):
+            fail("a toppers' publisher has no name or no url")
 
 
 DAILY_FIELDS = re.compile(r"\{(yyyy|mm|dd|d|month)\}")
@@ -395,6 +429,7 @@ def main() -> int:
     check_keys(keys)
     check_paper_tags(quiz, keys)
     check_optionals(opts)
+    check_toppers(toppers)
     check_daily(daily)
 
     if problems:

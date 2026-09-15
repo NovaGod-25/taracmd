@@ -190,6 +190,13 @@ a{color:var(--accent-ink);text-decoration:none}
 /* NOT .mt: that is the syllabus map's 16px square, and a meta line wearing it
    was squeezed into a 16px box with the text spilling over the name. */
 .tcard .tmeta{font-size:12px;color:var(--ink-3);margin-top:2px;display:block}
+.tcard .tbody{flex:1;min-width:0}
+.tcard .tlink{display:block;color:inherit}
+.tfiles{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
+.tfile{font-size:11.5px;line-height:1.3;padding:3px 8px;border-radius:7px;border:1px solid var(--rule-2);
+  background:var(--card-2);color:var(--ink-2)}
+.tfile:hover{border-color:var(--accent);color:var(--ink)}
+.tfile.on{border-color:var(--amber);color:var(--amber)}
 .ext{flex:none;color:var(--ink-3)}
 .ext svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 
@@ -871,6 +878,43 @@ const NATIVE = (typeof AndroidHost !== "undefined") ? AndroidHost : null;
 function savedPath(url){
   if(!NATIVE) return null;
   try{ return NATIVE.savedPath(url) || null; }catch(e){ return null; }
+}
+const isPdfUrl = u => /\.pdf($|\?)/i.test(u || "");
+/* One published copy as a row. Most publishers put a topper's booklets up
+   one paper at a time, so `files` holds them: the row opens the topper's own
+   page, each chip opens one booklet, and Save takes every booklet not yet on
+   the device. Used by both the Toppers tab and an optional's copies. */
+function copyRow(c, meta){
+  const files = c.files || [];
+  const pdfs = [...new Set([c.url, ...files.map(f => f.url)].filter(isPdfUrl))];
+  const unsaved = pdfs.filter(u => !savedPath(u));
+  const local = isPdfUrl(c.url) ? savedPath(c.url) : null;
+  const chips = files.length ? `<span class="tfiles">${files.map(f => {
+      const fl = isPdfUrl(f.url) ? savedPath(f.url) : null;
+      return `<a class="tfile${fl ? " on" : ""}" href="${esc(fl || f.url)}" target="_blank" rel="noopener">${esc(f.paper)}</a>`;
+    }).join("")}</span>` : "";
+  const saveLabel = pdfs.length < 2 ? "Save" : unsaved.length < pdfs.length ? `Save ${unsaved.length} more` : "Save all";
+  const side = pdfs.length && !unsaved.length ? `<span class="saved" title="Saved on this device">${DOWNI}</span>`
+    : NATIVE && unsaved.length ? `<button class="savebtn" data-save="${esc(unsaved.join(" "))}">${saveLabel}</button>`
+    : `<span class="ext">${LINKI}</span>`;
+  return `<div class="tcard">
+    <span class="rank ${c.rank===1?"top":""}">${c.rank ? "#"+c.rank : "—"}</span>
+    <div class="tbody">
+      <a class="tlink" href="${esc(local || c.url || "#")}" target="_blank" rel="noopener">
+        <span class="nm">${esc(c.name)}</span>
+        <span class="tmeta">${meta}${local ? " · saved" : ""}</span>
+      </a>${chips}
+    </div>
+    ${side}
+  </div>`;
+}
+/* A Save button carries every URL it will fetch, space-separated. */
+function wireSaves(){
+  view.querySelectorAll("[data-save]").forEach(b => b.onclick = () => {
+    const label = b.textContent;
+    b.textContent = "…";
+    try{ b.dataset.save.split(" ").forEach(u => NATIVE.saveCopy(u)); }catch(e){ b.textContent = label; }
+  });
 }
 const doneSet = id => new Set(store.done[id] || []);
 function toggleSub(tid, i, total){
@@ -2327,18 +2371,8 @@ function renderOptional(){
     <p class="note">Every paper opens on <a href="${ARCHIVE}" target="_blank" rel="noopener">upsc.gov.in</a> — the Commission publishes each one the day it is sat, ${s.pyq[0] ? `${s.pyq[0].year} included` : ""}. Log an answer against the paper you wrote it from; an optional answer is written under the same clock as a GS one, and the same 250 marks ride on the paper.</p>
 
     <div class="head"><h2>Toppers' copies</h2><span class="n">${s.copies.length}</span></div>
-    ${s.copies.length ? `<div class="list">${s.copies.map(c=>{
-        const isPdf = /\.pdf($|\?)/i.test(c.url || "");
-        const local = isPdf ? savedPath(c.url) : null;
-        return `<div class="tcard">
-          <span class="rank ${c.rank===1?"top":""}">${c.rank ? "#"+c.rank : "—"}</span>
-          <a style="flex:1;min-width:0;color:inherit" href="${esc(local || c.url || "#")}" target="_blank" rel="noopener">
-            <span class="nm">${esc(c.name)}</span>
-            <span class="tmeta">${c.year} · ${esc(c.publisher)}${c.note ? " · " + esc(c.note) : ""}${local ? " · saved" : ""}</span>
-          </a>
-          ${local ? `<span class="saved" title="Saved on this device">${DOWNI}</span>`
-                  : (NATIVE && isPdf ? `<button class="savebtn" data-save="${esc(c.url)}">Save</button>` : `<span class="ext">${LINKI}</span>`)}
-        </div>`;}).join("")}</div>`
+    ${s.copies.length ? `<div class="list">${s.copies.map(c =>
+        copyRow(c, `${c.year} · ${esc(c.publisher)}${c.note ? " · " + esc(c.note) : ""}`)).join("")}</div>`
       : `<div class="empty">None indexed yet for ${esc(s.short)}.<br><br>
           No publisher lists its copies by optional subject, so these have to be
           found by hand — open a section below, and add what you find to
@@ -2357,10 +2391,7 @@ function renderOptional(){
     const [yr, code, label] = b.dataset.olog.split("|");
     openWriting(+yr, code, label);
   });
-  view.querySelectorAll("[data-save]").forEach(b=>b.onclick=()=>{
-    b.textContent = "…";
-    try{ NATIVE.saveCopy(b.dataset.save); }catch(e){ b.textContent = "Save"; }
-  });
+  wireSaves();
 }
 
 /* ---------------- mode 2: papers ----------------
@@ -3104,18 +3135,9 @@ function renderToppers(){
       ${years.map(y=>`<button class="fchip ${state.filter===String(y)?"on":""}" data-y="${y}">${y}</button>`).join("")}
     </div>
     <div class="list">
-      ${sorted.map(c=>{
-        const isPdf = /\.pdf($|\?)/i.test(c.url || "");
-        const local = isPdf ? savedPath(c.url) : null;
-        return `<div class="tcard">
-        <span class="rank ${c.rank===1?"top":""}">${c.rank ? "#"+c.rank : "—"}</span>
-        <a style="flex:1;min-width:0;color:inherit" href="${esc(local || c.url || "#")}" target="_blank" rel="noopener">
-          <span class="nm">${esc(c.name)}</span>
-          <span class="tmeta">${c.year} · ${esc(c.publisher)}${c.papers && c.papers.length ? " · " + esc(c.papers.join(", ")) : ""}${c.direct ? "" : " · section page"}${local ? " · saved" : ""}</span>
-        </a>
-        ${local ? `<span class="saved" title="Saved on this device">${DOWNI}</span>`
-                : (NATIVE && isPdf ? `<button class="savebtn" data-save="${esc(c.url)}">Save</button>` : `<span class="ext">${LINKI}</span>`)}
-      </div>`;}).join("")}
+      ${sorted.map(c => copyRow(c, `${c.year} · ${esc(c.publisher)}${
+          c.papers && c.papers.length && !(c.files || []).length ? " · " + esc(c.papers.join(", ")) : ""}${
+          c.direct ? "" : " · section page"}`)).join("")}
     </div>
     <div class="head"><h2>Where they're published</h2></div>
     <div class="list">
@@ -3125,10 +3147,7 @@ function renderToppers(){
     </div>
     <p class="note">These booklets belong to the institutes that scanned and published them, so this is an index, not a mirror — every row opens the publisher's own page. Where a row is a direct PDF you can tap <b>Save</b> to keep that one copy in the app's own folder for offline reading; nothing is fetched unless you ask for it. Read them for structure: introduction shape, diagram use, how a 10-marker is bounded against a 15-marker.</p>`;
   view.querySelectorAll("[data-y]").forEach(b=>b.onclick=()=>{state.filter=b.dataset.y;renderToppers();});
-  view.querySelectorAll("[data-save]").forEach(b=>b.onclick=()=>{
-    b.textContent = "…";
-    try{ NATIVE.saveCopy(b.dataset.save); }catch(e){ b.textContent = "Save"; }
-  });
+  wireSaves();
 }
 /* Android calls this when a download lands so the row can flip to "saved".
    Both tabs that offer a Save button have to listen. */

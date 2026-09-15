@@ -195,7 +195,7 @@ turns it green rather than leaving it looking like a failure.
 | `pyq-papers.json` | official upsc.gov.in paper links per year — Prelims 22/24, Mains 54/60 |
 | `answer-keys.json` | Prelims answer keys: links, marking scheme, set-wise letters. GS-I and CSAT both complete 2017-2026, all four Series |
 | `quiz.json` | 2,595 questions: 35 written here, 846 from UPSC GS-I — every year 2017–2026 — 239 from UPSC CSAT (2020, 2021, 2024), and 1,475 from fifteen 2027 test series papers (Vision IAS 1, 3–6; ForumIAS 1–4 and Level 2 1–3; Vajiram PowerUp 2–4), with the institute's explanation as `why`. CSAT passages are stored once, in `passages` |
-| `toppers.json` | 102 published answer copies across 10 publishers |
+| `toppers.json` | 322 toppers across 10 publishers, one row per topper per year. `files` is a topper's booklets, one per paper (755 in all), each drawn as its own chip. 256 rows are CSE 2025, the copies published in 2026 |
 | `daily.json` | daily current-affairs quiz sources: a URL pattern the page expands against the date |
 | `optionals.json` | the Optional tab: Geography, Law and Agriculture, 22/22 papers each 2016–2026, plus curated copies |
 
@@ -566,11 +566,30 @@ answer booklets stay on upsc.gov.in and on the publishers' own sites. The app li
 them. This is not squeamishness — the scanned booklets are the coaching institutes'
 material, and bundling them turns a personal study tool into a redistribution problem.
 
-A bulk downloader for the topper entries was considered and rejected. Only 11 of the 102
-are direct PDFs; the rest sit behind publisher pages, so "download everything" means a
-scraper per site against ForumIAS, UnlockIAS, Vision, Vajiram, Insights, NEXT, GS SCORE,
-theIAShub and the rest. What exists instead is a **per-copy Save button**: one tap, one
-URL, handed to Android's DownloadManager, landing in the app's own folder. No crawler.
+A bulk downloader for the topper entries was considered and rejected: "download
+everything" means a scraper per site against ForumIAS, UnlockIAS, Vision, Vajiram,
+Insights, NEXT, GS SCORE, theIAShub and the rest. What exists instead is a **per-row Save
+button**: one tap takes that topper's booklets not yet on the device, each URL handed to
+Android's DownloadManager, landing in the app's own folder. No crawler.
+
+**The CSE 2025 rows were read in once, by hand, on 15 Sep 2026** — links only, nothing
+downloaded, and no scraper committed. Sources: Vajiram & Ravi's toppers page (65
+toppers), ForumIAS's 200 topper posts read two seconds apart (195 carry PDFs), the ten
+theIAShub pages that list copies (login to download, so the chip opens the page), and
+UnlockIAS for AIR 32. Rows from different publishers meet on year and rank —
+`check_toppers` fails a second row for the same rank, which is how 2024's "Rangamanju" and
+"Ranga Manju" were found to be one person. Two judgement calls, both on the side of
+leaving a thing out rather than mislabelling it:
+
+- A ForumIAS booklet is labelled from its **filename**, not its link text. The link text
+  is a template copied down each post ("Sample MGP (GS) Copy") and says GS on booklets
+  whose file is an essay; the filename was typed per file. Where the filename names only
+  the programme (MGP), the link text decides.
+- A Vajiram file **named for a different topper** is not listed. Sophia Siddiqui's GS-III
+  link is `SANDEEP_BADAD_GS_3…pdf`, and Basavaraj M Patil's GS-III and GS-IV are Basavaraj
+  Jawali's files. They are somebody's booklets, but not necessarily the named topper's.
+
+AIR 1, Anuj Agnihotri, had no public answer copy anywhere as of that date.
 
 **`localStorage` key is `taracmd-v1`.** Changing it orphans everyone's progress, so it
 never changes — every field added since is additive and defaulted from `BLANK` on load,

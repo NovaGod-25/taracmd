@@ -1236,6 +1236,24 @@ describe("the toppers list", () => {
     assert.equal(out.meta, out.rows, "every row carries its own meta class");
     assert.equal(out.squares, 0, "and none of them is styled as a map square");
   });
+
+  /* A topper's booklets come one paper at a time, each its own chip. The chips
+     sit beside the row's link, not inside it: a link inside a link is invalid
+     HTML, and the browser splits it so the chip would open the wrong page. */
+  test("each booklet is its own chip, and no link sits inside another", () => {
+    const out = JSON.parse(inPage(win, `(() => {
+      state.tab = "toppers"; state.filter = "all"; renderToppers();
+      const r = { chips: document.querySelectorAll(".tcard .tfile").length,
+                  booklets: TOPPERS.copies.reduce((n, c) => n + (c.files || []).length, 0),
+                  nested: document.querySelectorAll(".tcard a a").length,
+                  blank: [...document.querySelectorAll(".tcard .tfile")].filter(a => !a.textContent.trim()).length };
+      state.tab = "syllabus"; render();
+      return JSON.stringify(r); })()`));
+    assert.ok(out.booklets > 0, "some toppers carry more than one booklet");
+    assert.equal(out.chips, out.booklets);
+    assert.equal(out.nested, 0);
+    assert.equal(out.blank, 0, "every chip names its paper");
+  });
 });
 
 /* A CSAT paper is a folder only once its questions are typed in: a card that
